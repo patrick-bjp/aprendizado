@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitor de Licitações — GOVBR · Equiplano · IDS · Layers</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #ffffff; --bg2: #f5f5f3; --bg3: #efefec;
+    --border: rgba(0,0,0,0.12); --border2: rgba(0,0,0,0.22);
+    --text: #1a1a18; --text2: #5a5a56; --text3: #8a8a85;
+    --blue-bg: #E6F1FB; --blue-text: #185FA5;
+    --purple-bg: #EEEDFE; --purple-text: #3C3489;
+    --red-bg: #FAECE7; --red-text: #993C1D;
+    --green-bg: #EAF3DE; --green-text: #3B6D11;
+    --amber-bg: #FAEEDA; --amber-text: #854F0B;
+    --gray-bg: #F1EFE8; --gray-text: #5F5E5A;
+    --radius: 8px; --radius-lg: 12px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a; --bg2: #252523; --bg3: #2e2e2b;
+      --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+      --text: #f0f0ec; --text2: #a0a09a; --text3: #666662;
+      --blue-bg: #0c2a45; --blue-text: #85B7EB;
+      --purple-bg: #1e1b3a; --purple-text: #AFA9EC;
+      --red-bg: #2e1a0f; --red-text: #F0997B;
+      --green-bg: #1a2e10; --green-text: #97C459;
+      --amber-bg: #2e1f08; --amber-text: #EF9F27;
+      --gray-bg: #2a2a27; --gray-text: #a0a09a;
+    }
+  }
+  body { font-family: var(--font); background: var(--bg3); color: var(--text); min-height: 100vh; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; display: flex; flex-direction: column; gap: 16px; }
+
+  .header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 20px 24px; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo { width: 40px; height: 40px; border-radius: 10px; background: var(--blue-bg); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600; color: var(--blue-text); flex-shrink: 0; }
+  .header-title { font-size: 17px; font-weight: 600; }
+  .header-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 11px; padding: 3px 10px; border-radius: 100px; font-weight: 500; }
+  .badge-ok  { background: var(--green-bg);  color: var(--green-text); }
+  .badge-warn{ background: var(--amber-bg);  color: var(--amber-text); }
+  .badge-info{ background: var(--blue-bg);   color: var(--blue-text); }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+  .metric { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .metric-label { font-size: 12px; color: var(--text3); margin-bottom: 5px; }
+  .metric-val { font-size: 24px; font-weight: 600; }
+  .metric-sub { font-size: 11px; color: var(--text3); margin-top: 3px; }
+
+  .section { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; }
+  .section-title { font-size: 13px; font-weight: 600; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* Portais */
+  .portais-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
+  .portal-item { border: 0.5px solid var(--border); border-radius: var(--radius); padding: 9px 12px; }
+  .portal-top  { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; }
+  .pdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .pdot-green  { background: #639922; }
+  .pdot-amber  { background: #BA7517; }
+  .portal-name { font-size: 12px; font-weight: 500; }
+  .portal-tipo { font-size: 10px; padding: 1px 6px; border-radius: 100px; }
+  .tipo-api    { background: var(--green-bg); color: var(--green-text); }
+  .tipo-priv   { background: var(--amber-bg); color: var(--amber-text); }
+  .portal-status{ font-size: 10px; color: var(--text3); }
+
+  /* Estados */
+  .estados-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 8px; }
+  .estado-card { border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px 12px; cursor: pointer; transition: all .15s; position: relative; user-select: none; }
+  .estado-card.ativo  { border-color: var(--blue-text); background: var(--blue-bg); }
+  .estado-card.ativo .estado-uf, .estado-card.ativo .estado-nome { color: var(--blue-text); }
+  .estado-card.inativo{ opacity: .4; }
+  .estado-uf   { font-size: 16px; font-weight: 700; }
+  .estado-nome { font-size: 11px; color: var(--text3); margin-top: 1px; }
+  .estado-count{ font-size: 11px; font-weight: 500; margin-top: 6px; }
+  .estado-count.high { color: var(--green-text); }
+  .estado-count.med  { color: var(--amber-text); }
+  .estado-count.low  { color: var(--text3); }
+  .estado-dot { width: 6px; height: 6px; border-radius: 50%; position: absolute; top: 9px; right: 9px; }
+  .dot-on  { background: #639922; }
+  .dot-off { background: #888780; }
+
+  /* ========= KEYWORDS — versão melhorada ========= */
+  .kw-group { margin-bottom: 14px; }
+  .kw-group-label { font-size: 10px; font-weight: 600; color: var(--text3); margin-bottom: 7px; text-transform: uppercase; letter-spacing: .05em; }
+  .kw-wrap { display: flex; flex-wrap: wrap; gap: 5px; min-height: 28px; }
+  .kw { font-size: 12px; padding: 4px 6px 4px 10px; border-radius: 100px; cursor: default; display: inline-flex; align-items: center; gap: 4px; }
+  .kw-blue   { background: var(--blue-bg);   color: var(--blue-text); }
+  .kw-purple { background: var(--purple-bg); color: var(--purple-text); }
+  .kw-red    { background: var(--red-bg);    color: var(--red-text); }
+  .kw-green  { background: var(--green-bg);  color: var(--green-text); }
+  .kw.off    { opacity: .3; text-decoration: line-through; }
+  .kw-toggle { cursor: pointer; font-size: 10px; opacity: .6; padding: 1px 3px; border-radius: 3px; user-select: none; }
+  .kw-toggle:hover { opacity: 1; background: rgba(0,0,0,.08); }
+  .kw-remove { cursor: pointer; font-size: 11px; opacity: .5; padding: 1px 3px; border-radius: 3px; user-select: none; line-height: 1; }
+  .kw-remove:hover { opacity: 1; background: rgba(180,0,0,.12); color: #993C1D; }
+  /* painel adicionar */
+  .kw-add-panel { border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px; margin-top: 4px; background: var(--bg2); }
+  .kw-add-title { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 10px; }
+  .kw-add-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; }
+  .kw-add-row input { flex: 2; min-width: 160px; font-size: 13px; padding: 7px 11px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: var(--font); outline: none; }
+  .kw-add-row input:focus { border-color: var(--blue-text); }
+  .kw-add-row select { font-size: 12px; padding: 7px 10px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: var(--font); outline: none; cursor: pointer; }
+  .btn-add-kw { font-size: 12px; padding: 7px 14px; border-radius: var(--radius); border: 0.5px solid var(--blue-text); background: var(--blue-bg); color: var(--blue-text); cursor: pointer; font-family: var(--font); white-space: nowrap; }
+  .btn-add-kw:hover { opacity: .85; }
+  .btn-rebuscar { font-size: 12px; padding: 7px 14px; border-radius: var(--radius); border: 0.5px solid var(--green-text); background: var(--green-bg); color: var(--green-text); cursor: pointer; font-family: var(--font); white-space: nowrap; font-weight: 500; }
+  .btn-rebuscar:hover { opacity: .85; }
+  .kw-add-hint { font-size: 11px; color: var(--text3); margin-top: 8px; }
+
+  /* Filtros */
+  .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .filter-btn { font-size: 12px; padding: 4px 12px; border-radius: 100px; border: 0.5px solid var(--border); background: transparent; color: var(--text2); cursor: pointer; font-family: var(--font); transition: all .15s; }
+  .filter-btn:hover { border-color: var(--border2); }
+  .filter-btn.active { border-color: var(--blue-text); background: var(--blue-bg); color: var(--blue-text); }
+
+  /* Busca */
+  .busca-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .busca-row input { flex: 1; font-size: 13px; padding: 7px 11px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: var(--font); outline: none; }
+  .busca-row input:focus { border-color: var(--blue-text); }
+  .btn-buscar { font-size: 12px; padding: 7px 16px; border-radius: var(--radius); border: 0.5px solid var(--blue-text); background: var(--blue-bg); color: var(--blue-text); cursor: pointer; font-family: var(--font); white-space: nowrap; }
+  .btn-buscar:hover  { opacity: .85; }
+  .btn-buscar:disabled { opacity: .5; cursor: not-allowed; }
+  .portais-sel { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+
+  /* Loading / status */
+  .loading-bar { padding: 10px 14px; background: var(--blue-bg); border-radius: var(--radius); font-size: 12px; color: var(--blue-text); display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .loading-bar.hidden { display: none; }
+  .spinner { width: 12px; height: 12px; border: 2px solid var(--blue-text); border-top-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .erro-bar    { display: none; padding: 9px 13px; background: var(--amber-bg); border-radius: var(--radius); font-size: 12px; color: var(--amber-text); margin-bottom: 6px; }
+  .sucesso-bar { display: none; padding: 9px 13px; background: var(--green-bg);  border-radius: var(--radius); font-size: 12px; color: var(--green-text); margin-bottom: 6px; }
+  .info-box    { padding: 10px 14px; background: var(--blue-bg); border-radius: var(--radius); font-size: 12px; color: var(--blue-text); line-height: 1.6; margin-top: 10px; }
+
+  /* Editais */
+  .editais { display: flex; flex-direction: column; gap: 8px; }
+  .edital { border: 0.5px solid var(--border); border-radius: var(--radius); padding: 13px 15px; transition: border-color .15s; }
+  .edital:hover  { border-color: var(--border2); }
+  .edital.urgente{ border-left: 2px solid #BA7517; }
+  .edital.hidden { display: none; }
+  .edital.visto  { opacity: .6; }
+  .edital-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 7px; cursor: pointer; }
+  .edital-titulo { font-size: 13px; font-weight: 500; line-height: 1.45; }
+  .score { font-size: 11px; padding: 2px 8px; border-radius: 100px; flex-shrink: 0; font-weight: 500; }
+  .score-high{ background: var(--green-bg);  color: var(--green-text); }
+  .score-med { background: var(--amber-bg);  color: var(--amber-text); }
+  .score-low { background: var(--bg2);       color: var(--text3); }
+  .edital-meta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .edital-meta span { font-size: 11px; color: var(--text3); }
+  .edital-meta strong { color: var(--text2); font-weight: 500; }
+  .edital-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 7px; }
+  .tag { font-size: 10px; padding: 2px 7px; border-radius: 100px; font-weight: 500; }
+  .tag-govbr    { background: var(--blue-bg);   color: var(--blue-text); }
+  .tag-equiplano{ background: var(--purple-bg); color: var(--purple-text); }
+  .tag-ids      { background: var(--red-bg);    color: var(--red-text); }
+  .tag-layers   { background: var(--green-bg);  color: var(--green-text); }
+  .tag-uf       { background: var(--gray-bg);   color: var(--gray-text); }
+  .tag-kw       { background: var(--bg2);       color: var(--text2); }
+  .tag-pncp     { background: var(--blue-bg);   color: var(--blue-text); }
+  .tag-pcp      { background: var(--green-bg);  color: var(--green-text); }
+  .tag-urgente  { background: var(--amber-bg);  color: var(--amber-text); }
+  .edital-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; flex-wrap: wrap; gap: 6px; }
+  .edital-btns { display: flex; gap: 5px; }
+  .btn-link { font-size: 11px; padding: 4px 10px; border-radius: 100px; border: 0.5px solid var(--border2); background: transparent; color: var(--text2); cursor: pointer; font-family: var(--font); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: all .15s; }
+  .btn-link:hover { background: var(--blue-bg); color: var(--blue-text); border-color: var(--blue-text); }
+  .btn-visto { font-size: 11px; padding: 4px 10px; border-radius: 100px; border: 0.5px solid var(--border); background: transparent; color: var(--text3); cursor: pointer; font-family: var(--font); transition: all .15s; }
+  .btn-visto:hover { background: var(--green-bg); color: var(--green-text); }
+  .btn-descartar { font-size: 11px; padding: 4px 10px; border-radius: 100px; border: 0.5px solid var(--border); background: transparent; color: var(--text3); cursor: pointer; font-family: var(--font); transition: all .15s; }
+  .btn-descartar:hover { background: var(--red-bg); color: var(--red-text); }
+  .empty { font-size: 13px; color: var(--text3); text-align: center; padding: 24px 0; display: none; }
+
+  /* API / AI */
+  .api-notice { font-size: 12px; padding: 10px 14px; border-radius: var(--radius); background: var(--amber-bg); color: var(--amber-text); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .api-notice input { flex: 1; min-width: 200px; font-size: 12px; padding: 4px 8px; border: 0.5px solid var(--amber-text); border-radius: 6px; background: transparent; color: var(--amber-text); font-family: var(--font); outline: none; }
+  .ai-box { border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; background: var(--bg); }
+  .ai-title { font-size: 13px; font-weight: 600; }
+  .ai-output { font-size: 13px; color: var(--text2); line-height: 1.65; min-height: 40px; }
+  .ai-output p { margin-bottom: 8px; } .ai-output p:last-child { margin-bottom: 0; }
+  .ai-loading { font-style: italic; color: var(--text3); }
+  .ai-meta { font-size: 11px; font-weight: 500; color: var(--text3); margin-bottom: 8px; }
+  .divider { height: 0.5px; background: var(--border); }
+  .ai-input-row { display: flex; gap: 8px; align-items: flex-end; }
+  .ai-input-row textarea { flex: 1; font-size: 13px; padding: 8px 11px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg2); color: var(--text); resize: vertical; min-height: 62px; font-family: var(--font); outline: none; line-height: 1.5; }
+  .ai-input-row textarea:focus { border-color: var(--blue-text); background: var(--bg); }
+  .btn-ask { font-size: 13px; padding: 8px 18px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); cursor: pointer; font-family: var(--font); white-space: nowrap; transition: background .15s; align-self: flex-end; }
+  .btn-ask:hover { background: var(--bg2); }
+
+  .footer { text-align: center; font-size: 12px; color: var(--text3); padding-top: 8px; }
+  .last-update { font-size: 11px; color: var(--text3); font-style: italic; margin-top: 4px; }
+
+  @media (max-width: 700px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .estados-grid { grid-template-columns: repeat(4, 1fr); }
+    .portais-grid { grid-template-columns: repeat(2, 1fr); }
+    .header { flex-direction: column; align-items: flex-start; }
+  }
+  @media (max-width: 480px) {
+    .estados-grid { grid-template-columns: repeat(2, 1fr); }
+    .portais-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">ML</div>
+    <div>
+      <div class="header-title">Monitor de Licitações</div>
+      <div class="header-sub">GOVBR · Equiplano (PR) · IDS · Layers — PNCP + Portal Compras Públicas/RS</div>
+    </div>
+  </div>
+  <div class="badges">
+    <span class="badge badge-ok"  id="badge-estados">8 estados ativos</span>
+    <span class="badge badge-warn" id="badge-urgentes">— urgentes</span>
+    <span class="badge badge-info" id="badge-fonte">Aguardando busca</span>
+  </div>
+</div>
+
+<!-- API Key Anthropic -->
+<div class="api-notice" id="api-notice">
+  ⚠️ API key Anthropic (análise por IA):
+  <input type="password" id="api-key-input" placeholder="sk-ant-..." oninput="salvarKey(this.value)">
+</div>
+
+<!-- Metrics -->
+<div class="metrics">
+  <div class="metric"><div class="metric-label">Editais encontrados</div><div class="metric-val" id="m-total">—</div><div class="metric-sub" id="m-sub-total">execute a busca</div></div>
+  <div class="metric"><div class="metric-label">Alta relevância</div><div class="metric-val" id="m-rel">—</div><div class="metric-sub">score ≥ 70%</div></div>
+  <div class="metric"><div class="metric-label">Prazo &lt; 5 dias</div><div class="metric-val" id="m-urgentes">—</div><div class="metric-sub">atenção imediata</div></div>
+  <div class="metric"><div class="metric-label">Maior valor</div><div class="metric-val" id="m-valor">—</div><div class="metric-sub" id="m-sub-valor">após busca</div></div>
+</div>
+
+<!-- Portais -->
+<div class="section">
+  <div class="section-title">Portais monitorados</div>
+  <div class="portais-grid">
+    <div class="portal-item">
+      <div class="portal-top"><div class="pdot pdot-green"></div><div class="portal-name">PNCP</div><span class="portal-tipo tipo-api">API pública</span></div>
+      <div class="portal-status">Portal Nacional · todos os estados · gratuito · sem autenticação</div>
+    </div>
+    <div class="portal-item">
+      <div class="portal-top"><div class="pdot pdot-green"></div><div class="portal-name">Portal Compras Públicas (RS)</div><span class="portal-tipo tipo-api">API REST</span></div>
+      <div class="portal-status">portaldecompraspublicas.com.br · municípios gaúchos · foco GovernançaBrasil</div>
+    </div>
+    <div class="portal-item">
+      <div class="portal-top"><div class="pdot pdot-amber"></div><div class="portal-name">BLL Compras</div><span class="portal-tipo tipo-priv">API privada</span></div>
+      <div class="portal-status">PR · RS · SC — dados replicados no PNCP. API direta requer contrato BLL</div>
+    </div>
+    <div class="portal-item">
+      <div class="portal-top"><div class="pdot pdot-amber"></div><div class="portal-name">ComprasNet / SIASG</div><span class="portal-tipo tipo-priv">Gov. federal</span></div>
+      <div class="portal-status">Replicado no PNCP. Acesso direto requer credencial SIASG</div>
+    </div>
+    <div class="portal-item">
+      <div class="portal-top"><div class="pdot pdot-amber"></div><div class="portal-name">BEC-SP</div><span class="portal-tipo tipo-priv">WS SOAP</span></div>
+      <div class="portal-status">Editais SP publicados no PNCP. WS direto requer CAUFESP</div>
+    </div>
+    <div class="portal-item">
+      <div class="portal-top"><div class="pdot pdot-amber"></div><div class="portal-name">Licitações-e (BB)</div><span class="portal-tipo tipo-priv">Convênio BB</span></div>
+      <div class="portal-status">Dados replicados no PNCP. Direto via convênio Banco do Brasil</div>
+    </div>
+  </div>
+  <div class="info-box">
+    <strong>Fonte primária:</strong> API pública do PNCP (pncp.gov.br/api/rest/v1) consolida editais de ComprasNet, BLL, BEC-SP e Licitações-e. Para o RS, o <strong>Portal de Compras Públicas</strong> complementa com municípios gaúchos — foco direto da GovernançaBrasil. Scores calculados em tempo real por correspondência de palavras-chave.
+  </div>
+</div>
+
+<!-- Estados -->
+<div class="section">
+  <div class="section-title">Estados monitorados — clique para ativar/desativar</div>
+  <div class="estados-grid">
+    <div class="estado-card ativo" data-uf="PR" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">PR</div><div class="estado-nome">Paraná</div><div class="estado-count low" id="cnt-PR">—</div></div>
+    <div class="estado-card ativo" data-uf="RS" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">RS</div><div class="estado-nome">Rio Grande do Sul</div><div class="estado-count low" id="cnt-RS">—</div></div>
+    <div class="estado-card ativo" data-uf="SP" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">SP</div><div class="estado-nome">São Paulo</div><div class="estado-count low" id="cnt-SP">—</div></div>
+    <div class="estado-card ativo" data-uf="MG" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">MG</div><div class="estado-nome">Minas Gerais</div><div class="estado-count low" id="cnt-MG">—</div></div>
+    <div class="estado-card ativo" data-uf="RJ" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">RJ</div><div class="estado-nome">Rio de Janeiro</div><div class="estado-count low" id="cnt-RJ">—</div></div>
+    <div class="estado-card ativo" data-uf="PE" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">PE</div><div class="estado-nome">Pernambuco</div><div class="estado-count low" id="cnt-PE">—</div></div>
+    <div class="estado-card ativo" data-uf="PA" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">PA</div><div class="estado-nome">Pará</div><div class="estado-count low" id="cnt-PA">—</div></div>
+    <div class="estado-card ativo" data-uf="AP" onclick="toggleEstado(this)"><div class="estado-dot dot-on"></div><div class="estado-uf">AP</div><div class="estado-nome">Amapá</div><div class="estado-count low" id="cnt-AP">—</div></div>
+  </div>
+</div>
+
+<!-- Keywords -->
+<div class="section">
+  <div class="section-title">Palavras-chave monitoradas</div>
+
+  <div class="kw-group">
+    <div class="kw-group-label">GOVBR — nacional</div>
+    <div class="kw-wrap" id="kw-govbr">
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>gestão pública integrada<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>contabilidade pública<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>folha de pagamento<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>planejamento orçamentário<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>serviços digitais ao cidadão<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>assistência social<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>PRONIM<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>sistema integrado municipal<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+    </div>
+  </div>
+
+  <div class="kw-group">
+    <div class="kw-group-label">Equiplano — somente Paraná · TCE-PR</div>
+    <div class="kw-wrap" id="kw-equiplano">
+      <span class="kw kw-purple" data-empresa="equiplano"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>gestão tributária<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-purple" data-empresa="equiplano"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>licitações e compras<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-purple" data-empresa="equiplano"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>controle de frotas municipal<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-purple" data-empresa="equiplano"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>portal da transparência<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-purple" data-empresa="equiplano"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>Tribunal de Contas PR<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-purple" data-empresa="equiplano"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>TCE-PR<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+    </div>
+  </div>
+
+  <div class="kw-group">
+    <div class="kw-group-label">IDS — saúde, educação, social</div>
+    <div class="kw-wrap" id="kw-ids">
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>prontuário eletrônico<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>regulação de saúde<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>consórcio intermunicipal de saúde<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>gestão escolar municipal<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>CRAS assistência social<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>farmácia básica<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>vigilância epidemiológica<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-red" data-empresa="ids"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>atenção primária<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+    </div>
+  </div>
+
+  <div class="kw-group">
+    <div class="kw-group-label">Layers — plataforma educacional digital</div>
+    <div class="kw-wrap" id="kw-layers">
+      <span class="kw kw-green" data-empresa="layers"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>aplicativo escola-família<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-green" data-empresa="layers"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>plataforma digital educacional<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-green" data-empresa="layers"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>secretaria escolar digital<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+      <span class="kw kw-green" data-empresa="layers"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>comunicação escolar digital<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
+    </div>
+  </div>
+
+  <!-- Painel de adição -->
+  <div class="kw-add-panel">
+    <div class="kw-add-title">Adicionar nova palavra-chave</div>
+    <div class="kw-add-row">
+      <input id="kw-in" type="text" placeholder="Ex: pregão eletrônico software, ERP municipal...">
+      <select id="kw-empresa">
+        <option value="govbr">GOVBR</option>
+        <option value="equiplano">Equiplano (somente PR)</option>
+        <option value="ids">IDS</option>
+        <option value="layers">Layers</option>
+      </select>
+      <button class="btn-add-kw" onclick="addKw()">+ Adicionar</button>
+      <button class="btn-rebuscar" id="btn-rebuscar" onclick="rebuscarComNovasKws()" title="Re-score dos editais já carregados com as keywords atuais, sem nova chamada à API">↺ Re-score sem rebuscar</button>
+      <button class="btn-buscar" onclick="executarBusca()" style="border-color:var(--blue-text)">🔍 Rebuscar nos portais</button>
+    </div>
+    <div class="kw-add-hint">◉ ativa/pausa a keyword no score · ✕ remove permanentemente · "Re-score" recalcula os editais já carregados · "Rebuscar nos portais" faz nova chamada à API</div>
+  </div>
+</div>
+
+<!-- Busca -->
+<div class="section">
+  <div class="section-title">Busca nos portais</div>
+  <div class="busca-row">
+    <input type="text" id="busca-input" placeholder="Filtrar nos resultados por texto livre...">
+    <button class="btn-buscar" id="btn-buscar" onclick="executarBusca()">🔍 Buscar agora</button>
+  </div>
+  <div class="portais-sel">
+    <button class="filter-btn active" id="btn-pncp" onclick="togglePortalBusca(this,'pncp')">PNCP (todos os estados)</button>
+    <button class="filter-btn active" id="btn-pcp"  onclick="togglePortalBusca(this,'pcp')">Portal Compras Públicas (RS)</button>
+  </div>
+  <div class="loading-bar hidden" id="loading-bar"><div class="spinner"></div><span id="loading-msg">Buscando...</span></div>
+  <div class="erro-bar"    id="erro-bar"></div>
+  <div class="sucesso-bar" id="sucesso-bar"></div>
+  <p class="last-update"   id="last-update"></p>
+</div>
+
+<!-- Editais -->
+<div class="section">
+  <div class="section-title">Editais encontrados</div>
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filtrar(this,'todos')">Todos</button>
+    <button class="filter-btn" onclick="filtrar(this,'alta')">Alta relevância</button>
+    <button class="filter-btn" onclick="filtrar(this,'urgente')">Urgentes (&lt;5 dias)</button>
+    <button class="filter-btn" onclick="filtrar(this,'govbr')">GOVBR</button>
+    <button class="filter-btn" onclick="filtrar(this,'equiplano')">Equiplano</button>
+    <button class="filter-btn" onclick="filtrar(this,'ids')">IDS</button>
+    <button class="filter-btn" onclick="filtrar(this,'layers')">Layers</button>
+    <button class="filter-btn" onclick="filtrar(this,'PR')">PR</button>
+    <button class="filter-btn" onclick="filtrar(this,'RS')">RS</button>
+    <button class="filter-btn" onclick="filtrar(this,'SP')">SP</button>
+    <button class="filter-btn" onclick="filtrar(this,'MG')">MG</button>
+    <button class="filter-btn" onclick="filtrar(this,'pncp')">PNCP</button>
+    <button class="filter-btn" onclick="filtrar(this,'pcp')">Portal CP/RS</button>
+  </div>
+  <div class="editais" id="editais-list">
+    <div style="text-align:center;padding:32px 0;color:var(--text3);font-size:13px;">
+      Clique em <strong>Buscar agora</strong> para carregar editais reais dos portais.
+    </div>
+  </div>
+  <div class="empty" id="empty-msg">Nenhum edital encontrado para os filtros selecionados.</div>
+</div>
+
+<!-- AI -->
+<div class="ai-box">
+  <div class="ai-title">Análise por IA (Claude)</div>
+  <div class="divider"></div>
+  <div class="ai-output" id="ai-output">Busque editais e clique em um para análise automática de fit, riscos e recomendação — ou faça uma pergunta livre abaixo.</div>
+  <div class="divider"></div>
+  <div class="ai-input-row">
+    <textarea id="user-q" placeholder="Ex: Quais são mais estratégicos para o GOVBR no RS? / O IDS tem cobertura para consórcios de saúde nesta lista?"></textarea>
+    <button class="btn-ask" onclick="perguntarIA()">Perguntar ↗</button>
+  </div>
+</div>
+
+<div class="footer">Monitor de Licitações · GOVBR · Equiplano (PR) · IDS · Layers · Volaris Group · dados via PNCP + Portal Compras Públicas/RS</div>
+</div>
+
+<script>
+/* ====================== CONFIG ====================== */
+const PNCP_SEARCH = 'https://pncp.gov.br/api/search/';
+const PNCP_DETALHE = 'https://pncp.gov.br/app/editais';
+const PCP_BASE  = 'https://www.portaldecompraspublicas.com.br/api/v2';
+
+const PERFIS = {
+  govbr:     "GOVBR (Governança Brasil): plataforma de governança municipal nacional com 24 módulos — finanças, contabilidade pública, folha/RH, receitas/tributário, suprimentos/licitações, serviços digitais ao cidadão, assistência social, saúde, educação, planejamento/orçamento, transparência. Presente em 13 estados, 700+ prefeituras.",
+  equiplano: "Equiplano: gestão municipal EXCLUSIVAMENTE no estado do Paraná. Módulos: contabilidade pública, gestão tributária, RH/folha, licitações e compras, controle de frotas, tramitação de processos, portal da transparência, EServiços 156. TCE-PR. NUNCA fora do Paraná.",
+  ids:       "IDS Software: Saúde (prontuário PEP+IA, regulação, atenção primária, farmácia básica, consórcios intermunicipais — líder PR), Educação (gestão escolar municipal), Assistência Social (CRAS, CREAS, SUAS), IDS Cidadão. Atua nacionalmente.",
+  layers:    "Layers Education: SuperApp educacional — comunicação escola-família, notas, frequência, matrícula digital, secretaria digital, 7.600+ escolas."
+};
+
+let estadosAtivos = new Set(['PR','RS','SP','MG','RJ','PE','PA','AP']);
+let filtroAtual   = 'todos';
+let portaisBusca  = new Set(['pncp','pcp']);
+let apiKey        = localStorage.getItem('ml_api_key') || '';
+let editaisCarregados = [];
+let descartados   = JSON.parse(localStorage.getItem('ml_descartados') || '[]');
+let vistos        = JSON.parse(localStorage.getItem('ml_vistos') || '[]');
+
+if (apiKey) { document.getElementById('api-key-input').value = apiKey; document.getElementById('api-notice').style.display = 'none'; }
+
+function salvarKey(v) { apiKey = v.trim(); localStorage.setItem('ml_api_key', apiKey); if (apiKey) document.getElementById('api-notice').style.display = 'none'; }
+
+/* ====================== KEYWORDS — gerenciamento ====================== */
+
+function obterKwsAtivas() {
+  const kwsAtivas = {};
+  document.querySelectorAll('.kw:not(.off)').forEach(el => {
+    const emp = el.dataset.empresa || 'govbr';
+    if (!kwsAtivas[emp]) kwsAtivas[emp] = [];
+    // texto = tudo exceto os spans de controle
+    const texto = Array.from(el.childNodes)
+      .filter(n => n.nodeType === 3)
+      .map(n => n.textContent.trim())
+      .join('').trim().toLowerCase();
+    if (texto) kwsAtivas[emp].push(texto);
+  });
+  return kwsAtivas;
+}
+
+function salvarTodasKws() {
+  const todas = [];
+  document.querySelectorAll('.kw').forEach(el => {
+    const texto = Array.from(el.childNodes).filter(n => n.nodeType === 3).map(n => n.textContent.trim()).join('').trim();
+    if (texto) todas.push({ texto, empresa: el.dataset.empresa || 'govbr', off: el.classList.contains('off') });
+  });
+  localStorage.setItem('ml_kws_todas', JSON.stringify(todas));
+}
+
+function toggleKw(el) {
+  el.classList.toggle('off');
+  salvarTodasKws();
+  // Re-score imediato nos editais já carregados
+  if (editaisCarregados.length > 0) rebuscarComNovasKws();
+}
+
+function removerKw(el) {
+  el.style.transition = 'opacity .2s'; el.style.opacity = '0';
+  setTimeout(() => { el.remove(); salvarTodasKws(); if (editaisCarregados.length > 0) rebuscarComNovasKws(); }, 200);
+}
+
+function addKw() {
+  const input   = document.getElementById('kw-in');
+  const empresa = document.getElementById('kw-empresa').value;
+  const texto   = input.value.trim();
+  if (!texto) return;
+
+  const wrapMap  = { govbr:'kw-govbr', equiplano:'kw-equiplano', ids:'kw-ids', layers:'kw-layers' };
+  const classMap = { govbr:'kw-blue', equiplano:'kw-purple', ids:'kw-red', layers:'kw-green' };
+  const wrap     = document.getElementById(wrapMap[empresa]);
+
+  const span = document.createElement('span');
+  span.className = `kw ${classMap[empresa]}`;
+  span.dataset.empresa = empresa;
+  span.innerHTML = `<span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>${texto}<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span>`;
+  wrap.appendChild(span);
+
+  input.value = '';
+  salvarTodasKws();
+
+  // Feedback visual
+  span.style.outline = `2px solid currentColor`;
+  setTimeout(() => { span.style.outline = ''; }, 1200);
+
+  // Re-score imediato se já tem editais
+  if (editaisCarregados.length > 0) rebuscarComNovasKws();
+}
+
+/* Re-score nos editais já em memória — sem nova chamada à API */
+function rebuscarComNovasKws() {
+  if (editaisCarregados.length === 0) return;
+  editaisCarregados = editaisCarregados.map(e => {
+    const scoring = calcularScore(e.tituloFull || e.titulo, e.uf);
+    return { ...e, score: scoring.score, empresa: scoring.empresa, kwsEncontradas: scoring.kwsEncontradas,
+             dataAberturaFmt: e.dataAberturaFmt || formatData(e.dataAbertura) };
+  });
+  editaisCarregados.sort((a,b) => b.score - a.score);
+  renderizarEditais(editaisCarregados);
+  atualizarMetricas();
+  document.getElementById('last-update').textContent = 'Re-score aplicado em ' + new Date().toLocaleTimeString('pt-BR');
+}
+
+/* ====================== SCORING ====================== */
+function calcularScore(objeto, uf) {
+  if (!objeto) return { score: 0, empresa: '', kwsEncontradas: [] };
+  const texto = objeto.toLowerCase();
+  let melhorScore = 0, melhorEmpresa = '', todasKws = [];
+
+  const kwsAtivas = obterKwsAtivas();
+  for (const [empresa, kws] of Object.entries(kwsAtivas)) {
+    if (empresa === 'equiplano' && uf !== 'PR') continue;
+    if (!kws.length) continue;
+    let hits = 0, achadas = [];
+    for (const kw of kws) { if (texto.includes(kw)) { hits++; achadas.push(kw); } }
+    const s = Math.min(100, Math.round((hits / kws.length) * 100 + hits * 8));
+    if (s > melhorScore) { melhorScore = s; melhorEmpresa = empresa; todasKws = achadas; }
+  }
+  const extras = ['software','sistema','plataforma','licença','manutenção','suporte técnico','erp','módulo'];
+  if (melhorScore > 0) { for (const t of extras) { if (texto.includes(t)) melhorScore = Math.min(100, melhorScore + 3); } }
+  return { score: melhorScore, empresa: melhorEmpresa, kwsEncontradas: todasKws };
+}
+
+/* ====================== UTILIDADES ====================== */
+function calcPrazo(dataStr) {
+  if (!dataStr) return { dias: null, label: 'sem data', urgente: false };
+  const diff = Math.ceil((new Date(dataStr) - new Date()) / 86400000);
+  if (diff < 0)  return { dias: diff, label: 'encerrado', urgente: false };
+  if (diff === 0) return { dias: 0,   label: 'hoje!',     urgente: true  };
+  if (diff <= 5)  return { dias: diff, label: `${diff} dia${diff>1?'s':''}`, urgente: true };
+  return { dias: diff, label: `${diff} dias`, urgente: false };
+}
+function formatValor(v) {
+  if (!v) return '—';
+  if (v >= 1e6) return `R$ ${(v/1e6).toFixed(1)}M`;
+  if (v >= 1e3) return `R$ ${Math.round(v/1e3)}k`;
+  return `R$ ${Math.round(v).toLocaleString('pt-BR')}`;
+}
+
+function formatData(dataStr) {
+  if (!dataStr) return 'sem data';
+  try {
+    const d = new Date(dataStr);
+    // dd/mm/aaaa hh:mm — se tiver horário relevante inclui, senão só a data
+    const dia  = String(d.getDate()).padStart(2,'0');
+    const mes  = String(d.getMonth()+1).padStart(2,'0');
+    const ano  = d.getFullYear();
+    const hora = String(d.getHours()).padStart(2,'0');
+    const min  = String(d.getMinutes()).padStart(2,'0');
+    const temHora = d.getHours() !== 0 || d.getMinutes() !== 0;
+    return temHora ? `${dia}/${mes}/${ano} ${hora}:${min}` : `${dia}/${mes}/${ano}`;
+  } catch { return dataStr; }
+}
+
+/* ====================== APIs ====================== */
+async function buscarPNCP(uf) {
+  // Endpoint real confirmado ao vivo — interceptado do proprio portal PNCP
+  // /api/search/?tipos_documento=edital&status=recebendo_proposta&uf=XX&pagina=1&tam_pagina=50
+  const kws = obterKwsAtivas();
+  const todosTermos = Object.values(kws).flat();
+  const termos = todosTermos
+    .sort((a,b) => b.split(' ').length - a.split(' ').length)
+    .slice(0, 3).join(' ');
+
+  const params = new URLSearchParams({
+    tipos_documento: 'edital',
+    status: 'recebendo_proposta',
+    uf: uf,
+    pagina: '1',
+    tam_pagina: '50',
+    ordenacao: '-data'
+  });
+  if (termos) params.set('q', termos);
+
+  const resp = await fetch(`${PNCP_SEARCH}?${params}`, {
+    headers: { Accept: 'application/json' }
+  });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  const data = await resp.json();
+  return data.items || data.data || [];
+}
+
+async function buscarPortalCP() {
+  const url  = `${PCP_BASE}/licitacoes?uf=RS&status=aberta&limite=50`;
+  const resp = await fetch(url, { headers: { Accept: 'application/json' } });
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  const data = await resp.json();
+  return data.data || data.licitacoes || data || [];
+}
+
+/* ====================== NORMALIZAÇÃO ====================== */
+
+/**
+ * Monta o link direto ao edital conforme o portal de origem.
+ *
+ * PNCP: URL pública do edital é:
+ *   https://pncp.gov.br/app/editais/{cnpj}/{ano}/{sequencial}
+ * O campo numeroControlePNCP tem formato: {CNPJ}-{ano}/{sequencial}
+ * Ex: "00394544000185-2025/00042" → cnpj=00394544000185, ano=2025, seq=00042
+ *
+ * linkSistemaOrigem (quando presente) já traz o link direto do portal de origem
+ * (ComprasNet, BLL, BEC etc.) — tem prioridade pois leva ao edital no sistema nativo.
+ *
+ * Fallback final: página de busca do PNCP com o número de controle como termo.
+ */
+function montarLinkPNCP(item) {
+  // 1. Link do sistema de origem (ComprasNet, BLL, BEC-SP, etc.) — prioridade máxima
+  if (item.linkSistemaOrigem && item.linkSistemaOrigem.startsWith('http')) {
+    return item.linkSistemaOrigem;
+  }
+
+  // 2. Montar URL direta do PNCP a partir do numeroControlePNCP
+  // Formato esperado: "CNPJ-ANO/SEQUENCIAL"  ex: "00394544000185-2025/00042"
+  const num = item.numeroControlePNCP || '';
+  if (num) {
+    // tenta extrair cnpj, ano, sequencial
+    const match = num.match(/^(\d+)-(\d{4})\/(\d+)$/);
+    if (match) {
+      const [, cnpj, ano, seq] = match;
+      // URL pública do PNCP para visualização do edital
+      return `https://pncp.gov.br/app/editais/${cnpj}/${ano}/${seq}`;
+    }
+    // Se não casar o padrão, usa busca pelo número de controle
+    return `https://pncp.gov.br/app/editais?q=${encodeURIComponent(num)}`;
+  }
+
+  // 3. Fallback: página de busca geral
+  return 'https://pncp.gov.br/app/editais';
+}
+
+/**
+ * Monta link para o Portal de Compras Públicas (RS / GovernançaBrasil).
+ * URL pública de detalhe: portaldecompraspublicas.com.br/18/compras/{id-licitacao}
+ * O campo "id" ou "numero" do item é usado quando disponível.
+ */
+function montarLinkPCP(item) {
+  if (item.url   && item.url.startsWith('http'))  return item.url;
+  if (item.link  && item.link.startsWith('http')) return item.link;
+  const id = item.id || item.numero || item.codigoLicitacao || '';
+  if (id) return `https://www.portaldecompraspublicas.com.br/18/compras/${id}`;
+  return 'https://www.portaldecompraspublicas.com.br/18/compras';
+}
+
+function normPNCP(item, uf) {
+  // Campos reais confirmados da API /api/search/ do PNCP
+  const obj   = item.description || item.title || '';
+  const orgao = item.orgao_nome || item.unidade_nome || '';
+  const mun   = item.municipio_nome || '';
+  const val   = item.valor_global || 0;
+  const dtAb  = item.data_abertura_proposta || item.data_publicacao_pncp || '';
+  const prazo = calcPrazo(dtAb);
+  const sc    = calcularScore(obj, uf);
+  const num   = item.numero_controle_pncp || '';
+
+  // Link direto confirmado: /app/editais/{cnpj}/{ano}/{sequencial}
+  // item_url vem como "/compras/{cnpj}/{ano}/{seq}" — trocamos "compras" por "editais"
+  let link = 'https://pncp.gov.br/app/editais';
+  if (item.item_url) {
+    // item_url = "/compras/15410665000140/2026/15"
+    const partes = item.item_url.replace('/compras/', '').split('/');
+    if (partes.length === 3) {
+      link = `https://pncp.gov.br/app/editais/${partes[0]}/${partes[1]}/${partes[2]}`;
+    }
+  } else if (item.orgao_cnpj && item.ano && item.numero_sequencial) {
+    link = `https://pncp.gov.br/app/editais/${item.orgao_cnpj}/${item.ano}/${item.numero_sequencial}`;
+  }
+
+  // Portal de origem real (quando disponível no link_sistema_origem)
+  let portalNome = 'PNCP';
+  if (item.link_sistema_origem) {
+    const l = item.link_sistema_origem.toLowerCase();
+    if (l.includes('comprasnet') || l.includes('siasg'))    portalNome = 'ComprasNet';
+    else if (l.includes('bllcompras') || l.includes('bll')) portalNome = 'BLL Compras';
+    else if (l.includes('bec.sp'))                          portalNome = 'BEC-SP';
+    else if (l.includes('licitacoes-e'))                    portalNome = 'Licitações-e';
+  }
+
+  const titulo = obj.length > 130 ? obj.substring(0,130)+'\u2026' : obj;
+  return {
+    id: `pncp-${num || Math.random()}`,
+    titulo, tituloFull: obj,
+    orgao: `${orgao}${mun ? ' \u00b7 ' + mun : ''}`, uf,
+    valor: val, valorFmt: formatValor(val), prazo,
+    portal: portalNome, portalOrigem: portalNome !== 'PNCP' ? portalNome : null,
+    portalTipo: 'pncp', link,
+    score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
+    urgente: prazo.urgente, dataAbertura: dtAb, numeroControle: num
+  };
+}
+
+function normPCP(item) {
+  const obj  = item.objeto || item.descricao || item.titulo || '';
+  const orgao= item.orgao || item.entidade || '';
+  const val  = item.valorEstimado || item.valor || 0;
+  const dtAb = item.dataAbertura || item.dataFim || item.prazo;
+  const prazo= calcPrazo(dtAb);
+  const sc   = calcularScore(obj, 'RS');
+  return {
+    id: `pcp-${item.id || Math.random()}`,
+    titulo: obj.length > 130 ? obj.substring(0,130)+'…' : obj,
+    tituloFull: obj, orgao, uf: 'RS', valor: val,
+    valorFmt: formatValor(val), prazo,
+    portal: 'Portal CP/RS', portalTipo: 'pcp',
+    link: montarLinkPCP(item),
+    score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
+    urgente: prazo.urgente, dataAbertura: dtAb, dataAberturaFmt: formatData(dtAb),
+    numeroControle: item.numero || item.id || ''
+  };
+}
+
+/* ====================== BUSCA PRINCIPAL ====================== */
+async function executarBusca() {
+  const btn   = document.getElementById('btn-buscar');
+  const load  = document.getElementById('loading-bar');
+  const erroB = document.getElementById('erro-bar');
+  const okB   = document.getElementById('sucesso-bar');
+
+  btn.disabled = true; btn.textContent = 'Buscando…';
+  load.classList.remove('hidden'); erroB.style.display = 'none'; okB.style.display = 'none';
+  editaisCarregados = [];
+  const erros = [];
+
+  if (portaisBusca.has('pncp')) {
+    for (const uf of [...estadosAtivos]) {
+      document.getElementById('loading-msg').textContent = `PNCP · ${uf}…`;
+      try {
+        const items = await buscarPNCP(uf);
+        const norm  = items.map(i => normPNCP(i, uf)).filter(e => e.titulo.length > 8);
+        editaisCarregados.push(...norm);
+        atualizarCntEstado(uf, norm.length);
+      } catch(e) {
+        erros.push(`PNCP/${uf}: ${e.message}`);
+        const fb = gerarFallbackPNCP(uf);
+        editaisCarregados.push(...fb);
+        atualizarCntEstado(uf, fb.length);
+      }
+    }
+  }
+
+  if (portaisBusca.has('pcp') && estadosAtivos.has('RS')) {
+    document.getElementById('loading-msg').textContent = 'Portal Compras Públicas/RS…';
+    try {
+      const items = await buscarPortalCP();
+      editaisCarregados.push(...items.map(normPCP).filter(e => e.titulo.length > 8));
+    } catch(e) {
+      erros.push(`PortalCP/RS: ${e.message}`);
+      editaisCarregados.push(...gerarFallbackPCP());
+    }
+  }
+
+  editaisCarregados = editaisCarregados.filter(e => !descartados.includes(e.id));
+  editaisCarregados.sort((a,b) => b.score - a.score);
+
+  atualizarMetricas();
+  renderizarEditais(editaisCarregados);
+
+  load.classList.add('hidden');
+  btn.disabled = false; btn.textContent = '🔍 Buscar agora';
+
+  const agora = new Date().toLocaleString('pt-BR');
+  document.getElementById('last-update').textContent = `Última atualização: ${agora}`;
+  localStorage.setItem('ml_ultima_busca', agora);
+  localStorage.setItem('ml_cache_editais', JSON.stringify(editaisCarregados));
+  localStorage.setItem('ml_cache_ts', Date.now().toString());
+  document.getElementById('badge-fonte').textContent = `${editaisCarregados.length} editais`;
+
+  if (erros.length) { erroB.textContent = `${erros.length} portal(is) com erro (dados de demo ativos). ` + erros.join(' | '); erroB.style.display = 'block'; }
+  if (editaisCarregados.length) { okB.textContent = `${editaisCarregados.length} editais carregados.`; okB.style.display = 'block'; setTimeout(() => okB.style.display='none', 3500); }
+}
+
+/* ====================== RENDERIZAÇÃO ====================== */
+function renderizarEditais(lista) {
+  const c = document.getElementById('editais-list');
+  if (!lista.length) { c.innerHTML = '<div style="text-align:center;padding:32px 0;color:var(--text3);font-size:13px;">Nenhum edital carregado.</div>'; return; }
+
+  c.innerHTML = lista.map((e, i) => {
+    const sc  = e.score >= 70 ? 'score-high' : e.score >= 40 ? 'score-med' : 'score-low';
+    const urg = e.urgente ? ' urgente' : '';
+    const vis = vistos.includes(e.id) ? ' visto' : '';
+    const tagEmp  = e.empresa ? `<span class="tag tag-${e.empresa}">${e.empresa.toUpperCase()}</span>` : '';
+
+    // Tag de portal: mostra o nome real (ComprasNet, BLL, BEC-SP, Portal CP/RS, PNCP)
+    const portalLabel = e.portalOrigem || e.portal;
+    const tagPortClass = e.portalTipo === 'pcp' ? 'tag-pcp' : 'tag-pncp';
+    const tagPort = `<span class="tag ${tagPortClass}">${portalLabel}</span>`;
+
+    const tagKws  = e.kwsEncontradas.slice(0,3).map(k => `<span class="tag tag-kw">${k}</span>`).join('');
+    const tagUrg  = e.urgente ? `<span class="tag tag-urgente">⚡ ${e.prazo.label}</span>` : '';
+
+    return `<div class="edital${urg}${vis}" data-uf="${e.uf}" data-score="${e.score}" data-urgente="${e.urgente?1:0}" data-empresa="${e.empresa}" data-portal="${e.portalTipo}" id="edital-${i}">
+      <div class="edital-top" onclick="analisarEdital(${i})">
+        <div class="edital-titulo">${e.titulo}</div>
+        <span class="score ${sc}">${e.score}%</span>
+      </div>
+      <div class="edital-meta">
+        <span><strong>Portal:</strong> ${portalLabel}</span>
+        <span><strong>Órgão:</strong> ${e.orgao}</span>
+        <span><strong>Valor:</strong> ${e.valorFmt}</span>
+        <span><strong>Prazo:</strong> ${e.prazo.label}</span>
+        ${e.numeroControle ? `<span><strong>Nº:</strong> ${e.numeroControle}</span>` : ''}
+      </div>
+      <div class="edital-actions">
+        <div class="edital-tags"><span class="tag tag-uf">${e.uf}</span>${tagPort}${tagEmp}${tagKws}${tagUrg}</div>
+        <div class="edital-btns">
+          <button class="btn-visto"    onclick="event.stopPropagation();marcarVisto(${i},'${e.id}',this)">✓ Visto</button>
+          <button class="btn-descartar" onclick="event.stopPropagation();descartar(${i},'${e.id}')">✕</button>
+          <a class="btn-link" href="${e.link}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">Abrir edital ↗</a>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  aplicarFiltros();
+}
+
+/* ====================== MÉTRICAS ====================== */
+function atualizarMetricas() {
+  const total   = editaisCarregados.length;
+  const alta    = editaisCarregados.filter(e => e.score >= 70).length;
+  const urg     = editaisCarregados.filter(e => e.urgente).length;
+  const maior   = editaisCarregados.reduce((m, e) => e.valor > m.valor ? e : m, {valor:0,orgao:'—',uf:''});
+  document.getElementById('m-total').textContent    = total;
+  document.getElementById('m-sub-total').textContent= `${[...estadosAtivos].length} estados`;
+  document.getElementById('m-rel').textContent      = alta;
+  document.getElementById('m-urgentes').textContent  = urg;
+  document.getElementById('m-valor').textContent    = formatValor(maior.valor);
+  document.getElementById('m-sub-valor').textContent= maior.orgao ? `${maior.orgao.substring(0,25)} (${maior.uf})` : '—';
+  document.getElementById('badge-urgentes').textContent = `${urg} urgentes`;
+}
+
+function atualizarCntEstado(uf, n) {
+  const el = document.getElementById(`cnt-${uf}`);
+  if (el) { el.textContent = `${n} edital${n!==1?'is':''}`; el.className = `estado-count ${n>=5?'high':n>=2?'med':'low'}`; }
+}
+
+/* ====================== FILTROS ====================== */
+function aplicarFiltros() {
+  const items  = document.querySelectorAll('#editais-list .edital');
+  const busca  = document.getElementById('busca-input').value.toLowerCase().trim();
+  let v = 0;
+  items.forEach(el => {
+    const uf  = el.dataset.uf, sc = parseInt(el.dataset.score), urg = el.dataset.urgente==='1';
+    const emp = el.dataset.empresa||'', port = el.dataset.portal||'';
+    const tit = el.querySelector('.edital-titulo')?.textContent?.toLowerCase()||'';
+    const ufOk= estadosAtivos.has(uf);
+    let fOk   = true;
+    if      (filtroAtual==='alta')    fOk = sc>=70;
+    else if (filtroAtual==='urgente') fOk = urg;
+    else if (['govbr','equiplano','ids','layers'].includes(filtroAtual)) fOk = emp===filtroAtual;
+    else if (['PR','RS','SP','MG','RJ','PE','PA','AP'].includes(filtroAtual)) fOk = uf===filtroAtual;
+    else if (filtroAtual==='pncp')    fOk = port==='pncp';
+    else if (filtroAtual==='pcp')     fOk = port==='pcp';
+    const show = ufOk && fOk && (!busca || tit.includes(busca));
+    el.classList.toggle('hidden', !show);
+    if (show) v++;
+  });
+  document.getElementById('empty-msg').style.display = v===0 ? 'block' : 'none';
+}
+
+function togglePortalBusca(btn, p) {
+  if (portaisBusca.has(p)) { if (portaisBusca.size===1) return; portaisBusca.delete(p); btn.classList.remove('active'); }
+  else { portaisBusca.add(p); btn.classList.add('active'); }
+}
+
+function filtrar(btn, f) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); filtroAtual = f; aplicarFiltros();
+}
+
+function toggleEstado(card) {
+  const uf = card.dataset.uf;
+  if (estadosAtivos.has(uf)) { if (estadosAtivos.size===1) return; estadosAtivos.delete(uf); card.classList.replace('ativo','inativo'); card.querySelector('.estado-dot').className='estado-dot dot-off'; }
+  else { estadosAtivos.add(uf); card.classList.replace('inativo','ativo'); card.querySelector('.estado-dot').className='estado-dot dot-on'; }
+  document.getElementById('badge-estados').textContent = estadosAtivos.size+' estados ativos';
+  aplicarFiltros();
+}
+
+/* ====================== AÇÕES ====================== */
+function marcarVisto(idx, id, btn) {
+  if (vistos.includes(id)) return;
+  vistos.push(id); localStorage.setItem('ml_vistos', JSON.stringify(vistos));
+  document.getElementById(`edital-${idx}`)?.classList.add('visto');
+  btn.textContent='✓ Visto'; btn.style.background='var(--green-bg)'; btn.style.color='var(--green-text)';
+}
+function descartar(idx, id) {
+  descartados.push(id); localStorage.setItem('ml_descartados', JSON.stringify(descartados));
+  const el = document.getElementById(`edital-${idx}`);
+  if (el) { el.style.transition='opacity .3s'; el.style.opacity='0'; setTimeout(()=>el.remove(),300); }
+}
+
+/* ====================== FALLBACK (demo / CORS local) ====================== */
+function gerarFallbackPNCP(uf) {
+  const ad = d => { const n=new Date(); n.setDate(n.getDate()+d); return n.toISOString(); };
+  // Links diretos reais do PNCP: https://pncp.gov.br/app/editais/{cnpj}/{ano}/{seq}
+  // Usando CNPJs reais dos órgãos como exemplo de estrutura correta
+  const base = {
+    PR:[ {objeto:'Contratação de sistema de gestão municipal integrado — contabilidade pública, folha de pagamento, tributário, suprimentos e portal da transparência',orgao:{razaoSocial:'Prefeitura Municipal de Londrina'},unidadeOrgao:{municipioNome:'Londrina'},valorTotalEstimado:840000,dataAberturaPropostas:ad(4),numeroControlePNCP:'75771477000195-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/75771477000195/2025/1'},
+         {objeto:'Sistema de gestão de saúde municipal — prontuário eletrônico PEP, regulação, farmácia básica e vigilância epidemiológica',orgao:{razaoSocial:'CONIMS — Consórcio Intermunicipal de Saúde'},unidadeOrgao:{municipioNome:'Pato Branco'},valorTotalEstimado:960000,dataAberturaPropostas:ad(6),numeroControlePNCP:'03236895000158-2025/00002',linkSistemaOrigem:'https://pncp.gov.br/app/editais/03236895000158/2025/2'},
+         {objeto:'Sistema de controle de frotas municipal com manutenção preventiva e rastreamento GPS',orgao:{razaoSocial:'Prefeitura Municipal de Cascavel'},unidadeOrgao:{municipioNome:'Cascavel'},valorTotalEstimado:290000,dataAberturaPropostas:ad(12),numeroControlePNCP:'76208900000136-2025/00003',linkSistemaOrigem:'https://pncp.gov.br/app/editais/76208900000136/2025/3'},
+         {objeto:'Tramitação eletrônica de processos administrativos — TCE-PR compatível',orgao:{razaoSocial:'Câmara Municipal de Maringá'},unidadeOrgao:{municipioNome:'Maringá'},valorTotalEstimado:420000,dataAberturaPropostas:ad(9),numeroControlePNCP:'76282656000182-2025/00004',linkSistemaOrigem:'https://pncp.gov.br/app/editais/76282656000182/2025/4'} ],
+    RS:[ {objeto:'Sistema integrado de gestão municipal — contabilidade pública, folha de pagamento e planejamento orçamentário',orgao:{razaoSocial:'Prefeitura Municipal de Caxias do Sul'},unidadeOrgao:{municipioNome:'Caxias do Sul'},valorTotalEstimado:720000,dataAberturaPropostas:ad(7),numeroControlePNCP:'88017600000140-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/88017600000140/2025/1'},
+         {objeto:'Plataforma de gestão escolar municipal — matrículas, frequência, notas e comunicação escola-família',orgao:{razaoSocial:'Prefeitura Municipal de Porto Alegre'},unidadeOrgao:{municipioNome:'Porto Alegre'},valorTotalEstimado:380000,dataAberturaPropostas:ad(14),numeroControlePNCP:'92963560000160-2025/00002',linkSistemaOrigem:'https://pncp.gov.br/app/editais/92963560000160/2025/2'} ],
+    SP:[ {objeto:'Sistema informatizado de gestão pública — contabilidade pública PCASP, folha de pagamento, tributário IPTU/ISS e execução orçamentária LRF',orgao:{razaoSocial:'Prefeitura Municipal de Campinas'},unidadeOrgao:{municipioNome:'Campinas'},valorTotalEstimado:1400000,dataAberturaPropostas:ad(3),numeroControlePNCP:'51885pastry000105-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/51885242000105/2025/1'},
+         {objeto:'Plataforma de comunicação escolar digital — aplicativo escola-família, secretaria digital e portal do aluno',orgao:{razaoSocial:'Sec. Educação Ribeirão Preto'},unidadeOrgao:{municipioNome:'Ribeirão Preto'},valorTotalEstimado:420000,dataAberturaPropostas:ad(11),numeroControlePNCP:'66789198000163-2025/00002',linkSistemaOrigem:'https://pncp.gov.br/app/editais/66789198000163/2025/2'},
+         {objeto:'Folha de pagamento, gestão de pessoas e controle de ponto eletrônico para câmara municipal',orgao:{razaoSocial:'Câmara Municipal de Sorocaba'},unidadeOrgao:{municipioNome:'Sorocaba'},valorTotalEstimado:480000,dataAberturaPropostas:ad(7),numeroControlePNCP:'57571275000118-2025/00003',linkSistemaOrigem:'https://pncp.gov.br/app/editais/57571275000118/2025/3'} ],
+    MG:[ {objeto:'Software de contabilidade pública, execução orçamentária PCASP, SICONFI e LRF',orgao:{razaoSocial:'Prefeitura Municipal de Uberlândia'},unidadeOrgao:{municipioNome:'Uberlândia'},valorTotalEstimado:680000,dataAberturaPropostas:ad(5),numeroControlePNCP:'18431312000143-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/18431312000143/2025/1'},
+         {objeto:'Sistema de saúde municipal — prontuário eletrônico PEP, regulação, agendamento e vigilância epidemiológica',orgao:{razaoSocial:'Sec. Saúde Belo Horizonte'},unidadeOrgao:{municipioNome:'Belo Horizonte'},valorTotalEstimado:1900000,dataAberturaPropostas:ad(10),numeroControlePNCP:'18715383000130-2025/00002',linkSistemaOrigem:'https://pncp.gov.br/app/editais/18715383000130/2025/2'} ],
+    RJ:[ {objeto:'Software de arrecadação tributária municipal — IPTU, ISS, ITBI e integração bancária',orgao:{razaoSocial:'Prefeitura Municipal de Niterói'},unidadeOrgao:{municipioNome:'Niterói'},valorTotalEstimado:450000,dataAberturaPropostas:ad(14),numeroControlePNCP:'28920868000155-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/28920868000155/2025/1'} ],
+    PE:[ {objeto:'Plataforma de gestão pública integrada — financeiro, folha, tributário e assistência social',orgao:{razaoSocial:'Prefeitura Municipal de Caruaru'},unidadeOrgao:{municipioNome:'Caruaru'},valorTotalEstimado:310000,dataAberturaPropostas:ad(16),numeroControlePNCP:'11444077000170-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/11444077000170/2025/1'} ],
+    PA:[ {objeto:'Sistema de saúde e assistência social municipal — prontuário eletrônico, CRAS e cadastro único integrado',orgao:{razaoSocial:'Sec. Saúde Belém'},unidadeOrgao:{municipioNome:'Belém'},valorTotalEstimado:1200000,dataAberturaPropostas:ad(17),numeroControlePNCP:'05807256000131-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/05807256000131/2025/1'} ],
+    AP:[ {objeto:'Sistema informatizado de gestão administrativa municipal — módulos financeiro e RH básicos',orgao:{razaoSocial:'Prefeitura Municipal de Macapá'},unidadeOrgao:{municipioNome:'Macapá'},valorTotalEstimado:120000,dataAberturaPropostas:ad(23),numeroControlePNCP:'34194788000100-2025/00001',linkSistemaOrigem:'https://pncp.gov.br/app/editais/34194788000100/2025/1'} ]
+  };
+  return (base[uf]||[]).map(i => normPNCP(i, uf));
+}
+
+function gerarFallbackPCP() {
+  const ad = d => { const n=new Date(); n.setDate(n.getDate()+d); return n.toISOString(); };
+  // URL de detalhe do Portal de Compras Públicas: /18/compras/{id}
+  return [
+    {id:'2025001',objeto:'Contratação de plataforma integrada de gestão municipal — contabilidade pública, folha de pagamento e serviços digitais ao cidadão',orgao:'Prefeitura Municipal de Santa Cruz do Sul · RS',valorEstimado:560000,dataAbertura:ad(5),url:'https://www.portaldecompraspublicas.com.br/18/compras/2025001',numero:'RS-PCP-2025-001'},
+    {id:'2025002',objeto:'Sistema de gestão de saúde — prontuário eletrônico, atenção primária, regulação e farmácia básica para consórcio municipal de saúde',orgao:'Consórcio de Saúde do Vale dos Sinos · RS',valorEstimado:880000,dataAbertura:ad(8),url:'https://www.portaldecompraspublicas.com.br/18/compras/2025002',numero:'RS-PCP-2025-002'},
+    {id:'2025003',objeto:'Plataforma de serviços digitais ao cidadão e portal de transparência governamental para prefeitura',orgao:'Prefeitura Municipal de Passo Fundo · RS',valorEstimado:320000,dataAbertura:ad(15),url:'https://www.portaldecompraspublicas.com.br/18/compras/2025003',numero:'RS-PCP-2025-003'},
+    {id:'2025004',objeto:'Sistema de contabilidade pública, planejamento orçamentário e execução financeira — LRF e PCASP',orgao:'Prefeitura Municipal de Pelotas · RS',valorEstimado:490000,dataAbertura:ad(11),url:'https://www.portaldecompraspublicas.com.br/18/compras/2025004',numero:'RS-PCP-2025-004'},
+    {id:'2025005',objeto:'Solução de gestão escolar municipal — matrículas, frequência, notas, merenda e secretaria digital',orgao:'Prefeitura Municipal de Novo Hamburgo · RS',valorEstimado:270000,dataAbertura:ad(19),url:'https://www.portaldecompraspublicas.com.br/18/compras/2025005',numero:'RS-PCP-2025-005'},
+  ].map(normPCP);
+}
+
+/* ====================== IA ====================== */
+function setOutput(h) { document.getElementById('ai-output').innerHTML = h; }
+
+async function analisarEdital(idx) {
+  if (!apiKey) { setOutput('<span style="color:var(--amber-text)">Insira a API key da Anthropic para análise por IA.</span>'); return; }
+  const e = editaisCarregados[idx]; if (!e) return;
+  setOutput('<span class="ai-loading">Analisando edital…</span>');
+  const prompt = `Você é um analista de licitações público brasileiro.\n\nPerfis:\n${Object.values(PERFIS).join('\n')}\n\nREGRA: Equiplano APENAS PR.\n\nEdital (${e.portal}):\nTítulo: ${e.tituloFull||e.titulo}\nÓrgão: ${e.orgao} (${e.uf}) | Valor: ${e.valorFmt} | Abertura: ${e.prazo.label}\nScore: ${e.score}% | Empresa mapeada: ${e.empresa||'—'} | Keywords: ${e.kwsEncontradas.join(', ')||'nenhuma'}\nLink: ${e.link}\n\nResponda:\n1. FIT: empresa mais aderente e por quê\n2. RISCOS: pontos de atenção\n3. RECOMENDAÇÃO: participar / avaliar / descartar — 1 frase.`;
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const d = await r.json();
+    if (d.error) { setOutput(`<span style="color:var(--amber-text)">Erro: ${d.error.message}</span>`); return; }
+    const txt = d.content?.[0]?.text||'Sem resposta.';
+    setOutput(`<div class="ai-meta">${e.orgao} (${e.uf}) · ${e.valorFmt} · ${e.prazo.label} · ${e.portal}</div>`+txt.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join(''));
+  } catch { setOutput('<span style="color:var(--amber-text)">Erro de conexão.</span>'); }
+}
+
+async function perguntarIA() {
+  const q = document.getElementById('user-q').value.trim();
+  if (!q) return;
+  if (!apiKey) { setOutput('<span style="color:var(--amber-text)">Insira a API key da Anthropic.</span>'); return; }
+  setOutput('<span class="ai-loading">Processando…</span>');
+  const ctx = editaisCarregados.filter((_,i)=>!document.getElementById(`edital-${i}`)?.classList.contains('hidden')).slice(0,20).map((e,i)=>`[${i+1}] ${e.titulo} | ${e.orgao} (${e.uf}) | ${e.valorFmt} | ${e.prazo.label} | score ${e.score}% | ${e.empresa} | ${e.portal}`).join('\n');
+  const prompt = `Inteligência comercial — software gestão pública.\nPerfis: ${Object.values(PERFIS).join(' | ')}\nREGRA: Equiplano APENAS PR.\nEditais: ${ctx||'Nenhum — execute a busca.'}\nPergunta: ${q}\nResposta direta e prática.`;
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const d = await r.json();
+    if (d.error) { setOutput(`<span style="color:var(--amber-text)">Erro: ${d.error.message}</span>`); return; }
+    const txt = d.content?.[0]?.text||'Sem resposta.';
+    setOutput(`<div class="ai-meta">"${q}"</div>`+txt.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join(''));
+    document.getElementById('user-q').value='';
+  } catch { setOutput('<span style="color:var(--amber-text)">Erro de conexão.</span>'); }
+}
+
+/* ====================== INICIALIZAÇÃO ====================== */
+(function init() {
+  // Restaurar keywords salvas (substituindo as padrão se existirem)
+  const kwsSalvas = JSON.parse(localStorage.getItem('ml_kws_todas') || '[]');
+  if (kwsSalvas.length) {
+    ['govbr','equiplano','ids','layers'].forEach(emp => {
+      const w = document.getElementById(`kw-${emp}`); if (w) w.innerHTML = '';
+    });
+    const classMap = {govbr:'kw-blue',equiplano:'kw-purple',ids:'kw-red',layers:'kw-green'};
+    const wrapMap  = {govbr:'kw-govbr',equiplano:'kw-equiplano',ids:'kw-ids',layers:'kw-layers'};
+    kwsSalvas.forEach(({texto, empresa, off}) => {
+      const wrap = document.getElementById(wrapMap[empresa]); if (!wrap) return;
+      const span = document.createElement('span');
+      span.className = `kw ${classMap[empresa]}${off?' off':''}`;
+      span.dataset.empresa = empresa;
+      span.innerHTML = `<span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>${texto}<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span>`;
+      wrap.appendChild(span);
+    });
+  }
+
+  // Restaurar cache de editais (TTL 4h)
+  const ts    = parseInt(localStorage.getItem('ml_cache_ts')||'0');
+  const cache = localStorage.getItem('ml_cache_editais');
+  const ult   = localStorage.getItem('ml_ultima_busca');
+  if (ts && (Date.now()-ts) < 4*3600*1000 && cache) {
+    try {
+      editaisCarregados = JSON.parse(cache).filter(e => !descartados.includes(e.id));
+      renderizarEditais(editaisCarregados);
+      atualizarMetricas();
+      document.getElementById('last-update').textContent = `Cache de: ${ult} (clique em Buscar para atualizar)`;
+      document.getElementById('badge-fonte').textContent = `${editaisCarregados.length} editais (cache)`;
+    } catch { localStorage.removeItem('ml_cache_editais'); }
+  }
+
+  // Filtro de texto em tempo real
+  document.getElementById('busca-input').addEventListener('input', aplicarFiltros);
+
+  // Enter no campo de keyword
+  document.getElementById('kw-in').addEventListener('keydown', e => { if (e.key==='Enter') addKw(); });
+})();
+</script>
+</body>
+</html>
