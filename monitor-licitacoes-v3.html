@@ -613,43 +613,45 @@ function xhrGetLegacy(url) {
 }
 
 async function buscarPNCP(uf) {
-  // API pública do PNCP — busca por grupos de keywords por empresa
-  // Garante resultados relevantes filtrando pelo objeto da licitação
-  const kws = obterKwsAtivas();
+  // API pública do PNCP — faz múltiplas buscas por termos específicos
+  // e agrega os resultados, garantindo cobertura de todos os nichos
+  // Estratégia: 3 queries separadas, cada uma focada num nicho diferente
 
-  // Termos estratégicos por grupo — palavras curtas que aparecem nos objetos reais
-  const termosBase = [
-    'sistema gestao municipal',
-    'software gestao publica',
-    'contabilidade publica',
-    'prontuario eletronico',
-    'gestao escolar',
-    'folha pagamento',
-    'plataforma educacional'
+  const queries = [
+    'sistema gestao municipal software',     // GOVBR / Equiplano
+    'prontuario eletronico saude publica',   // IDS saúde
+    'contabilidade publica folha pagamento'  // GOVBR financeiro
   ];
 
-  // Adiciona keywords ativas do usuário (até 3 das mais específicas)
-  const todosTermos = Object.values(kws).flat();
-  const kwsUsuario = todosTermos
-    .sort((a,b) => b.split(' ').length - a.split(' ').length)
-    .slice(0, 3);
+  const todosItens = [];
+  const idsVistos = new Set();
 
-  // Une termos base com keywords do usuário, pega os 4 mais relevantes
-  const termosFinais = [...new Set([...kwsUsuario, ...termosBase])].slice(0, 4);
-  const queryStr = termosFinais.join(' ');
+  for (const q of queries) {
+    const params = new URLSearchParams({
+      tipos_documento: 'edital',
+      status: 'recebendo_proposta',
+      uf: uf,
+      pagina: '1',
+      tam_pagina: '20',
+      ordenacao: '-data',
+      q: q
+    });
+    try {
+      const data = await xhrGet(`${PNCP_SEARCH}?${params}`);
+      const itens = data.items || data.data || [];
+      for (const item of itens) {
+        const id = item.numero_controle_pncp || item.item_url || Math.random();
+        if (!idsVistos.has(id)) {
+          idsVistos.add(id);
+          todosItens.push(item);
+        }
+      }
+    } catch(e) {
+      // ignora erro de query individual, tenta a próxima
+    }
+  }
 
-  const params = new URLSearchParams({
-    tipos_documento: 'edital',
-    status: 'recebendo_proposta',
-    uf: uf,
-    pagina: '1',
-    tam_pagina: '50',
-    ordenacao: '-data',
-    q: queryStr
-  });
-
-  const data = await xhrGet(`${PNCP_SEARCH}?${params}`);
-  return data.items || data.data || [];
+  return todosItens;
 }
 
 async function buscarPortalCP() {
