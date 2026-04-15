@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://api.anthropic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';">
 <title>Monitor de Licitações — GOVBR · Equiplano · IDS · Layers</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -596,13 +597,30 @@ function xhrGet(url) {
 }
 
 async function buscarPNCP(uf) {
-  // API pública do PNCP confirmada ao vivo
-  // Funciona via XHR (file:// e http://) — fetch bloqueado em file://
+  // API pública do PNCP — busca por grupos de keywords por empresa
+  // Garante resultados relevantes filtrando pelo objeto da licitação
   const kws = obterKwsAtivas();
+
+  // Termos estratégicos por grupo — palavras curtas que aparecem nos objetos reais
+  const termosBase = [
+    'sistema gestao municipal',
+    'software gestao publica',
+    'contabilidade publica',
+    'prontuario eletronico',
+    'gestao escolar',
+    'folha pagamento',
+    'plataforma educacional'
+  ];
+
+  // Adiciona keywords ativas do usuário (até 3 das mais específicas)
   const todosTermos = Object.values(kws).flat();
-  const termos = todosTermos
+  const kwsUsuario = todosTermos
     .sort((a,b) => b.split(' ').length - a.split(' ').length)
-    .slice(0, 3).join(' ');
+    .slice(0, 3);
+
+  // Une termos base com keywords do usuário, pega os 4 mais relevantes
+  const termosFinais = [...new Set([...kwsUsuario, ...termosBase])].slice(0, 4);
+  const queryStr = termosFinais.join(' ');
 
   const params = new URLSearchParams({
     tipos_documento: 'edital',
@@ -610,9 +628,9 @@ async function buscarPNCP(uf) {
     uf: uf,
     pagina: '1',
     tam_pagina: '50',
-    ordenacao: '-data'
+    ordenacao: '-data',
+    q: queryStr
   });
-  if (termos) params.set('q', termos);
 
   const data = await xhrGet(`${PNCP_SEARCH}?${params}`);
   return data.items || data.data || [];
@@ -791,9 +809,10 @@ async function executarBusca() {
         atualizarCntEstado(uf, norm.length);
       } catch(e) {
         const msg = e.message || '';
-        // "Failed to fetch" em file:// é esperado — usar demo silenciosamente
-        const ehFilePath = window.location.protocol === 'file:';
-        if (!ehFilePath) erros.push(`PNCP/${uf}: ${msg}`);
+        // Não empilhar erros em file:// (esperado) nem em SharePoint sem config
+        const ehFilePath   = window.location.protocol === 'file:';
+        const ehSharePoint = window.location.hostname.includes('sharepoint.com');
+        if (!ehFilePath && !ehSharePoint) erros.push(`PNCP/${uf}: ${msg}`);
         const fb = gerarFallbackPNCP(uf);
         editaisCarregados.push(...fb);
         atualizarCntEstado(uf, fb.length);
@@ -807,8 +826,9 @@ async function executarBusca() {
       const items = await buscarPortalCP();
       editaisCarregados.push(...items.map(normPCP).filter(e => e.titulo.length > 8));
     } catch(e) {
-      const ehFilePath = window.location.protocol === 'file:';
-      if (!ehFilePath) erros.push(`PortalCP/RS: ${e.message}`);
+      const ehFilePath   = window.location.protocol === 'file:';
+      const ehSharePoint = window.location.hostname.includes('sharepoint.com');
+      if (!ehFilePath && !ehSharePoint) erros.push(`PortalCP/RS: ${e.message}`);
       editaisCarregados.push(...gerarFallbackPCP());
     }
   }
@@ -829,9 +849,15 @@ async function executarBusca() {
   localStorage.setItem('ml_cache_ts', Date.now().toString());
   document.getElementById('badge-fonte').textContent = `${editaisCarregados.length} editais`;
 
-  const ehFilePath = window.location.protocol === 'file:';
-  if (ehFilePath && erros.length === 0) {
-    erroB.textContent = '⚠️ Arquivo aberto localmente (file://) — dados de demonstração ativos. Para busca real, sirva via servidor: python -m http.server 8080';
+  const ehFilePath  = window.location.protocol === 'file:';
+  const ehSharePoint = window.location.hostname.includes('sharepoint.com');
+  const ehLocal      = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+  if (ehFilePath) {
+    erroB.textContent = '⚠️ Arquivo aberto localmente (file://) — dados de demonstração. Opções: (1) python -m http.server 8080 e abrir localhost:8080 (2) Subir para SharePoint ou GitHub Pages';
+    erroB.style.display = 'block';
+  } else if (ehSharePoint && erros.length > 0) {
+    erroB.textContent = '⚠️ SharePoint detectado — se o CSP bloquear, habilite "Permitir conteúdo personalizado" na biblioteca ou use GitHub Pages. Erros: ' + erros.join(' | ');
     erroB.style.display = 'block';
   } else if (erros.length) {
     erroB.textContent = `${erros.length} portal(is) com erro (dados de demo ativos). ` + erros.join(' | ');
