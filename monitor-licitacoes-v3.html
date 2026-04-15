@@ -612,27 +612,41 @@ function xhrGetLegacy(url) {
   });
 }
 
-async function buscarPNCP(uf) {
-  // API pública do PNCP — faz múltiplas buscas por termos específicos
-  // e agrega os resultados, garantindo cobertura de todos os nichos
-  // Estratégia: 3 queries separadas, cada uma focada num nicho diferente
+// Cache global das buscas PNCP para evitar chamadas repetidas por UF
+let _pncpCache = null;
+let _pncpCacheTs = 0;
 
+async function buscarPNCP(uf) {
+  // A API /api/search/ com q= ignora o filtro uf — retorna resultados globais
+  // Estratégia: buscar UMA VEZ por todas as UFs ativas e filtrar localmente
+  // Cache de 5 minutos para evitar repetição durante a mesma sessão de busca
+
+  const agora = Date.now();
+  const cincoMin = 5 * 60 * 1000;
+
+  // Se cache válido, filtrar localmente pelo UF
+  if (_pncpCache && (agora - _pncpCacheTs) < cincoMin) {
+    return _pncpCache.filter(i => (i.uf || '') === uf);
+  }
+
+  // Primeira chamada: buscar tudo e popular cache
   const queries = [
-    'sistema gestao municipal software',     // GOVBR / Equiplano
-    'prontuario eletronico saude publica',   // IDS saúde
-    'contabilidade publica folha pagamento'  // GOVBR financeiro
+    { q: 'sistema gestao municipal software',    tam: 50 },
+    { q: 'prontuario eletronico saude publica',  tam: 50 },
+    { q: 'contabilidade publica folha pagamento',tam: 50 },
+    { q: 'gestao escolar secretaria digital',    tam: 30 },
+    { q: 'licenca software prefeitura municipal',tam: 30 }
   ];
 
   const todosItens = [];
   const idsVistos = new Set();
 
-  for (const q of queries) {
+  for (const { q, tam } of queries) {
     const params = new URLSearchParams({
       tipos_documento: 'edital',
       status: 'recebendo_proposta',
-      uf: uf,
       pagina: '1',
-      tam_pagina: '20',
+      tam_pagina: String(tam),
       ordenacao: '-data',
       q: q
     });
@@ -640,18 +654,22 @@ async function buscarPNCP(uf) {
       const data = await xhrGet(`${PNCP_SEARCH}?${params}`);
       const itens = data.items || data.data || [];
       for (const item of itens) {
-        const id = item.numero_controle_pncp || item.item_url || Math.random();
-        if (!idsVistos.has(id)) {
+        const id = item.numero_controle_pncp || item.id;
+        if (id && !idsVistos.has(id)) {
           idsVistos.add(id);
           todosItens.push(item);
         }
       }
     } catch(e) {
-      // ignora erro de query individual, tenta a próxima
+      // ignora erro de query individual
     }
   }
 
-  return todosItens;
+  _pncpCache = todosItens;
+  _pncpCacheTs = agora;
+
+  // Retornar apenas os do UF solicitado
+  return todosItens.filter(i => (i.uf || '') === uf);
 }
 
 async function buscarPortalCP() {
@@ -817,17 +835,26 @@ async function executarBusca() {
   editaisCarregados = [];
   const erros = [];
 
+  // Deduplicador global — evita o mesmo edital aparecer para múltiplas UFs
+  const idsGlobais = new Set();
+
   if (portaisBusca.has('pncp')) {
     for (const uf of [...estadosAtivos]) {
       document.getElementById('loading-msg').textContent = `PNCP · ${uf}…`;
       try {
         const items = await buscarPNCP(uf);
-        const norm  = items.map(i => normPNCP(i, uf)).filter(e => e.titulo.length > 8);
-        editaisCarregados.push(...norm);
-        atualizarCntEstado(uf, norm.length);
+        const novos = [];
+        for (const item of items) {
+          const e = normPNCP(item, uf);
+          if (e.titulo.length > 8 && !idsGlobais.has(e.link)) {
+            idsGlobais.add(e.link);
+            novos.push(e);
+          }
+        }
+        editaisCarregados.push(...novos);
+        atualizarCntEstado(uf, novos.length);
       } catch(e) {
         const msg = e.message || '';
-        // Só reportar erro se for falha real (não ambiente local/iframe)
         const ehHttps = window.location.protocol === 'https:';
         const ehLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         if (ehHttps && !ehLocalhost) erros.push(`PNCP/${uf}: ${msg}`);
@@ -838,16 +865,21 @@ async function executarBusca() {
     }
   }
 
+  // Portal de Compras Públicas RS — API externa sem CORS público
+  // Tentativa de busca: se falhar, não exibe fallback de demonstração
+  // (editais RS já cobertos pelo PNCP acima)
   if (portaisBusca.has('pcp') && estadosAtivos.has('RS')) {
     document.getElementById('loading-msg').textContent = 'Portal Compras Públicas/RS…';
     try {
       const items = await buscarPortalCP();
-      editaisCarregados.push(...items.map(normPCP).filter(e => e.titulo.length > 8));
+      const novos = items
+        .map(normPCP)
+        .filter(e => e.titulo.length > 8 && !idsGlobais.has(e.link));
+      novos.forEach(e => idsGlobais.add(e.link));
+      editaisCarregados.push(...novos);
     } catch(e) {
-      const ehHttps = window.location.protocol === 'https:';
-      const ehLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      if (ehHttps && !ehLocalhost) erros.push(`PortalCP/RS: ${e.message}`);
-      editaisCarregados.push(...gerarFallbackPCP());
+      // Portal CP/RS sem CORS — não exibe erro nem dados falsos
+      // RS já coberto pelo PNCP
     }
   }
 
