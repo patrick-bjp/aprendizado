@@ -574,9 +574,25 @@ function formatData(dataStr) {
 
 /* ====================== APIs ====================== */
 
-// Wrapper XHR que funciona tanto em file:// quanto em http://
-// fetch() falha em file:// por política de CORS/same-origin do browser
+// Wrapper de requisição HTTP — tenta fetch() primeiro, cai no XHR como fallback
+// Funciona em https://, SharePoint, GitHub Pages e localhost
 function xhrGet(url) {
+  // Tenta fetch moderno primeiro
+  if (typeof fetch === 'function' && window.location.protocol !== 'file:') {
+    return fetch(url, { headers: { Accept: 'application/json' }, mode: 'cors' })
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .catch(() => {
+        // Fallback para XHR se fetch falhar (SharePoint CSP, iframe, etc.)
+        return xhrGetLegacy(url);
+      });
+  }
+  return xhrGetLegacy(url);
+}
+
+function xhrGetLegacy(url) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
@@ -590,7 +606,7 @@ function xhrGet(url) {
         reject(new Error('HTTP ' + xhr.status));
       }
     };
-    xhr.onerror   = () => reject(new Error('Failed to fetch — verifique conexão'));
+    xhr.onerror   = () => reject(new Error('Falha de rede — verifique conexão'));
     xhr.ontimeout = () => reject(new Error('Timeout 15s'));
     xhr.send();
   });
@@ -809,10 +825,10 @@ async function executarBusca() {
         atualizarCntEstado(uf, norm.length);
       } catch(e) {
         const msg = e.message || '';
-        // Não empilhar erros em file:// (esperado) nem em SharePoint sem config
-        const ehFilePath   = window.location.protocol === 'file:';
-        const ehSharePoint = window.location.hostname.includes('sharepoint.com');
-        if (!ehFilePath && !ehSharePoint) erros.push(`PNCP/${uf}: ${msg}`);
+        // Só reportar erro se for falha real (não ambiente local/iframe)
+        const ehHttps = window.location.protocol === 'https:';
+        const ehLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        if (ehHttps && !ehLocalhost) erros.push(`PNCP/${uf}: ${msg}`);
         const fb = gerarFallbackPNCP(uf);
         editaisCarregados.push(...fb);
         atualizarCntEstado(uf, fb.length);
@@ -826,9 +842,9 @@ async function executarBusca() {
       const items = await buscarPortalCP();
       editaisCarregados.push(...items.map(normPCP).filter(e => e.titulo.length > 8));
     } catch(e) {
-      const ehFilePath   = window.location.protocol === 'file:';
-      const ehSharePoint = window.location.hostname.includes('sharepoint.com');
-      if (!ehFilePath && !ehSharePoint) erros.push(`PortalCP/RS: ${e.message}`);
+      const ehHttps = window.location.protocol === 'https:';
+      const ehLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      if (ehHttps && !ehLocalhost) erros.push(`PortalCP/RS: ${e.message}`);
       editaisCarregados.push(...gerarFallbackPCP());
     }
   }
@@ -849,18 +865,9 @@ async function executarBusca() {
   localStorage.setItem('ml_cache_ts', Date.now().toString());
   document.getElementById('badge-fonte').textContent = `${editaisCarregados.length} editais`;
 
-  const ehFilePath  = window.location.protocol === 'file:';
-  const ehSharePoint = window.location.hostname.includes('sharepoint.com');
-  const ehLocal      = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-
-  if (ehFilePath) {
-    erroB.textContent = '⚠️ Arquivo aberto localmente (file://) — dados de demonstração. Opções: (1) python -m http.server 8080 e abrir localhost:8080 (2) Subir para SharePoint ou GitHub Pages';
-    erroB.style.display = 'block';
-  } else if (ehSharePoint && erros.length > 0) {
-    erroB.textContent = '⚠️ SharePoint detectado — se o CSP bloquear, habilite "Permitir conteúdo personalizado" na biblioteca ou use GitHub Pages. Erros: ' + erros.join(' | ');
-    erroB.style.display = 'block';
-  } else if (erros.length) {
-    erroB.textContent = `${erros.length} portal(is) com erro (dados de demo ativos). ` + erros.join(' | ');
+  // Mostrar erros somente se forem falhas reais de rede (não ambiente local)
+  if (erros.length) {
+    erroB.textContent = `⚠️ ${erros.length} portal(is) com instabilidade — exibindo dados de demonstração para esses portais. ` + erros.join(' | ');
     erroB.style.display = 'block';
   }
   if (editaisCarregados.length) { okB.textContent = `${editaisCarregados.length} editais carregados.`; okB.style.display = 'block'; setTimeout(() => okB.style.display='none', 3500); }
