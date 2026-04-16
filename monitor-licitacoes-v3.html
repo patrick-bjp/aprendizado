@@ -127,6 +127,22 @@
   .btn-buscar:disabled { opacity: .5; cursor: not-allowed; }
   .portais-sel { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 
+  /* Filtro Município */
+  .muni-filtro { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 8px; padding: 12px 14px; background: var(--bg2); border: 0.5px solid var(--border); border-radius: var(--radius); }
+  .muni-filtro-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .05em; width: 100%; margin-bottom: 2px; }
+  .muni-select { font-size: 12px; padding: 6px 10px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: var(--font); outline: none; cursor: pointer; min-width: 80px; }
+  .muni-select:focus { border-color: var(--blue-text); }
+  .muni-input { flex: 1; min-width: 160px; font-size: 13px; padding: 6px 11px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: var(--font); outline: none; }
+  .muni-input:focus { border-color: var(--blue-text); }
+  .muni-input::placeholder { color: var(--text3); }
+  .btn-muni-buscar { font-size: 12px; padding: 6px 14px; border-radius: var(--radius); border: 0.5px solid var(--blue-text); background: var(--blue-bg); color: var(--blue-text); cursor: pointer; font-family: var(--font); white-space: nowrap; font-weight: 500; }
+  .btn-muni-buscar:hover { opacity: .85; }
+  .btn-muni-buscar:disabled { opacity: .5; cursor: not-allowed; }
+  .btn-muni-limpar { font-size: 12px; padding: 6px 12px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: transparent; color: var(--text3); cursor: pointer; font-family: var(--font); }
+  .btn-muni-limpar:hover { color: var(--red-text); border-color: var(--red-text); }
+  .muni-ativa { background: var(--amber-bg) !important; border-color: var(--amber-text) !important; }
+  .muni-badge { font-size: 11px; padding: 2px 8px; border-radius: 100px; background: var(--amber-bg); color: var(--amber-text); font-weight: 500; }
+
   /* Loading / status */
   .loading-bar { padding: 10px 14px; background: var(--blue-bg); border-radius: var(--radius); font-size: 12px; color: var(--blue-text); display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
   .loading-bar.hidden { display: none; }
@@ -370,6 +386,28 @@
     <button class="filter-btn active" id="btn-pncp" onclick="togglePortalBusca(this,'pncp')">PNCP (todos os estados)</button>
     <button class="filter-btn active" id="btn-pcp"  onclick="togglePortalBusca(this,'pcp')">Portal Compras Públicas (RS)</button>
   </div>
+
+  <!-- Filtro por UF + Município -->
+  <div class="muni-filtro" id="muni-filtro">
+    <div class="muni-filtro-label">🔎 Busca por município — qualquer processo publicado nos portais selecionados</div>
+    <select class="muni-select" id="muni-uf-sel" onchange="onMuniUFChange()">
+      <option value="">UF...</option>
+      <option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option>
+      <option value="AP">AP</option><option value="BA">BA</option><option value="CE">CE</option>
+      <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
+      <option value="MA">MA</option><option value="MG">MG</option><option value="MS">MS</option>
+      <option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option>
+      <option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option>
+      <option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option>
+      <option value="RR">RR</option><option value="RS" selected>RS</option><option value="SC">SC</option>
+      <option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option>
+    </select>
+    <input class="muni-input" type="text" id="muni-nome-input"
+      placeholder="Nome do município (ex: Arvorezinha)..."
+      onkeydown="if(event.key==='Enter') buscarPorMunicipio()">
+    <button class="btn-muni-buscar" id="btn-muni-buscar" onclick="buscarPorMunicipio()">📍 Buscar município</button>
+    <button class="btn-muni-limpar" id="btn-muni-limpar" onclick="limparFiltroPorMunicipio()" style="display:none">✕ Limpar</button>
+  </div>
   <div class="loading-bar hidden" id="loading-bar"><div class="spinner"></div><span id="loading-msg">Buscando...</span></div>
   <div class="erro-bar"    id="erro-bar"></div>
   <div class="sucesso-bar" id="sucesso-bar"></div>
@@ -437,6 +475,11 @@ let apiKey        = localStorage.getItem('ml_api_key') || '';
 let editaisCarregados = [];
 let descartados   = JSON.parse(localStorage.getItem('ml_descartados') || '[]');
 let vistos        = JSON.parse(localStorage.getItem('ml_vistos') || '[]');
+
+// Estado do filtro por município
+let modoMunicipio = false;   // true quando busca municipal está ativa
+let muniUFAtiva   = '';
+let muniNomeAtivo = '';
 
 if (apiKey) { document.getElementById('api-key-input').value = apiKey; document.getElementById('api-notice').style.display = 'none'; }
 
@@ -906,6 +949,132 @@ function normPCP(item) {
     urgente: prazo.urgente, dataAbertura: dtAb, dataAberturaFmt: formatData(dtAb),
     numeroControle: item.numero || item.id || ''
   };
+}
+
+/* ====================== BUSCA POR MUNICÍPIO ====================== */
+
+function onMuniUFChange() {
+  // Pré-selecionar UF no seletor de estados ao escolher no filtro município
+  const uf = document.getElementById('muni-uf-sel').value;
+  document.getElementById('muni-nome-input').focus();
+}
+
+async function buscarPorMunicipio() {
+  const uf   = document.getElementById('muni-uf-sel').value.trim();
+  const nome = document.getElementById('muni-nome-input').value.trim();
+
+  if (!nome) {
+    document.getElementById('muni-nome-input').focus();
+    return;
+  }
+
+  // Ativar modo município
+  modoMunicipio = true;
+  muniUFAtiva   = uf;
+  muniNomeAtivo = nome;
+
+  // Visual: destacar painel e mostrar botão limpar
+  document.getElementById('muni-filtro').classList.add('muni-ativa');
+  document.getElementById('btn-muni-limpar').style.display = 'inline-block';
+  document.getElementById('btn-muni-buscar').disabled = true;
+  document.getElementById('btn-muni-buscar').textContent = 'Buscando…';
+
+  const btn   = document.getElementById('btn-buscar');
+  const load  = document.getElementById('loading-bar');
+  const erroB = document.getElementById('erro-bar');
+  const okB   = document.getElementById('sucesso-bar');
+
+  load.classList.remove('hidden');
+  erroB.style.display = 'none';
+  okB.style.display   = 'none';
+  editaisCarregados   = [];
+
+  try {
+    // Buscar na API do PNCP usando nome do município como query
+    // A API retorna resultados onde municipio_nome bate com a query
+    const nomeEncoded = encodeURIComponent(nome.toLowerCase());
+    const params = new URLSearchParams({
+      tipos_documento: 'edital',
+      status: 'recebendo_proposta',
+      pagina: '1',
+      tam_pagina: '50',
+      ordenacao: '-data',
+      q: nome
+    });
+    if (uf) params.set('uf', uf);
+
+    const data  = await xhrGet(`${PNCP_SEARCH}?${params}`);
+    const itens = data.items || data.data || [];
+
+    // Filtrar localmente pelo nome do município (case-insensitive, acentos tolerados)
+    const nomeLower = nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    const filtrados = itens.filter(i => {
+      const mun = (i.municipio_nome || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+      return mun.includes(nomeLower);
+    });
+
+    // Normalizar — sem filtro de score (mostra TODOS os processos do município)
+    for (const item of filtrados) {
+      const e = normPNCP(item, item.uf || uf);
+      if (e) {
+        // No modo município, forçar score mínimo para garantir exibição
+        e.score = Math.max(e.score, 1);
+        editaisCarregados.push(e);
+      }
+    }
+
+    // Deduplica por link
+    const vistos_links = new Set();
+    editaisCarregados = editaisCarregados.filter(e => {
+      if (vistos_links.has(e.link)) return false;
+      vistos_links.add(e.link);
+      return true;
+    });
+
+  } catch(err) {
+    erroB.textContent = `Erro na busca por município: ${err.message}`;
+    erroB.style.display = 'block';
+  }
+
+  // Atualizar badge e métricas
+  const muniLabel = uf ? `${nome}/${uf}` : nome;
+  document.getElementById('badge-fonte').innerHTML =
+    `<span class="muni-badge">📍 ${muniLabel}</span> ${editaisCarregados.length} editais`;
+
+  atualizarMetricas();
+  renderizarEditais(editaisCarregados);
+
+  load.classList.add('hidden');
+  document.getElementById('btn-muni-buscar').disabled = false;
+  document.getElementById('btn-muni-buscar').textContent = '📍 Buscar município';
+
+  const agora = new Date().toLocaleString('pt-BR');
+  document.getElementById('last-update').textContent = `Busca por município "${muniLabel}": ${agora}`;
+
+  if (editaisCarregados.length > 0) {
+    okB.textContent = `${editaisCarregados.length} editais encontrados em ${muniLabel}.`;
+    okB.style.display = 'block';
+    setTimeout(() => okB.style.display = 'none', 4000);
+  } else {
+    erroB.textContent = `Nenhum edital encontrado para "${nome}"${uf ? ' em '+uf : ''} com processos abertos.`;
+    erroB.style.display = 'block';
+  }
+}
+
+function limparFiltroPorMunicipio() {
+  modoMunicipio = false;
+  muniUFAtiva   = '';
+  muniNomeAtivo = '';
+  document.getElementById('muni-filtro').classList.remove('muni-ativa');
+  document.getElementById('btn-muni-limpar').style.display = 'none';
+  document.getElementById('muni-nome-input').value = '';
+  document.getElementById('badge-fonte').textContent = 'Aguardando busca';
+  editaisCarregados = [];
+  renderizarEditais([]);
+  atualizarMetricas();
+  document.getElementById('last-update').textContent = '';
+  document.getElementById('erro-bar').style.display = 'none';
+  document.getElementById('sucesso-bar').style.display = 'none';
 }
 
 /* ====================== BUSCA PRINCIPAL ====================== */
