@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://api.anthropic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';">
-<title>Monitor de Licitações — GOVBR · Equiplano · IDS · Layers</title>
+<title>Monitor de Licitações — GovernançaBrasil · Equiplano · IDS · Layers</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -229,7 +229,7 @@
     <div class="logo">ML</div>
     <div>
       <div class="header-title">Monitor de Licitações</div>
-      <div class="header-sub">GOVBR · Equiplano (PR) · IDS · Layers — PNCP + Portal Compras Públicas/RS</div>
+      <div class="header-sub">GovernançaBrasil · Equiplano (PR) · IDS · Layers — PNCP + Portal Compras Públicas</div>
     </div>
   </div>
   <div class="badges">
@@ -307,7 +307,7 @@
   <div class="section-title">Palavras-chave monitoradas</div>
 
   <div class="kw-group">
-    <div class="kw-group-label">GOVBR — nacional</div>
+    <div class="kw-group-label">GovernançaBrasil — nacional</div>
     <div class="kw-wrap" id="kw-govbr">
       <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>gestão pública integrada<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
       <span class="kw kw-blue" data-empresa="govbr"><span class="kw-toggle" onclick="toggleKw(this.parentNode)">◉</span>contabilidade pública<span class="kw-remove" onclick="removerKw(this.parentNode)" title="Remover">✕</span></span>
@@ -362,7 +362,7 @@
     <div class="kw-add-row">
       <input id="kw-in" type="text" placeholder="Ex: pregão eletrônico software, ERP municipal...">
       <select id="kw-empresa">
-        <option value="govbr">GOVBR</option>
+        <option value="govbr">GovernançaBrasil</option>
         <option value="equiplano">Equiplano (somente PR)</option>
         <option value="ids">IDS</option>
         <option value="layers">Layers</option>
@@ -421,7 +421,7 @@
     <button class="filter-btn active" onclick="filtrar(this,'todos')">Todos</button>
     <button class="filter-btn" onclick="filtrar(this,'alta')">Alta relevância</button>
     <button class="filter-btn" onclick="filtrar(this,'urgente')">Urgentes (&lt;5 dias)</button>
-    <button class="filter-btn" onclick="filtrar(this,'govbr')">GOVBR</button>
+    <button class="filter-btn" onclick="filtrar(this,'govbr')">GovernançaBrasil</button>
     <button class="filter-btn" onclick="filtrar(this,'equiplano')">Equiplano</button>
     <button class="filter-btn" onclick="filtrar(this,'ids')">IDS</button>
     <button class="filter-btn" onclick="filtrar(this,'layers')">Layers</button>
@@ -447,12 +447,12 @@
   <div class="ai-output" id="ai-output">Busque editais e clique em um para análise automática de fit, riscos e recomendação — ou faça uma pergunta livre abaixo.</div>
   <div class="divider"></div>
   <div class="ai-input-row">
-    <textarea id="user-q" placeholder="Ex: Quais são mais estratégicos para o GOVBR no RS? / O IDS tem cobertura para consórcios de saúde nesta lista?"></textarea>
+    <textarea id="user-q" placeholder="Ex: Quais são mais estratégicos para o GovernançaBrasil no RS? / O IDS tem cobertura para consórcios de saúde nesta lista?"></textarea>
     <button class="btn-ask" onclick="perguntarIA()">Perguntar ↗</button>
   </div>
 </div>
 
-<div class="footer">Monitor de Licitações · GOVBR · Equiplano (PR) · IDS · Layers · Volaris Group · dados via PNCP + Portal Compras Públicas/RS</div>
+<div class="footer">Monitor de Licitações · GovernançaBrasil · Equiplano (PR) · IDS · Layers · Volaris Group · dados via PNCP + Portal Compras Públicas</div>
 </div>
 
 <script>
@@ -462,7 +462,7 @@ const PNCP_DETALHE = 'https://pncp.gov.br/app/editais';
 const PCP_BASE  = 'https://www.portaldecompraspublicas.com.br/api/v2';
 
 const PERFIS = {
-  govbr:     "GOVBR (Governança Brasil): plataforma de governança municipal nacional com 24 módulos — finanças, contabilidade pública, folha/RH, receitas/tributário, suprimentos/licitações, serviços digitais ao cidadão, assistência social, saúde, educação, planejamento/orçamento, transparência. Presente em 13 estados, 700+ prefeituras.",
+  govbr:     "GovernançaBrasil: plataforma de governança municipal nacional com 24 módulos — finanças, contabilidade pública, folha/RH, receitas/tributário, suprimentos/licitações, serviços digitais ao cidadão, assistência social, saúde, educação, planejamento/orçamento, transparência. Presente em 13 estados, 700+ prefeituras.",
   equiplano: "Equiplano: gestão municipal EXCLUSIVAMENTE no estado do Paraná. Módulos: contabilidade pública, gestão tributária, RH/folha, licitações e compras, controle de frotas, tramitação de processos, portal da transparência, EServiços 156. TCE-PR. NUNCA fora do Paraná.",
   ids:       "IDS Software: Saúde (prontuário PEP+IA, regulação, atenção primária, farmácia básica, consórcios intermunicipais — líder PR), Educação (gestão escolar municipal), Assistência Social (CRAS, CREAS, SUAS), IDS Cidadão. Atua nacionalmente.",
   layers:    "Layers Education: SuperApp educacional — comunicação escola-família, notas, frequência, matrícula digital, secretaria digital, 7.600+ escolas."
@@ -584,20 +584,20 @@ function calcularScore(objeto, uf) {
       'folha pagamento','orcamento','planejamento orcamentario','pcasp','lrf','siafic',
       'tributario','iptu','iss','itbi','arrecadacao','patrimonio','almoxarifado',
       'compras','licitacoes','transparencia','servicos digitais','cidadao',
-      'prefeitura','municipio','secretaria','prontu'
+      'prefeitura','municipio','secretaria','prontu','solucao informatizada'
     ],
     equiplano: [
       'gestao tributaria','tce-pr','tribunal de contas','frotas','frota municipal',
-      'tramitacao','processo administrativo','portal transparencia'
+      'tramitacao','processo administrativo','portal transparencia','solucao informatizada'
     ],
     ids: [
       'saude','prontuario','pep','regulacao','farmacia','vigilancia epidemiologica',
       'atencao primaria','cras','creas','suas','assistencia social','consorcio saude',
-      'educacao','escola','matricula','frequencia'
+      'educacao','escola','matricula','frequencia','solucao informatizada'
     ],
     layers: [
       'comunicacao escolar','escola familia','aplicativo escola','secretaria escolar',
-      'plataforma educacional','portal aluno','matricula digital'
+      'plataforma educacional','portal aluno','matricula digital','solucao informatizada'
     ]
   };
 
@@ -778,7 +778,9 @@ async function buscarPNCP(uf) {
 }
 
 async function buscarPortalCP() {
-  const data = await xhrGet(`${PCP_BASE}/licitacoes?uf=RS&status=aberta&limite=50`);
+  // Sem filtro de UF — busca nacional no Portal de Compras Públicas
+  // O filtro por UF/estado é feito localmente após o retorno
+  const data = await xhrGet(`${PCP_BASE}/licitacoes?status=aberta&limite=50`);
   return data.data || data.licitacoes || data || [];
 }
 
@@ -944,7 +946,7 @@ function normPCP(item) {
   return {
     id: `pcp-${item.id || Math.random()}`,
     titulo: obj.length > 130 ? obj.substring(0,130)+'…' : obj,
-    tituloFull: obj, orgao, uf: 'RS', valor: val,
+    tituloFull: obj, orgao, uf: item.uf || item.estado || 'RS', valor: val,
     valorFmt: formatValor(val), prazo,
     portal: 'Portal CP/RS', portalTipo: 'pcp',
     link: montarLinkPCP(item),
@@ -1125,8 +1127,8 @@ async function executarBusca() {
   // Portal de Compras Públicas RS — API externa sem CORS público
   // Tentativa de busca: se falhar, não exibe fallback de demonstração
   // (editais RS já cobertos pelo PNCP acima)
-  if (portaisBusca.has('pcp') && estadosAtivos.has('RS')) {
-    document.getElementById('loading-msg').textContent = 'Portal Compras Públicas/RS…';
+  if (portaisBusca.has('pcp')) {
+    document.getElementById('loading-msg').textContent = 'Portal Compras Públicas…';
     try {
       const items = await buscarPortalCP();
       const novos = items
@@ -1173,7 +1175,8 @@ function renderizarEditais(lista) {
     const sc  = e.score >= 70 ? 'score-high' : e.score >= 40 ? 'score-med' : 'score-low';
     const urg = e.urgente ? ' urgente' : '';
     const vis = vistos.includes(e.id) ? ' visto' : '';
-    const tagEmp  = e.empresa ? `<span class="tag tag-${e.empresa}">${e.empresa.toUpperCase()}</span>` : '';
+    const nomeEmpresa = { govbr: 'GovernançaBrasil', equiplano: 'Equiplano', ids: 'IDS', layers: 'Layers' };
+    const tagEmp  = e.empresa ? `<span class="tag tag-${e.empresa}">${nomeEmpresa[e.empresa] || e.empresa.toUpperCase()}</span>` : '';
 
     // Tag de portal: mostra o nome real (ComprasNet, BLL, BEC-SP, Portal CP/RS, PNCP)
     const portalLabel = e.portalOrigem || e.portal;
