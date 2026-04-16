@@ -840,6 +840,8 @@ function normPNCP(item, uf) {
   if (item.cancelado === true) return null;
 
   // Campos da API real e do fallback de demonstração
+  // item.title contém o número formatado ex: "Edital nº 8/2026", "Pregão nº 3/2026"
+  const numeroEdital = item.title || '';
   const obj   = item.description || item.objeto || item.title || '';
   const orgao = item.orgao_nome
               || item.orgao?.razaoSocial
@@ -927,6 +929,7 @@ function normPNCP(item, uf) {
     dataEncerramento: dtEncerramento, dataEncerramentoFmt: formatData(dtEncerramento),
     dataPublicacao: dtPublicacao, dataPublicacaoFmt: formatData(dtPublicacao),
     modalidade: item.modalidade_licitacao_nome || '',
+    numeroEdital: numeroEdital,
     numeroControle: num
   };
 }
@@ -1197,7 +1200,8 @@ function renderizarEditais(lista) {
         ${e.dataPublicacaoFmt && e.dataPublicacaoFmt !== 'sem data'
           ? `<span><strong>Publicado:</strong> ${e.dataPublicacaoFmt}</span>` : ''}
         ${e.modalidade ? `<span><strong>Modalidade:</strong> ${e.modalidade}</span>` : ''}
-        ${e.numeroControle ? `<span><strong>Nº:</strong> ${e.numeroControle}</span>` : ''}
+        ${e.numeroEdital ? `<span><strong>Nº edital:</strong> ${e.numeroEdital}</span>` : ''}
+        ${e.numeroControle ? `<span><strong>Controle:</strong> ${e.numeroControle}</span>` : ''}
       </div>
       <div class="edital-actions">
         <div class="edital-tags"><span class="tag tag-uf">${e.uf}</span>${tagPort}${tagEmp}${tagKws}${tagUrg}</div>
