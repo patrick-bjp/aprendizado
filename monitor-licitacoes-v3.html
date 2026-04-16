@@ -524,20 +524,71 @@ function rebuscarComNovasKws() {
 /* ====================== SCORING ====================== */
 function calcularScore(objeto, uf) {
   if (!objeto) return { score: 0, empresa: '', kwsEncontradas: [] };
-  const texto = objeto.toLowerCase();
+  const texto = objeto.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos para comparação
+    .toLowerCase();
+
+  // Termos universais de software de gestão pública — aparecem nos editais reais
+  const termosUniversais = [
+    'sistema','software','plataforma','licenca','modulo','implantacao',
+    'suporte tecnico','manutencao','treinamento','capacitacao'
+  ];
+
+  // Mapeamento empresa → termos fragmentados baseados na linguagem real dos editais
+  const mapaEmpresas = {
+    govbr: [
+      'gestao municipal','gestao publica','contabilidade','folha de pagamento',
+      'folha pagamento','orcamento','planejamento orcamentario','pcasp','lrf','siafic',
+      'tributario','iptu','iss','itbi','arrecadacao','patrimonio','almoxarifado',
+      'compras','licitacoes','transparencia','servicos digitais','cidadao',
+      'prefeitura','municipio','secretaria','prontu'
+    ],
+    equiplano: [
+      'gestao tributaria','tce-pr','tribunal de contas','frotas','frota municipal',
+      'tramitacao','processo administrativo','portal transparencia'
+    ],
+    ids: [
+      'saude','prontuario','pep','regulacao','farmacia','vigilancia epidemiologica',
+      'atencao primaria','cras','creas','suas','assistencia social','consorcio saude',
+      'educacao','escola','matricula','frequencia'
+    ],
+    layers: [
+      'comunicacao escolar','escola familia','aplicativo escola','secretaria escolar',
+      'plataforma educacional','portal aluno','matricula digital'
+    ]
+  };
+
   let melhorScore = 0, melhorEmpresa = '', todasKws = [];
 
-  const kwsAtivas = obterKwsAtivas();
-  for (const [empresa, kws] of Object.entries(kwsAtivas)) {
+  // Primeiro verificar se é edital de software/sistema (pré-filtro)
+  const ehSoftware = termosUniversais.some(t => texto.includes(t));
+
+  for (const [empresa, termos] of Object.entries(mapaEmpresas)) {
     if (empresa === 'equiplano' && uf !== 'PR') continue;
-    if (!kws.length) continue;
-    let hits = 0, achadas = [];
-    for (const kw of kws) { if (texto.includes(kw)) { hits++; achadas.push(kw); } }
-    const s = Math.min(100, Math.round((hits / kws.length) * 100 + hits * 8));
-    if (s > melhorScore) { melhorScore = s; melhorEmpresa = empresa; todasKws = achadas; }
+
+    // Também checar keywords personalizadas do usuário para esta empresa
+    const kwsUsuario = (obterKwsAtivas()[empresa] || []).map(k =>
+      k.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
+    );
+    const todosTeremos = [...new Set([...termos, ...kwsUsuario])];
+
+    const achadas = todosTeremos.filter(t => texto.includes(t));
+    if (achadas.length === 0) continue;
+
+    // Score: base por hits + bônus por ser software + bônus por múltiplos hits
+    let s = Math.min(100,
+      achadas.length * 15          // 15 pts por termo encontrado
+      + (ehSoftware ? 10 : 0)      // +10 se menciona software/sistema
+      + Math.min(achadas.length * 3, 15) // bônus progressivo
+    );
+
+    if (s > melhorScore) {
+      melhorScore = s;
+      melhorEmpresa = empresa;
+      todasKws = achadas.slice(0, 5);
+    }
   }
-  const extras = ['software','sistema','plataforma','licença','manutenção','suporte técnico','erp','módulo'];
-  if (melhorScore > 0) { for (const t of extras) { if (texto.includes(t)) melhorScore = Math.min(100, melhorScore + 3); } }
+
   return { score: melhorScore, empresa: melhorEmpresa, kwsEncontradas: todasKws };
 }
 
@@ -630,6 +681,7 @@ async function buscarPNCP(uf) {
   }
 
   // Primeira chamada: buscar tudo e popular cache
+  // 5 queries temáticas globais — cobrem todos os nichos de produto
   const queries = [
     { q: 'sistema gestao municipal software',    tam: 50 },
     { q: 'prontuario eletronico saude publica',  tam: 50 },
@@ -637,6 +689,16 @@ async function buscarPNCP(uf) {
     { q: 'gestao escolar secretaria digital',    tam: 30 },
     { q: 'licenca software prefeitura municipal',tam: 30 }
   ];
+
+  // Para AP e outros estados de baixa cobertura: query específica por UF
+  const ufsComBaixaCobertura = ['AP','AC','RO','RR','TO','AM'];
+  const estaAtivoBaixaCobertura = ufsComBaixaCobertura.some(u =>
+    [...estadosAtivos].includes(u)
+  );
+  if (estaAtivoBaixaCobertura) {
+    queries.push({ q: 'sistema informatizado gestao administrativa municipal', tam: 30 });
+    queries.push({ q: 'implantacao software municipio prefeitura secretaria', tam: 30 });
+  }
 
   const todosItens = [];
   const idsVistos = new Set();
@@ -731,9 +793,10 @@ function montarLinkPCP(item) {
 }
 
 function normPNCP(item, uf) {
-  // Aceita tanto campos da API real quanto campos do fallback de demonstracao
-  // API real: description, orgao_nome, municipio_nome, valor_global, data_abertura_proposta, item_url
-  // Fallback:  objeto, orgao.razaoSocial, unidadeOrgao.municipioNome, valorTotalEstimado, dataAberturaPropostas, linkSistemaOrigem
+  // Filtrar processos cancelados ou encerrados
+  if (item.cancelado === true) return null;
+
+  // Campos da API real e do fallback de demonstração
   const obj   = item.description || item.objeto || item.title || '';
   const orgao = item.orgao_nome
               || item.orgao?.razaoSocial
@@ -746,12 +809,29 @@ function normPNCP(item, uf) {
               || item.valorTotalEstimado
               || item.valorTotalHomologado
               || 0;
-  const dtAb  = item.data_abertura_proposta
-              || item.dataAberturaPropostas
-              || item.data_publicacao_pncp
-              || item.dataPublicacao
-              || '';
-  const prazo = calcPrazo(dtAb);
+
+  // data_inicio_vigencia = abertura de propostas (campo confirmado na API /api/search/)
+  // data_fim_vigencia    = encerramento de propostas
+  // data_publicacao_pncp = data de publicação no portal
+  const dtAbertura    = item.data_inicio_vigencia
+                      || item.dataAberturaPropostas
+                      || item.data_abertura_proposta
+                      || '';
+  const dtEncerramento = item.data_fim_vigencia
+                       || item.dataEncerramentoProposta
+                       || '';
+  const dtPublicacao  = item.data_publicacao_pncp
+                      || item.dataPublicacao
+                      || item.createdAt
+                      || '';
+
+  // Filtrar editais já encerrados (data_fim_vigencia no passado)
+  if (dtEncerramento) {
+    const enc = new Date(dtEncerramento);
+    if (!isNaN(enc) && enc < new Date()) return null;
+  }
+
+  const prazo = calcPrazo(dtAbertura || dtEncerramento);
   const sc    = calcularScore(obj, uf);
   const num   = item.numero_controle_pncp || item.numeroControlePNCP || '';
 
@@ -799,7 +879,12 @@ function normPNCP(item, uf) {
     portal: portalNome, portalOrigem: portalNome !== 'PNCP' ? portalNome : null,
     portalTipo: 'pncp', link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
-    urgente: prazo.urgente, dataAbertura: dtAb, numeroControle: num
+    urgente: prazo.urgente,
+    dataAbertura: dtAbertura, dataAberturFmt: formatData(dtAbertura),
+    dataEncerramento: dtEncerramento, dataEncerramentoFmt: formatData(dtEncerramento),
+    dataPublicacao: dtPublicacao, dataPublicacaoFmt: formatData(dtPublicacao),
+    modalidade: item.modalidade_licitacao_nome || '',
+    numeroControle: num
   };
 }
 
@@ -846,7 +931,7 @@ async function executarBusca() {
         const novos = [];
         for (const item of items) {
           const e = normPNCP(item, uf);
-          if (e.titulo.length > 8 && !idsGlobais.has(e.link)) {
+          if (e && e.titulo.length > 8 && !idsGlobais.has(e.link)) {
             idsGlobais.add(e.link);
             novos.push(e);
           }
@@ -935,7 +1020,14 @@ function renderizarEditais(lista) {
         <span><strong>Portal:</strong> ${portalLabel}</span>
         <span><strong>Órgão:</strong> ${e.orgao}</span>
         <span><strong>Valor:</strong> ${e.valorFmt}</span>
-        <span><strong>Prazo:</strong> ${e.prazo.label}</span>
+        ${e.dataAberturFmt && e.dataAberturFmt !== 'sem data'
+          ? `<span><strong>Abertura:</strong> ${e.dataAberturFmt}</span>` : ''}
+        ${e.dataEncerramentoFmt && e.dataEncerramentoFmt !== 'sem data'
+          ? `<span><strong>Encerramento:</strong> ${e.dataEncerramentoFmt}</span>`
+          : `<span><strong>Prazo:</strong> ${e.prazo.label}</span>`}
+        ${e.dataPublicacaoFmt && e.dataPublicacaoFmt !== 'sem data'
+          ? `<span><strong>Publicado:</strong> ${e.dataPublicacaoFmt}</span>` : ''}
+        ${e.modalidade ? `<span><strong>Modalidade:</strong> ${e.modalidade}</span>` : ''}
         ${e.numeroControle ? `<span><strong>Nº:</strong> ${e.numeroControle}</span>` : ''}
       </div>
       <div class="edital-actions">
@@ -956,13 +1048,19 @@ function atualizarMetricas() {
   const total   = editaisCarregados.length;
   const alta    = editaisCarregados.filter(e => e.score >= 70).length;
   const urg     = editaisCarregados.filter(e => e.urgente).length;
-  const maior   = editaisCarregados.reduce((m, e) => e.valor > m.valor ? e : m, {valor:0,orgao:'—',uf:''});
+  // Valor: usar maior valor disponível; se todos forem 0/null, mostrar texto informativo
+  const comValor = editaisCarregados.filter(e => e.valor && e.valor > 0);
+  const maior    = comValor.length > 0
+    ? comValor.reduce((m, e) => e.valor > m.valor ? e : m)
+    : null;
   document.getElementById('m-total').textContent    = total;
   document.getElementById('m-sub-total').textContent= `${[...estadosAtivos].length} estados`;
   document.getElementById('m-rel').textContent      = alta;
   document.getElementById('m-urgentes').textContent  = urg;
-  document.getElementById('m-valor').textContent    = formatValor(maior.valor);
-  document.getElementById('m-sub-valor').textContent= maior.orgao ? `${maior.orgao.substring(0,25)} (${maior.uf})` : '—';
+  document.getElementById('m-valor').textContent    = maior ? formatValor(maior.valor) : 'n/d';
+  document.getElementById('m-sub-valor').textContent= maior
+    ? `${maior.orgao.substring(0,25)} (${maior.uf})`
+    : 'API não informa valor';
   document.getElementById('badge-urgentes').textContent = `${urg} urgentes`;
 }
 
