@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://api.anthropic.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://api.groq.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:;">
 <title>Monitor de Licitações — v4</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -694,8 +694,15 @@ body::before {
 .status-pill.live { background: var(--live-bg); color: var(--live); border-color: rgba(255,77,109,.25); }
 .status-pill.warn { background: var(--warn-bg); color: var(--warn); border-color: rgba(255,176,32,.25); }
 .status-pill.ok   { background: var(--ok-bg);   color: var(--ok);   border-color: rgba(74,222,128,.25); }
+.status-pill.encerrado {
+  background: var(--bg-3); color: var(--ink-lo);
+  border-color: var(--stroke-hi);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
 .status-pill .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 .status-pill.live .dot { animation: blink 1.2s infinite; }
+.status-pill.encerrado .dot { background: var(--ink-ghost); }
 @keyframes blink { 50% { opacity: .3; } }
 
 .bid-title {
@@ -775,6 +782,19 @@ body::before {
 }
 .countdown.warn b { color: var(--warn); }
 .countdown.live b { color: var(--live); }
+.countdown.encerrado b { color: var(--ink-lo); text-decoration: line-through; text-decoration-thickness: 1px; }
+
+/* Cards encerrados: visual desbotado, faixa lateral cinza */
+.edital.encerrado {
+  opacity: .65;
+  border-left: 3px solid var(--ink-ghost);
+}
+.edital.encerrado:hover { opacity: .9; }
+.edital.encerrado.urgente { border-left-color: var(--ink-ghost); }
+.edital.encerrado.urgente::before { display: none; }
+.edital.encerrado .bid-title {
+  color: var(--ink); /* texto mais apagado */
+}
 
 .bid-link {
   font-family: var(--ff-mono); font-size: 11px; font-weight: 600;
@@ -938,6 +958,11 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         Alta relevância
         <span class="nav-count" id="nav-cnt-alta">—</span>
       </button>
+      <button class="nav-item" onclick="filtrarFeed(this,'encerrado')" title="Mostrar editais já encerrados (histórico)">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M6 6l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14M10 11v6M14 11v6"/></svg>
+        Encerrados
+        <span class="nav-count" id="nav-cnt-encerrado">—</span>
+      </button>
     </nav>
 
     <nav class="nav-section">
@@ -1048,8 +1073,8 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 
     <!-- API KEY (escondido se já preenchido) -->
     <div class="api-notice" id="api-notice">
-      ⚠️ API key Anthropic (análise por IA):
-      <input type="password" id="api-key-input" placeholder="sk-ant-..." oninput="salvarKey(this.value)">
+      🔑 API key Groq (análise por IA — gratuita em console.groq.com):
+      <input type="password" id="api-key-input" placeholder="gsk_..." oninput="salvarKey(this.value)">
     </div>
 
     <!-- KPIs -->
@@ -1099,7 +1124,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
     <div class="muni-filtro" id="muni-filtro">
       <span class="muni-filtro-label">📍 Por município:</span>
       <select class="muni-select" id="muni-uf-sel" onchange="onMuniUFChange()">
-        <option value="">UF…</option>
+        <option value="" selected>UF…</option>
         <option value="AC">AC</option><option value="AL">AL</option><option value="AM">AM</option>
         <option value="AP">AP</option><option value="BA">BA</option><option value="CE">CE</option>
         <option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option>
@@ -1107,7 +1132,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <option value="MT">MT</option><option value="PA">PA</option><option value="PB">PB</option>
         <option value="PE">PE</option><option value="PI">PI</option><option value="PR">PR</option>
         <option value="RJ">RJ</option><option value="RN">RN</option><option value="RO">RO</option>
-        <option value="RR">RR</option><option value="RS" selected>RS</option><option value="SC">SC</option>
+        <option value="RR">RR</option><option value="RS">RS</option><option value="SC">SC</option>
         <option value="SE">SE</option><option value="SP">SP</option><option value="TO">TO</option>
       </select>
       <input type="text" class="muni-input" id="muni-nome-input"
@@ -1230,7 +1255,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 
     <!-- AI BOX -->
     <div class="ai-box">
-      <div class="ai-title">Análise por IA · Claude</div>
+      <div class="ai-title">Análise por IA · Groq Llama 3.3</div>
       <div class="divider"></div>
       <div class="ai-output" id="ai-output">Busque editais e clique em um para análise automática de fit, riscos e recomendação — ou faça uma pergunta livre abaixo.</div>
       <div class="divider"></div>
@@ -1275,7 +1300,23 @@ if (apiKey) {
 function salvarKey(v) {
   apiKey = v.trim();
   localStorage.setItem('ml_api_key', apiKey);
-  if (apiKey) document.getElementById('api-notice').style.display = 'none';
+  const notice = document.getElementById('api-notice');
+  if (apiKey) {
+    // Formato esperado do Groq: gsk_ + ~52 caracteres alfanuméricos
+    if (apiKey.startsWith('gsk_') && apiKey.length >= 50) {
+      // Key válida no formato — esconde o notice após pequeno delay (feedback)
+      notice.style.background = 'var(--ok-bg)';
+      notice.style.color = 'var(--ok)';
+      notice.style.borderColor = 'rgba(74,222,128,.3)';
+      setTimeout(() => {
+        notice.style.display = 'none';
+        // Restaura cores para próxima exibição
+        notice.style.background = '';
+        notice.style.color = '';
+        notice.style.borderColor = '';
+      }, 800);
+    }
+  }
 }
 
 /* ====================== TOGGLE TEMA ====================== */
@@ -1376,7 +1417,8 @@ function rebuscarComNovasKws() {
       kwsEncontradas: scoring.kwsEncontradas
     };
   });
-  editaisCarregados.sort((a,b) => b.score - a.score);
+  editaisCarregados.sort((a,b) => b.score - a.score);  // mantém score como base
+  ordenarEditais(editaisCarregados);
   renderizarEditais(editaisCarregados);
   atualizarMetricas();
   document.getElementById('last-update').textContent =
@@ -1595,11 +1637,29 @@ function normPNCP(item, uf) {
   const dtAbertura     = item.data_inicio_vigencia || item.dataAberturaPropostas || item.data_abertura_proposta || '';
   const dtEncerramento = item.data_fim_vigencia || item.dataEncerramentoProposta || '';
   const dtPublicacao   = item.data_publicacao_pncp || item.dataPublicacao || item.createdAt || '';
+
+  // Marca editais encerrados (encerramento já passou) — não filtra mais,
+  // o usuário pode escolher vê-los pelo filtro "Encerrados" na sidebar
+  let estaEncerrado = false;
   if (dtEncerramento) {
     const enc = new Date(dtEncerramento);
-    if (!isNaN(enc) && enc < new Date()) return null;
+    if (!isNaN(enc) && enc < new Date()) estaEncerrado = true;
   }
-  const prazo = calcPrazo(dtAbertura || dtEncerramento);
+
+  // CORREÇÃO BUG "ENCERRADO" indevido:
+  // O prazo deve refletir quando o processo ENCERRA (data_fim_vigencia).
+  // A data_inicio_vigencia frequentemente já passou em editais ATIVOS — usar ela
+  // como prazo causava label "encerrado" em processo aberto.
+  // Lógica: se já abriu (dtAbertura no passado), calcular dias até o encerramento;
+  //         se ainda não abriu, calcular dias até a abertura.
+  const agora = new Date();
+  const aberturaJaOcorreu = dtAbertura && new Date(dtAbertura) <= agora;
+  const dataParaPrazo = aberturaJaOcorreu
+    ? (dtEncerramento || dtAbertura)
+    : (dtAbertura || dtEncerramento);
+  const prazo = calcPrazo(dataParaPrazo);
+  // Marcar para o renderCard saber se é prazo até abertura ou até encerramento
+  prazo.tipo = aberturaJaOcorreu ? 'encerramento' : 'abertura';
   const sc    = calcularScore(obj, uf);
   const num   = item.numero_controle_pncp || item.numeroControlePNCP || '';
 
@@ -1639,6 +1699,7 @@ function normPNCP(item, uf) {
     link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
     urgente: prazo.urgente,
+    encerrado: estaEncerrado,
     dataAbertura: dtAbertura, dataAberturaFmt: formatData(dtAbertura),
     dataEncerramento: dtEncerramento, dataEncerramentoFmt: formatData(dtEncerramento),
     dataPublicacao: dtPublicacao, dataPublicacaoFmt: formatData(dtPublicacao),
@@ -1653,6 +1714,7 @@ function normPCP(item) {
   const val  = item.valorEstimado || item.valor || 0;
   const dtAb = item.dataAbertura || item.dataFim || item.prazo;
   const prazo= calcPrazo(dtAb);
+  prazo.tipo = 'abertura';
   const sc   = calcularScore(obj, 'RS');
   const link = item.url || item.link ||
     (item.id ? `https://www.portaldecompraspublicas.com.br/18/compras/${item.id}` : 'https://www.portaldecompraspublicas.com.br/18/compras');
@@ -1665,6 +1727,7 @@ function normPCP(item) {
     link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
     urgente: prazo.urgente,
+    encerrado: prazo.dias !== null && prazo.dias < 0,
     dataAbertura: dtAb, dataAberturaFmt: formatData(dtAb),
     dataEncerramento: '', dataEncerramentoFmt: '',
     dataPublicacao: '', dataPublicacaoFmt: '',
@@ -1723,6 +1786,7 @@ async function buscarPorMunicipio() {
       if (vistos_links.has(e.link)) return false;
       vistos_links.add(e.link); return true;
     });
+    ordenarEditais(editaisCarregados);
   } catch(err) {
     erroB.textContent = `Erro na busca por município: ${err.message}`;
     erroB.style.display = 'block';
@@ -1818,7 +1882,7 @@ async function executarBusca() {
   }
 
   editaisCarregados = editaisCarregados.filter(e => !descartados.includes(e.id));
-  editaisCarregados.sort((a,b) => b.score - a.score);
+  ordenarEditais(editaisCarregados);
   atualizarMetricas();
   renderizarEditais(editaisCarregados);
   load.classList.add('hidden');
@@ -1843,6 +1907,43 @@ async function executarBusca() {
   }
 }
 
+/* ====================== ORDENAÇÃO ====================== */
+/* Lógica:
+   1. Editais encerrados vão para o FINAL (são acessíveis pelo filtro "Encerrados")
+   2. Entre os ativos: prioriza menor número de dias até o encerramento
+      (mais próximos do encerramento aparecem primeiro)
+   3. Sem data de encerramento → usa data de abertura como referência
+   4. Desempate: maior score
+   5. Último desempate: ordem original */
+function ordenarEditais(lista) {
+  lista.sort((a, b) => {
+    // 1. Encerrados ao final
+    if (a.encerrado && !b.encerrado) return 1;
+    if (!a.encerrado && b.encerrado) return -1;
+
+    // 2. Calcular dias para o "evento mais próximo" (encerramento ou abertura)
+    const diasA = a.prazo?.dias;
+    const diasB = b.prazo?.dias;
+
+    // Trata null/undefined: vai para o final
+    if (diasA === null || diasA === undefined) return 1;
+    if (diasB === null || diasB === undefined) return -1;
+
+    // Para encerrados, ordena os mais recentes primeiro (menos negativo = mais próximo do hoje)
+    if (a.encerrado && b.encerrado) {
+      if (diasA !== diasB) return diasB - diasA;  // -1 vem antes de -10
+      return b.score - a.score;
+    }
+
+    // Ativos: menor dias = mais urgente = primeiro
+    if (diasA !== diasB) return diasA - diasB;
+
+    // 3. Desempate por score
+    return b.score - a.score;
+  });
+  return lista;
+}
+
 /* ====================== RENDERIZAÇÃO ====================== */
 function renderizarEditais(lista) {
   const c = document.getElementById('editais-list');
@@ -1859,23 +1960,41 @@ function renderizarEditais(lista) {
     return;
   }
 
-  const urgentes = lista.filter(e => e.urgente);
-  const naoUrgentes = lista.filter(e => !e.urgente);
+  // Editais ativos x encerrados
+  const ativos = lista.filter(e => !e.encerrado);
+  const encerrados = lista.filter(e => e.encerrado);
 
-  if (urgentes.length > 0) {
+  // Seção "Urgentes" só aparece se NÃO estiver no filtro de encerrados
+  // e se houver urgentes ativos
+  const urgentes = ativos.filter(e => e.urgente);
+  const naoUrgentes = ativos.filter(e => !e.urgente);
+  const mostrarSecaoUrgentes = filtroAtual !== 'encerrado' && urgentes.length > 0;
+
+  if (mostrarSecaoUrgentes) {
     dividerUrg.style.display = 'flex';
     feedUrg.style.display = 'flex';
     cntUrg.textContent = `${urgentes.length} ${urgentes.length === 1 ? 'item' : 'itens'}`;
-    feedUrg.innerHTML = urgentes.map((e, i) => renderCard(e, lista.indexOf(e))).join('');
+    feedUrg.innerHTML = urgentes.map(e => renderCard(e, lista.indexOf(e))).join('');
   } else {
     dividerUrg.style.display = 'none';
     feedUrg.style.display = 'none';
   }
 
-  cntFeed.textContent = `${naoUrgentes.length} ${naoUrgentes.length === 1 ? 'item' : 'itens'}`;
-  c.innerHTML = naoUrgentes.length > 0
-    ? naoUrgentes.map((e, i) => renderCard(e, lista.indexOf(e))).join('')
-    : '<div class="empty-feed">Sem editais não-urgentes nesta busca.</div>';
+  // Feed principal: depende do filtro
+  // - filtro 'encerrado': mostra só encerrados
+  // - outros: ativos não-urgentes (urgentes já foram para a seção acima)
+  let lista_feed;
+  if (filtroAtual === 'encerrado') {
+    lista_feed = encerrados;
+    cntFeed.textContent = `${encerrados.length} ${encerrados.length === 1 ? 'item encerrado' : 'itens encerrados'}`;
+  } else {
+    lista_feed = naoUrgentes;
+    cntFeed.textContent = `${naoUrgentes.length} ${naoUrgentes.length === 1 ? 'item' : 'itens'}`;
+  }
+
+  c.innerHTML = lista_feed.length > 0
+    ? lista_feed.map(e => renderCard(e, lista.indexOf(e))).join('')
+    : `<div class="empty-feed">${filtroAtual === 'encerrado' ? 'Nenhum edital encerrado nos resultados atuais.' : 'Sem editais não-urgentes nesta busca.'}</div>`;
 
   aplicarFiltros();
 }
@@ -1890,14 +2009,16 @@ function renderCard(e, i) {
   const tagEmp = e.empresa ? `<span class="tag-empresa ${e.empresa}">${nomeEmpresa[e.empresa] || e.empresa}</span>` : '';
   const tagPort = `<span class="portal-chip ${e.portalClass}">${e.portal}</span>`;
 
-  // Status pill
+  // Status pill — baseado no encerramento (não na abertura, que pode já ter passado)
   let statusPill = '';
-  if (e.urgente) {
+  if (e.encerrado) {
+    statusPill = `<span class="status-pill encerrado"><span class="dot"></span> Encerrado</span>`;
+  } else if (e.urgente) {
     statusPill = `<span class="status-pill live"><span class="dot"></span> ${e.prazo.label}</span>`;
   } else if (e.prazo.dias !== null && e.prazo.dias <= 10) {
     statusPill = `<span class="status-pill warn"><span class="dot"></span> ${e.prazo.label}</span>`;
   } else {
-    statusPill = `<span class="status-pill ok"><span class="dot"></span> Recebendo</span>`;
+    statusPill = `<span class="status-pill ok"><span class="dot"></span> Recebendo propostas</span>`;
   }
 
   const orgaoCompleto = e.municipio ? `${e.orgao} <span class="sep">·</span> <b>${e.municipio}</b>` : `<b>${e.orgao}</b>`;
@@ -1912,12 +2033,30 @@ function renderCard(e, i) {
     tituloHighlight = e.titulo.replace(re, '<mark>$1</mark>');
   }
 
-  // Countdown class
-  const countdownClass = e.urgente ? ' live' : (e.prazo.dias !== null && e.prazo.dias <= 10 ? ' warn' : '');
+  // Countdown class e legenda
+  let countdownClass = '';
+  let countdownLegenda = '';
+  if (e.encerrado) {
+    countdownClass = ' encerrado';
+    countdownLegenda = 'encerrado há';
+  } else if (e.urgente) {
+    countdownClass = ' live';
+    countdownLegenda = e.prazo.tipo === 'encerramento' ? 'até encerramento' : 'até abertura';
+  } else if (e.prazo.dias !== null && e.prazo.dias <= 10) {
+    countdownClass = ' warn';
+    countdownLegenda = e.prazo.tipo === 'encerramento' ? 'até encerramento' : 'até abertura';
+  } else {
+    countdownLegenda = e.prazo.tipo === 'encerramento' ? 'até encerramento' : 'até abertura';
+  }
+  // Para encerrados, mostrar dias atrás (positivos)
+  const labelCountdown = e.encerrado && e.prazo.dias !== null
+    ? `${Math.abs(e.prazo.dias)} dia${Math.abs(e.prazo.dias) !== 1 ? 's' : ''}`
+    : e.prazo.label;
 
-  return `<article class="edital${urg}${vis}"
+  return `<article class="edital${urg}${vis}${e.encerrado ? ' encerrado' : ''}"
     data-uf="${e.uf}" data-score="${e.score}"
-    data-urgente="${e.urgente?1:0}" data-empresa="${e.empresa}"
+    data-urgente="${e.urgente?1:0}" data-encerrado="${e.encerrado?1:0}"
+    data-empresa="${e.empresa}"
     data-portal="${e.portalTipo}" id="edital-${i}"
     style="--score:${e.score}; --score-color:${scoreColor}">
 
@@ -1939,6 +2078,11 @@ function renderCard(e, i) {
           <span class="detail-label">Valor</span>
           <span class="detail-value money">${e.valorFmt}</span>
         </div>
+        ${e.dataPublicacaoFmt && e.dataPublicacaoFmt !== 'sem data' ? `
+        <div class="detail">
+          <span class="detail-label">Publicação</span>
+          <span class="detail-value">${e.dataPublicacaoFmt}</span>
+        </div>` : ''}
         ${e.dataAberturaFmt && e.dataAberturaFmt !== 'sem data' ? `
         <div class="detail">
           <span class="detail-label">Abertura propostas</span>
@@ -1965,8 +2109,8 @@ function renderCard(e, i) {
 
     <div class="bid-actions">
       <div class="countdown${countdownClass}">
-        <b>${e.prazo.label}</b>
-        ${e.dataAberturaFmt && e.dataAberturaFmt !== 'sem data' ? 'até abertura' : 'prazo'}
+        <b>${labelCountdown}</b>
+        ${countdownLegenda}
       </div>
       <a href="${e.link}" target="_blank" rel="noopener noreferrer" class="bid-link" onclick="event.stopPropagation()">
         Abrir edital <span class="arrow">→</span>
@@ -1981,10 +2125,12 @@ function renderCard(e, i) {
 
 /* ====================== MÉTRICAS ====================== */
 function atualizarMetricas() {
-  const total   = editaisCarregados.length;
-  const alta    = editaisCarregados.filter(e => e.score >= 70).length;
-  const urg     = editaisCarregados.filter(e => e.urgente).length;
-  const comValor = editaisCarregados.filter(e => e.valor && e.valor > 0);
+  const ativos  = editaisCarregados.filter(e => !e.encerrado);
+  const encerr  = editaisCarregados.filter(e => e.encerrado);
+  const total   = ativos.length;
+  const alta    = ativos.filter(e => e.score >= 70).length;
+  const urg     = ativos.filter(e => e.urgente).length;
+  const comValor = ativos.filter(e => e.valor && e.valor > 0);
   const maior    = comValor.length > 0 ? comValor.reduce((m, e) => e.valor > m.valor ? e : m) : null;
 
   document.getElementById('m-total').textContent     = total;
@@ -1994,14 +2140,15 @@ function atualizarMetricas() {
   document.getElementById('m-valor').textContent     = maior ? formatValor(maior.valor) : 'n/d';
   document.getElementById('m-sub-valor').textContent = maior ? `${maior.orgao.substring(0,30)} (${maior.uf})` : 'API não informa valor';
 
-  // Sidebar counts
+  // Topbar / sidebar counts
   document.getElementById('topbar-bids').textContent = total;
-  document.getElementById('nav-cnt-todos').textContent   = total || '—';
-  document.getElementById('nav-cnt-urgente').textContent = urg || '—';
-  document.getElementById('nav-cnt-alta').textContent    = alta || '—';
+  document.getElementById('nav-cnt-todos').textContent     = total || '—';
+  document.getElementById('nav-cnt-urgente').textContent   = urg || '—';
+  document.getElementById('nav-cnt-alta').textContent      = alta || '—';
+  document.getElementById('nav-cnt-encerrado').textContent = encerr.length || '—';
 
   ['govbr','equiplano','ids','layers'].forEach(emp => {
-    const n = editaisCarregados.filter(e => e.empresa === emp).length;
+    const n = ativos.filter(e => e.empresa === emp).length;
     const el = document.getElementById(`emp-cnt-${emp}`);
     if (el) el.textContent = n || '—';
   });
@@ -2026,15 +2173,22 @@ function aplicarFiltros() {
   let v = 0;
   items.forEach(el => {
     const uf = el.dataset.uf, sc = parseInt(el.dataset.score), urg = el.dataset.urgente === '1';
+    const enc = el.dataset.encerrado === '1';
     const emp = el.dataset.empresa || '', port = el.dataset.portal || '';
     const tit = el.querySelector('.bid-title')?.textContent?.toLowerCase() || '';
     const ufOk = estadosAtivos.has(uf);
     let fOk = true;
-    if      (filtroAtual === 'alta')    fOk = sc >= 70;
-    else if (filtroAtual === 'urgente') fOk = urg;
-    else if (['govbr','equiplano','ids','layers'].includes(filtroAtual)) fOk = emp === filtroAtual;
-    else if (filtroAtual === 'pncp')    fOk = port === 'pncp';
-    else if (filtroAtual === 'pcp')     fOk = port === 'pcp';
+
+    // Filtro principal
+    if      (filtroAtual === 'alta')      fOk = sc >= 70 && !enc;
+    else if (filtroAtual === 'urgente')   fOk = urg && !enc;
+    else if (filtroAtual === 'encerrado') fOk = enc;
+    else if (['govbr','equiplano','ids','layers'].includes(filtroAtual)) fOk = emp === filtroAtual && !enc;
+    else if (filtroAtual === 'pncp')      fOk = port === 'pncp' && !enc;
+    else if (filtroAtual === 'pcp')       fOk = port === 'pcp' && !enc;
+    else if (filtroAtual === 'todos')     fOk = !enc;  // por padrão esconde encerrados
+    else fOk = !enc;
+
     const show = ufOk && fOk && (!busca || tit.includes(busca));
     el.classList.toggle('hidden', !show);
     if (show) v++;
@@ -2058,7 +2212,23 @@ function filtrarFeed(btn, f) {
   document.querySelectorAll('.nav-item.active, .chip.active').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   filtroAtual = f;
-  aplicarFiltros();
+  // Atualizar o título da seção principal conforme o filtro
+  const titles = {
+    'todos':     'Feed de editais',
+    'urgente':   'Encerrando em < 5 dias',
+    'alta':      'Editais de alta relevância',
+    'encerrado': 'Editais encerrados (histórico)',
+    'govbr':     'Editais · GovernançaBrasil',
+    'equiplano': 'Editais · Equiplano',
+    'ids':       'Editais · IDS',
+    'layers':    'Editais · Layers',
+    'pncp':      'Editais do portal PNCP',
+    'pcp':       'Editais do Portal Compras Públicas RS'
+  };
+  const tt = document.getElementById('divider-feed-title');
+  if (tt && titles[f]) tt.textContent = titles[f];
+  // Re-renderiza para aplicar a separação ativos/encerrados conforme novo filtro
+  renderizarEditais(editaisCarregados);
 }
 
 function toggleUF(card) {
@@ -2125,28 +2295,48 @@ function setOutput(h) { document.getElementById('ai-output').innerHTML = h; }
 
 async function analisarEdital(idx) {
   if (!apiKey) {
-    setOutput('<span style="color:var(--warn)">Insira a API key da Anthropic para análise por IA.</span>');
+    setOutput('<span style="color:var(--warn)">Insira a API key do Groq para análise por IA. <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Criar key gratuita →</a></span>');
     document.getElementById('api-notice').style.display = 'flex';
     return;
   }
   const e = editaisCarregados[idx]; if (!e) return;
   setOutput('<span class="ai-loading">Analisando edital…</span>');
-  const prompt = `Você é um analista de licitações público brasileiro.\n\nPerfis:\n${Object.values(PERFIS).join('\n')}\n\nREGRA: Equiplano APENAS PR.\n\nEdital (${e.portal}):\nTítulo: ${e.tituloFull||e.titulo}\nÓrgão: ${e.orgao}${e.municipio ? ' / '+e.municipio : ''} (${e.uf}) | Valor: ${e.valorFmt} | Abertura: ${e.prazo.label}\nScore: ${e.score}% | Empresa mapeada: ${e.empresa||'—'} | Keywords: ${e.kwsEncontradas.join(', ')||'nenhuma'}\nLink: ${e.link}\n\nResponda em texto direto:\n1. FIT: empresa mais aderente e por quê\n2. RISCOS: pontos de atenção\n3. RECOMENDAÇÃO: participar / avaliar / descartar — 1 frase.`;
+  const prompt = `Você é um analista de licitações público brasileiro.\n\nPerfis das empresas:\n${Object.values(PERFIS).join('\n')}\n\nREGRA IMPORTANTE: Equiplano APENAS atende o estado do Paraná.\n\nEdital (${e.portal}):\nTítulo: ${e.tituloFull||e.titulo}\nÓrgão: ${e.orgao}${e.municipio ? ' / '+e.municipio : ''} (${e.uf}) | Valor: ${e.valorFmt} | Abertura: ${e.prazo.label}\nScore: ${e.score}% | Empresa mapeada: ${e.empresa||'—'} | Keywords: ${e.kwsEncontradas.join(', ')||'nenhuma'}\nLink: ${e.link}\n\nResponda em português, em até 3 parágrafos curtos:\n1. FIT: empresa mais aderente e por quê\n2. RISCOS: pontos de atenção\n3. RECOMENDAÇÃO: participar / avaliar / descartar — em uma frase.`;
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 1000,
+        temperature: 0.3,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
     const d = await r.json();
-    if (d.error) { setOutput(`<span style="color:var(--warn)">Erro: ${d.error.message}</span>`); return; }
-    const txt = d.content?.[0]?.text || 'Sem resposta.';
+    if (d.error) {
+      const msg = d.error.message || 'erro desconhecido';
+      const dica = msg.toLowerCase().includes('api key') || msg.toLowerCase().includes('invalid')
+        ? ' <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Verificar key →</a>' : '';
+      setOutput(`<span style="color:var(--warn)">Erro Groq: ${msg}${dica}</span>`);
+      return;
+    }
+    const txt = d.choices?.[0]?.message?.content || 'Sem resposta.';
     setOutput(`<div class="ai-meta">${e.orgao}${e.municipio ? ' · '+e.municipio : ''} (${e.uf}) · ${e.valorFmt} · ${e.prazo.label} · ${e.portal}</div>` +
       txt.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join(''));
-  } catch { setOutput('<span style="color:var(--warn)">Erro de conexão.</span>'); }
+  } catch (err) {
+    setOutput(`<span style="color:var(--warn)">Erro de conexão: ${err.message || 'verifique sua rede'}</span>`);
+  }
 }
 
 async function perguntarIA() {
   const q = document.getElementById('user-q').value.trim();
   if (!q) return;
   if (!apiKey) {
-    setOutput('<span style="color:var(--warn)">Insira a API key da Anthropic.</span>');
+    setOutput('<span style="color:var(--warn)">Insira a API key do Groq. <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Criar key gratuita →</a></span>');
     document.getElementById('api-notice').style.display = 'flex';
     return;
   }
@@ -2156,16 +2346,36 @@ async function perguntarIA() {
     .slice(0,20)
     .map((e,i) => `[${i+1}] ${e.titulo} | ${e.orgao} (${e.uf}) | ${e.valorFmt} | ${e.prazo.label} | score ${e.score}% | ${e.empresa} | ${e.portal}`)
     .join('\n');
-  const prompt = `Inteligência comercial — software gestão pública.\nPerfis: ${Object.values(PERFIS).join(' | ')}\nREGRA: Equiplano APENAS PR.\nEditais: ${ctx||'Nenhum — execute a busca.'}\nPergunta: ${q}\nResposta direta e prática.`;
+  const prompt = `Você é um analista de inteligência comercial em software de gestão pública brasileira.\n\nPerfis: ${Object.values(PERFIS).join(' | ')}\nREGRA: Equiplano APENAS PR.\n\nEditais visíveis nos resultados:\n${ctx||'Nenhum — execute a busca primeiro.'}\n\nPergunta do usuário: ${q}\n\nResponda em português, de forma direta e prática.`;
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 1000,
+        temperature: 0.4,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
     const d = await r.json();
-    if (d.error) { setOutput(`<span style="color:var(--warn)">Erro: ${d.error.message}</span>`); return; }
-    const txt = d.content?.[0]?.text || 'Sem resposta.';
+    if (d.error) {
+      const msg = d.error.message || 'erro desconhecido';
+      const dica = msg.toLowerCase().includes('api key') || msg.toLowerCase().includes('invalid')
+        ? ' <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Verificar key →</a>' : '';
+      setOutput(`<span style="color:var(--warn)">Erro Groq: ${msg}${dica}</span>`);
+      return;
+    }
+    const txt = d.choices?.[0]?.message?.content || 'Sem resposta.';
     setOutput(`<div class="ai-meta">"${q}"</div>` +
       txt.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join(''));
     document.getElementById('user-q').value = '';
-  } catch { setOutput('<span style="color:var(--warn)">Erro de conexão.</span>'); }
+  } catch (err) {
+    setOutput(`<span style="color:var(--warn)">Erro de conexão: ${err.message || 'verifique sua rede'}</span>`);
+  }
 }
 
 /* ====================== INIT ====================== */
