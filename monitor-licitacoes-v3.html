@@ -1019,6 +1019,87 @@ body::before {
   text-decoration-color: var(--accent);
 }
 
+/* ---------- EXPORT DROPDOWN (B3) ---------- */
+.export-dropdown { position: relative; }
+.export-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 100;
+  min-width: 240px;
+  background: var(--bg-1);
+  border: 1px solid var(--stroke-hi);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lift, 0 8px 24px rgba(0,0,0,.3));
+  padding: 6px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+}
+[data-theme="light"] .export-menu {
+  background: var(--bg-2);
+  box-shadow: 0 4px 6px rgba(26,29,36,.08), 0 10px 25px rgba(26,29,36,.12);
+}
+.export-menu.open { display: flex; }
+.export-menu button {
+  font-family: var(--ff-body);
+  font-size: 13px;
+  color: var(--ink-hi);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background .12s;
+}
+.export-menu button:hover { background: var(--bg-2); }
+[data-theme="light"] .export-menu button:hover { background: var(--bg-3); }
+.export-menu .icon {
+  width: 14px; height: 14px;
+  stroke: var(--ink-lo); fill: none; stroke-width: 2;
+  flex-shrink: 0;
+}
+.export-menu .hint {
+  margin-left: auto;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  color: var(--ink-lo);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ---------- BADGE "NOVO" (A4) ---------- */
+.novo-badge {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  animation: novoShine 2.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes novoShine {
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-bg); }
+  50%      { box-shadow: 0 0 0 4px var(--accent-bg); }
+}
+
+/* Borda lateral verde pontilhada nos cards novos (não-urgentes, pra não competir com o vermelho) */
+.edital.novo:not(.urgente):not(.encerrado) {
+  border-left: 3px solid var(--accent);
+  border-left-style: dashed;
+}
+
 /* ---------- SCROLLBAR ---------- */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg-0); }
@@ -1071,6 +1152,11 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <svg class="icon" viewBox="0 0 24 24"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
         Feed completo
         <span class="nav-count" id="nav-cnt-todos">—</span>
+      </button>
+      <button class="nav-item" onclick="filtrarFeed(this,'novos')" title="Editais novos desde a última busca">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l2 5 5 1-4 4 1 5-4-2-4 2 1-5-4-4 5-1z"/></svg>
+        Novos
+        <span class="nav-count" id="nav-cnt-novos">—</span>
       </button>
       <button class="nav-item" onclick="filtrarFeed(this,'urgente')">
         <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
@@ -1189,6 +1275,27 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
         Keyword
       </button>
+      <div class="export-dropdown">
+        <button class="btn" onclick="toggleMenuExport(event)" title="Exportar editais visíveis">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Exportar
+        </button>
+        <div class="export-menu" id="export-menu">
+          <button onclick="exportarCSV()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
+            CSV <span class="hint">abre no Excel</span>
+          </button>
+          <button onclick="exportarMarkdown()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M7 15V9l3 3 3-3v6M17 9v6"/></svg>
+            Markdown <span class="hint">cola em Slack/e-mail</span>
+          </button>
+          <button onclick="exportarLink()">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.72-1.72"/></svg>
+            Copiar link <span class="hint">filtros atuais</span>
+          </button>
+        </div>
+      </div>
+
       <button class="btn btn-primary" id="btn-rebuscar-top" onclick="executarBusca()">
         <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--accent-ink)"><path d="M21 12a9 9 0 11-9-9c2.5 0 4.8 1 6.5 2.6M21 5v5h-5"/></svg>
         Buscar agora
@@ -1931,6 +2038,8 @@ async function buscarPorMunicipio() {
   document.getElementById('sidebar-status').innerHTML = `📍 ${muniLabel}`;
   document.getElementById('divider-feed-title').textContent = `Editais em ${muniLabel}`;
 
+  ordenarEditais(editaisCarregados);
+  marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
   renderizarEditais(editaisCarregados);
   load.classList.add('hidden');
@@ -1947,6 +2056,7 @@ async function buscarPorMunicipio() {
     erroB.textContent = `Nenhum edital encontrado para "${nome}"${uf ? ' em '+uf : ''} com processos abertos.`;
     erroB.style.display = 'block';
   }
+  atualizarURLStateDoFiltro();
 }
 
 function limparFiltroPorMunicipio() {
@@ -1963,6 +2073,7 @@ function limparFiltroPorMunicipio() {
   document.getElementById('last-update').textContent = '';
   document.getElementById('erro-bar').style.display = 'none';
   document.getElementById('sucesso-bar').style.display = 'none';
+  atualizarURLStateDoFiltro();
 }
 
 /* ====================== BUSCA PRINCIPAL ====================== */
@@ -2018,6 +2129,7 @@ async function executarBusca() {
 
   editaisCarregados = editaisCarregados.filter(e => !descartados.includes(e.id));
   ordenarEditais(editaisCarregados);
+  const novosCount = marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
   renderizarEditais(editaisCarregados);
   load.classList.add('hidden');
@@ -2036,9 +2148,229 @@ async function executarBusca() {
     erroB.style.display = 'block';
   }
   if (editaisCarregados.length) {
-    okB.textContent = `${editaisCarregados.length} editais carregados.`;
+    const msgNovos = novosCount > 0
+      ? ` · ✨ ${novosCount} ${novosCount === 1 ? 'novo' : 'novos'} desde a última busca`
+      : '';
+    okB.textContent = `${editaisCarregados.length} editais carregados.${msgNovos}`;
     okB.style.display = 'block';
-    setTimeout(() => okB.style.display = 'none', 3500);
+    setTimeout(() => okB.style.display = 'none', 5000);
+  }
+}
+
+/* ====================== URL STATE (A5) ====================== */
+/* Sincroniza filtros, tema e estado de município com query string.
+   Útil para compartilhar visões via link. */
+function atualizarURLStateDoFiltro() {
+  try {
+    const params = new URLSearchParams();
+    if (filtroAtual && filtroAtual !== 'todos') params.set('f', filtroAtual);
+    // UFs ativas: só se NÃO for o conjunto padrão
+    const ufsDefault = ['PR','RS','SP','MG','RJ','PE','PA','AP'].sort().join(',');
+    const ufsAtivas = [...estadosAtivos].sort().join(',');
+    if (ufsAtivas !== ufsDefault) params.set('uf', ufsAtivas);
+    // Modo município ativo
+    if (modoMunicipio && muniNomeAtivo) {
+      params.set('muni', muniNomeAtivo);
+      if (muniUFAtiva) params.set('muniUF', muniUFAtiva);
+    }
+    // Busca textual se tiver
+    const busca = document.getElementById('busca-input')?.value.trim();
+    if (busca) params.set('q', busca);
+
+    const novaUrl = params.toString()
+      ? `${location.pathname}?${params}`
+      : location.pathname;
+    history.replaceState(null, '', novaUrl);
+  } catch (e) {}
+}
+
+function restaurarURLState() {
+  try {
+    const params = new URLSearchParams(location.search);
+    // UFs
+    const ufParam = params.get('uf');
+    if (ufParam) {
+      const ufs = ufParam.split(',').filter(Boolean);
+      if (ufs.length > 0) {
+        estadosAtivos = new Set(ufs);
+        document.querySelectorAll('.uf-chip').forEach(chip => {
+          const ativa = estadosAtivos.has(chip.dataset.uf);
+          chip.classList.toggle('ativo', ativa);
+          chip.classList.toggle('inativo', !ativa);
+        });
+      }
+    }
+    // Busca textual
+    const q = params.get('q');
+    if (q) document.getElementById('busca-input').value = q;
+    // Filtro (aplica após renderização ter acontecido via init)
+    const f = params.get('f');
+    if (f) {
+      // Encontrar botão correspondente e simular click (sem provocar loop de URL)
+      filtroAtual = f;
+      const btns = {
+        'novos':     '.nav-item[onclick*="\'novos\'"]',
+        'urgente':   '.nav-item[onclick*="\'urgente\'"]',
+        'alta':      '.nav-item[onclick*="\'alta\'"]',
+        'encerrado': '.nav-item[onclick*="\'encerrado\'"]',
+        'govbr':     '.company-item[onclick*="\'govbr\'"]',
+        'equiplano': '.company-item[onclick*="\'equiplano\'"]',
+        'ids':       '.company-item[onclick*="\'ids\'"]',
+        'layers':    '.company-item[onclick*="\'layers\'"]',
+        'pncp':      '.chip[onclick*="\'pncp\'"]',
+        'pcp':       '.chip[onclick*="\'pcp\'"]'
+      };
+      const seletor = btns[f];
+      if (seletor) {
+        const btn = document.querySelector(seletor);
+        if (btn) {
+          document.querySelectorAll('.nav-item.active, .chip.active').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        }
+      }
+    }
+    // Município (busca automática se presente)
+    const muni = params.get('muni');
+    if (muni) {
+      const muniUF = params.get('muniUF') || '';
+      document.getElementById('muni-nome-input').value = muni;
+      if (muniUF) document.getElementById('muni-uf-sel').value = muniUF;
+      // Agenda a busca para depois da inicialização
+      setTimeout(() => buscarPorMunicipio(), 500);
+    }
+  } catch (e) {}
+}
+
+/* ====================== EXPORTAÇÃO (B3) ====================== */
+/* Exporta os editais VISÍVEIS no feed (respeita filtros) para vários formatos. */
+function obterEditaisVisiveis() {
+  const visiveis = [];
+  document.querySelectorAll('.feed .edital:not(.hidden)').forEach(el => {
+    const idx = parseInt(el.id.replace('edital-', ''));
+    if (!isNaN(idx) && editaisCarregados[idx]) {
+      visiveis.push(editaisCarregados[idx]);
+    }
+  });
+  return visiveis;
+}
+
+function exportarCSV() {
+  const editais = obterEditaisVisiveis();
+  if (editais.length === 0) { alertaExport('Nenhum edital visível para exportar.'); return; }
+  const escaparCSV = (v) => {
+    if (v === null || v === undefined) return '';
+    const s = String(v);
+    return (s.includes(',') || s.includes('"') || s.includes('\n'))
+      ? `"${s.replace(/"/g, '""')}"`
+      : s;
+  };
+  const colunas = ['Score','Empresa','Portal','Órgão','Município','UF','Nº Edital','Valor','Abertura','Encerramento','Publicação','Modalidade','Nº Controle','Keywords','Link','Objeto'];
+  const linhas = editais.map(e => [
+    e.score, e.empresa, e.portal, e.orgao, e.municipio, e.uf, e.numeroEdital,
+    e.valor, e.dataAbertura, e.dataEncerramento, e.dataPublicacao,
+    e.modalidade, e.numeroControle, e.kwsEncontradas.join('; '),
+    e.link, e.tituloFull || e.titulo
+  ].map(escaparCSV).join(','));
+  const csv = '\ufeff' + colunas.join(',') + '\n' + linhas.join('\n');  // BOM para Excel pt-BR
+  baixarArquivo(csv, `monitor-licitacoes-${dataHoje()}.csv`, 'text/csv;charset=utf-8');
+  fecharMenuExport();
+}
+
+function exportarMarkdown() {
+  const editais = obterEditaisVisiveis();
+  if (editais.length === 0) { alertaExport('Nenhum edital visível para exportar.'); return; }
+  const nomeEmp = { govbr: 'GovernançaBrasil', equiplano: 'Equiplano', ids: 'IDS', layers: 'Layers' };
+  const linhas = editais.map(e => {
+    const emp = e.empresa ? ` [${nomeEmp[e.empresa]}]` : '';
+    const urg = e.urgente ? ' ⚠️' : '';
+    const kws = e.kwsEncontradas.length > 0 ? ` _(${e.kwsEncontradas.slice(0,3).join(', ')})_` : '';
+    return `### ${e.score}% · ${e.orgao}${e.municipio ? ' — ' + e.municipio : ''} (${e.uf})${emp}${urg}
+- **Objeto:** ${e.tituloFull || e.titulo}
+- **Valor:** ${e.valorFmt} · **Prazo:** ${e.prazo.label} · **Abertura:** ${e.dataAberturaFmt || '—'} · **Encerramento:** ${e.dataEncerramentoFmt || '—'}
+- **Portal:** ${e.portal}${e.modalidade ? ' · **Modalidade:** ' + e.modalidade : ''}${e.numeroEdital ? ' · **Edital:** ' + e.numeroEdital : ''}${kws}
+- [Abrir edital →](${e.link})
+`;
+  });
+  const cabecalho = `# Monitor de Licitações — ${editais.length} editais
+_Exportado em ${new Date().toLocaleString('pt-BR')}_
+
+`;
+  baixarArquivo(cabecalho + linhas.join('\n'), `monitor-licitacoes-${dataHoje()}.md`, 'text/markdown;charset=utf-8');
+  fecharMenuExport();
+}
+
+function exportarLink() {
+  const url = location.href;
+  navigator.clipboard?.writeText(url).then(() => {
+    alertaExport('✓ Link copiado para área de transferência.');
+  }).catch(() => {
+    // Fallback para navegadores sem Clipboard API
+    prompt('Copie este link:', url);
+  });
+  fecharMenuExport();
+}
+
+function dataHoje() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function baixarArquivo(conteudo, nome, tipo) {
+  const blob = new Blob([conteudo], { type: tipo });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = nome;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function toggleMenuExport(e) {
+  e?.stopPropagation();
+  const menu = document.getElementById('export-menu');
+  if (menu) menu.classList.toggle('open');
+}
+function fecharMenuExport() {
+  const menu = document.getElementById('export-menu');
+  if (menu) menu.classList.remove('open');
+}
+function alertaExport(msg) {
+  const ok = document.getElementById('sucesso-bar');
+  ok.textContent = msg;
+  ok.style.display = 'block';
+  setTimeout(() => ok.style.display = 'none', 3000);
+}
+
+/* ====================== NOVIDADES (A4) ====================== */
+/* Compara IDs da busca atual com snapshot anterior salvo em localStorage.
+   Marca edital.novo = true para os inéditos, que ganham badge visual.
+   O snapshot é atualizado APÓS a comparação (próxima busca será vs essa). */
+function marcarNovosEAtualizarSnapshot(editais) {
+  try {
+    const snapshotAnterior = JSON.parse(localStorage.getItem('ml_ultima_busca_ids') || '[]');
+    const idsAnteriores = new Set(snapshotAnterior);
+    let novosCount = 0;
+    editais.forEach(e => {
+      // Primeira busca (sem snapshot): ninguém é "novo"
+      if (snapshotAnterior.length === 0) {
+        e.novo = false;
+      } else if (!idsAnteriores.has(e.id)) {
+        e.novo = true;
+        novosCount++;
+      } else {
+        e.novo = false;
+      }
+    });
+    // Atualiza snapshot com IDs da busca atual (até 500 pra não crescer sem limite)
+    const idsAtuais = editais.slice(0, 500).map(e => e.id);
+    localStorage.setItem('ml_ultima_busca_ids', JSON.stringify(idsAtuais));
+    return novosCount;
+  } catch (e) {
+    // Se localStorage falhar, não quebra — só não marca ninguém
+    editais.forEach(e => { e.novo = false; });
+    return 0;
   }
 }
 
@@ -2197,9 +2529,10 @@ function renderCard(e, i) {
     ? `${Math.abs(e.prazo.dias)} dia${Math.abs(e.prazo.dias) !== 1 ? 's' : ''}`
     : e.prazo.label;
 
-  return `<article class="edital${urg}${vis}${e.encerrado ? ' encerrado' : ''}"
+  return `<article class="edital${urg}${vis}${e.encerrado ? ' encerrado' : ''}${e.novo ? ' novo' : ''}"
     data-uf="${e.uf}" data-score="${e.score}"
     data-urgente="${e.urgente?1:0}" data-encerrado="${e.encerrado?1:0}"
+    data-novo="${e.novo?1:0}"
     data-empresa="${e.empresa}"
     data-portal="${e.portalTipo}" id="edital-${i}"
     style="--score:${e.score}; --score-color:${scoreColor}">
@@ -2211,6 +2544,7 @@ function renderCard(e, i) {
 
     <div class="bid-body" onclick="analisarEdital(${i})">
       <div class="bid-meta">
+        ${e.novo ? '<span class="novo-badge">✨ Novo</span>' : ''}
         ${tagPort}
         <span class="orgao-line">${orgaoCompleto} <span class="sep">·</span> ${e.uf}${e.numeroEdital ? ` <span class="sep">·</span> ${e.numeroEdital}` : ''}</span>
         ${statusPill}
@@ -2271,6 +2605,7 @@ function renderCard(e, i) {
 function atualizarMetricas() {
   const ativos  = editaisCarregados.filter(e => !e.encerrado);
   const encerr  = editaisCarregados.filter(e => e.encerrado);
+  const novos   = ativos.filter(e => e.novo);
   const total   = ativos.length;
   const alta    = ativos.filter(e => e.score >= 70).length;
   const urg     = ativos.filter(e => e.urgente).length;
@@ -2287,6 +2622,7 @@ function atualizarMetricas() {
   // Topbar / sidebar counts
   document.getElementById('topbar-bids').textContent = total;
   document.getElementById('nav-cnt-todos').textContent     = total || '—';
+  document.getElementById('nav-cnt-novos').textContent     = novos.length || '—';
   document.getElementById('nav-cnt-urgente').textContent   = urg || '—';
   document.getElementById('nav-cnt-alta').textContent      = alta || '—';
   document.getElementById('nav-cnt-encerrado').textContent = encerr.length || '—';
@@ -2326,6 +2662,7 @@ function aplicarFiltros() {
     // Filtro principal
     if      (filtroAtual === 'alta')      fOk = sc >= 70 && !enc;
     else if (filtroAtual === 'urgente')   fOk = urg && !enc;
+    else if (filtroAtual === 'novos')     fOk = el.dataset.novo === '1' && !enc;
     else if (filtroAtual === 'encerrado') fOk = enc;
     else if (['govbr','equiplano','ids','layers'].includes(filtroAtual)) fOk = emp === filtroAtual && !enc;
     else if (filtroAtual === 'pncp')      fOk = port === 'pncp' && !enc;
@@ -2359,6 +2696,7 @@ function filtrarFeed(btn, f) {
   // Atualizar o título da seção principal conforme o filtro
   const titles = {
     'todos':     'Feed de editais',
+    'novos':     'Editais novos desde a última busca',
     'urgente':   'Encerrando em < 5 dias',
     'alta':      'Editais de alta relevância',
     'encerrado': 'Editais encerrados (histórico)',
@@ -2373,6 +2711,7 @@ function filtrarFeed(btn, f) {
   if (tt && titles[f]) tt.textContent = titles[f];
   // Re-renderiza para aplicar a separação ativos/encerrados conforme novo filtro
   renderizarEditais(editaisCarregados);
+  atualizarURLStateDoFiltro();
 }
 
 function toggleUF(card) {
@@ -2386,6 +2725,8 @@ function toggleUF(card) {
     card.classList.replace('inativo','ativo');
   }
   aplicarFiltros();
+  atualizarMetricas();  // contadores reativos ao filtro (prévia de A3)
+  atualizarURLStateDoFiltro();
 }
 
 /* ====================== AÇÕES EDITAL ====================== */
@@ -2574,8 +2915,16 @@ async function perguntarIA() {
   }
 
   // Filtro de texto em tempo real
-  document.getElementById('busca-input').addEventListener('input', aplicarFiltros);
+  document.getElementById('busca-input').addEventListener('input', () => { aplicarFiltros(); atualizarURLStateDoFiltro(); });
   document.getElementById('kw-in').addEventListener('keydown', e => { if (e.key==='Enter') addKw(); });
+
+  // Fechar menu de exportação ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.export-dropdown')) fecharMenuExport();
+  });
+
+  // Restaurar estado da URL (deep-linking)
+  restaurarURLState();
 })();
 </script>
 </body>
