@@ -2169,11 +2169,12 @@ function renderCard(e, i) {
   }
 
   // Tooltip com texto completo — só quando o título foi truncado
-  // (comparar o objeto original vs título exibido)
+  // IMPORTANTE: não usar 'title' (gera tooltip nativo do navegador e duplica o customizado).
+  // 'aria-label' informa leitores de tela sem renderizar tooltip visual.
   const tituloFoiTruncado = e.tituloFull && e.tituloFull !== e.titulo;
   const textoCompleto = tituloFoiTruncado ? escapeAttr(e.tituloFull) : '';
   const tituloAttrs = tituloFoiTruncado
-    ? ` data-full="${textoCompleto}" title="${textoCompleto}" tabindex="0"`
+    ? ` data-full="${textoCompleto}" aria-label="${textoCompleto}" tabindex="0"`
     : '';
 
   // Countdown class e legenda
