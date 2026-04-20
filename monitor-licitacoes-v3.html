@@ -895,6 +895,130 @@ body::before {
 }
 .btn-ask:hover { background: var(--accent-dim); border-color: var(--accent-dim); }
 
+/* ---------- TOOLTIP (objeto completo do edital) ---------- */
+.bid-title {
+  position: relative;
+  cursor: help;
+}
+/* Só mostra o tooltip se o título estiver truncado (tem data-full diferente) */
+.bid-title[data-full]::after {
+  content: attr(data-full);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 100;
+
+  max-width: min(560px, calc(100vw - 48px));
+  min-width: 280px;
+  padding: 12px 16px;
+
+  background: var(--bg-1);
+  color: var(--ink-hi);
+  border: 1px solid var(--stroke-hi);
+  border-radius: var(--radius-sm);
+  box-shadow:
+    0 4px 6px rgba(0,0,0,.1),
+    0 10px 25px rgba(0,0,0,.2);
+
+  /* Tipografia do tooltip: body legível, não display */
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.55;
+  letter-spacing: 0;
+  white-space: normal;
+  text-align: left;
+
+  /* Estado inicial: oculto */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition:
+    opacity .15s ease .2s,       /* delay de 200ms para não ativar em passagem rápida */
+    visibility 0s linear .35s,
+    transform .15s ease .2s;
+
+  pointer-events: none;
+}
+[data-theme="light"] .bid-title[data-full]::after {
+  background: var(--bg-2);
+  box-shadow:
+    0 4px 6px rgba(26,29,36,.08),
+    0 10px 25px rgba(26,29,36,.12);
+}
+
+/* Seta apontando para o título */
+.bid-title[data-full]::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: calc(100% + 2px);
+  z-index: 101;
+  width: 10px;
+  height: 10px;
+  background: var(--bg-1);
+  border-left: 1px solid var(--stroke-hi);
+  border-top: 1px solid var(--stroke-hi);
+  transform: rotate(45deg) translateY(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .15s ease .2s, visibility 0s linear .35s;
+  pointer-events: none;
+}
+[data-theme="light"] .bid-title[data-full]::before { background: var(--bg-2); }
+
+/* Mostra o tooltip no hover (e ao focar via tab) */
+.bid-title[data-full]:hover::after,
+.bid-title[data-full]:focus::after,
+.bid-title[data-full]:hover::before,
+.bid-title[data-full]:focus::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) rotate(0);
+  transition-delay: .2s, 0s, .2s;
+}
+.bid-title[data-full]:hover::before,
+.bid-title[data-full]:focus::before {
+  transform: rotate(45deg) translateY(0);
+}
+
+/* Para cards próximos ao fim do feed: abre pra cima em vez de pra baixo */
+.edital:nth-last-child(-n+2) .bid-title[data-full]::after {
+  top: auto;
+  bottom: calc(100% + 8px);
+  transform: translateY(4px);
+}
+.edital:nth-last-child(-n+2) .bid-title[data-full]:hover::after,
+.edital:nth-last-child(-n+2) .bid-title[data-full]:focus::after {
+  transform: translateY(0);
+}
+.edital:nth-last-child(-n+2) .bid-title[data-full]::before {
+  top: auto;
+  bottom: calc(100% + 2px);
+  border-left: none;
+  border-top: none;
+  border-right: 1px solid var(--stroke-hi);
+  border-bottom: 1px solid var(--stroke-hi);
+  transform: rotate(45deg) translateY(-4px);
+}
+.edital:nth-last-child(-n+2) .bid-title[data-full]:hover::before,
+.edital:nth-last-child(-n+2) .bid-title[data-full]:focus::before {
+  transform: rotate(45deg) translateY(0);
+}
+
+/* Indicador visual discreto: sublinhado pontilhado no título quando truncado */
+.bid-title[data-full] {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--ink-ghost);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+.bid-title[data-full]:hover {
+  text-decoration-color: var(--accent);
+}
+
 /* ---------- SCROLLBAR ---------- */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg-0); }
@@ -1548,6 +1672,17 @@ function formatData(dataStr) {
   } catch { return dataStr; }
 }
 
+/* Escapa string para ser usada como valor de atributo HTML sem quebrar */
+function escapeAttr(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 /* ====================== APIs ====================== */
 function xhrGet(url) {
   if (typeof fetch === 'function' && window.location.protocol !== 'file:') {
@@ -2033,6 +2168,14 @@ function renderCard(e, i) {
     tituloHighlight = e.titulo.replace(re, '<mark>$1</mark>');
   }
 
+  // Tooltip com texto completo — só quando o título foi truncado
+  // (comparar o objeto original vs título exibido)
+  const tituloFoiTruncado = e.tituloFull && e.tituloFull !== e.titulo;
+  const textoCompleto = tituloFoiTruncado ? escapeAttr(e.tituloFull) : '';
+  const tituloAttrs = tituloFoiTruncado
+    ? ` data-full="${textoCompleto}" title="${textoCompleto}" tabindex="0"`
+    : '';
+
   // Countdown class e legenda
   let countdownClass = '';
   let countdownLegenda = '';
@@ -2072,7 +2215,7 @@ function renderCard(e, i) {
         ${statusPill}
         ${tagEmp}
       </div>
-      <h3 class="bid-title">${tituloHighlight}</h3>
+      <h3 class="bid-title"${tituloAttrs}>${tituloHighlight}</h3>
       <div class="bid-details">
         <div class="detail">
           <span class="detail-label">Valor</span>
