@@ -813,20 +813,6 @@ body::before {
 .bid-link .arrow { transition: transform .15s; }
 .bid-link:hover .arrow { transform: translateX(2px); }
 
-.bid-side-actions {
-  display: flex; gap: 6px;
-}
-.bid-side-btn {
-  font-family: var(--ff-mono); font-size: 10px; font-weight: 600;
-  padding: 4px 8px; border-radius: var(--radius-sm);
-  border: 1px solid var(--stroke);
-  background: transparent; color: var(--ink-lo);
-  cursor: pointer; transition: all .15s;
-  text-transform: uppercase; letter-spacing: 0.5px;
-}
-.bid-side-btn:hover.btn-visto    { background: var(--ok-bg);   color: var(--ok);   border-color: var(--ok); }
-.bid-side-btn:hover.btn-descartar{ background: var(--live-bg); color: var(--live); border-color: var(--live); }
-
 .empty-feed {
   text-align: center; padding: 40px 0;
   color: var(--ink-lo); font-family: var(--ff-mono);
@@ -1100,6 +1086,109 @@ body::before {
   border-left-style: dashed;
 }
 
+/* ---------- BOTÕES DE AÇÃO NO CARD (Opção B) ---------- */
+.bid-side-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.bid-side-btn {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--stroke);
+  background: transparent;
+  color: var(--ink-lo);
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1;
+}
+.bid-side-btn svg { flex-shrink: 0; }
+
+/* Acompanhar — laranja/âmbar (combina com estrela de favorito) */
+.bid-side-btn.btn-acompanhar:hover {
+  background: var(--warn-bg);
+  color: var(--warn);
+  border-color: var(--warn);
+}
+.bid-side-btn.btn-acompanhar.ativo {
+  background: var(--warn-bg);
+  color: var(--warn);
+  border-color: var(--warn);
+}
+.bid-side-btn.btn-acompanhar.ativo:hover {
+  background: var(--warn);
+  color: var(--bg-0);
+}
+[data-theme="light"] .bid-side-btn.btn-acompanhar.ativo:hover { color: var(--bg-2); }
+
+/* Já vi — verde/ok */
+.bid-side-btn.btn-ja-vi:hover {
+  background: var(--ok-bg);
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.bid-side-btn.btn-ja-vi.ativo {
+  background: var(--ok-bg);
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+/* Dispensar — vermelho/live */
+.bid-side-btn.btn-dispensar:hover {
+  background: var(--live-bg);
+  color: var(--live);
+  border-color: var(--live);
+}
+
+/* Restaurar (só aparece em dispensados) — azul/info */
+.bid-side-btn.btn-restaurar {
+  background: var(--info-bg);
+  color: var(--info);
+  border-color: var(--info);
+}
+.bid-side-btn.btn-restaurar:hover {
+  background: var(--info);
+  color: var(--bg-0);
+}
+[data-theme="light"] .bid-side-btn.btn-restaurar:hover { color: var(--bg-2); }
+
+/* Visual do card quando Acompanhando — destaque sutil com estrela âmbar */
+.edital.acompanhando:not(.urgente):not(.encerrado):not(.dispensado) {
+  border-left: 3px solid var(--warn);
+}
+.edital.acompanhando .bid-score::after {
+  content: '★';
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  color: var(--warn);
+  font-size: 14px;
+  text-shadow: 0 0 4px var(--warn-bg);
+  z-index: 2;
+}
+.edital.acompanhando .bid-score { position: relative; }
+
+/* Visual do card quando Dispensado — bem desbotado, padrão listrado */
+.edital.dispensado {
+  opacity: .5;
+  border-style: dashed !important;
+  background: transparent !important;
+}
+.edital.dispensado:hover { opacity: .75; }
+.edital.dispensado .bid-title {
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-ghost);
+  text-decoration-thickness: 1px;
+}
+
 /* ---------- SCROLLBAR ---------- */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg-0); }
@@ -1168,10 +1257,20 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         Alta relevância
         <span class="nav-count" id="nav-cnt-alta">—</span>
       </button>
+      <button class="nav-item" onclick="filtrarFeed(this,'acompanhando')" title="Editais que você pinou para acompanhar">
+        <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+        Acompanhando
+        <span class="nav-count" id="nav-cnt-acompanhando">—</span>
+      </button>
       <button class="nav-item" onclick="filtrarFeed(this,'encerrado')" title="Mostrar editais já encerrados (histórico)">
         <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M6 6l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14M10 11v6M14 11v6"/></svg>
         Encerrados
         <span class="nav-count" id="nav-cnt-encerrado">—</span>
+      </button>
+      <button class="nav-item" onclick="filtrarFeed(this,'dispensado')" title="Editais que você dispensou — você pode restaurar clicando em ↩">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M6 6l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14"/><path d="M9 11l6 6M15 11l-6 6"/></svg>
+        Dispensados
+        <span class="nav-count" id="nav-cnt-dispensado">—</span>
       </button>
     </nav>
 
@@ -1518,6 +1617,7 @@ let apiKey        = localStorage.getItem('ml_api_key') || '';
 let editaisCarregados = [];
 let descartados   = JSON.parse(localStorage.getItem('ml_descartados') || '[]');
 let vistos        = JSON.parse(localStorage.getItem('ml_vistos') || '[]');
+let acompanhando  = JSON.parse(localStorage.getItem('ml_acompanhando') || '[]');
 
 let modoMunicipio = false;
 let muniUFAtiva   = '';
@@ -2039,6 +2139,11 @@ async function buscarPorMunicipio() {
   document.getElementById('divider-feed-title').textContent = `Editais em ${muniLabel}`;
 
   ordenarEditais(editaisCarregados);
+  // Aplica flags persistentes
+  editaisCarregados.forEach(e => {
+    e.acompanhando = acompanhando.includes(e.id);
+    e.dispensado   = descartados.includes(e.id);
+  });
   marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
   renderizarEditais(editaisCarregados);
@@ -2127,7 +2232,11 @@ async function executarBusca() {
     } catch(e) {}
   }
 
-  editaisCarregados = editaisCarregados.filter(e => !descartados.includes(e.id));
+  // Marca cada edital com flags persistentes (acompanhando, dispensado, visto)
+  editaisCarregados.forEach(e => {
+    e.acompanhando = acompanhando.includes(e.id);
+    e.dispensado   = descartados.includes(e.id);
+  });
   ordenarEditais(editaisCarregados);
   const novosCount = marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
@@ -2209,10 +2318,12 @@ function restaurarURLState() {
       // Encontrar botão correspondente e simular click (sem provocar loop de URL)
       filtroAtual = f;
       const btns = {
-        'novos':     '.nav-item[onclick*="\'novos\'"]',
-        'urgente':   '.nav-item[onclick*="\'urgente\'"]',
-        'alta':      '.nav-item[onclick*="\'alta\'"]',
-        'encerrado': '.nav-item[onclick*="\'encerrado\'"]',
+        'novos':        '.nav-item[onclick*="\'novos\'"]',
+        'urgente':      '.nav-item[onclick*="\'urgente\'"]',
+        'alta':         '.nav-item[onclick*="\'alta\'"]',
+        'acompanhando': '.nav-item[onclick*="\'acompanhando\'"]',
+        'encerrado':    '.nav-item[onclick*="\'encerrado\'"]',
+        'dispensado':   '.nav-item[onclick*="\'dispensado\'"]',
         'govbr':     '.company-item[onclick*="\'govbr\'"]',
         'equiplano': '.company-item[onclick*="\'equiplano\'"]',
         'ids':       '.company-item[onclick*="\'ids\'"]',
@@ -2427,12 +2538,36 @@ function renderizarEditais(lista) {
     return;
   }
 
-  // Editais ativos x encerrados
-  const ativos = lista.filter(e => !e.encerrado);
-  const encerrados = lista.filter(e => e.encerrado);
+  // Filtro "Dispensados" tem lógica própria — mostra só os descartados
+  if (filtroAtual === 'dispensado') {
+    const dispensados = lista.filter(e => e.dispensado);
+    dividerUrg.style.display = 'none';
+    feedUrg.style.display = 'none';
+    cntFeed.textContent = `${dispensados.length} ${dispensados.length === 1 ? 'item dispensado' : 'itens dispensados'}`;
+    c.innerHTML = dispensados.length > 0
+      ? dispensados.map(e => renderCard(e, lista.indexOf(e))).join('')
+      : '<div class="empty-feed">Nenhum edital dispensado. Use o botão 🗑 nos cards para dispensar.</div>';
+    aplicarFiltros();
+    return;
+  }
 
-  // Seção "Urgentes" só aparece se NÃO estiver no filtro de encerrados
-  // e se houver urgentes ativos
+  // Filtro "Acompanhando" também tem lógica própria — só os pinados
+  if (filtroAtual === 'acompanhando') {
+    const acomps = lista.filter(e => e.acompanhando && !e.dispensado);
+    dividerUrg.style.display = 'none';
+    feedUrg.style.display = 'none';
+    cntFeed.textContent = `${acomps.length} ${acomps.length === 1 ? 'item acompanhado' : 'itens acompanhados'}`;
+    c.innerHTML = acomps.length > 0
+      ? acomps.map(e => renderCard(e, lista.indexOf(e))).join('')
+      : '<div class="empty-feed">Nenhum edital marcado para acompanhar. Use o botão 📌 nos cards.</div>';
+    aplicarFiltros();
+    return;
+  }
+
+  // Fluxo normal: ativos x encerrados
+  const ativos = lista.filter(e => !e.encerrado && !e.dispensado);
+  const encerrados = lista.filter(e => e.encerrado && !e.dispensado);
+
   const urgentes = ativos.filter(e => e.urgente);
   const naoUrgentes = ativos.filter(e => !e.urgente);
   const mostrarSecaoUrgentes = filtroAtual !== 'encerrado' && urgentes.length > 0;
@@ -2447,9 +2582,6 @@ function renderizarEditais(lista) {
     feedUrg.style.display = 'none';
   }
 
-  // Feed principal: depende do filtro
-  // - filtro 'encerrado': mostra só encerrados
-  // - outros: ativos não-urgentes (urgentes já foram para a seção acima)
   let lista_feed;
   if (filtroAtual === 'encerrado') {
     lista_feed = encerrados;
@@ -2529,10 +2661,12 @@ function renderCard(e, i) {
     ? `${Math.abs(e.prazo.dias)} dia${Math.abs(e.prazo.dias) !== 1 ? 's' : ''}`
     : e.prazo.label;
 
-  return `<article class="edital${urg}${vis}${e.encerrado ? ' encerrado' : ''}${e.novo ? ' novo' : ''}"
+  return `<article class="edital${urg}${vis}${e.encerrado ? ' encerrado' : ''}${e.novo ? ' novo' : ''}${e.acompanhando ? ' acompanhando' : ''}${e.dispensado ? ' dispensado' : ''}"
     data-uf="${e.uf}" data-score="${e.score}"
     data-urgente="${e.urgente?1:0}" data-encerrado="${e.encerrado?1:0}"
     data-novo="${e.novo?1:0}"
+    data-acompanhando="${e.acompanhando?1:0}"
+    data-dispensado="${e.dispensado?1:0}"
     data-empresa="${e.empresa}"
     data-portal="${e.portalTipo}" id="edital-${i}"
     style="--score:${e.score}; --score-color:${scoreColor}">
@@ -2594,8 +2728,31 @@ function renderCard(e, i) {
         Abrir edital <span class="arrow">→</span>
       </a>
       <div class="bid-side-actions">
-        <button class="bid-side-btn btn-visto" onclick="event.stopPropagation();marcarVisto(${i},'${e.id}',this)">✓ Visto</button>
-        <button class="bid-side-btn btn-descartar" onclick="event.stopPropagation();descartar(${i},'${e.id}')">✕</button>
+        ${e.dispensado ? `
+          <button class="bid-side-btn btn-restaurar" onclick="event.stopPropagation();reverterDispensado('${e.id}',this)"
+            title="Restaurar — volta para o feed nas próximas buscas">
+            ↩ Restaurar
+          </button>
+        ` : `
+          <button class="bid-side-btn btn-acompanhar${e.acompanhando ? ' ativo' : ''}"
+            onclick="event.stopPropagation();toggleAcompanhar(${i},'${e.id}',this)"
+            title="${e.acompanhando ? 'Acompanhando — clique para remover' : 'Acompanhar este edital (pinar)'}">
+            <svg viewBox="0 0 24 24" fill="${e.acompanhando ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linejoin="round" width="12" height="12"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            ${e.acompanhando ? 'Acompanhando' : 'Acompanhar'}
+          </button>
+          <button class="bid-side-btn btn-ja-vi${vistos.includes(e.id) ? ' ativo' : ''}"
+            onclick="event.stopPropagation();marcarVisto(${i},'${e.id}',this)"
+            title="${vistos.includes(e.id) ? 'Analisado — clique para desmarcar' : 'Marcar como já analisado'}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            ${vistos.includes(e.id) ? 'Analisado' : 'Já vi'}
+          </button>
+          <button class="bid-side-btn btn-dispensar"
+            onclick="event.stopPropagation();descartar(${i},'${e.id}')"
+            title="Dispensar — não mostrar mais este edital (reversível em Dispensados)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M6 6l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14"/></svg>
+            Dispensar
+          </button>
+        `}
       </div>
     </div>
   </article>`;
@@ -2603,9 +2760,12 @@ function renderCard(e, i) {
 
 /* ====================== MÉTRICAS ====================== */
 function atualizarMetricas() {
-  const ativos  = editaisCarregados.filter(e => !e.encerrado);
-  const encerr  = editaisCarregados.filter(e => e.encerrado);
+  const naoDispensados = editaisCarregados.filter(e => !e.dispensado);
+  const ativos  = naoDispensados.filter(e => !e.encerrado);
+  const encerr  = naoDispensados.filter(e => e.encerrado);
   const novos   = ativos.filter(e => e.novo);
+  const acomps  = ativos.filter(e => e.acompanhando);
+  const dispens = editaisCarregados.filter(e => e.dispensado);
   const total   = ativos.length;
   const alta    = ativos.filter(e => e.score >= 70).length;
   const urg     = ativos.filter(e => e.urgente).length;
@@ -2621,11 +2781,13 @@ function atualizarMetricas() {
 
   // Topbar / sidebar counts
   document.getElementById('topbar-bids').textContent = total;
-  document.getElementById('nav-cnt-todos').textContent     = total || '—';
-  document.getElementById('nav-cnt-novos').textContent     = novos.length || '—';
-  document.getElementById('nav-cnt-urgente').textContent   = urg || '—';
-  document.getElementById('nav-cnt-alta').textContent      = alta || '—';
-  document.getElementById('nav-cnt-encerrado').textContent = encerr.length || '—';
+  document.getElementById('nav-cnt-todos').textContent       = total || '—';
+  document.getElementById('nav-cnt-novos').textContent       = novos.length || '—';
+  document.getElementById('nav-cnt-urgente').textContent     = urg || '—';
+  document.getElementById('nav-cnt-alta').textContent        = alta || '—';
+  document.getElementById('nav-cnt-acompanhando').textContent = acomps.length || '—';
+  document.getElementById('nav-cnt-encerrado').textContent   = encerr.length || '—';
+  document.getElementById('nav-cnt-dispensado').textContent  = dispens.length || '—';
 
   ['govbr','equiplano','ids','layers'].forEach(emp => {
     const n = ativos.filter(e => e.empresa === emp).length;
@@ -2654,21 +2816,25 @@ function aplicarFiltros() {
   items.forEach(el => {
     const uf = el.dataset.uf, sc = parseInt(el.dataset.score), urg = el.dataset.urgente === '1';
     const enc = el.dataset.encerrado === '1';
+    const acomp = el.dataset.acompanhando === '1';
+    const disp  = el.dataset.dispensado === '1';
     const emp = el.dataset.empresa || '', port = el.dataset.portal || '';
     const tit = el.querySelector('.bid-title')?.textContent?.toLowerCase() || '';
     const ufOk = estadosAtivos.has(uf);
     let fOk = true;
 
     // Filtro principal
-    if      (filtroAtual === 'alta')      fOk = sc >= 70 && !enc;
-    else if (filtroAtual === 'urgente')   fOk = urg && !enc;
-    else if (filtroAtual === 'novos')     fOk = el.dataset.novo === '1' && !enc;
-    else if (filtroAtual === 'encerrado') fOk = enc;
-    else if (['govbr','equiplano','ids','layers'].includes(filtroAtual)) fOk = emp === filtroAtual && !enc;
-    else if (filtroAtual === 'pncp')      fOk = port === 'pncp' && !enc;
-    else if (filtroAtual === 'pcp')       fOk = port === 'pcp' && !enc;
-    else if (filtroAtual === 'todos')     fOk = !enc;  // por padrão esconde encerrados
-    else fOk = !enc;
+    if      (filtroAtual === 'alta')         fOk = sc >= 70 && !enc && !disp;
+    else if (filtroAtual === 'urgente')      fOk = urg && !enc && !disp;
+    else if (filtroAtual === 'novos')        fOk = el.dataset.novo === '1' && !enc && !disp;
+    else if (filtroAtual === 'encerrado')    fOk = enc && !disp;
+    else if (filtroAtual === 'acompanhando') fOk = acomp && !disp;
+    else if (filtroAtual === 'dispensado')   fOk = disp;
+    else if (['govbr','equiplano','ids','layers'].includes(filtroAtual)) fOk = emp === filtroAtual && !enc && !disp;
+    else if (filtroAtual === 'pncp')         fOk = port === 'pncp' && !enc && !disp;
+    else if (filtroAtual === 'pcp')          fOk = port === 'pcp' && !enc && !disp;
+    else if (filtroAtual === 'todos')        fOk = !enc && !disp;  // padrão esconde encerrados E dispensados
+    else fOk = !enc && !disp;
 
     const show = ufOk && fOk && (!busca || tit.includes(busca));
     el.classList.toggle('hidden', !show);
@@ -2695,17 +2861,19 @@ function filtrarFeed(btn, f) {
   filtroAtual = f;
   // Atualizar o título da seção principal conforme o filtro
   const titles = {
-    'todos':     'Feed de editais',
-    'novos':     'Editais novos desde a última busca',
-    'urgente':   'Encerrando em < 5 dias',
-    'alta':      'Editais de alta relevância',
-    'encerrado': 'Editais encerrados (histórico)',
-    'govbr':     'Editais · GovernançaBrasil',
-    'equiplano': 'Editais · Equiplano',
-    'ids':       'Editais · IDS',
-    'layers':    'Editais · Layers',
-    'pncp':      'Editais do portal PNCP',
-    'pcp':       'Editais do Portal Compras Públicas RS'
+    'todos':        'Feed de editais',
+    'novos':        'Editais novos desde a última busca',
+    'urgente':      'Encerrando em < 5 dias',
+    'alta':         'Editais de alta relevância',
+    'acompanhando': 'Editais que você está acompanhando',
+    'encerrado':    'Editais encerrados (histórico)',
+    'dispensado':   'Editais dispensados — você pode restaurar qualquer um',
+    'govbr':        'Editais · GovernançaBrasil',
+    'equiplano':    'Editais · Equiplano',
+    'ids':          'Editais · IDS',
+    'layers':       'Editais · Layers',
+    'pncp':         'Editais do portal PNCP',
+    'pcp':          'Editais do Portal Compras Públicas RS'
   };
   const tt = document.getElementById('divider-feed-title');
   if (tt && titles[f]) tt.textContent = titles[f];
@@ -2730,25 +2898,79 @@ function toggleUF(card) {
 }
 
 /* ====================== AÇÕES EDITAL ====================== */
+/* Três ações distintas com intenções diferentes:
+   - toggleAcompanhar: pinar para acompanhar (destaque nas próximas buscas)
+   - marcarVisto: marcar como já analisado (fica desbotado)
+   - descartar: esconder permanentemente (reversível via filtro Dispensados) */
+
+function toggleAcompanhar(idx, id, btn) {
+  const estava = acompanhando.includes(id);
+  if (estava) {
+    acompanhando = acompanhando.filter(x => x !== id);
+    btn.classList.remove('ativo');
+    btn.title = 'Acompanhar este edital (pinar)';
+  } else {
+    acompanhando.push(id);
+    btn.classList.add('ativo');
+    btn.title = 'Acompanhando — clique para remover';
+  }
+  localStorage.setItem('ml_acompanhando', JSON.stringify(acompanhando));
+  // Atualiza classe no card para aplicar visual de acompanhando
+  const card = document.getElementById(`edital-${idx}`);
+  if (card) card.classList.toggle('acompanhando', !estava);
+  // Atualiza estado no objeto em memória
+  if (editaisCarregados[idx]) editaisCarregados[idx].acompanhando = !estava;
+  atualizarMetricas();
+}
+
 function marcarVisto(idx, id, btn) {
-  if (vistos.includes(id)) return;
-  vistos.push(id);
+  if (vistos.includes(id)) {
+    // Toggle: se já estava marcado, desmarca
+    vistos = vistos.filter(x => x !== id);
+    btn.classList.remove('ativo');
+    btn.title = 'Marcar como já analisado';
+    document.getElementById(`edital-${idx}`)?.classList.remove('visto');
+  } else {
+    vistos.push(id);
+    btn.classList.add('ativo');
+    btn.title = 'Analisado — clique para desmarcar';
+    document.getElementById(`edital-${idx}`)?.classList.add('visto');
+  }
   localStorage.setItem('ml_vistos', JSON.stringify(vistos));
-  document.getElementById(`edital-${idx}`)?.classList.add('visto');
-  btn.style.background = 'var(--ok-bg)';
-  btn.style.color = 'var(--ok)';
-  btn.style.borderColor = 'var(--ok)';
-  btn.textContent = '✓ Visto';
 }
 
 function descartar(idx, id) {
+  if (!confirm('Dispensar este edital? Ele não aparecerá mais em buscas futuras.\n\nVocê pode reverter em "Dispensados" na sidebar.')) return;
   descartados.push(id);
   localStorage.setItem('ml_descartados', JSON.stringify(descartados));
   const el = document.getElementById(`edital-${idx}`);
   if (el) {
-    el.style.transition = 'opacity .3s';
+    el.style.transition = 'opacity .3s, transform .3s';
     el.style.opacity = '0';
-    setTimeout(() => el.remove(), 300);
+    el.style.transform = 'translateX(30px)';
+    setTimeout(() => {
+      el.remove();
+      // Atualiza array em memória pra filtros/contadores baterem
+      if (editaisCarregados[idx]) editaisCarregados[idx].dispensado = true;
+      atualizarMetricas();
+    }, 300);
+  }
+}
+
+function reverterDispensado(id, btnEl) {
+  descartados = descartados.filter(x => x !== id);
+  localStorage.setItem('ml_descartados', JSON.stringify(descartados));
+  // Atualiza em memória e re-renderiza
+  editaisCarregados.forEach(e => {
+    if (e.id === id) e.dispensado = false;
+  });
+  atualizarMetricas();
+  renderizarEditais(editaisCarregados);
+  // Se estávamos no filtro Dispensados e não há mais nenhum, volta pra Feed
+  const aindaTem = editaisCarregados.some(e => e.dispensado);
+  if (filtroAtual === 'dispensado' && !aindaTem) {
+    const btnTodos = document.querySelector('.nav-item[onclick*="\'todos\'"]');
+    if (btnTodos) filtrarFeed(btnTodos, 'todos');
   }
 }
 
