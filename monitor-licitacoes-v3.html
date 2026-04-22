@@ -1383,18 +1383,6 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
           <span class="company-dot" style="background:var(--ok)"></span>
           Compras Públicas RS <span style="color:var(--ok);margin-left:auto;font-size:9px;font-family:var(--ff-mono)">●</span>
         </button>
-        <div class="company-item" style="opacity:.5;cursor:default">
-          <span class="company-dot" style="background:var(--c-ids)"></span>
-          BLL Compras
-        </div>
-        <div class="company-item" style="opacity:.5;cursor:default">
-          <span class="company-dot" style="background:var(--c-equiplano)"></span>
-          ComprasNet
-        </div>
-        <div class="company-item" style="opacity:.5;cursor:default">
-          <span class="company-dot" style="background:var(--warn)"></span>
-          BEC-SP
-        </div>
       </div>
     </nav>
 
@@ -2090,6 +2078,10 @@ function normPNCP(item, uf) {
     if (m) link = `https://pncp.gov.br/app/editais/${m[1]}/${m[2]}/${m[3]}`;
   }
 
+  // Detecção da origem do edital (só metadado informativo no chip do card).
+  // Não são fontes de busca ativa — todos esses portais são agregados pelo PNCP.
+  // Quando o campo link_sistema_origem estiver presente, mostra o nome do portal
+  // original para contexto do usuário.
   const origemUrl = item.link_sistema_origem || item.linkSistemaOrigem || '';
   let portalNome = 'PNCP';
   let portalClass = 'pncp';
