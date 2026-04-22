@@ -381,6 +381,64 @@ body::before {
 .search .icon { width: 14px; height: 14px; stroke: var(--ink-lo); fill: none; stroke-width: 2; }
 
 .filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* ---------- SELETOR DE ORDENAÇÃO ---------- */
+.ordem-seletor {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--bg-2);
+  border: 1px solid var(--stroke);
+  border-radius: 100px;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: border-color .15s;
+}
+[data-theme="light"] .ordem-seletor { background: var(--bg-1); }
+.ordem-seletor:hover { border-color: var(--ink-lo); }
+.ordem-seletor .icon {
+  width: 13px; height: 13px;
+  stroke: var(--ink-lo); fill: none; stroke-width: 2;
+  flex-shrink: 0;
+}
+.ordem-label {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--ink-lo);
+  font-weight: 600;
+}
+.ordem-seletor select {
+  background: transparent;
+  border: none;
+  color: var(--ink-hi);
+  font-family: var(--ff-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 0;
+  cursor: pointer;
+  outline: none;
+  /* Remove a seta padrão e coloca uma customizada */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 14px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%236b7685' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+.ordem-seletor select:hover { color: var(--accent); }
+.ordem-seletor select option {
+  background: var(--bg-1);
+  color: var(--ink-hi);
+}
+
+/* Em telas estreitas, esconde o label e fica só o ícone + select */
+@media (max-width: 900px) {
+  .ordem-label { display: none; }
+}
 .chip {
   font-family: var(--ff-mono); font-size: 11px;
   padding: 5px 10px; border-radius: 100px;
@@ -1448,6 +1506,18 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <button class="chip" onclick="filtrarFeed(this,'pncp')">PNCP</button>
         <button class="chip" onclick="filtrarFeed(this,'pcp')">CP/RS</button>
       </div>
+      <!-- Seletor de ordenação -->
+      <div class="ordem-seletor" title="Ordenar resultados">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M3 6h13M3 12h10M3 18h6M17 9l3-3-3-3M20 6v12"/></svg>
+        <span class="ordem-label">Ordenar:</span>
+        <select id="ordem-select" onchange="mudarOrdenacao(this.value)">
+          <option value="prazo">Encerrando primeiro</option>
+          <option value="score">Maior relevância</option>
+          <option value="recente">Mais recentes</option>
+          <option value="valor">Maior valor</option>
+          <option value="orgao">Órgão A→Z</option>
+        </select>
+      </div>
     </div>
 
     <!-- BUSCA POR MUNICÍPIO -->
@@ -2486,40 +2556,89 @@ function marcarNovosEAtualizarSnapshot(editais) {
 }
 
 /* ====================== ORDENAÇÃO ====================== */
-/* Lógica:
-   1. Editais encerrados vão para o FINAL (são acessíveis pelo filtro "Encerrados")
-   2. Entre os ativos: prioriza menor número de dias até o encerramento
-      (mais próximos do encerramento aparecem primeiro)
-   3. Sem data de encerramento → usa data de abertura como referência
-   4. Desempate: maior score
-   5. Último desempate: ordem original */
+/* Critérios de ordenação suportados (ordemAtual):
+   - 'prazo'   : encerrando primeiro (padrão — original)
+   - 'score'   : maior relevância primeiro
+   - 'recente' : publicado mais recentemente primeiro
+   - 'valor'   : maior valor R$ primeiro
+   - 'orgao'   : alfabético por órgão A→Z
+   Em todos os casos: encerrados vão para o FINAL e dispensados também. */
+let ordemAtual = localStorage.getItem('ml_ordem') || 'prazo';
+
 function ordenarEditais(lista) {
-  lista.sort((a, b) => {
-    // 1. Encerrados ao final
+  const cmpEncerrados = (a, b) => {
+    // Sempre: encerrados ao final
     if (a.encerrado && !b.encerrado) return 1;
     if (!a.encerrado && b.encerrado) return -1;
+    return 0;
+  };
 
-    // 2. Calcular dias para o "evento mais próximo" (encerramento ou abertura)
-    const diasA = a.prazo?.dias;
-    const diasB = b.prazo?.dias;
-
-    // Trata null/undefined: vai para o final
-    if (diasA === null || diasA === undefined) return 1;
-    if (diasB === null || diasB === undefined) return -1;
-
-    // Para encerrados, ordena os mais recentes primeiro (menos negativo = mais próximo do hoje)
-    if (a.encerrado && b.encerrado) {
-      if (diasA !== diasB) return diasB - diasA;  // -1 vem antes de -10
+  const comparadores = {
+    prazo: (a, b) => {
+      const c = cmpEncerrados(a, b); if (c !== 0) return c;
+      const diasA = a.prazo?.dias, diasB = b.prazo?.dias;
+      if (diasA === null || diasA === undefined) return 1;
+      if (diasB === null || diasB === undefined) return -1;
+      // Para encerrados: mais recentes primeiro (menos negativo)
+      if (a.encerrado && b.encerrado) {
+        if (diasA !== diasB) return diasB - diasA;
+        return b.score - a.score;
+      }
+      // Ativos: menor dias = mais urgente
+      if (diasA !== diasB) return diasA - diasB;
+      return b.score - a.score;
+    },
+    score: (a, b) => {
+      const c = cmpEncerrados(a, b); if (c !== 0) return c;
+      // Maior score primeiro
+      if (b.score !== a.score) return b.score - a.score;
+      // Desempate: prazo mais próximo
+      const diasA = a.prazo?.dias ?? Infinity;
+      const diasB = b.prazo?.dias ?? Infinity;
+      return diasA - diasB;
+    },
+    recente: (a, b) => {
+      const c = cmpEncerrados(a, b); if (c !== 0) return c;
+      // Maior data de publicação primeiro
+      const dataA = a.dataPublicacao ? new Date(a.dataPublicacao).getTime() : 0;
+      const dataB = b.dataPublicacao ? new Date(b.dataPublicacao).getTime() : 0;
+      if (dataB !== dataA) return dataB - dataA;
+      return b.score - a.score;
+    },
+    valor: (a, b) => {
+      const c = cmpEncerrados(a, b); if (c !== 0) return c;
+      // Maior valor primeiro; null/0 vai pro final
+      const valA = a.valor || 0;
+      const valB = b.valor || 0;
+      if (valA === 0 && valB > 0) return 1;
+      if (valB === 0 && valA > 0) return -1;
+      if (valB !== valA) return valB - valA;
+      return b.score - a.score;
+    },
+    orgao: (a, b) => {
+      const c = cmpEncerrados(a, b); if (c !== 0) return c;
+      const orgaoA = (a.orgao || '').toLowerCase();
+      const orgaoB = (b.orgao || '').toLowerCase();
+      const cmp = orgaoA.localeCompare(orgaoB, 'pt-BR');
+      if (cmp !== 0) return cmp;
       return b.score - a.score;
     }
+  };
 
-    // Ativos: menor dias = mais urgente = primeiro
-    if (diasA !== diasB) return diasA - diasB;
-
-    // 3. Desempate por score
-    return b.score - a.score;
-  });
+  const cmp = comparadores[ordemAtual] || comparadores.prazo;
+  lista.sort(cmp);
   return lista;
+}
+
+/* Trocar o critério de ordenação e re-renderizar */
+function mudarOrdenacao(novaOrdem) {
+  if (!['prazo','score','recente','valor','orgao'].includes(novaOrdem)) return;
+  ordemAtual = novaOrdem;
+  localStorage.setItem('ml_ordem', novaOrdem);
+  if (editaisCarregados.length > 0) {
+    ordenarEditais(editaisCarregados);
+    renderizarEditais(editaisCarregados);
+  }
 }
 
 /* ====================== RENDERIZAÇÃO ====================== */
@@ -3093,6 +3212,10 @@ async function perguntarIA() {
   const meses = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
   document.getElementById('topbar-date').innerHTML =
     `${dias[hoje.getDay()]} · <b>${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}</b>`;
+
+  // Restaurar critério de ordenação salvo
+  const sel = document.getElementById('ordem-select');
+  if (sel) sel.value = ordemAtual;
 
   // Restaurar keywords salvas
   const kwsSalvas = JSON.parse(localStorage.getItem('ml_kws_todas') || '[]');
