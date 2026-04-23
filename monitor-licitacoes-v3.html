@@ -909,11 +909,39 @@ body::before {
   font-family: var(--ff-mono); font-weight: 600;
   color: var(--accent);
 }
-.detail-value.money.sigiloso {
+.detail-value.money.vazio {
   color: var(--ink-lo);
   font-style: italic;
   font-weight: 500;
-  cursor: help;
+}
+
+/* ---------- MODO DIAGNÓSTICO ---------- */
+.debug-toggle {
+  background: none; border: 1px solid var(--stroke);
+  color: var(--ink-lo);
+  padding: 4px 10px; margin-right: 8px;
+  border-radius: 100px; cursor: pointer;
+  font-size: 12px; line-height: 1;
+  transition: all .15s;
+}
+.debug-toggle:hover { border-color: var(--accent); color: var(--accent); }
+body.debug-ativo .debug-toggle {
+  background: var(--accent); color: var(--accent-ink);
+  border-color: var(--accent);
+}
+/* Quando modo debug ativo: mostra badge com nome do campo da API ao lado do valor */
+body.debug-ativo .detail-value.money::after {
+  content: " [" attr(data-campo-origem) "]";
+  font-family: var(--ff-mono);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--live);
+  margin-left: 4px;
+  text-transform: lowercase;
+}
+body.debug-ativo .detail-value.money:not(.vazio)::after {
+  color: var(--ok);
 }
 .detail-value.mono {
   font-family: var(--ff-mono); font-size: 11px;
@@ -1535,6 +1563,10 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <span><b id="topbar-portais">2</b> portais</span>
       </div>
 
+      <button class="debug-toggle" id="debugToggle" aria-label="Modo diagnóstico" title="Modo diagnóstico — mostra nome do campo da API em cada valor">
+        🔍
+      </button>
+
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema" title="Alternar tema (Shift+D)">
         <span class="knob">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -2149,25 +2181,39 @@ function formatValor(v) {
    campo desconhecidos que estão chegando da API. */
 window.ML_DEBUG_VALOR = window.ML_DEBUG_VALOR || false;
 
-/* Leitura do valor do edital — campos reais confirmados da API /api/search/ do PNCP:
-     valor_global      (mais comum — busca)
-     valorTotal        (algumas respostas)
-     valorEstimado     (dispensas e modalidades alternativas)
-     valor             (fallback genérico)
-   Números em string são convertidos para Number. */
+/* Leitura do valor do edital.
+   Retorna objeto { valor, campo } — 'campo' ajuda a depurar quando debug ativo. */
 function extrairValor(item) {
-  if (!item || typeof item !== 'object') return 0;
-  const raw = item.valor_global
-           ?? item.valorTotal
-           ?? item.valor_total
-           ?? item.valorEstimado
-           ?? item.valor_estimado
-           ?? item.valorTotalEstimado
-           ?? item.valorTotalHomologado
-           ?? item.valor
-           ?? 0;
-  const n = Number(raw);
-  return (!isNaN(n) && n > 0) ? n : 0;
+  if (!item || typeof item !== 'object') return { valor: 0, campo: '' };
+  const candidatos = [
+    'valor_global','valorTotal','valor_total',
+    'valorEstimado','valor_estimado',
+    'valorTotalEstimado','valor_total_estimado',
+    'valorTotalHomologado','valor_total_homologado',
+    'valor'
+  ];
+  for (const k of candidatos) {
+    if (k in item && item[k] !== null && item[k] !== undefined && item[k] !== '') {
+      const n = Number(item[k]);
+      if (!isNaN(n) && n > 0) return { valor: n, campo: k };
+    }
+  }
+  // Varredura defensiva: qualquer chave do objeto que contenha "valor" e tenha
+  // número positivo. Cobre variações futuras ou campos não listados acima.
+  for (const k of Object.keys(item)) {
+    if (/valor/i.test(k) && item[k] !== null && item[k] !== undefined && item[k] !== '') {
+      const n = Number(item[k]);
+      if (!isNaN(n) && n > 0) return { valor: n, campo: k + ' (varredura)' };
+    }
+  }
+  // Lista todos os campos que começam/contêm "valor" mesmo vazios — útil pra debug
+  const camposValor = Object.keys(item).filter(k => /valor/i.test(k));
+  return {
+    valor: 0,
+    campo: camposValor.length
+      ? `nenhum válido. encontrados: ${camposValor.join(', ')}`
+      : 'nenhum campo com "valor" no item'
+  };
 }
 
 function formatData(dataStr) {
@@ -2280,11 +2326,13 @@ function normPNCP(item, uf) {
   const obj   = item.description || item.objeto || item.title || '';
   const orgao = item.orgao_nome || item.orgao?.razaoSocial || item.unidade_nome || '';
   const mun   = item.municipio_nome || item.unidadeOrgao?.municipioNome || '';
-  // Busca recursiva resiliente — funciona com qualquer variação de campo da API PNCP
-  const val = extrairValor(item);
-  // Log defensivo: se ainda saiu zero, registra o objeto inteiro para inspeção
-  if (val === 0 && window.ML_DEBUG_VALOR) {
-    console.log('[ML] Valor=0, objeto da API:', item);
+  // Extração do valor (guardando qual campo foi encontrado para debug)
+  const _ev = extrairValor(item);
+  const val = _ev.valor;
+  const campoOrigemValor = _ev.campo;
+  // Log sempre quando debug ativo, para ver o que a API devolveu
+  if (window.ML_DEBUG_VALOR) {
+    console.log(`[ML] Edital "${item.title || ''}" | campo="${campoOrigemValor}" | valor=${val}`, item);
   }
   const dtAbertura     = item.data_inicio_vigencia || item.dataAberturaPropostas || item.data_abertura_proposta || '';
   const dtEncerramento = item.data_fim_vigencia || item.dataEncerramentoProposta || '';
@@ -2350,7 +2398,7 @@ function normPNCP(item, uf) {
     id: `pncp-${num || Math.random()}`,
     titulo, tituloFull: obj,
     orgao, municipio: mun, uf,
-    valor: val, valorFmt: formatValor(val), prazo,
+    valor: val, valorFmt: formatValor(val), campoOrigemValor, prazo,
     portal: portalNome, portalClass, portalTipo: 'pncp',
     link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
@@ -2367,7 +2415,9 @@ function normPNCP(item, uf) {
 function normPCP(item) {
   const obj  = item.objeto || item.descricao || item.titulo || '';
   const orgao= item.orgao || item.entidade || '';
-  const val  = extrairValor(item);
+  const _ev  = extrairValor(item);
+  const val  = _ev.valor;
+  const campoOrigemValor = _ev.campo;
   const dtAb = item.dataAbertura || item.dataFim || item.prazo;
   const prazo= calcPrazo(dtAb);
   prazo.tipo = 'abertura';
@@ -2378,7 +2428,7 @@ function normPCP(item) {
     id: `pcp-${item.id || Math.random()}`,
     titulo: obj.length > 130 ? obj.substring(0,130)+'…' : obj,
     tituloFull: obj, orgao, municipio: '', uf: item.uf || item.estado || 'RS',
-    valor: val, valorFmt: formatValor(val), prazo,
+    valor: val, valorFmt: formatValor(val), campoOrigemValor, prazo,
     portal: 'Portal CP/RS', portalClass: 'pcp', portalTipo: 'pcp',
     link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
@@ -3051,7 +3101,7 @@ function renderCard(e, i) {
       <div class="bid-details">
         <div class="detail">
           <span class="detail-label">Valor</span>
-          <span class="detail-value money${e.valor > 0 ? '' : ' sigiloso'}" title="${e.valor > 0 ? '' : 'Valor não divulgado pelo órgão (modalidade sigilosa ou ainda não informado)'}">${e.valor > 0 ? e.valorFmt : 'Sigiloso'}</span>
+          <span class="detail-value money${e.valor > 0 ? '' : ' vazio'}" data-campo-origem="${e.campoOrigemValor || ''}">${e.valor > 0 ? e.valorFmt : 'Não informado'}</span>
         </div>
         ${e.dataPublicacaoFmt && e.dataPublicacaoFmt !== 'sem data' ? `
         <div class="detail">
@@ -3473,6 +3523,22 @@ async function perguntarIA() {
 
   // Sincroniza estado visual da IA (notice inline, botão remover no modal)
   atualizarEstadoIA();
+
+  // Toggle de modo diagnóstico — mostra campo da API ao lado de cada valor
+  const debugBtn = document.getElementById('debugToggle');
+  if (debugBtn) {
+    const ativo = localStorage.getItem('ml_debug') === '1';
+    if (ativo) {
+      document.body.classList.add('debug-ativo');
+      window.ML_DEBUG_VALOR = true;
+    }
+    debugBtn.addEventListener('click', () => {
+      const novoEstado = !document.body.classList.contains('debug-ativo');
+      document.body.classList.toggle('debug-ativo', novoEstado);
+      window.ML_DEBUG_VALOR = novoEstado;
+      localStorage.setItem('ml_debug', novoEstado ? '1' : '0');
+    });
+  }
 
   // Restaurar keywords salvas
   const kwsSalvas = JSON.parse(localStorage.getItem('ml_kws_todas') || '[]');
