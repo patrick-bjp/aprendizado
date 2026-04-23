@@ -2250,6 +2250,76 @@ function xhrGet(url) {
   }
   return xhrGetLegacy(url);
 }
+
+/* Busca o VALOR no endpoint de detalhe do PNCP.
+   A API search só retorna valor_global = null. O valor de fato está em:
+   https://pncp.gov.br/api/pncp/v1/orgaos/{CNPJ}/compras/{ANO}/{SEQ}
+   Campo: valorTotalEstimado (ou valorTotalHomologado se já foi homologado).
+
+   numeroControle formato: "CNPJ-1-SEQ/ANO" (ex: "87612750000100-1-000038/2026")
+   Retorna: número > 0 se achou, ou 0 se falhou. */
+async function buscarValorDetalhe(numeroControle) {
+  if (!numeroControle) return 0;
+  const m = numeroControle.match(/^(\d+)-\d+-(\d+)\/(\d+)$/);
+  if (!m) return 0;
+  const [, cnpj, seq, ano] = m;
+  const seqLimpo = parseInt(seq, 10);
+  const url = `https://pncp.gov.br/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`;
+  try {
+    const detalhe = await xhrGet(url);
+    // Campos possíveis no detalhe — em ordem de preferência
+    const candidatos = [
+      'valorTotalEstimado','valor_total_estimado',
+      'valorTotalHomologado','valor_total_homologado',
+      'valorGlobal','valor_global',
+      'valorTotal','valor_total'
+    ];
+    for (const k of candidatos) {
+      if (detalhe[k] != null && detalhe[k] !== '') {
+        const n = Number(detalhe[k]);
+        if (!isNaN(n) && n > 0) return n;
+      }
+    }
+    // Varredura por qualquer campo com "valor" (último recurso)
+    for (const k of Object.keys(detalhe)) {
+      if (/valor/i.test(k) && detalhe[k] != null && detalhe[k] !== '') {
+        const n = Number(detalhe[k]);
+        if (!isNaN(n) && n > 0) return n;
+      }
+    }
+    return 0;
+  } catch(e) {
+    if (window.ML_DEBUG_VALOR) console.warn('[ML] Falha buscando detalhe:', numeroControle, e.message);
+    return 0;
+  }
+}
+
+/* Enriquece uma lista de editais com valor vindo do endpoint de detalhe.
+   Roda em lotes de 5 em paralelo para não sobrecarregar o PNCP.
+   Só busca editais que vieram sem valor da search (economiza requests). */
+async function enriquecerValores(editais) {
+  const semValor = editais.filter(e =>
+    e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
+  );
+  if (semValor.length === 0) return;
+  if (window.ML_DEBUG_VALOR) {
+    console.log(`%c[ML]%c Enriquecendo valores de ${semValor.length} editais via API de detalhe...`,
+      'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:inherit');
+  }
+  const LOTE = 5;
+  for (let i = 0; i < semValor.length; i += LOTE) {
+    const chunk = semValor.slice(i, i + LOTE);
+    await Promise.all(chunk.map(async (e) => {
+      const v = await buscarValorDetalhe(e.numeroControle);
+      if (v > 0) {
+        e.valor = v;
+        e.valorFmt = formatValor(v);
+        e.campoOrigemValor = 'detalhe:valorTotalEstimado';
+      }
+    }));
+  }
+}
+
 function xhrGetLegacy(url) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -2300,6 +2370,19 @@ async function buscarPNCP(uf) {
     try {
       const data = await xhrGet(`${PNCP_SEARCH}?${params}`);
       const itens = data.items || data.data || [];
+      // DIAGNÓSTICO: loga o primeiro item da PRIMEIRA query pra inspeção
+      if (todosItens.length === 0 && itens.length > 0) {
+        console.log('%c[DIAGNÓSTICO PNCP]%c Estrutura do primeiro item retornado pela API:',
+          'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
+          'color:inherit');
+        console.log(itens[0]);
+        // Também lista todos os campos que contenham "valor"
+        const camposValor = Object.keys(itens[0]).filter(k => /valor/i.test(k));
+        console.log('%c[DIAGNÓSTICO]%c Campos com "valor" encontrados:',
+          'background:#ffb020;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
+          'color:inherit',
+          camposValor.length ? camposValor.map(k => `${k} = ${JSON.stringify(itens[0][k])}`) : 'NENHUM — valor não vem pela search');
+      }
       for (const item of itens) {
         const id = item.numero_controle_pncp || item.id;
         if (id && !idsVistos.has(id)) {
@@ -2475,6 +2558,18 @@ async function buscarPorMunicipio() {
     if (uf) params.set('uf', uf);
     const data  = await xhrGet(`${PNCP_SEARCH}?${params}`);
     const itens = data.items || data.data || [];
+    // DIAGNÓSTICO: sempre loga estrutura do primeiro item + campos com "valor"
+    if (itens.length > 0) {
+      console.log('%c[DIAGNÓSTICO MUNICÍPIO]%c Estrutura do primeiro item da API:',
+        'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
+        'color:inherit');
+      console.log(itens[0]);
+      const camposValor = Object.keys(itens[0]).filter(k => /valor/i.test(k));
+      console.log('%c[DIAGNÓSTICO]%c Campos com "valor":',
+        'background:#ffb020;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
+        'color:inherit',
+        camposValor.length ? camposValor.map(k => `${k} = ${JSON.stringify(itens[0][k])}`) : 'NENHUM CAMPO COM VALOR');
+    }
     const nomeLower = nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
     const filtrados = itens.filter(i => {
       const mun = (i.municipio_nome || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
@@ -2502,12 +2597,14 @@ async function buscarPorMunicipio() {
   document.getElementById('sidebar-status').innerHTML = `📍 ${muniLabel}`;
   document.getElementById('divider-feed-title').textContent = `Editais em ${muniLabel}`;
 
-  ordenarEditais(editaisCarregados);
   // Aplica flags persistentes
   editaisCarregados.forEach(e => {
     e.acompanhando = acompanhando.includes(e.id);
     e.dispensado   = descartados.includes(e.id);
   });
+  // Enriquecer valores via API de detalhe ANTES de renderizar
+  await enriquecerValores(editaisCarregados);
+  ordenarEditais(editaisCarregados);
   marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
   renderizarEditais(editaisCarregados);
@@ -2601,6 +2698,10 @@ async function executarBusca() {
     e.acompanhando = acompanhando.includes(e.id);
     e.dispensado   = descartados.includes(e.id);
   });
+  // Enriquecer valores via API de detalhe ANTES de renderizar
+  // (a API search do PNCP retorna valor_global=null; o valor real está no detalhe)
+  document.getElementById('sidebar-status').textContent = 'Buscando valores...';
+  await enriquecerValores(editaisCarregados);
   ordenarEditais(editaisCarregados);
   const novosCount = marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
@@ -3101,7 +3202,7 @@ function renderCard(e, i) {
       <div class="bid-details">
         <div class="detail">
           <span class="detail-label">Valor</span>
-          <span class="detail-value money${e.valor > 0 ? '' : ' vazio'}" data-campo-origem="${e.campoOrigemValor || ''}">${e.valor > 0 ? e.valorFmt : 'Não informado'}</span>
+          <span class="detail-value money${e.valor > 0 ? '' : ' vazio'}">${e.valor > 0 ? e.valorFmt : 'Não informado'}${window.ML_DEBUG_VALOR ? ` <code style="color:${e.valor>0?'#4ade80':'#ff4d6d'};font-size:9px;font-family:monospace;background:rgba(0,0,0,.2);padding:1px 4px;border-radius:3px;margin-left:4px;">[${e.campoOrigemValor || '?'}]</code>` : ''}</span>
         </div>
         ${e.dataPublicacaoFmt && e.dataPublicacaoFmt !== 'sem data' ? `
         <div class="detail">
