@@ -2256,18 +2256,53 @@ function xhrGet(url) {
    https://pncp.gov.br/api/pncp/v1/orgaos/{CNPJ}/compras/{ANO}/{SEQ}
    Campo: valorTotalEstimado (ou valorTotalHomologado se já foi homologado).
 
-   numeroControle formato: "CNPJ-1-SEQ/ANO" (ex: "87612750000100-1-000038/2026")
+   numeroControle pode vir em vários formatos conhecidos:
+   - "87612750000100-1-000038/2026"    (3 partes com hífens + ano)
+   - "87612750000100-2026/000038"      (CNPJ-ano/seq)
+   - "87612750000100/2026/38"          (tudo com barras)
+   - Com ou sem zeros à esquerda no seq
+
    Retorna: número > 0 se achou, ou 0 se falhou. */
-async function buscarValorDetalhe(numeroControle) {
+async function buscarValorDetalhe(numeroControle, edital) {
   if (!numeroControle) return 0;
-  const m = numeroControle.match(/^(\d+)-\d+-(\d+)\/(\d+)$/);
-  if (!m) return 0;
-  const [, cnpj, seq, ano] = m;
+  // Extrai os números separados por qualquer não-dígito.
+  // Precisamos identificar 3 coisas: CNPJ (14 dígitos), ano (4 dígitos, 20xx)
+  // e seq (número sequencial). Em alguns formatos aparece um "1" ou "2" no meio
+  // que é um discriminador de tipo (compra/contrato/ata) — não é o seq.
+  // Estratégia: CNPJ é o de 14 dígitos, ano é o 20xx, e seq é o MAIOR número
+  // restante (que pode ser 1 a 6 dígitos, mas em caso de ambiguidade, o maior).
+  const partes = numeroControle.split(/[-\/]/).filter(p => /^\d+$/.test(p));
+  let cnpj = '', ano = '';
+  const outros = [];
+  for (const p of partes) {
+    if (!cnpj && p.length === 14) cnpj = p;
+    else if (!ano && p.length === 4 && p.startsWith('20')) ano = p;
+    else outros.push(p);
+  }
+  // seq = o maior número dentre os restantes (evita pegar o "1" discriminador)
+  let seq = '';
+  for (const p of outros) {
+    if (!seq || parseInt(p, 10) > parseInt(seq, 10)) seq = p;
+  }
+  if (!cnpj || !ano || !seq) {
+    if (window.ML_DEBUG_VALOR) {
+      console.warn('[ML] Formato desconhecido de numeroControle:', numeroControle,
+                   '| partes:', partes, '| cnpj:', cnpj, '| ano:', ano, '| seq:', seq);
+    }
+    return 0;
+  }
   const seqLimpo = parseInt(seq, 10);
   const url = `https://pncp.gov.br/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`;
   try {
     const detalhe = await xhrGet(url);
-    // Campos possíveis no detalhe — em ordem de preferência
+    // Log da estrutura do detalhe pra primeira resposta bem-sucedida
+    if (window.ML_DEBUG_VALOR && window._ML_LOGOU_DETALHE !== true) {
+      window._ML_LOGOU_DETALHE = true;
+      console.log('%c[ML]%c Estrutura da API de DETALHE (primeiro sucesso):',
+        'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
+        'color:inherit');
+      console.log(detalhe);
+    }
     const candidatos = [
       'valorTotalEstimado','valor_total_estimado',
       'valorTotalHomologado','valor_total_homologado',
@@ -2280,7 +2315,6 @@ async function buscarValorDetalhe(numeroControle) {
         if (!isNaN(n) && n > 0) return n;
       }
     }
-    // Varredura por qualquer campo com "valor" (último recurso)
     for (const k of Object.keys(detalhe)) {
       if (/valor/i.test(k) && detalhe[k] != null && detalhe[k] !== '') {
         const n = Number(detalhe[k]);
@@ -2289,7 +2323,7 @@ async function buscarValorDetalhe(numeroControle) {
     }
     return 0;
   } catch(e) {
-    if (window.ML_DEBUG_VALOR) console.warn('[ML] Falha buscando detalhe:', numeroControle, e.message);
+    if (window.ML_DEBUG_VALOR) console.warn('[ML] Falha buscando detalhe:', url, e.message);
     return 0;
   }
 }
@@ -2302,21 +2336,31 @@ async function enriquecerValores(editais) {
     e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
   );
   if (semValor.length === 0) return;
-  if (window.ML_DEBUG_VALOR) {
+  window._ML_LOGOU_DETALHE = false;
+  const debug = window.ML_DEBUG_VALOR;
+  if (debug) {
     console.log(`%c[ML]%c Enriquecendo valores de ${semValor.length} editais via API de detalhe...`,
       'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:inherit');
   }
   const LOTE = 5;
+  let sucessos = 0, falhas = 0;
   for (let i = 0; i < semValor.length; i += LOTE) {
     const chunk = semValor.slice(i, i + LOTE);
     await Promise.all(chunk.map(async (e) => {
-      const v = await buscarValorDetalhe(e.numeroControle);
+      const v = await buscarValorDetalhe(e.numeroControle, e);
       if (v > 0) {
         e.valor = v;
         e.valorFmt = formatValor(v);
         e.campoOrigemValor = 'detalhe:valorTotalEstimado';
+        sucessos++;
+      } else {
+        falhas++;
       }
     }));
+  }
+  if (debug) {
+    console.log(`%c[ML]%c Enriquecimento concluído: ${sucessos} sucesso(s), ${falhas} falha(s)`,
+      'background:#4ade80;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:inherit');
   }
 }
 
