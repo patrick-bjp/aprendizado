@@ -2252,25 +2252,34 @@ function xhrGet(url) {
 }
 
 /* Busca o VALOR no endpoint de detalhe do PNCP.
-   A API search só retorna valor_global = null. O valor de fato está em:
-   https://pncp.gov.br/api/pncp/v1/orgaos/{CNPJ}/compras/{ANO}/{SEQ}
-   Campo: valorTotalEstimado (ou valorTotalHomologado se já foi homologado).
+   A API search retorna valor_global=null. O valor de fato está no endpoint de detalhe.
 
-   numeroControle pode vir em vários formatos conhecidos:
-   - "87612750000100-1-000038/2026"    (3 partes com hífens + ano)
-   - "87612750000100-2026/000038"      (CNPJ-ano/seq)
-   - "87612750000100/2026/38"          (tudo com barras)
-   - Com ou sem zeros à esquerda no seq
+   O PNCP tem várias URLs possíveis que servem o detalhe. Tentamos em ordem:
+   1. /api/consulta/v1/orgaos/{cnpj}/compras/{ano}/{seq}  (atual, consulta pública)
+   2. /api/pncp/v1/orgaos/{cnpj}/compras/{ano}/{seq}      (legado — redirect 301)
+   3. com barra no final (alguns servidores redirecionam p/ essa versão)
+
+   Usa fetch com redirect:'follow' para seguir 301/302 automaticamente.
 
    Retorna: número > 0 se achou, ou 0 se falhou. */
+async function fetchDetalhePNCP(url) {
+  try {
+    const r = await fetch(url, {
+      headers: { 'Accept': 'application/json' },
+      mode: 'cors',
+      redirect: 'follow',
+      credentials: 'omit'
+    });
+    if (!r.ok) return null;
+    return await r.json();
+  } catch(e) {
+    return null;
+  }
+}
+
 async function buscarValorDetalhe(numeroControle, edital) {
   if (!numeroControle) return 0;
-  // Extrai os números separados por qualquer não-dígito.
-  // Precisamos identificar 3 coisas: CNPJ (14 dígitos), ano (4 dígitos, 20xx)
-  // e seq (número sequencial). Em alguns formatos aparece um "1" ou "2" no meio
-  // que é um discriminador de tipo (compra/contrato/ata) — não é o seq.
-  // Estratégia: CNPJ é o de 14 dígitos, ano é o 20xx, e seq é o MAIOR número
-  // restante (que pode ser 1 a 6 dígitos, mas em caso de ambiguidade, o maior).
+  // Parsing tolerante do numeroControle (ver docs acima)
   const partes = numeroControle.split(/[-\/]/).filter(p => /^\d+$/.test(p));
   let cnpj = '', ano = '';
   const outros = [];
@@ -2279,53 +2288,71 @@ async function buscarValorDetalhe(numeroControle, edital) {
     else if (!ano && p.length === 4 && p.startsWith('20')) ano = p;
     else outros.push(p);
   }
-  // seq = o maior número dentre os restantes (evita pegar o "1" discriminador)
   let seq = '';
   for (const p of outros) {
     if (!seq || parseInt(p, 10) > parseInt(seq, 10)) seq = p;
   }
   if (!cnpj || !ano || !seq) {
     if (window.ML_DEBUG_VALOR) {
-      console.warn('[ML] Formato desconhecido de numeroControle:', numeroControle,
-                   '| partes:', partes, '| cnpj:', cnpj, '| ano:', ano, '| seq:', seq);
+      console.warn('[ML] numeroControle não parseável:', numeroControle, '| partes:', partes);
     }
     return 0;
   }
   const seqLimpo = parseInt(seq, 10);
-  const url = `https://pncp.gov.br/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`;
-  try {
-    const detalhe = await xhrGet(url);
-    // Log da estrutura do detalhe pra primeira resposta bem-sucedida
-    if (window.ML_DEBUG_VALOR && window._ML_LOGOU_DETALHE !== true) {
-      window._ML_LOGOU_DETALHE = true;
-      console.log('%c[ML]%c Estrutura da API de DETALHE (primeiro sucesso):',
-        'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
-        'color:inherit');
-      console.log(detalhe);
+
+  // Tenta múltiplos endpoints do PNCP até achar um que funcione
+  const urls = [
+    `https://pncp.gov.br/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`,
+    `https://pncp.gov.br/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`,
+    `https://pncp.gov.br/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}/`,
+  ];
+
+  let detalhe = null;
+  let urlUsada = '';
+  for (const u of urls) {
+    detalhe = await fetchDetalhePNCP(u);
+    if (detalhe && typeof detalhe === 'object') {
+      urlUsada = u;
+      break;
     }
-    const candidatos = [
-      'valorTotalEstimado','valor_total_estimado',
-      'valorTotalHomologado','valor_total_homologado',
-      'valorGlobal','valor_global',
-      'valorTotal','valor_total'
-    ];
-    for (const k of candidatos) {
-      if (detalhe[k] != null && detalhe[k] !== '') {
-        const n = Number(detalhe[k]);
-        if (!isNaN(n) && n > 0) return n;
-      }
-    }
-    for (const k of Object.keys(detalhe)) {
-      if (/valor/i.test(k) && detalhe[k] != null && detalhe[k] !== '') {
-        const n = Number(detalhe[k]);
-        if (!isNaN(n) && n > 0) return n;
-      }
-    }
-    return 0;
-  } catch(e) {
-    if (window.ML_DEBUG_VALOR) console.warn('[ML] Falha buscando detalhe:', url, e.message);
+  }
+
+  if (!detalhe) {
+    if (window.ML_DEBUG_VALOR) console.warn('[ML] Todos os endpoints falharam para:', numeroControle);
     return 0;
   }
+
+  // Log da primeira resposta bem-sucedida pra inspeção
+  if (window.ML_DEBUG_VALOR && window._ML_LOGOU_DETALHE !== true) {
+    window._ML_LOGOU_DETALHE = true;
+    console.log('%c[ML]%c Estrutura do DETALHE (primeira resposta OK) de', urlUsada,
+      'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
+      'color:inherit');
+    console.log(detalhe);
+    const camposV = Object.keys(detalhe).filter(k => /valor/i.test(k));
+    console.log('[ML] Campos de valor no detalhe:',
+      camposV.map(k => `${k}=${JSON.stringify(detalhe[k])}`));
+  }
+
+  const candidatos = [
+    'valorTotalEstimado','valor_total_estimado',
+    'valorTotalHomologado','valor_total_homologado',
+    'valorGlobal','valor_global',
+    'valorTotal','valor_total'
+  ];
+  for (const k of candidatos) {
+    if (detalhe[k] != null && detalhe[k] !== '') {
+      const n = Number(detalhe[k]);
+      if (!isNaN(n) && n > 0) return n;
+    }
+  }
+  for (const k of Object.keys(detalhe)) {
+    if (/valor/i.test(k) && detalhe[k] != null && detalhe[k] !== '') {
+      const n = Number(detalhe[k]);
+      if (!isNaN(n) && n > 0) return n;
+    }
+  }
+  return 0;
 }
 
 /* Enriquece uma lista de editais com valor vindo do endpoint de detalhe.
