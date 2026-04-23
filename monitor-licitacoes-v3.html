@@ -2149,109 +2149,25 @@ function formatValor(v) {
    campo desconhecidos que estão chegando da API. */
 window.ML_DEBUG_VALOR = window.ML_DEBUG_VALOR || false;
 
-function extrairValor(obj, profundidade = 0) {
-  if (!obj || typeof obj !== 'object' || profundidade > 4) return 0;
-
-  // Tenta primeiro os campos conhecidos por ordem de prevalência
-  const candidatos = [
-    'valorTotal','valor_total','valor_total_estimado','valorTotalEstimado',
-    'valorEstimadoTotal','valor_estimado_total',
-    'valor_global','valorGlobal','valor_global_estimado',
-    'valorEstimado','valor_estimado',
-    'valorTotalHomologado','valor_total_homologado',
-    'valorContratado','valor_contratado',
-    'valor','total'
-  ];
-  for (const k of candidatos) {
-    if (k in obj && obj[k] !== null && obj[k] !== undefined && obj[k] !== '') {
-      const n = Number(obj[k]);
-      if (!isNaN(n) && n > 0) return n;
-    }
-  }
-
-  // Varredura defensiva: qualquer chave contendo "valor" (case-insensitive)
-  for (const k of Object.keys(obj)) {
-    if (/valor/i.test(k) && obj[k] !== null && obj[k] !== undefined && obj[k] !== '') {
-      const n = Number(obj[k]);
-      if (!isNaN(n) && n > 0) return n;
-    }
-  }
-
-  // Recursão: se o valor está em sub-objeto (ex: detalhes.valorTotal)
-  for (const k of Object.keys(obj)) {
-    if (obj[k] && typeof obj[k] === 'object' && !Array.isArray(obj[k])) {
-      const v = extrairValor(obj[k], profundidade + 1);
-      if (v > 0) return v;
-    }
-  }
-
-  return 0;
-}
-
-/* Hidratação de valores faltantes:
-   Quando a API search do PNCP não retorna valor (acontece com frequência),
-   busca o detalhe do edital via endpoint /v1/orgaos/{cnpj}/compras/{ano}/{seq}
-   que sempre tem valorTotalEstimado declarado.
-
-   Roda em background após a renderização inicial — não bloqueia a UI.
-   Limita concorrência a 3 requests simultâneos para não sobrecarregar a API.
-   Atualiza o card silenciosamente quando valor é descoberto. */
-async function hidratarValoresFaltantes() {
-  const semValor = editaisCarregados.filter(e =>
-    e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
-  );
-  if (semValor.length === 0) return;
-
-  const limiteConcorrencia = 3;
-  let descobertos = 0;
-
-  async function buscarDetalhe(edital) {
-    try {
-      // numeroControle PNCP tem formato: CNPJ-1-SEQ/ANO (ex: 87612750000100-1-000038/2026)
-      const m = edital.numeroControle.match(/^(\d+)-\d+-(\d+)\/(\d+)$/);
-      if (!m) return;
-      const [, cnpj, seq, ano] = m;
-      const seqLimpo = parseInt(seq, 10);  // remove zeros à esquerda
-      const url = `https://pncp.gov.br/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`;
-      const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
-      if (!r.ok) return;
-      const detalhe = await r.json();
-      const v = extrairValor(detalhe);
-      if (v > 0) {
-        edital.valor = v;
-        edital.valorFmt = formatValor(v);
-        descobertos++;
-        atualizarCardValor(edital);
-      }
-    } catch (e) {
-      // silencioso — falha na hidratação não atrapalha o card
-    }
-  }
-
-  // Processa em lotes para não disparar 50 requests de uma vez
-  for (let i = 0; i < semValor.length; i += limiteConcorrencia) {
-    const lote = semValor.slice(i, i + limiteConcorrencia);
-    await Promise.all(lote.map(buscarDetalhe));
-  }
-
-  // Se descobriu pelo menos 1, atualiza KPI "Maior valor"
-  if (descobertos > 0) {
-    atualizarMetricas();
-  }
-}
-
-/* Atualiza apenas o campo "Valor" de um card específico, sem re-renderizar tudo */
-function atualizarCardValor(edital) {
-  const idx = editaisCarregados.indexOf(edital);
-  if (idx < 0) return;
-  const card = document.getElementById(`edital-${idx}`);
-  if (!card) return;
-  const valorEl = card.querySelector('.detail-value.money');
-  if (valorEl) {
-    valorEl.textContent = edital.valorFmt;
-    valorEl.classList.remove('sigiloso');
-    valorEl.removeAttribute('title');
-  }
+/* Leitura do valor do edital — campos reais confirmados da API /api/search/ do PNCP:
+     valor_global      (mais comum — busca)
+     valorTotal        (algumas respostas)
+     valorEstimado     (dispensas e modalidades alternativas)
+     valor             (fallback genérico)
+   Números em string são convertidos para Number. */
+function extrairValor(item) {
+  if (!item || typeof item !== 'object') return 0;
+  const raw = item.valor_global
+           ?? item.valorTotal
+           ?? item.valor_total
+           ?? item.valorEstimado
+           ?? item.valor_estimado
+           ?? item.valorTotalEstimado
+           ?? item.valorTotalHomologado
+           ?? item.valor
+           ?? 0;
+  const n = Number(raw);
+  return (!isNaN(n) && n > 0) ? n : 0;
 }
 
 function formatData(dataStr) {
@@ -2560,8 +2476,6 @@ async function buscarPorMunicipio() {
     erroB.style.display = 'block';
   }
   atualizarURLStateDoFiltro();
-  // Hidratação assíncrona dos valores faltantes
-  hidratarValoresFaltantes();
 }
 
 function limparFiltroPorMunicipio() {
@@ -2664,9 +2578,6 @@ async function executarBusca() {
     okB.style.display = 'block';
     setTimeout(() => okB.style.display = 'none', 5000);
   }
-
-  // Hidratação assíncrona: busca valores faltantes via API de detalhe (background)
-  hidratarValoresFaltantes();
 }
 
 /* ====================== URL STATE (A5) ====================== */
@@ -3587,6 +3498,16 @@ async function perguntarIA() {
   atualizarKeywordsBarTop();
 
   // Restaurar cache de editais (TTL 4h)
+  // CACHE_VERSION: incremente quando houver mudança no formato ou em campos críticos
+  // (como o fix do campo valor). Isso invalida caches antigos automaticamente.
+  const CACHE_VERSION = 'v2-valor-fix';
+  const cacheVersion = localStorage.getItem('ml_cache_version');
+  if (cacheVersion !== CACHE_VERSION) {
+    // Cache antigo ou inexistente: limpa para forçar nova busca
+    localStorage.removeItem('ml_cache_editais');
+    localStorage.removeItem('ml_cache_ts');
+    localStorage.setItem('ml_cache_version', CACHE_VERSION);
+  }
   const ts    = parseInt(localStorage.getItem('ml_cache_ts')||'0');
   const cache = localStorage.getItem('ml_cache_editais');
   const ult   = localStorage.getItem('ml_ultima_busca');
