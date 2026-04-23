@@ -304,22 +304,138 @@ body::before {
 [data-theme="dark"]  .theme-toggle .knob .icon-sun  { display: none; }
 [data-theme="light"] .theme-toggle .knob .icon-moon { display: none; }
 
-/* ---------- API NOTICE ---------- */
-.api-notice {
+/* ---------- API KEY (notice inline + modal) ---------- */
+/* Notice inline: aparece no topo quando chave não está configurada e
+   um card foi clicado pra análise. Discreto, não invasivo. */
+.api-notice-inline {
   font-family: var(--ff-mono); font-size: 11px;
-  padding: 10px 14px; border-radius: var(--radius-sm);
-  background: var(--warn-bg); color: var(--warn);
-  border: 1px solid rgba(255,176,32,.2);
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  background: var(--bg-2); color: var(--ink-lo);
+  border: 1px solid var(--stroke);
   display: flex; align-items: center; gap: 10px;
-  flex-wrap: wrap; margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-.api-notice input {
-  flex: 1; min-width: 220px;
+[data-theme="light"] .api-notice-inline { background: var(--bg-1); }
+.api-notice-inline .icon { width: 14px; height: 14px; fill: none; stroke-width: 2; }
+.link-like {
+  background: none; border: none; padding: 0;
+  color: var(--accent); cursor: pointer;
+  font: inherit; text-decoration: underline; text-underline-offset: 2px;
+}
+.link-like:hover { color: var(--ink-hi); }
+.link-danger { color: var(--live); }
+.link-danger:hover { color: var(--ink-hi); }
+
+/* Modal overlay: backdrop escuro com blur */
+.ia-modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: iaModalFadeIn .2s ease;
+}
+[data-theme="light"] .ia-modal-overlay { background: rgba(26,29,36,.4); }
+@keyframes iaModalFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Modal card: centralizado, com sombra */
+.ia-modal {
+  background: var(--bg-1);
+  border: 1px solid var(--stroke-hi);
+  border-radius: var(--radius-md, 12px);
+  max-width: 540px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  animation: iaModalSlide .25s ease;
+}
+[data-theme="light"] .ia-modal {
+  background: var(--bg-2);
+  box-shadow: 0 20px 60px rgba(26,29,36,.15);
+}
+@keyframes iaModalSlide {
+  from { opacity: 0; transform: translateY(-8px) scale(.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.ia-modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--stroke);
+}
+.ia-modal-header h3 {
+  font-family: var(--ff-display);
+  font-size: 18px; font-weight: 600;
+  color: var(--ink-hi); margin: 0;
+  letter-spacing: -0.01em;
+}
+.ia-modal-close {
+  background: none; border: none; padding: 4px 8px;
+  color: var(--ink-lo); font-size: 16px;
+  cursor: pointer; border-radius: var(--radius-sm);
+  transition: all .15s;
+}
+.ia-modal-close:hover { background: var(--bg-2); color: var(--ink-hi); }
+[data-theme="light"] .ia-modal-close:hover { background: var(--bg-3); }
+
+.ia-modal-body {
+  padding: 18px 22px 22px;
+  font-family: var(--ff-body);
+  font-size: 14px; line-height: 1.55;
+  color: var(--ink-hi);
+}
+.ia-modal-body p { margin: 0 0 12px; }
+.ia-modal-body a {
+  color: var(--accent); text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ia-modal-body a:hover { color: var(--ink-hi); }
+.ia-modal-body code {
   font-family: var(--ff-mono); font-size: 12px;
-  padding: 6px 10px; border: 1px solid currentColor;
-  border-radius: var(--radius-sm);
-  background: transparent; color: var(--warn); outline: none;
+  padding: 1px 6px; border-radius: 4px;
+  background: var(--bg-2); color: var(--accent);
 }
+[data-theme="light"] .ia-modal-body code { background: var(--bg-3); }
+
+.ia-setup-steps {
+  margin: 0 0 18px; padding: 12px 16px 12px 36px;
+  background: var(--bg-2);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-size: 13px;
+}
+[data-theme="light"] .ia-setup-steps { background: var(--bg-1); }
+.ia-setup-steps li { margin-bottom: 6px; }
+.ia-setup-steps li:last-child { margin-bottom: 0; }
+
+.ia-key-label {
+  display: block; margin-bottom: 10px;
+  font-family: var(--ff-mono); font-size: 10px;
+  font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--ink-lo);
+}
+.ia-key-label input {
+  display: block; width: 100%; margin-top: 6px;
+  font-family: var(--ff-mono); font-size: 13px;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  background: var(--bg-2);
+  border: 1px solid var(--stroke);
+  color: var(--ink-hi); outline: none;
+  transition: border-color .15s;
+  box-sizing: border-box;
+}
+[data-theme="light"] .ia-key-label input { background: var(--bg-1); }
+.ia-key-label input:focus { border-color: var(--accent); }
+
+.ia-key-hint {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--ff-mono); font-size: 10px;
+  color: var(--ink-lo); text-transform: uppercase;
+  letter-spacing: 0.5px; margin-top: 10px;
+}
+.ia-key-remover { margin-top: 12px; text-align: right; }
 
 /* ---------- KPIs ---------- */
 .kpis {
@@ -897,7 +1013,16 @@ body::before {
 .ai-title {
   font-family: var(--ff-display); font-style: italic;
   font-size: 16px; font-weight: 400; color: var(--ink);
+  display: flex; align-items: center; justify-content: space-between;
 }
+.ai-config-btn {
+  background: none; border: none; padding: 4px;
+  color: var(--ink-lo); cursor: pointer;
+  border-radius: var(--radius-sm);
+  display: inline-flex; align-items: center;
+  transition: color .15s, transform .3s;
+}
+.ai-config-btn:hover { color: var(--accent); transform: rotate(30deg); }
 .divider { height: 1px; background: var(--stroke); }
 .ai-output {
   font-size: 13px; color: var(--ink); line-height: 1.7;
@@ -1447,10 +1572,39 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
       </button>
     </div>
 
-    <!-- API KEY (escondido se já preenchido) -->
-    <div class="api-notice" id="api-notice">
-      🔑 API key Groq (análise por IA — gratuita em console.groq.com):
-      <input type="password" id="api-key-input" placeholder="gsk_..." oninput="salvarKey(this.value)">
+    <!-- API KEY — escondida por padrão, só aparece via modal quando IA é solicitada -->
+    <div class="api-notice-inline" id="api-notice-inline" style="display:none">
+      <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--info);flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span>IA desativada — <button class="link-like" onclick="abrirModalIA()">configurar chave</button> para ativar análise automática.</span>
+    </div>
+
+    <!-- Modal de configuração da IA -->
+    <div class="ia-modal-overlay" id="ia-modal" style="display:none" onclick="fecharModalIA(event)">
+      <div class="ia-modal" onclick="event.stopPropagation()">
+        <div class="ia-modal-header">
+          <h3>Configurar IA · Groq Llama 3.3</h3>
+          <button class="ia-modal-close" onclick="fecharModalIA()" aria-label="Fechar">✕</button>
+        </div>
+        <div class="ia-modal-body">
+          <p>A análise automática de editais usa <strong>Groq</strong> (LLM gratuito, rápido). Você precisa de uma chave pessoal — <strong>grátis para sempre</strong>, dura até 14k requests por dia.</p>
+          <ol class="ia-setup-steps">
+            <li>Acesse <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a> e faça login</li>
+            <li>Clique em <b>Create API Key</b>, dê um nome (ex: "monitor-licitacoes")</li>
+            <li>Copie a chave (<code>gsk_...</code>) e cole abaixo</li>
+          </ol>
+          <label class="ia-key-label">
+            Sua chave Groq
+            <input type="password" id="api-key-input" placeholder="gsk_..." oninput="salvarKey(this.value)" autocomplete="off">
+          </label>
+          <p class="ia-key-hint">
+            <svg class="icon" viewBox="0 0 24 24" style="width:12px;height:12px;stroke:var(--ok);flex-shrink:0"><path d="M20 6L9 17l-5-5"/></svg>
+            A chave fica salva apenas no seu navegador (localStorage). Nunca sai do seu computador.
+          </p>
+          <p class="ia-key-remover" id="ia-key-remover" style="display:none">
+            <button class="link-like link-danger" onclick="removerKey()">Remover chave deste navegador</button>
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- KPIs -->
@@ -1643,7 +1797,12 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 
     <!-- AI BOX -->
     <div class="ai-box">
-      <div class="ai-title">Análise por IA · Groq Llama 3.3</div>
+      <div class="ai-title">
+        Análise por IA · Groq Llama 3.3
+        <button class="ai-config-btn" onclick="abrirModalIA()" title="Configurar chave Groq" aria-label="Configurar IA">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        </button>
+      </div>
       <div class="divider"></div>
       <div class="ai-output" id="ai-output">Busque editais e clique em um para análise automática de fit, riscos e recomendação — ou faça uma pergunta livre abaixo.</div>
       <div class="divider"></div>
@@ -1681,31 +1840,80 @@ let modoMunicipio = false;
 let muniUFAtiva   = '';
 let muniNomeAtivo = '';
 
-if (apiKey) {
-  document.getElementById('api-key-input').value = apiKey;
-  document.getElementById('api-notice').style.display = 'none';
+// Inicialização do estado da IA (executa após DOMContentLoaded via init)
+function atualizarEstadoIA() {
+  const notice = document.getElementById('api-notice-inline');
+  const remover = document.getElementById('ia-key-remover');
+  const input = document.getElementById('api-key-input');
+  if (apiKey) {
+    // IA configurada: notice some, botão remover aparece no modal
+    if (notice) notice.style.display = 'none';
+    if (remover) remover.style.display = 'block';
+    if (input) input.value = apiKey;
+  } else {
+    // Sem chave: esconde notice inline até que o usuário tente usar IA
+    if (notice) notice.style.display = 'none';
+    if (remover) remover.style.display = 'none';
+  }
+}
+
+function abrirModalIA() {
+  const modal = document.getElementById('ia-modal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  atualizarEstadoIA();
+  // Foca no input após animação
+  setTimeout(() => document.getElementById('api-key-input')?.focus(), 200);
+}
+
+function fecharModalIA(event) {
+  // Só fecha se clicou no overlay ou no botão X (não ao clicar no conteúdo interno)
+  if (event && event.target && !event.target.classList.contains('ia-modal-overlay') && !event.target.classList.contains('ia-modal-close')) {
+    return;
+  }
+  const modal = document.getElementById('ia-modal');
+  if (modal) modal.style.display = 'none';
 }
 
 function salvarKey(v) {
   apiKey = v.trim();
   localStorage.setItem('ml_api_key', apiKey);
-  const notice = document.getElementById('api-notice');
-  if (apiKey) {
-    // Formato esperado do Groq: gsk_ + ~52 caracteres alfanuméricos
-    if (apiKey.startsWith('gsk_') && apiKey.length >= 50) {
-      // Key válida no formato — esconde o notice após pequeno delay (feedback)
-      notice.style.background = 'var(--ok-bg)';
-      notice.style.color = 'var(--ok)';
-      notice.style.borderColor = 'rgba(74,222,128,.3)';
-      setTimeout(() => {
-        notice.style.display = 'none';
-        // Restaura cores para próxima exibição
-        notice.style.background = '';
-        notice.style.color = '';
-        notice.style.borderColor = '';
-      }, 800);
+  const input = document.getElementById('api-key-input');
+  const remover = document.getElementById('ia-key-remover');
+
+  if (apiKey && apiKey.startsWith('gsk_') && apiKey.length >= 50) {
+    // Formato válido — feedback visual no input e fecha modal
+    if (input) {
+      input.style.borderColor = 'var(--ok)';
+      input.style.background = 'var(--ok-bg)';
     }
+    if (remover) remover.style.display = 'block';
+    setTimeout(() => {
+      if (input) {
+        input.style.borderColor = '';
+        input.style.background = '';
+      }
+      // Fecha modal automaticamente após salvar
+      const modal = document.getElementById('ia-modal');
+      if (modal && modal.style.display !== 'none') modal.style.display = 'none';
+      // Esconde notice inline se estava aparecendo
+      const notice = document.getElementById('api-notice-inline');
+      if (notice) notice.style.display = 'none';
+    }, 800);
   }
+}
+
+function removerKey() {
+  if (!confirm('Remover a chave Groq deste navegador? A IA ficará desativada até você configurar uma nova.')) return;
+  apiKey = '';
+  localStorage.removeItem('ml_api_key');
+  const input = document.getElementById('api-key-input');
+  if (input) input.value = '';
+  const remover = document.getElementById('ia-key-remover');
+  if (remover) remover.style.display = 'none';
+  // Fecha modal
+  const modal = document.getElementById('ia-modal');
+  if (modal) modal.style.display = 'none';
 }
 
 /* ====================== TOGGLE TEMA ====================== */
@@ -3113,8 +3321,10 @@ function setOutput(h) { document.getElementById('ai-output').innerHTML = h; }
 
 async function analisarEdital(idx) {
   if (!apiKey) {
-    setOutput('<span style="color:var(--warn)">Insira a API key do Groq para análise por IA. <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Criar key gratuita →</a></span>');
-    document.getElementById('api-notice').style.display = 'flex';
+    // Sem chave configurada: abre modal explicativo e mostra notice no topo
+    const notice = document.getElementById('api-notice-inline');
+    if (notice) notice.style.display = 'flex';
+    abrirModalIA();
     return;
   }
   const e = editaisCarregados[idx]; if (!e) return;
@@ -3154,8 +3364,9 @@ async function perguntarIA() {
   const q = document.getElementById('user-q').value.trim();
   if (!q) return;
   if (!apiKey) {
-    setOutput('<span style="color:var(--warn)">Insira a API key do Groq. <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Criar key gratuita →</a></span>');
-    document.getElementById('api-notice').style.display = 'flex';
+    const notice = document.getElementById('api-notice-inline');
+    if (notice) notice.style.display = 'flex';
+    abrirModalIA();
     return;
   }
   setOutput('<span class="ai-loading">Processando…</span>');
@@ -3208,6 +3419,9 @@ async function perguntarIA() {
   // Restaurar critério de ordenação salvo
   const sel = document.getElementById('ordem-select');
   if (sel) sel.value = ordemAtual;
+
+  // Sincroniza estado visual da IA (notice inline, botão remover no modal)
+  atualizarEstadoIA();
 
   // Restaurar keywords salvas
   const kwsSalvas = JSON.parse(localStorage.getItem('ml_kws_todas') || '[]');
