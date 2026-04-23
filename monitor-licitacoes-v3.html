@@ -2137,6 +2137,123 @@ function formatValor(v) {
   if (v >= 1e3) return `R$ ${Math.round(v/1e3)}k`;
   return `R$ ${Math.round(v).toLocaleString('pt-BR')}`;
 }
+
+/* Extrai o valor monetário de um objeto da API, varrendo recursivamente
+   todos os campos cujos nomes contenham "valor". A API do PNCP varia o nome
+   conforme modalidade e versão. Esta abordagem é resiliente a mudanças.
+
+   Retorna: número > 0 se encontrou valor declarado, ou 0 se não encontrou.
+
+   Quando ML_DEBUG_VALOR está true (set via console: window.ML_DEBUG_VALOR = true),
+   loga o objeto inteiro quando não encontra valor — útil pra descobrir nomes de
+   campo desconhecidos que estão chegando da API. */
+window.ML_DEBUG_VALOR = window.ML_DEBUG_VALOR || false;
+
+function extrairValor(obj, profundidade = 0) {
+  if (!obj || typeof obj !== 'object' || profundidade > 4) return 0;
+
+  // Tenta primeiro os campos conhecidos por ordem de prevalência
+  const candidatos = [
+    'valorTotal','valor_total','valor_total_estimado','valorTotalEstimado',
+    'valorEstimadoTotal','valor_estimado_total',
+    'valor_global','valorGlobal','valor_global_estimado',
+    'valorEstimado','valor_estimado',
+    'valorTotalHomologado','valor_total_homologado',
+    'valorContratado','valor_contratado',
+    'valor','total'
+  ];
+  for (const k of candidatos) {
+    if (k in obj && obj[k] !== null && obj[k] !== undefined && obj[k] !== '') {
+      const n = Number(obj[k]);
+      if (!isNaN(n) && n > 0) return n;
+    }
+  }
+
+  // Varredura defensiva: qualquer chave contendo "valor" (case-insensitive)
+  for (const k of Object.keys(obj)) {
+    if (/valor/i.test(k) && obj[k] !== null && obj[k] !== undefined && obj[k] !== '') {
+      const n = Number(obj[k]);
+      if (!isNaN(n) && n > 0) return n;
+    }
+  }
+
+  // Recursão: se o valor está em sub-objeto (ex: detalhes.valorTotal)
+  for (const k of Object.keys(obj)) {
+    if (obj[k] && typeof obj[k] === 'object' && !Array.isArray(obj[k])) {
+      const v = extrairValor(obj[k], profundidade + 1);
+      if (v > 0) return v;
+    }
+  }
+
+  return 0;
+}
+
+/* Hidratação de valores faltantes:
+   Quando a API search do PNCP não retorna valor (acontece com frequência),
+   busca o detalhe do edital via endpoint /v1/orgaos/{cnpj}/compras/{ano}/{seq}
+   que sempre tem valorTotalEstimado declarado.
+
+   Roda em background após a renderização inicial — não bloqueia a UI.
+   Limita concorrência a 3 requests simultâneos para não sobrecarregar a API.
+   Atualiza o card silenciosamente quando valor é descoberto. */
+async function hidratarValoresFaltantes() {
+  const semValor = editaisCarregados.filter(e =>
+    e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
+  );
+  if (semValor.length === 0) return;
+
+  const limiteConcorrencia = 3;
+  let descobertos = 0;
+
+  async function buscarDetalhe(edital) {
+    try {
+      // numeroControle PNCP tem formato: CNPJ-1-SEQ/ANO (ex: 87612750000100-1-000038/2026)
+      const m = edital.numeroControle.match(/^(\d+)-\d+-(\d+)\/(\d+)$/);
+      if (!m) return;
+      const [, cnpj, seq, ano] = m;
+      const seqLimpo = parseInt(seq, 10);  // remove zeros à esquerda
+      const url = `https://pncp.gov.br/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`;
+      const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+      if (!r.ok) return;
+      const detalhe = await r.json();
+      const v = extrairValor(detalhe);
+      if (v > 0) {
+        edital.valor = v;
+        edital.valorFmt = formatValor(v);
+        descobertos++;
+        atualizarCardValor(edital);
+      }
+    } catch (e) {
+      // silencioso — falha na hidratação não atrapalha o card
+    }
+  }
+
+  // Processa em lotes para não disparar 50 requests de uma vez
+  for (let i = 0; i < semValor.length; i += limiteConcorrencia) {
+    const lote = semValor.slice(i, i + limiteConcorrencia);
+    await Promise.all(lote.map(buscarDetalhe));
+  }
+
+  // Se descobriu pelo menos 1, atualiza KPI "Maior valor"
+  if (descobertos > 0) {
+    atualizarMetricas();
+  }
+}
+
+/* Atualiza apenas o campo "Valor" de um card específico, sem re-renderizar tudo */
+function atualizarCardValor(edital) {
+  const idx = editaisCarregados.indexOf(edital);
+  if (idx < 0) return;
+  const card = document.getElementById(`edital-${idx}`);
+  if (!card) return;
+  const valorEl = card.querySelector('.detail-value.money');
+  if (valorEl) {
+    valorEl.textContent = edital.valorFmt;
+    valorEl.classList.remove('sigiloso');
+    valorEl.removeAttribute('title');
+  }
+}
+
 function formatData(dataStr) {
   if (!dataStr) return 'sem data';
   try {
@@ -2247,26 +2364,12 @@ function normPNCP(item, uf) {
   const obj   = item.description || item.objeto || item.title || '';
   const orgao = item.orgao_nome || item.orgao?.razaoSocial || item.unidade_nome || '';
   const mun   = item.municipio_nome || item.unidadeOrgao?.municipioNome || '';
-  // CAMPO DE VALOR — a API de busca do PNCP varia o nome do campo conforme
-  // a modalidade do edital. Lista de fallbacks ordenada por frequência observada:
-  // - valorTotal: campo mais comum nas respostas da API search
-  // - valor_total, valor_total_estimado: variações snake_case
-  // - valorEstimado: dispensas e licitações antigas
-  // - valor_global / valorGlobal: contratos
-  // - valorTotalEstimado / valorTotalHomologado: campos da API de detalhe (também aceitos)
-  // Number(...) garante que strings numéricas sejam convertidas (a API às vezes devolve string)
-  const valorBruto = item.valorTotal
-                  ?? item.valor_total
-                  ?? item.valor_total_estimado
-                  ?? item.valorTotalEstimado
-                  ?? item.valor_global
-                  ?? item.valorGlobal
-                  ?? item.valorEstimado
-                  ?? item.valor_estimado
-                  ?? item.valorTotalHomologado
-                  ?? item.valor_total_homologado
-                  ?? 0;
-  const val = Number(valorBruto) || 0;
+  // Busca recursiva resiliente — funciona com qualquer variação de campo da API PNCP
+  const val = extrairValor(item);
+  // Log defensivo: se ainda saiu zero, registra o objeto inteiro para inspeção
+  if (val === 0 && window.ML_DEBUG_VALOR) {
+    console.log('[ML] Valor=0, objeto da API:', item);
+  }
   const dtAbertura     = item.data_inicio_vigencia || item.dataAberturaPropostas || item.data_abertura_proposta || '';
   const dtEncerramento = item.data_fim_vigencia || item.dataEncerramentoProposta || '';
   const dtPublicacao   = item.data_publicacao_pncp || item.dataPublicacao || item.createdAt || '';
@@ -2348,8 +2451,7 @@ function normPNCP(item, uf) {
 function normPCP(item) {
   const obj  = item.objeto || item.descricao || item.titulo || '';
   const orgao= item.orgao || item.entidade || '';
-  // PCP/RS: campos típicos são valorEstimado, valor, ou valorTotal
-  const val  = Number(item.valorEstimado ?? item.valor ?? item.valorTotal ?? 0) || 0;
+  const val  = extrairValor(item);
   const dtAb = item.dataAbertura || item.dataFim || item.prazo;
   const prazo= calcPrazo(dtAb);
   prazo.tipo = 'abertura';
@@ -2458,6 +2560,8 @@ async function buscarPorMunicipio() {
     erroB.style.display = 'block';
   }
   atualizarURLStateDoFiltro();
+  // Hidratação assíncrona dos valores faltantes
+  hidratarValoresFaltantes();
 }
 
 function limparFiltroPorMunicipio() {
@@ -2560,6 +2664,9 @@ async function executarBusca() {
     okB.style.display = 'block';
     setTimeout(() => okB.style.display = 'none', 5000);
   }
+
+  // Hidratação assíncrona: busca valores faltantes via API de detalhe (background)
+  hidratarValoresFaltantes();
 }
 
 /* ====================== URL STATE (A5) ====================== */
