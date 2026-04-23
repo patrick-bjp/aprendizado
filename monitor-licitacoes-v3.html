@@ -909,6 +909,12 @@ body::before {
   font-family: var(--ff-mono); font-weight: 600;
   color: var(--accent);
 }
+.detail-value.money.sigiloso {
+  color: var(--ink-lo);
+  font-style: italic;
+  font-weight: 500;
+  cursor: help;
+}
 .detail-value.mono {
   font-family: var(--ff-mono); font-size: 11px;
 }
@@ -2241,7 +2247,26 @@ function normPNCP(item, uf) {
   const obj   = item.description || item.objeto || item.title || '';
   const orgao = item.orgao_nome || item.orgao?.razaoSocial || item.unidade_nome || '';
   const mun   = item.municipio_nome || item.unidadeOrgao?.municipioNome || '';
-  const val   = item.valor_global || item.valorTotalEstimado || item.valorTotalHomologado || 0;
+  // CAMPO DE VALOR — a API de busca do PNCP varia o nome do campo conforme
+  // a modalidade do edital. Lista de fallbacks ordenada por frequência observada:
+  // - valorTotal: campo mais comum nas respostas da API search
+  // - valor_total, valor_total_estimado: variações snake_case
+  // - valorEstimado: dispensas e licitações antigas
+  // - valor_global / valorGlobal: contratos
+  // - valorTotalEstimado / valorTotalHomologado: campos da API de detalhe (também aceitos)
+  // Number(...) garante que strings numéricas sejam convertidas (a API às vezes devolve string)
+  const valorBruto = item.valorTotal
+                  ?? item.valor_total
+                  ?? item.valor_total_estimado
+                  ?? item.valorTotalEstimado
+                  ?? item.valor_global
+                  ?? item.valorGlobal
+                  ?? item.valorEstimado
+                  ?? item.valor_estimado
+                  ?? item.valorTotalHomologado
+                  ?? item.valor_total_homologado
+                  ?? 0;
+  const val = Number(valorBruto) || 0;
   const dtAbertura     = item.data_inicio_vigencia || item.dataAberturaPropostas || item.data_abertura_proposta || '';
   const dtEncerramento = item.data_fim_vigencia || item.dataEncerramentoProposta || '';
   const dtPublicacao   = item.data_publicacao_pncp || item.dataPublicacao || item.createdAt || '';
@@ -2323,7 +2348,8 @@ function normPNCP(item, uf) {
 function normPCP(item) {
   const obj  = item.objeto || item.descricao || item.titulo || '';
   const orgao= item.orgao || item.entidade || '';
-  const val  = item.valorEstimado || item.valor || 0;
+  // PCP/RS: campos típicos são valorEstimado, valor, ou valorTotal
+  const val  = Number(item.valorEstimado ?? item.valor ?? item.valorTotal ?? 0) || 0;
   const dtAb = item.dataAbertura || item.dataFim || item.prazo;
   const prazo= calcPrazo(dtAb);
   prazo.tipo = 'abertura';
@@ -3007,7 +3033,7 @@ function renderCard(e, i) {
       <div class="bid-details">
         <div class="detail">
           <span class="detail-label">Valor</span>
-          <span class="detail-value money">${e.valorFmt}</span>
+          <span class="detail-value money${e.valor > 0 ? '' : ' sigiloso'}" title="${e.valor > 0 ? '' : 'Valor não divulgado pelo órgão (modalidade sigilosa ou ainda não informado)'}">${e.valor > 0 ? e.valorFmt : 'Sigiloso'}</span>
         </div>
         ${e.dataPublicacaoFmt && e.dataPublicacaoFmt !== 'sem data' ? `
         <div class="detail">
@@ -3096,7 +3122,14 @@ function atualizarMetricas() {
   document.getElementById('m-rel').textContent       = alta;
   document.getElementById('m-urgentes').textContent  = urg;
   document.getElementById('m-valor').textContent     = maior ? formatValor(maior.valor) : 'n/d';
-  document.getElementById('m-sub-valor').textContent = maior ? `${maior.orgao.substring(0,30)} (${maior.uf})` : 'API não informa valor';
+  // Subtítulo: quando há valor mostra órgão; quando não há, indica quantos editais têm valor sigiloso
+  if (maior) {
+    document.getElementById('m-sub-valor').textContent = `${maior.orgao.substring(0,30)} (${maior.uf})`;
+  } else if (total > 0) {
+    document.getElementById('m-sub-valor').textContent = 'Nenhum edital com valor declarado';
+  } else {
+    document.getElementById('m-sub-valor').textContent = '—';
+  }
 
   // Topbar / sidebar counts
   document.getElementById('topbar-bids').textContent = total;
