@@ -3697,6 +3697,14 @@ async function perguntarIA() {
   atualizarEstadoIA();
 
   // Toggle de modo diagnóstico — mostra campo da API ao lado de cada valor
+  // O debug existe pra depurar problemas. Ao corrigir o bug do valor (abril/2026),
+  // desativamos automaticamente para usuários que já tinham o debug ligado do período
+  // de investigação — eles não precisam mais ver a marcação [detalhe:valorTotalEstimado].
+  const DEBUG_RESET_VERSION = 'v2-valor-ok';
+  if (localStorage.getItem('ml_debug_reset') !== DEBUG_RESET_VERSION) {
+    localStorage.removeItem('ml_debug');
+    localStorage.setItem('ml_debug_reset', DEBUG_RESET_VERSION);
+  }
   const debugBtn = document.getElementById('debugToggle');
   if (debugBtn) {
     const ativo = localStorage.getItem('ml_debug') === '1';
