@@ -1571,10 +1571,6 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <span><b id="topbar-portais">1</b> portal</span>
       </div>
 
-      <button class="debug-toggle" id="debugToggle" aria-label="Modo diagnóstico" title="Modo diagnóstico — mostra nome do campo da API em cada valor">
-        🔍
-      </button>
-
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema" title="Alternar tema (Shift+D)">
         <span class="knob">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -1622,15 +1618,6 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
     <div class="api-notice-inline" id="api-notice-inline" style="display:none">
       <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--info);flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
       <span>IA desativada — <button class="link-like" onclick="abrirModalIA()">configurar chave</button> para ativar análise automática.</span>
-    </div>
-
-    <!-- Aviso sobre valores não enriquecidos (dispensável após ter proxy) -->
-    <div class="info-notice" id="valor-notice" style="display:none">
-      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span>Valores detalhados temporariamente indisponíveis (CORS do PNCP).
-        Abra o edital pelo link para consultar o valor total no portal.
-        <button class="link-like" onclick="localStorage.setItem('ml_valor_notice_dismissed','1');document.getElementById('valor-notice').style.display='none'">Dispensar</button>
-      </span>
     </div>
 
     <!-- Modal de configuração da IA -->
@@ -2204,39 +2191,22 @@ function formatValor(v) {
    campo desconhecidos que estão chegando da API. */
 window.ML_DEBUG_VALOR = window.ML_DEBUG_VALOR || false;
 
-/* Leitura do valor do edital.
-   Retorna objeto { valor, campo } — 'campo' ajuda a depurar quando debug ativo. */
+/* Leitura do valor do edital — campos que a API search do PNCP retorna.
+   Na maioria dos casos valor_global vem preenchido. Se não vier, o card
+   mostra "—" e o usuário pode consultar abrindo o edital pelo link. */
 function extrairValor(item) {
-  if (!item || typeof item !== 'object') return { valor: 0, campo: '' };
-  const candidatos = [
-    'valor_global','valorTotal','valor_total',
-    'valorEstimado','valor_estimado',
-    'valorTotalEstimado','valor_total_estimado',
-    'valorTotalHomologado','valor_total_homologado',
-    'valor'
-  ];
-  for (const k of candidatos) {
-    if (k in item && item[k] !== null && item[k] !== undefined && item[k] !== '') {
-      const n = Number(item[k]);
-      if (!isNaN(n) && n > 0) return { valor: n, campo: k };
-    }
-  }
-  // Varredura defensiva: qualquer chave do objeto que contenha "valor" e tenha
-  // número positivo. Cobre variações futuras ou campos não listados acima.
-  for (const k of Object.keys(item)) {
-    if (/valor/i.test(k) && item[k] !== null && item[k] !== undefined && item[k] !== '') {
-      const n = Number(item[k]);
-      if (!isNaN(n) && n > 0) return { valor: n, campo: k + ' (varredura)' };
-    }
-  }
-  // Lista todos os campos que começam/contêm "valor" mesmo vazios — útil pra debug
-  const camposValor = Object.keys(item).filter(k => /valor/i.test(k));
-  return {
-    valor: 0,
-    campo: camposValor.length
-      ? `nenhum válido. encontrados: ${camposValor.join(', ')}`
-      : 'nenhum campo com "valor" no item'
-  };
+  if (!item || typeof item !== 'object') return 0;
+  const raw = item.valor_global
+           ?? item.valorTotal
+           ?? item.valor_total
+           ?? item.valorEstimado
+           ?? item.valor_estimado
+           ?? item.valorTotalEstimado
+           ?? item.valorTotalHomologado
+           ?? item.valor
+           ?? 0;
+  const n = Number(raw);
+  return (!isNaN(n) && n > 0) ? n : 0;
 }
 
 function formatData(dataStr) {
@@ -2272,162 +2242,6 @@ function xhrGet(url) {
       .catch(() => xhrGetLegacy(url));
   }
   return xhrGetLegacy(url);
-}
-
-/* Busca o VALOR no endpoint de detalhe do PNCP.
-   A API search retorna valor_global=null. O valor de fato está no endpoint de detalhe.
-
-   O PNCP tem várias URLs possíveis que servem o detalhe. Tentamos em ordem:
-   1. /api/consulta/v1/orgaos/{cnpj}/compras/{ano}/{seq}  (atual, consulta pública)
-   2. /api/pncp/v1/orgaos/{cnpj}/compras/{ano}/{seq}      (legado — redirect 301)
-   3. com barra no final (alguns servidores redirecionam p/ essa versão)
-
-   Usa fetch com redirect:'follow' para seguir 301/302 automaticamente.
-
-   Retorna: número > 0 se achou, ou 0 se falhou. */
-async function fetchDetalhePNCP(url) {
-  try {
-    const r = await fetch(url, {
-      headers: { 'Accept': 'application/json' },
-      mode: 'cors',
-      redirect: 'follow',
-      credentials: 'omit'
-    });
-    if (!r.ok) return null;
-    return await r.json();
-  } catch(e) {
-    return null;
-  }
-}
-
-async function buscarValorDetalhe(numeroControle, edital) {
-  if (!numeroControle) return 0;
-  // Parsing tolerante do numeroControle (ver docs acima)
-  const partes = numeroControle.split(/[-\/]/).filter(p => /^\d+$/.test(p));
-  let cnpj = '', ano = '';
-  const outros = [];
-  for (const p of partes) {
-    if (!cnpj && p.length === 14) cnpj = p;
-    else if (!ano && p.length === 4 && p.startsWith('20')) ano = p;
-    else outros.push(p);
-  }
-  let seq = '';
-  for (const p of outros) {
-    if (!seq || parseInt(p, 10) > parseInt(seq, 10)) seq = p;
-  }
-  if (!cnpj || !ano || !seq) {
-    if (window.ML_DEBUG_VALOR) {
-      console.warn('[ML] numeroControle não parseável:', numeroControle, '| partes:', partes);
-    }
-    return 0;
-  }
-  const seqLimpo = parseInt(seq, 10);
-
-  // Tenta múltiplos endpoints do PNCP até achar um que funcione
-  const urls = [
-    `https://pncp.gov.br/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`,
-    `https://pncp.gov.br/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`,
-    `https://pncp.gov.br/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}/`,
-  ];
-
-  let detalhe = null;
-  let urlUsada = '';
-  for (const u of urls) {
-    detalhe = await fetchDetalhePNCP(u);
-    if (detalhe && typeof detalhe === 'object') {
-      urlUsada = u;
-      break;
-    }
-  }
-
-  if (!detalhe) {
-    if (window.ML_DEBUG_VALOR) console.warn('[ML] Todos os endpoints falharam para:', numeroControle);
-    return 0;
-  }
-
-  // Log da primeira resposta bem-sucedida pra inspeção
-  if (window.ML_DEBUG_VALOR && window._ML_LOGOU_DETALHE !== true) {
-    window._ML_LOGOU_DETALHE = true;
-    console.log('%c[ML]%c Estrutura do DETALHE (primeira resposta OK) de', urlUsada,
-      'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
-      'color:inherit');
-    console.log(detalhe);
-    const camposV = Object.keys(detalhe).filter(k => /valor/i.test(k));
-    console.log('[ML] Campos de valor no detalhe:',
-      camposV.map(k => `${k}=${JSON.stringify(detalhe[k])}`));
-  }
-
-  const candidatos = [
-    'valorTotalEstimado','valor_total_estimado',
-    'valorTotalHomologado','valor_total_homologado',
-    'valorGlobal','valor_global',
-    'valorTotal','valor_total'
-  ];
-  for (const k of candidatos) {
-    if (detalhe[k] != null && detalhe[k] !== '') {
-      const n = Number(detalhe[k]);
-      if (!isNaN(n) && n > 0) return n;
-    }
-  }
-  for (const k of Object.keys(detalhe)) {
-    if (/valor/i.test(k) && detalhe[k] != null && detalhe[k] !== '') {
-      const n = Number(detalhe[k]);
-      if (!isNaN(n) && n > 0) return n;
-    }
-  }
-  return 0;
-}
-
-/* Enriquece uma lista de editais com valor vindo do endpoint de detalhe.
-
-   ⚠️ DESATIVADO TEMPORARIAMENTE (abril/2026):
-   O PNCP não envia headers CORS consistentes no endpoint de detalhe.
-   Cada request toma timeout de ~30s quando bloqueada — com 50 editais isso
-   trava o navegador por minutos. Reativar quando o proxy Cloudflare Workers
-   (ver GROQ_PROXY_SETUP.md) estiver online.
-
-   Para reativar manualmente: window.ML_ENRIQUECER_VALOR = true no console. */
-window.ML_ENRIQUECER_VALOR = window.ML_ENRIQUECER_VALOR || false;
-
-async function enriquecerValores(editais) {
-  if (!window.ML_ENRIQUECER_VALOR) {
-    if (window.ML_DEBUG_VALOR) {
-      console.log('%c[ML]%c Enriquecimento desativado — veja GROQ_PROXY_SETUP.md',
-        'background:#ffb020;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
-        'color:inherit');
-    }
-    return;
-  }
-  const semValor = editais.filter(e =>
-    e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
-  );
-  if (semValor.length === 0) return;
-  window._ML_LOGOU_DETALHE = false;
-  const debug = window.ML_DEBUG_VALOR;
-  if (debug) {
-    console.log(`%c[ML]%c Enriquecendo valores de ${semValor.length} editais via API de detalhe...`,
-      'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:inherit');
-  }
-  const LOTE = 5;
-  let sucessos = 0, falhas = 0;
-  for (let i = 0; i < semValor.length; i += LOTE) {
-    const chunk = semValor.slice(i, i + LOTE);
-    await Promise.all(chunk.map(async (e) => {
-      const v = await buscarValorDetalhe(e.numeroControle, e);
-      if (v > 0) {
-        e.valor = v;
-        e.valorFmt = formatValor(v);
-        e.campoOrigemValor = 'detalhe:valorTotalEstimado';
-        sucessos++;
-      } else {
-        falhas++;
-      }
-    }));
-  }
-  if (debug) {
-    console.log(`%c[ML]%c Enriquecimento concluído: ${sucessos} sucesso(s), ${falhas} falha(s)`,
-      'background:#4ade80;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:inherit');
-  }
 }
 
 function xhrGetLegacy(url) {
@@ -2519,14 +2333,7 @@ function normPNCP(item, uf) {
   const obj   = item.description || item.objeto || item.title || '';
   const orgao = item.orgao_nome || item.orgao?.razaoSocial || item.unidade_nome || '';
   const mun   = item.municipio_nome || item.unidadeOrgao?.municipioNome || '';
-  // Extração do valor (guardando qual campo foi encontrado para debug)
-  const _ev = extrairValor(item);
-  const val = _ev.valor;
-  const campoOrigemValor = _ev.campo;
-  // Log sempre quando debug ativo, para ver o que a API devolveu
-  if (window.ML_DEBUG_VALOR) {
-    console.log(`[ML] Edital "${item.title || ''}" | campo="${campoOrigemValor}" | valor=${val}`, item);
-  }
+  const val   = extrairValor(item);
   const dtAbertura     = item.data_inicio_vigencia || item.dataAberturaPropostas || item.data_abertura_proposta || '';
   const dtEncerramento = item.data_fim_vigencia || item.dataEncerramentoProposta || '';
   const dtPublicacao   = item.data_publicacao_pncp || item.dataPublicacao || item.createdAt || '';
@@ -2601,7 +2408,7 @@ function normPNCP(item, uf) {
     id: `pncp-${num || Math.random()}`,
     titulo, tituloFull: obj,
     orgao, municipio: mun, uf,
-    valor: val, valorFmt: formatValor(val), campoOrigemValor, prazo,
+    valor: val, valorFmt: formatValor(val), prazo,
     portal: portalNome, portalClass, portalTipo: 'pncp',
     link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
@@ -2618,9 +2425,7 @@ function normPNCP(item, uf) {
 function normPCP(item) {
   const obj  = item.objeto || item.descricao || item.titulo || '';
   const orgao= item.orgao || item.entidade || '';
-  const _ev  = extrairValor(item);
-  const val  = _ev.valor;
-  const campoOrigemValor = _ev.campo;
+  const val  = extrairValor(item);
   const dtAb = item.dataAbertura || item.dataFim || item.prazo;
   const prazo= calcPrazo(dtAb);
   prazo.tipo = 'abertura';
@@ -2631,7 +2436,7 @@ function normPCP(item) {
     id: `pcp-${item.id || Math.random()}`,
     titulo: obj.length > 130 ? obj.substring(0,130)+'…' : obj,
     tituloFull: obj, orgao, municipio: '', uf: item.uf || item.estado || 'RS',
-    valor: val, valorFmt: formatValor(val), campoOrigemValor, prazo,
+    valor: val, valorFmt: formatValor(val), prazo,
     portal: 'Portal CP/RS', portalClass: 'pcp', portalTipo: 'pcp',
     link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
@@ -2722,10 +2527,6 @@ async function buscarPorMunicipio() {
     e.acompanhando = acompanhando.includes(e.id);
     e.dispensado   = descartados.includes(e.id);
   });
-  // Enriquecimento só com proxy (ver doc da função enriquecerValores)
-  if (window.ML_ENRIQUECER_VALOR || window.ML_PROXY_PNCP) {
-    await enriquecerValores(editaisCarregados);
-  }
   ordenarEditais(editaisCarregados);
   marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
@@ -2818,20 +2619,6 @@ async function executarBusca() {
     e.acompanhando = acompanhando.includes(e.id);
     e.dispensado   = descartados.includes(e.id);
   });
-  // Enriquecimento de valor (desativado por padrão — ver doc da função).
-  // Só é chamado quando explicitamente habilitado (proxy configurado).
-  if (window.ML_ENRIQUECER_VALOR || window.ML_PROXY_PNCP) {
-    document.getElementById('sidebar-status').textContent = 'Buscando valores...';
-    await enriquecerValores(editaisCarregados);
-  }
-  // Se há editais sem valor, mostra aviso (uma vez) informando que é limitação da API
-  if (!localStorage.getItem('ml_valor_notice_dismissed')) {
-    const semValor = editaisCarregados.filter(e => e.portalTipo === 'pncp' && (!e.valor || e.valor === 0));
-    if (semValor.length > 3) {
-      const n = document.getElementById('valor-notice');
-      if (n) n.style.display = 'flex';
-    }
-  }
   ordenarEditais(editaisCarregados);
   const novosCount = marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
@@ -3332,7 +3119,7 @@ function renderCard(e, i) {
       <div class="bid-details">
         <div class="detail">
           <span class="detail-label">Valor</span>
-          <span class="detail-value money${e.valor > 0 ? '' : ' vazio'}">${e.valor > 0 ? e.valorFmt : 'Não informado'}${window.ML_DEBUG_VALOR ? ` <code style="color:${e.valor>0?'#4ade80':'#ff4d6d'};font-size:9px;font-family:monospace;background:rgba(0,0,0,.2);padding:1px 4px;border-radius:3px;margin-left:4px;">[${e.campoOrigemValor || '?'}]</code>` : ''}</span>
+          <span class="detail-value money${e.valor > 0 ? '' : ' vazio'}">${e.valor > 0 ? e.valorFmt : 'Não informado'}</span>
         </div>
         ${e.dataPublicacaoFmt && e.dataPublicacaoFmt !== 'sem data' ? `
         <div class="detail">
