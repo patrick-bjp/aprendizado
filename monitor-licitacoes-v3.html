@@ -317,6 +317,18 @@ body::before {
 }
 [data-theme="light"] .api-notice-inline { background: var(--bg-1); }
 .api-notice-inline .icon { width: 14px; height: 14px; fill: none; stroke-width: 2; }
+
+.info-notice {
+  font-family: var(--ff-mono); font-size: 11px;
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  background: var(--bg-2); color: var(--ink-lo);
+  border: 1px solid var(--stroke);
+  border-left: 3px solid var(--warn);
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+[data-theme="light"] .info-notice { background: var(--bg-1); }
+.info-notice .icon { width: 14px; height: 14px; fill: none; stroke: var(--warn); stroke-width: 2; flex-shrink: 0; }
 .link-like {
   background: none; border: none; padding: 0;
   color: var(--accent); cursor: pointer;
@@ -1612,6 +1624,15 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
       <span>IA desativada — <button class="link-like" onclick="abrirModalIA()">configurar chave</button> para ativar análise automática.</span>
     </div>
 
+    <!-- Aviso sobre valores não enriquecidos (dispensável após ter proxy) -->
+    <div class="info-notice" id="valor-notice" style="display:none">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+      <span>Valores detalhados temporariamente indisponíveis (CORS do PNCP).
+        Abra o edital pelo link para consultar o valor total no portal.
+        <button class="link-like" onclick="localStorage.setItem('ml_valor_notice_dismissed','1');document.getElementById('valor-notice').style.display='none'">Dispensar</button>
+      </span>
+    </div>
+
     <!-- Modal de configuração da IA -->
     <div class="ia-modal-overlay" id="ia-modal" style="display:none" onclick="fecharModalIA(event)">
       <div class="ia-modal" onclick="event.stopPropagation()">
@@ -2358,9 +2379,25 @@ async function buscarValorDetalhe(numeroControle, edital) {
 }
 
 /* Enriquece uma lista de editais com valor vindo do endpoint de detalhe.
-   Roda em lotes de 5 em paralelo para não sobrecarregar o PNCP.
-   Só busca editais que vieram sem valor da search (economiza requests). */
+
+   ⚠️ DESATIVADO TEMPORARIAMENTE (abril/2026):
+   O PNCP não envia headers CORS consistentes no endpoint de detalhe.
+   Cada request toma timeout de ~30s quando bloqueada — com 50 editais isso
+   trava o navegador por minutos. Reativar quando o proxy Cloudflare Workers
+   (ver GROQ_PROXY_SETUP.md) estiver online.
+
+   Para reativar manualmente: window.ML_ENRIQUECER_VALOR = true no console. */
+window.ML_ENRIQUECER_VALOR = window.ML_ENRIQUECER_VALOR || false;
+
 async function enriquecerValores(editais) {
+  if (!window.ML_ENRIQUECER_VALOR) {
+    if (window.ML_DEBUG_VALOR) {
+      console.log('%c[ML]%c Enriquecimento desativado — veja GROQ_PROXY_SETUP.md',
+        'background:#ffb020;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
+        'color:inherit');
+    }
+    return;
+  }
   const semValor = editais.filter(e =>
     e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
   );
@@ -2685,8 +2722,10 @@ async function buscarPorMunicipio() {
     e.acompanhando = acompanhando.includes(e.id);
     e.dispensado   = descartados.includes(e.id);
   });
-  // Enriquecer valores via API de detalhe ANTES de renderizar
-  await enriquecerValores(editaisCarregados);
+  // Enriquecimento só com proxy (ver doc da função enriquecerValores)
+  if (window.ML_ENRIQUECER_VALOR || window.ML_PROXY_PNCP) {
+    await enriquecerValores(editaisCarregados);
+  }
   ordenarEditais(editaisCarregados);
   marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
@@ -2779,10 +2818,20 @@ async function executarBusca() {
     e.acompanhando = acompanhando.includes(e.id);
     e.dispensado   = descartados.includes(e.id);
   });
-  // Enriquecer valores via API de detalhe ANTES de renderizar
-  // (a API search do PNCP retorna valor_global=null; o valor real está no detalhe)
-  document.getElementById('sidebar-status').textContent = 'Buscando valores...';
-  await enriquecerValores(editaisCarregados);
+  // Enriquecimento de valor (desativado por padrão — ver doc da função).
+  // Só é chamado quando explicitamente habilitado (proxy configurado).
+  if (window.ML_ENRIQUECER_VALOR || window.ML_PROXY_PNCP) {
+    document.getElementById('sidebar-status').textContent = 'Buscando valores...';
+    await enriquecerValores(editaisCarregados);
+  }
+  // Se há editais sem valor, mostra aviso (uma vez) informando que é limitação da API
+  if (!localStorage.getItem('ml_valor_notice_dismissed')) {
+    const semValor = editaisCarregados.filter(e => e.portalTipo === 'pncp' && (!e.valor || e.valor === 0));
+    if (semValor.length > 3) {
+      const n = document.getElementById('valor-notice');
+      if (n) n.style.display = 'flex';
+    }
+  }
   ordenarEditais(editaisCarregados);
   const novosCount = marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
