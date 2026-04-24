@@ -1538,10 +1538,6 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
           <span class="company-dot" style="background:var(--info)"></span>
           PNCP <span style="color:var(--ok);margin-left:auto;font-size:9px;font-family:var(--ff-mono)">●</span>
         </button>
-        <button class="company-item" id="btn-pcp" onclick="togglePortalBusca(this,'pcp')">
-          <span class="company-dot" style="background:var(--ok)"></span>
-          Compras Públicas RS <span style="color:var(--ok);margin-left:auto;font-size:9px;font-family:var(--ff-mono)">●</span>
-        </button>
       </div>
     </nav>
 
@@ -1560,7 +1556,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
       <div class="topbar-meta">
         <span id="topbar-date">—</span>
         <span><b id="topbar-bids">—</b> bids</span>
-        <span><b id="topbar-portais">2</b> portais</span>
+        <span><b id="topbar-portais">1</b> portal</span>
       </div>
 
       <button class="debug-toggle" id="debugToggle" aria-label="Modo diagnóstico" title="Modo diagnóstico — mostra nome do campo da API em cada valor">
@@ -1684,7 +1680,6 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
           <span class="chip-dot" style="background:var(--live)"></span> Urgente
         </button>
         <button class="chip" onclick="filtrarFeed(this,'pncp')">PNCP</button>
-        <button class="chip" onclick="filtrarFeed(this,'pcp')">CP/RS</button>
       </div>
       <!-- Seletor de ordenação -->
       <div class="ordem-seletor" title="Ordenar resultados">
@@ -2157,7 +2152,14 @@ function calcularScore(objeto, uf) {
 /* ====================== UTILITIES ====================== */
 function calcPrazo(dataStr) {
   if (!dataStr) return { dias: null, label: 'sem data', urgente: false };
-  const diff = Math.ceil((new Date(dataStr) - new Date()) / 86400000);
+  // Calcula em dias de CALENDÁRIO (ignorando hora) pra que um edital que
+  // encerra hoje de manhã mostre "hoje!" a tarde toda, não "encerrado".
+  const data = new Date(dataStr);
+  if (isNaN(data)) return { dias: null, label: 'sem data', urgente: false };
+  const dataDia = new Date(data.getFullYear(), data.getMonth(), data.getDate());
+  const hoje = new Date();
+  const hojeDia = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+  const diff = Math.round((dataDia - hojeDia) / 86400000);
   if (diff < 0)  return { dias: diff, label: 'encerrado', urgente: false };
   if (diff === 0) return { dias: 0,  label: 'hoje!',     urgente: true  };
   if (diff <= 5)  return { dias: diff, label: `${diff} dia${diff>1?'s':''}`, urgente: true };
@@ -2492,12 +2494,22 @@ function normPNCP(item, uf) {
   const dtEncerramento = item.data_fim_vigencia || item.dataEncerramentoProposta || '';
   const dtPublicacao   = item.data_publicacao_pncp || item.dataPublicacao || item.createdAt || '';
 
-  // Marca editais encerrados (encerramento já passou) — não filtra mais,
-  // o usuário pode escolher vê-los pelo filtro "Encerrados" na sidebar
+  // Marca editais encerrados aplicando regra D+1:
+  // O edital só é considerado "encerrado" a partir da meia-noite do dia SEGUINTE
+  // à data de encerramento. Isso permite que editais que encerram de manhã
+  // continuem aparecendo como "encerrando hoje" durante todo o dia (útil pro
+  // analista que chega à tarde e quer ver o que fechou cedo).
+  // Ex: encerramento 24/04 07:59 → só vira "encerrado" no dia 25/04 às 00:00.
   let estaEncerrado = false;
   if (dtEncerramento) {
     const enc = new Date(dtEncerramento);
-    if (!isNaN(enc) && enc < new Date()) estaEncerrado = true;
+    if (!isNaN(enc)) {
+      // Data de corte = 00:00 do dia SEGUINTE ao encerramento
+      const corte = new Date(enc);
+      corte.setHours(0, 0, 0, 0);
+      corte.setDate(corte.getDate() + 1);
+      if (corte <= new Date()) estaEncerrado = true;
+    }
   }
 
   // CORREÇÃO BUG "ENCERRADO" indevido:
@@ -2755,13 +2767,11 @@ async function executarBusca() {
     }
   }
   if (portaisBusca.has('pcp')) {
-    document.getElementById('loading-msg').textContent = 'Portal Compras Públicas…';
-    try {
-      const items = await buscarPortalCP();
-      const novos = items.map(normPCP).filter(e => e.titulo.length > 8 && !idsGlobais.has(e.link));
-      novos.forEach(e => idsGlobais.add(e.link));
-      editaisCarregados.push(...novos);
-    } catch(e) {}
+    // Portal de Compras Públicas foi removido como fonte de busca ativa —
+    // a API pública exige autenticação corporativa e retorna CORS bloqueado.
+    // Deixamos a flag setada só por compatibilidade com estado antigo de usuários;
+    // a busca em si não é mais feita (economiza 30-90s de timeout).
+    // Ver ROADMAP.md seção "Portais não-implementados" para contexto.
   }
 
   // Marca cada edital com flags persistentes (acompanhando, dispensado, visto)
