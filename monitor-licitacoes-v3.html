@@ -927,31 +927,6 @@ body::before {
   font-weight: 500;
 }
 
-/* Fornecedor atual — destaque visual sutil (insight comercial chave) */
-.detail-value.fornecedor {
-  color: var(--warn);
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: -0.01em;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.detail-value.fornecedor.vazio {
-  color: var(--ink-lo);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 11px;
-}
-.detail-fornecedor {
-  cursor: help;
-}
-/* No tema light, fornecedor fica em tom mais escuro pra contraste */
-[data-theme="light"] .detail-value.fornecedor:not(.vazio) {
-  color: #b04a00;
-}
-
 /* ---------- MODO DIAGNÓSTICO ---------- */
 .debug-toggle {
   background: none; border: 1px solid var(--stroke);
@@ -1697,7 +1672,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
     <div class="toolbar">
       <div class="search">
         <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-        <input type="text" id="busca-input" placeholder="Filtrar por objeto, órgão, município, fornecedor…" />
+        <input type="text" id="busca-input" placeholder="Filtrar nos resultados por texto livre…" />
       </div>
       <div class="filter-group">
         <button class="chip active" onclick="filtrarFeed(this,'todos')">Todos</button>
@@ -2242,9 +2217,8 @@ function extrairValor(item) {
 
    Estratégia: após a busca normal, identifica editais sem valor e busca
    o detalhe em paralelo (lotes de 5). Atualiza UI silenciosamente. */
-async function buscarDetalheCompleto(numeroControle) {
-  const vazio = { valor: 0, fornecedor: '' };
-  if (!numeroControle) return vazio;
+async function buscarValorDetalhe(numeroControle) {
+  if (!numeroControle) return 0;
   // Parsing tolerante: extrai CNPJ (14 dígitos), ano (20xx) e seq.
   const partes = numeroControle.split(/[-\/]/).filter(p => /^\d+$/.test(p));
   let cnpj = '', ano = '';
@@ -2259,7 +2233,7 @@ async function buscarDetalheCompleto(numeroControle) {
   for (const p of outros) {
     if (!seq || parseInt(p, 10) > parseInt(seq, 10)) seq = p;
   }
-  if (!cnpj || !ano || !seq) return vazio;
+  if (!cnpj || !ano || !seq) return 0;
   const seqLimpo = parseInt(seq, 10);
 
   // Chama o proxy, que internamente faz GET no PNCP e retorna com CORS OK
@@ -2270,98 +2244,62 @@ async function buscarDetalheCompleto(numeroControle) {
       headers: { 'Accept': 'application/json' },
       redirect: 'follow'
     });
-    if (!r.ok) return vazio;
+    if (!r.ok) return 0;
     const detalhe = await r.json();
-
-    // 1. Valor — campos possíveis em ordem de preferência
-    let valor = 0;
-    const camposValor = [
+    // Campos possíveis no detalhe — em ordem de preferência
+    const candidatos = [
       'valorTotalEstimado','valor_total_estimado',
       'valorTotalHomologado','valor_total_homologado',
       'valorGlobal','valor_global',
       'valorTotal','valor_total'
     ];
-    for (const k of camposValor) {
+    for (const k of candidatos) {
       if (detalhe[k] != null && detalhe[k] !== '') {
         const n = Number(detalhe[k]);
-        if (!isNaN(n) && n > 0) { valor = n; break; }
+        if (!isNaN(n) && n > 0) return n;
       }
     }
-
-    // 2. Fornecedor / Fonte — quem opera o sistema do município
-    // No PNCP esse é o campo "Fonte" do edital (frequentemente o fornecedor atual
-    // de software, especialmente em editais de TI/gestão pública).
-    let fornecedor = '';
-    const camposFonte = [
-      'fonte', 'Fonte',
-      'fonteDocumento', 'fonte_documento',
-      'fornecedor', 'sistemaOrigem', 'sistema_origem',
-      'origemDocumento', 'origem_documento',
-      'sistemaPNCP', 'sistema_pncp'
-    ];
-    for (const k of camposFonte) {
-      if (detalhe[k] && typeof detalhe[k] === 'string' && detalhe[k].trim()) {
-        fornecedor = detalhe[k].trim();
-        break;
-      }
-    }
-
-    return { valor, fornecedor };
+    return 0;
   } catch(e) {
-    return vazio;
+    return 0;
   }
 }
 
-/* Hidrata uma lista de editais com valor + fornecedor via proxy.
+/* Hidrata uma lista de editais com valores via proxy.
    Roda em lotes de 5 paralelos para velocidade sem sobrecarregar. */
 async function enriquecerValores(editais) {
-  const semDetalhe = editais.filter(e =>
-    e.portalTipo === 'pncp' && e.numeroControle &&
-    ((!e.valor || e.valor === 0) || !e.fornecedor)
+  const semValor = editais.filter(e =>
+    e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
   );
-  if (semDetalhe.length === 0) return 0;
+  if (semValor.length === 0) return 0;
   const LOTE = 5;
   let descobertos = 0;
-  for (let i = 0; i < semDetalhe.length; i += LOTE) {
-    const chunk = semDetalhe.slice(i, i + LOTE);
+  for (let i = 0; i < semValor.length; i += LOTE) {
+    const chunk = semValor.slice(i, i + LOTE);
     await Promise.all(chunk.map(async (e) => {
-      const det = await buscarDetalheCompleto(e.numeroControle);
-      let mudou = false;
-      if (det.valor > 0 && (!e.valor || e.valor === 0)) {
-        e.valor = det.valor;
-        e.valorFmt = formatValor(det.valor);
-        mudou = true;
-      }
-      if (det.fornecedor && !e.fornecedor) {
-        e.fornecedor = det.fornecedor;
-        mudou = true;
-      }
-      if (mudou) {
+      const v = await buscarValorDetalhe(e.numeroControle);
+      if (v > 0) {
+        e.valor = v;
+        e.valorFmt = formatValor(v);
         descobertos++;
-        atualizarCardDetalhe(e);
+        // Atualiza o card individual sem re-renderizar tudo
+        atualizarCardValor(e);
       }
     }));
   }
   return descobertos;
 }
 
-/* Atualiza valor e fornecedor de um card sem re-renderizar tudo */
-function atualizarCardDetalhe(edital) {
+/* Atualiza apenas o campo "Valor" de um card específico, sem re-renderizar tudo */
+function atualizarCardValor(edital) {
   const idx = editaisCarregados.indexOf(edital);
   if (idx < 0) return;
   const card = document.getElementById(`edital-${idx}`);
   if (!card) return;
   const valorEl = card.querySelector('.detail-value.money');
-  if (valorEl && edital.valor > 0) {
+  if (valorEl) {
     valorEl.textContent = edital.valorFmt;
     valorEl.classList.remove('vazio');
-  }
-  const fornEl = card.querySelector('.detail-value.fornecedor');
-  if (fornEl && edital.fornecedor) {
-    fornEl.textContent = edital.fornecedor;
-    fornEl.classList.remove('vazio');
-    // Atualiza dataset pra busca textual continuar funcionando
-    card.dataset.fornecedor = edital.fornecedor;
   }
 }
 
@@ -2574,7 +2512,6 @@ function normPNCP(item, uf) {
     dataEncerramento: dtEncerramento, dataEncerramentoFmt: formatData(dtEncerramento),
     dataPublicacao: dtPublicacao, dataPublicacaoFmt: formatData(dtPublicacao),
     modalidade: item.modalidade_licitacao_nome || '',
-    fornecedor: '', // preenchido depois via enriquecerValores (campo "Fonte" do detalhe PNCP)
     numeroEdital, numeroControle: num
   };
 }
@@ -2928,10 +2865,10 @@ function exportarCSV() {
       ? `"${s.replace(/"/g, '""')}"`
       : s;
   };
-  const colunas = ['Score','Empresa','Portal','Órgão','Município','UF','Nº Edital','Valor','Fornecedor atual','Abertura','Encerramento','Publicação','Modalidade','Nº Controle','Keywords','Link','Objeto'];
+  const colunas = ['Score','Empresa','Portal','Órgão','Município','UF','Nº Edital','Valor','Abertura','Encerramento','Publicação','Modalidade','Nº Controle','Keywords','Link','Objeto'];
   const linhas = editais.map(e => [
     e.score, e.empresa, e.portal, e.orgao, e.municipio, e.uf, e.numeroEdital,
-    e.valor, e.fornecedor || '', e.dataAbertura, e.dataEncerramento, e.dataPublicacao,
+    e.valor, e.dataAbertura, e.dataEncerramento, e.dataPublicacao,
     e.modalidade, e.numeroControle, e.kwsEncontradas.join('; '),
     e.link, e.tituloFull || e.titulo
   ].map(escaparCSV).join(','));
@@ -2951,7 +2888,7 @@ function exportarMarkdown() {
     return `### ${e.score}% · ${e.orgao}${e.municipio ? ' — ' + e.municipio : ''} (${e.uf})${emp}${urg}
 - **Objeto:** ${e.tituloFull || e.titulo}
 - **Valor:** ${e.valorFmt} · **Prazo:** ${e.prazo.label} · **Abertura:** ${e.dataAberturaFmt || '—'} · **Encerramento:** ${e.dataEncerramentoFmt || '—'}
-- **Portal:** ${e.portal}${e.modalidade ? ' · **Modalidade:** ' + e.modalidade : ''}${e.numeroEdital ? ' · **Edital:** ' + e.numeroEdital : ''}${kws}${e.fornecedor ? '\n- **Fornecedor atual:** ' + e.fornecedor : ''}
+- **Portal:** ${e.portal}${e.modalidade ? ' · **Modalidade:** ' + e.modalidade : ''}${e.numeroEdital ? ' · **Edital:** ' + e.numeroEdital : ''}${kws}
 - [Abrir edital →](${e.link})
 `;
   });
@@ -3270,11 +3207,7 @@ function renderCard(e, i) {
     data-acompanhando="${e.acompanhando?1:0}"
     data-dispensado="${e.dispensado?1:0}"
     data-empresa="${e.empresa}"
-    data-portal="${e.portalTipo}"
-    data-orgao="${(e.orgao||'').replace(/"/g,'&quot;')}"
-    data-municipio="${(e.municipio||'').replace(/"/g,'&quot;')}"
-    data-fornecedor="${(e.fornecedor||'').replace(/"/g,'&quot;')}"
-    id="edital-${i}"
+    data-portal="${e.portalTipo}" id="edital-${i}"
     style="--score:${e.score}; --score-color:${scoreColor}">
 
     <div class="bid-score" onclick="analisarEdital(${i})">
@@ -3320,11 +3253,6 @@ function renderCard(e, i) {
         <div class="detail">
           <span class="detail-label">Nº controle</span>
           <span class="detail-value mono">${e.numeroControle}</span>
-        </div>` : ''}
-        ${e.portalTipo === 'pncp' ? `
-        <div class="detail detail-fornecedor" title="Empresa que opera o sistema do município (campo 'Fonte' no PNCP) — frequentemente o fornecedor atual de software">
-          <span class="detail-label">Fornecedor atual</span>
-          <span class="detail-value fornecedor${e.fornecedor ? '' : ' vazio'}">${e.fornecedor || '—'}</span>
         </div>` : ''}
       </div>
       ${tagKws ? `<div class="matched-kws">${tagKws}</div>` : ''}
@@ -3454,15 +3382,7 @@ function aplicarFiltros() {
     else if (filtroAtual === 'todos')        fOk = !enc && !disp;  // padrão esconde encerrados E dispensados
     else fOk = !enc && !disp;
 
-    // Filtro textual: busca em título, órgão, município E fornecedor
-    let textoOk = true;
-    if (busca) {
-      const orgao = el.dataset.orgao?.toLowerCase() || '';
-      const muni  = el.dataset.municipio?.toLowerCase() || '';
-      const forn  = el.dataset.fornecedor?.toLowerCase() || '';
-      textoOk = tit.includes(busca) || orgao.includes(busca) || muni.includes(busca) || forn.includes(busca);
-    }
-    const show = ufOk && fOk && textoOk;
+    const show = ufOk && fOk && (!busca || tit.includes(busca));
     el.classList.toggle('hidden', !show);
     if (show) v++;
   });
@@ -3766,7 +3686,7 @@ async function perguntarIA() {
   // Restaurar cache de editais (TTL 4h)
   // CACHE_VERSION: incremente quando houver mudança no formato ou em campos críticos
   // (como o fix do campo valor). Isso invalida caches antigos automaticamente.
-  const CACHE_VERSION = 'v4-fornecedor';
+  const CACHE_VERSION = 'v5-rollback-fornecedor';
   const cacheVersion = localStorage.getItem('ml_cache_version');
   if (cacheVersion !== CACHE_VERSION) {
     // Cache antigo ou inexistente: limpa para forçar nova busca
