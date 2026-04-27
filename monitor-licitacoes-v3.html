@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://api.groq.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://api.groq.com https://monitor.patrickbjp.workers.dev; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:;">
 <title>Monitor de Licitações — v4</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1615,20 +1615,6 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
     </div>
 
     <!-- API KEY — escondida por padrão, só aparece via modal quando IA é solicitada -->
-    <div class="api-notice-inline" id="api-notice-inline" style="display:none">
-      <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--info);flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span>IA desativada — <button class="link-like" onclick="abrirModalIA()">configurar chave</button> para ativar análise automática.</span>
-    </div>
-
-    <!-- Aviso sobre valores não exibidos (CORS do PNCP) -->
-    <div class="info-notice" id="valor-notice" style="display:none">
-      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-      <span>Valores detalhados temporariamente indisponíveis (CORS do PNCP).
-        Abra o edital pelo link para consultar o valor total no portal.
-        <button class="link-like" onclick="localStorage.setItem('ml_valor_notice_dismissed','1');document.getElementById('valor-notice').style.display='none'">Dispensar</button>
-      </span>
-    </div>
-
     <!-- Modal de configuração da IA -->
     <div class="ia-modal-overlay" id="ia-modal" style="display:none" onclick="fecharModalIA(event)">
       <div class="ia-modal" onclick="event.stopPropagation()">
@@ -1849,9 +1835,6 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
     <div class="ai-box">
       <div class="ai-title">
         Análise por IA · Groq Llama 3.3
-        <button class="ai-config-btn" onclick="abrirModalIA()" title="Configurar chave Groq" aria-label="Configurar IA">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-        </button>
       </div>
       <div class="divider"></div>
       <div class="ai-output" id="ai-output">Busque editais e clique em um para análise automática de fit, riscos e recomendação — ou faça uma pergunta livre abaixo.</div>
@@ -1869,6 +1852,13 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 /* ====================== CONFIG ====================== */
 const PNCP_SEARCH = 'https://pncp.gov.br/api/search/';
 const PCP_BASE    = 'https://www.portaldecompraspublicas.com.br/api/v2';
+
+/* Proxy Cloudflare Workers — atua como intermediário para:
+   - IA Groq (esconde a chave que está como Secret no Worker)
+   - PNCP detalhe (contorna CORS bloqueado para buscar valor dos editais) */
+const PROXY_BASE = 'https://monitor.patrickbjp.workers.dev';
+const PROXY_IA   = `${PROXY_BASE}/ia`;
+const PROXY_PNCP = `${PROXY_BASE}/pncp`;
 
 const PERFIS = {
   govbr:     "GovernançaBrasil: plataforma de governança municipal nacional com 24 módulos — finanças, contabilidade pública, folha/RH, receitas/tributário, suprimentos/licitações, serviços digitais ao cidadão, assistência social, saúde, educação, planejamento/orçamento, transparência. Presente em 13 estados, 700+ prefeituras.",
@@ -2218,6 +2208,101 @@ function extrairValor(item) {
   return (!isNaN(n) && n > 0) ? n : 0;
 }
 
+/* ====================== ENRIQUECIMENTO DE VALOR ======================
+   A API search do PNCP retorna valor_global=null. O valor real está em
+   /api/consulta/v1/orgaos/{cnpj}/compras/{ano}/{seq}.
+
+   Direto do browser → CORS bloqueia.
+   Via proxy Cloudflare → funciona (CORS liberado no Worker).
+
+   Estratégia: após a busca normal, identifica editais sem valor e busca
+   o detalhe em paralelo (lotes de 5). Atualiza UI silenciosamente. */
+async function buscarValorDetalhe(numeroControle) {
+  if (!numeroControle) return 0;
+  // Parsing tolerante: extrai CNPJ (14 dígitos), ano (20xx) e seq.
+  const partes = numeroControle.split(/[-\/]/).filter(p => /^\d+$/.test(p));
+  let cnpj = '', ano = '';
+  const outros = [];
+  for (const p of partes) {
+    if (!cnpj && p.length === 14) cnpj = p;
+    else if (!ano && p.length === 4 && p.startsWith('20')) ano = p;
+    else outros.push(p);
+  }
+  // seq = o maior número dentre os restantes (evita pegar o "1" discriminador)
+  let seq = '';
+  for (const p of outros) {
+    if (!seq || parseInt(p, 10) > parseInt(seq, 10)) seq = p;
+  }
+  if (!cnpj || !ano || !seq) return 0;
+  const seqLimpo = parseInt(seq, 10);
+
+  // Chama o proxy, que internamente faz GET no PNCP e retorna com CORS OK
+  const url = `${PROXY_PNCP}/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`;
+  try {
+    const r = await fetch(url, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+      redirect: 'follow'
+    });
+    if (!r.ok) return 0;
+    const detalhe = await r.json();
+    // Campos possíveis no detalhe — em ordem de preferência
+    const candidatos = [
+      'valorTotalEstimado','valor_total_estimado',
+      'valorTotalHomologado','valor_total_homologado',
+      'valorGlobal','valor_global',
+      'valorTotal','valor_total'
+    ];
+    for (const k of candidatos) {
+      if (detalhe[k] != null && detalhe[k] !== '') {
+        const n = Number(detalhe[k]);
+        if (!isNaN(n) && n > 0) return n;
+      }
+    }
+    return 0;
+  } catch(e) {
+    return 0;
+  }
+}
+
+/* Hidrata uma lista de editais com valores via proxy.
+   Roda em lotes de 5 paralelos para velocidade sem sobrecarregar. */
+async function enriquecerValores(editais) {
+  const semValor = editais.filter(e =>
+    e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
+  );
+  if (semValor.length === 0) return 0;
+  const LOTE = 5;
+  let descobertos = 0;
+  for (let i = 0; i < semValor.length; i += LOTE) {
+    const chunk = semValor.slice(i, i + LOTE);
+    await Promise.all(chunk.map(async (e) => {
+      const v = await buscarValorDetalhe(e.numeroControle);
+      if (v > 0) {
+        e.valor = v;
+        e.valorFmt = formatValor(v);
+        descobertos++;
+        // Atualiza o card individual sem re-renderizar tudo
+        atualizarCardValor(e);
+      }
+    }));
+  }
+  return descobertos;
+}
+
+/* Atualiza apenas o campo "Valor" de um card específico, sem re-renderizar tudo */
+function atualizarCardValor(edital) {
+  const idx = editaisCarregados.indexOf(edital);
+  if (idx < 0) return;
+  const card = document.getElementById(`edital-${idx}`);
+  if (!card) return;
+  const valorEl = card.querySelector('.detail-value.money');
+  if (valorEl) {
+    valorEl.textContent = edital.valorFmt;
+    valorEl.classList.remove('vazio');
+  }
+}
+
 function formatData(dataStr) {
   if (!dataStr) return 'sem data';
   try {
@@ -2540,14 +2625,10 @@ async function buscarPorMunicipio() {
   marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
   renderizarEditais(editaisCarregados);
-  // Aviso de valores indisponíveis (mesmo comportamento que na busca geral)
-  if (!localStorage.getItem('ml_valor_notice_dismissed')) {
-    const semValor = editaisCarregados.filter(e => e.portalTipo === 'pncp' && (!e.valor || e.valor === 0));
-    if (semValor.length > 3) {
-      const n = document.getElementById('valor-notice');
-      if (n) n.style.display = 'flex';
-    }
-  }
+  // Enriquece valores via proxy em background — não bloqueia UI
+  enriquecerValores(editaisCarregados).then(descobertos => {
+    if (descobertos > 0) atualizarMetricas();
+  });
   load.classList.add('hidden');
   document.getElementById('btn-muni-buscar').disabled = false;
   document.getElementById('btn-muni-buscar').innerHTML = '<svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg> Buscar município';
@@ -2640,16 +2721,16 @@ async function executarBusca() {
   const novosCount = marcarNovosEAtualizarSnapshot(editaisCarregados);
   atualizarMetricas();
   renderizarEditais(editaisCarregados);
-  // Aviso sobre valores indisponíveis (dispensável): mostra quando há editais
-  // PNCP sem valor declarado — situação causada por limitação CORS da API de detalhe.
-  // Só aparece se o usuário ainda não clicou em "Dispensar".
-  if (!localStorage.getItem('ml_valor_notice_dismissed')) {
-    const semValor = editaisCarregados.filter(e => e.portalTipo === 'pncp' && (!e.valor || e.valor === 0));
-    if (semValor.length > 3) {
-      const n = document.getElementById('valor-notice');
-      if (n) n.style.display = 'flex';
+  // Enriquece valores via proxy Cloudflare em background.
+  // Não bloqueia a UI — cards aparecem com "Não informado" e atualizam quando
+  // o valor chega. Atualiza métricas (Maior valor) ao final.
+  enriquecerValores(editaisCarregados).then(descobertos => {
+    if (descobertos > 0) {
+      atualizarMetricas();
+      // Re-salva cache com valores enriquecidos
+      localStorage.setItem('ml_cache_editais', JSON.stringify(editaisCarregados));
     }
-  }
+  });
   load.classList.add('hidden');
   btn.disabled = false;
   btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" style="stroke:var(--accent-ink)"><path d="M21 12a9 9 0 11-9-9c2.5 0 4.8 1 6.5 2.6M21 5v5h-5"/></svg> Buscar agora';
@@ -3466,23 +3547,14 @@ function gerarFallbackPNCP(uf) {
 function setOutput(h) { document.getElementById('ai-output').innerHTML = h; }
 
 async function analisarEdital(idx) {
-  if (!apiKey) {
-    // Sem chave configurada: abre modal explicativo e mostra notice no topo
-    const notice = document.getElementById('api-notice-inline');
-    if (notice) notice.style.display = 'flex';
-    abrirModalIA();
-    return;
-  }
   const e = editaisCarregados[idx]; if (!e) return;
   setOutput('<span class="ai-loading">Analisando edital…</span>');
   const prompt = `Você é um analista de licitações público brasileiro.\n\nPerfis das empresas:\n${Object.values(PERFIS).join('\n')}\n\nREGRA IMPORTANTE: Equiplano APENAS atende o estado do Paraná.\n\nEdital (${e.portal}):\nTítulo: ${e.tituloFull||e.titulo}\nÓrgão: ${e.orgao}${e.municipio ? ' / '+e.municipio : ''} (${e.uf}) | Valor: ${e.valorFmt} | Abertura: ${e.prazo.label}\nScore: ${e.score}% | Empresa mapeada: ${e.empresa||'—'} | Keywords: ${e.kwsEncontradas.join(', ')||'nenhuma'}\nLink: ${e.link}\n\nResponda em português, em até 3 parágrafos curtos:\n1. FIT: empresa mais aderente e por quê\n2. RISCOS: pontos de atenção\n3. RECOMENDAÇÃO: participar / avaliar / descartar — em uma frase.`;
   try {
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    // Usa o proxy Cloudflare — chave Groq fica escondida no Worker
+    const r = await fetch(PROXY_IA, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         max_tokens: 1000,
@@ -3493,9 +3565,7 @@ async function analisarEdital(idx) {
     const d = await r.json();
     if (d.error) {
       const msg = d.error.message || 'erro desconhecido';
-      const dica = msg.toLowerCase().includes('api key') || msg.toLowerCase().includes('invalid')
-        ? ' <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Verificar key →</a>' : '';
-      setOutput(`<span style="color:var(--warn)">Erro Groq: ${msg}${dica}</span>`);
+      setOutput(`<span style="color:var(--warn)">Erro IA: ${msg}</span>`);
       return;
     }
     const txt = d.choices?.[0]?.message?.content || 'Sem resposta.';
@@ -3509,12 +3579,6 @@ async function analisarEdital(idx) {
 async function perguntarIA() {
   const q = document.getElementById('user-q').value.trim();
   if (!q) return;
-  if (!apiKey) {
-    const notice = document.getElementById('api-notice-inline');
-    if (notice) notice.style.display = 'flex';
-    abrirModalIA();
-    return;
-  }
   setOutput('<span class="ai-loading">Processando…</span>');
   const ctx = editaisCarregados
     .filter((_,i) => !document.getElementById(`edital-${i}`)?.classList.contains('hidden'))
@@ -3523,12 +3587,9 @@ async function perguntarIA() {
     .join('\n');
   const prompt = `Você é um analista de inteligência comercial em software de gestão pública brasileira.\n\nPerfis: ${Object.values(PERFIS).join(' | ')}\nREGRA: Equiplano APENAS PR.\n\nEditais visíveis nos resultados:\n${ctx||'Nenhum — execute a busca primeiro.'}\n\nPergunta do usuário: ${q}\n\nResponda em português, de forma direta e prática.`;
   try {
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const r = await fetch(PROXY_IA, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         max_tokens: 1000,
@@ -3539,9 +3600,7 @@ async function perguntarIA() {
     const d = await r.json();
     if (d.error) {
       const msg = d.error.message || 'erro desconhecido';
-      const dica = msg.toLowerCase().includes('api key') || msg.toLowerCase().includes('invalid')
-        ? ' <a href="https://console.groq.com/keys" target="_blank" style="color:var(--accent)">Verificar key →</a>' : '';
-      setOutput(`<span style="color:var(--warn)">Erro Groq: ${msg}${dica}</span>`);
+      setOutput(`<span style="color:var(--warn)">Erro IA: ${msg}</span>`);
       return;
     }
     const txt = d.choices?.[0]?.message?.content || 'Sem resposta.';
@@ -3551,6 +3610,7 @@ async function perguntarIA() {
   } catch (err) {
     setOutput(`<span style="color:var(--warn)">Erro de conexão: ${err.message || 'verifique sua rede'}</span>`);
   }
+}
 }
 
 /* ====================== INIT ====================== */
@@ -3627,7 +3687,7 @@ async function perguntarIA() {
   // Restaurar cache de editais (TTL 4h)
   // CACHE_VERSION: incremente quando houver mudança no formato ou em campos críticos
   // (como o fix do campo valor). Isso invalida caches antigos automaticamente.
-  const CACHE_VERSION = 'v2-valor-fix';
+  const CACHE_VERSION = 'v3-proxy-cloudflare';
   const cacheVersion = localStorage.getItem('ml_cache_version');
   if (cacheVersion !== CACHE_VERSION) {
     // Cache antigo ou inexistente: limpa para forçar nova busca
