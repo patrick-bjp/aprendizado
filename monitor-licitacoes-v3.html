@@ -2233,19 +2233,56 @@ async function buscarValorDetalhe(numeroControle) {
   for (const p of outros) {
     if (!seq || parseInt(p, 10) > parseInt(seq, 10)) seq = p;
   }
-  if (!cnpj || !ano || !seq) return 0;
+  if (!cnpj || !ano || !seq) {
+    if ((window._ML_LOG_COUNT = (window._ML_LOG_COUNT||0)) < 3) {
+      console.warn('[ML] numeroControle não parseável:', numeroControle, '| partes:', partes);
+      window._ML_LOG_COUNT++;
+    }
+    return 0;
+  }
   const seqLimpo = parseInt(seq, 10);
 
-  // Chama o proxy, que internamente faz GET no PNCP e retorna com CORS OK
-  const url = `${PROXY_PNCP}/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`;
+  // O PNCP tem dois caminhos paralelos. O endpoint atual é /api/pncp/v1/
+  // O legado /api/consulta/v1/ ainda funciona pra alguns órgãos mas frequentemente
+  // retorna HTTP 500. Tentamos o atual primeiro, depois fallback.
+  const urls = [
+    `${PROXY_PNCP}/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`,
+    `${PROXY_PNCP}/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`
+  ];
+  const logar = (window._ML_LOG_DETALHE_COUNT = (window._ML_LOG_DETALHE_COUNT||0)) < 3;
+  if (logar) window._ML_LOG_DETALHE_COUNT++;
+
+  let detalhe = null;
+  let urlUsada = '';
+  for (const url of urls) {
+    try {
+      if (logar) console.log(`[ML] Tentando ${url}`);
+      const r = await fetch(url, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+        redirect: 'follow'
+      });
+      if (logar) console.log(`[ML]   → status=${r.status}, ok=${r.ok}`);
+      if (r.ok) {
+        detalhe = await r.json();
+        urlUsada = url;
+        break;
+      }
+    } catch(e) {
+      if (logar) console.warn(`[ML] Falha de fetch:`, e.message);
+    }
+  }
+
+  if (!detalhe) {
+    if (logar) console.warn(`[ML] Nenhum endpoint funcionou para ${numeroControle}`);
+    return 0;
+  }
+
+  if (logar) {
+    console.log(`[ML] OK via ${urlUsada}. Campos com "valor":`,
+      Object.keys(detalhe).filter(k => /valor/i.test(k)).map(k => `${k}=${detalhe[k]}`));
+  }
   try {
-    const r = await fetch(url, {
-      method: 'GET',
-      headers: { 'Accept': 'application/json' },
-      redirect: 'follow'
-    });
-    if (!r.ok) return 0;
-    const detalhe = await r.json();
     // Campos possíveis no detalhe — em ordem de preferência
     const candidatos = [
       'valorTotalEstimado','valor_total_estimado',
@@ -2256,11 +2293,16 @@ async function buscarValorDetalhe(numeroControle) {
     for (const k of candidatos) {
       if (detalhe[k] != null && detalhe[k] !== '') {
         const n = Number(detalhe[k]);
-        if (!isNaN(n) && n > 0) return n;
+        if (!isNaN(n) && n > 0) {
+          if (logar) console.log(`[ML] ✓ Valor encontrado em "${k}": ${n}`);
+          return n;
+        }
       }
     }
+    if (logar) console.warn('[ML] Nenhum campo de valor com número positivo encontrado.');
     return 0;
   } catch(e) {
+    if (logar) console.error(`[ML] Erro processando detalhe:`, e.message);
     return 0;
   }
 }
@@ -2271,22 +2313,39 @@ async function enriquecerValores(editais) {
   const semValor = editais.filter(e =>
     e.portalTipo === 'pncp' && (!e.valor || e.valor === 0) && e.numeroControle
   );
-  if (semValor.length === 0) return 0;
+  console.log(`%c[ML]%c Enriquecimento iniciado: ${editais.length} editais total, ${semValor.length} sem valor`,
+    'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:inherit');
+  if (semValor.length === 0) {
+    console.log('[ML] Nenhum edital precisa ser enriquecido (todos já têm valor ou não são PNCP).');
+    return 0;
+  }
+  console.log('[ML] Exemplo do primeiro edital sem valor:', {
+    numeroControle: semValor[0].numeroControle,
+    portal: semValor[0].portal,
+    valor: semValor[0].valor,
+    proxyURL: `${PROXY_PNCP}/api/consulta/v1/orgaos/...`
+  });
   const LOTE = 5;
   let descobertos = 0;
+  let tentativas = 0;
+  let falhasFetch = 0;
   for (let i = 0; i < semValor.length; i += LOTE) {
     const chunk = semValor.slice(i, i + LOTE);
     await Promise.all(chunk.map(async (e) => {
+      tentativas++;
       const v = await buscarValorDetalhe(e.numeroControle);
       if (v > 0) {
         e.valor = v;
         e.valorFmt = formatValor(v);
         descobertos++;
-        // Atualiza o card individual sem re-renderizar tudo
         atualizarCardValor(e);
+      } else {
+        falhasFetch++;
       }
     }));
   }
+  console.log(`%c[ML]%c Enriquecimento concluído: ${descobertos}/${tentativas} editais com valor descoberto. ${falhasFetch} falhas/sem valor.`,
+    'background:#4ade80;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold', 'color:inherit');
   return descobertos;
 }
 
