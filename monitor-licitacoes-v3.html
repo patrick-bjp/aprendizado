@@ -1851,7 +1851,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 
 <script>
 /* ====================== VERSÃO ====================== */
-console.log('%c[Monitor]%c v4.5-corrigido carregado com sucesso',
+console.log('%c[Monitor]%c v4.6-scoring-semantico carregado com sucesso',
   'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
   'color:inherit');
 
@@ -2100,59 +2100,115 @@ function abrirPainelKws() {
   p.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-/* ====================== SCORING ====================== */
-function calcularScore(objeto, uf) {
-  if (!objeto) return { score: 0, empresa: '', kwsEncontradas: [] };
-  const texto = objeto.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+/* ====================== SCORING v2 ======================
+   Score semântico baseado no portfólio real das empresas.
+   Fonte: sites oficiais + linguagem real de editais PNCP.
+   ========================================================= */
 
-  const termosUniversais = [
-    'sistema','software','plataforma','licenca','modulo','implantacao',
-    'suporte tecnico','manutencao','treinamento','capacitacao'
-  ];
-  const mapaEmpresas = {
-    govbr: [
-      'gestao municipal','gestao publica','contabilidade','folha de pagamento',
-      'folha pagamento','orcamento','planejamento orcamentario','pcasp','lrf','siafic',
-      'tributario','iptu','iss','itbi','arrecadacao','patrimonio','almoxarifado',
-      'compras','licitacoes','transparencia','servicos digitais','cidadao',
-      'prefeitura','municipio','secretaria','prontu','solucao informatizada'
-    ],
-    equiplano: [
-      'gestao tributaria','tce-pr','tribunal de contas','frotas','frota municipal',
-      'tramitacao','processo administrativo','portal transparencia','solucao informatizada'
-    ],
-    ids: [
-      'saude','prontuario','pep','regulacao','farmacia','vigilancia epidemiologica',
-      'atencao primaria','cras','creas','suas','assistencia social','consorcio saude',
-      'educacao','escola','matricula','frequencia','solucao informatizada'
-    ],
-    layers: [
-      'comunicacao escolar','escola familia','aplicativo escola','secretaria escolar',
-      'plataforma educacional','portal aluno','matricula digital','solucao informatizada'
-    ]
-  };
+/* ── PORTFÓLIO REAL DAS EMPRESAS ──────────────────────────
+   Cada empresa tem categorias de produto com termos fortes
+   (específicos, +peso alto) e termos fracos (genéricos, +peso baixo).
+   ────────────────────────────────────────────────────────── */
+const PORTFOLIO_EMPRESAS = {
 
-  let melhorScore = 0, melhorEmpresa = '', todasKws = [];
-  const ehSoftware = termosUniversais.some(t => texto.includes(t));
+  govbr: {
+    restricaoUF: null,
+    categorias: {
+      gestaoERP: { peso: 40, tf: ['sistema integrado gestao municipal','erp municipal','solucao integrada municipal','sistema de gestao municipal','plataforma municipal integrada','sistema informatizado gestao publica','gestao publica integrada','plataforma governanca municipal','pronim','sistema administracao municipal'], tr: ['sistema municipal','gestao municipal','software municipal','prefeitura sistema','municipio solucao','erp publico'] },
+      financeiro: { peso: 40, tf: ['contabilidade publica','execucao orcamentaria','pcasp','lrf','siconfi','siafic','rreo','rgf','balancete municipal','nota de empenho','liquidacao despesa','contabilidade municipal','empenho orcamentario'], tr: ['financeiro municipal','orcamento municipal','planejamento orcamentario','ppa','ldo','loa','execucao financeira'] },
+      tributario: { peso: 35, tf: ['iptu','issqn','iss municipal','itbi','nota fiscal eletronica servico','nfse','divida ativa municipal','cadin municipal','lancamento tributario','arrecadacao tributaria','imposto predial'], tr: ['tributario','tributos municipais','gestao tributaria','receitas municipais','arrecadacao municipal','fiscalizacao tributaria','cadastro imobiliario'] },
+      rhfolha: { peso: 35, tf: ['folha de pagamento','folha pagamento prefeitura','holerite servidor','contracheque servidor','rescisao contratual servidor','previdencia municipal','rpps','ponto eletronico servidor','servidor publico municipal','folha mensal servidores'], tr: ['recursos humanos','gestao de pessoal','rh municipal','pagamento servidores','gestao funcional','admissao demissao'] },
+      compras: { peso: 30, tf: ['compras publicas municipais','sistema de licitacoes municipais','gestao de contratos municipais','almoxarifado municipal','controle de estoque municipal','patrimonio municipal','inventario patrimonial','cotacao de precos'], tr: ['compras municipais','licitacoes municipais','contratos administrativos','suprimentos municipais'] },
+      transparencia: { peso: 30, tf: ['portal da transparencia','lei de acesso a informacao','e-sic municipal','ouvidoria municipal','portal cidadao municipal','servicos digitais cidadao','e-servicos 156','carta de servicos municipal'], tr: ['transparencia municipal','acesso informacao','prestacao de contas','diario oficial municipal'] },
+      assistenciaSocial: { peso: 25, tf: ['cras','creas','suas','cadastro unico cadunico','bolsa familia','bpc prestacao continuada','paif','paefi','beneficio eventual','assistencia social municipal'], tr: ['assistencia social','protecao social','servico social municipal'] }
+    }
+  },
 
-  for (const [empresa, termos] of Object.entries(mapaEmpresas)) {
-    if (empresa === 'equiplano' && uf !== 'PR') continue;
-    const kwsUsuario = (obterKwsAtivas()[empresa] || []).map(k =>
-      k.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()
-    );
-    const todosTermos = [...new Set([...termos, ...kwsUsuario])];
-    const achadas = todosTermos.filter(t => texto.includes(t));
-    if (achadas.length === 0) continue;
-    let s = Math.min(100,
-      achadas.length * 15 + (ehSoftware ? 10 : 0) + Math.min(achadas.length * 3, 15)
-    );
-    if (s > melhorScore) {
-      melhorScore = s; melhorEmpresa = empresa;
-      todasKws = achadas.slice(0, 5);
+  equiplano: {
+    restricaoUF: 'PR',
+    categorias: {
+      tcepr: { peso: 55, tf: ['tce-pr','tribunal de contas do parana','tribunal de contas pr','e-sfinge','sagres','prestacao contas tce','auditoria tce parana'], tr: ['tribunal de contas','prestacao contas','auditoria publica parana'] },
+      frota: { peso: 50, tf: ['controle de frotas municipal','gestao de frotas prefeitura','frota municipal','manutencao de veiculos prefeitura','abastecimento frota prefeitura','rastreamento veicular municipal','controle quilometragem veiculos'], tr: ['frota','veiculos municipais','manutencao veiculos prefeitura','garagem municipal'] },
+      tramitacao: { peso: 40, tf: ['tramitacao eletronica processos','protocolo digital prefeitura','processo administrativo digital','gestao documental municipal','assinatura digital documento prefeitura','processo eletronico administrativo'], tr: ['protocolo','tramitacao','gestao processos administrativos','expediente digital'] },
+      financeiroPR: { peso: 35, tf: ['contabilidade publica parana','pcasp parana','execucao orcamentaria parana','prestacao contas parana'], tr: ['contabilidade','financeiro municipal','orcamento municipal','empenho'] },
+      tributarioPR: { peso: 35, tf: ['gestao tributaria parana','iptu parana','iss parana','cadastro imobiliario parana','divida ativa parana'], tr: ['tributario','iptu','iss','tributos municipais'] },
+      eservicos: { peso: 30, tf: ['e-servicos 156 parana','portal servicos cidadao parana','ouvidoria digital parana'], tr: ['e-servicos','portal cidadao','servicos online prefeitura'] }
+    }
+  },
+
+  ids: {
+    restricaoUF: null,
+    categorias: {
+      saudePEP: { peso: 55, tf: ['prontuario eletronico do paciente','pep saude','prontuario eletronico saude','registro eletronico saude','prontuario digital paciente','gestao hospitalar','sistema hospitalar','his hospital'], tr: ['prontuario','pep','saude digital','registro saude','atendimento medico sistema'] },
+      atencaoPrimaria: { peso: 50, tf: ['atencao primaria saude','esf equipe saude familia','e-sus','esus ab','sistema atencao basica','unidade basica saude sistema','agente comunitario saude','visita domiciliar saude'], tr: ['atencao basica','saude basica','saude familia','ubs sistema','aps saude'] },
+      regulacao: { peso: 50, tf: ['regulacao de saude','central de regulacao','sisreg','agendamento especialidades saude','referencia contrarreferencia','fila espera saude','regulacao assistencial'], tr: ['regulacao saude','agendamento saude','marcacao consulta'] },
+      farmacia: { peso: 45, tf: ['farmacia basica municipal','assistencia farmaceutica','dispensacao medicamentos','farmacia componente basico','remume','rename','estoque farmaceutico','controle medicamentos municipio'], tr: ['farmacia','medicamentos municipais','dispensacao farmacia','estoque farmacia'] },
+      consorcioSaude: { peso: 50, tf: ['consorcio intermunicipal de saude','consorcio saude','rede intermunicipal saude','consorcio publico saude','cis saude','sistema consorcio saude'], tr: ['consorcio saude','intermunicipal saude'] },
+      assistenciaSocialIDS: { peso: 45, tf: ['cras','creas','suas','cadastro unico cadunico','beneficio eventual','bpc','paif','paefi','vigilancia socioassistencial','gestao suas'], tr: ['assistencia social','protecao social','suas municipal','servico social sistema'] },
+      vigilancia: { peso: 40, tf: ['vigilancia epidemiologica','sinan','agravo notificacao','doenca de notificacao','vigilancia sanitaria sistema','epidemiologia sistema','notificacao compulsoria'], tr: ['vigilancia','epidemiologico','notificacao saude'] },
+      educacaoIDS: { peso: 35, tf: ['gestao escolar municipal sistema','matricula escolar sistema','frequencia escolar digital','boletim escolar sistema','secretaria escolar sistema','censo escolar sistema'], tr: ['gestao escolar','sistema escolar'] }
+    }
+  },
+
+  layers: {
+    restricaoUF: null,
+    categorias: {
+      comunicacao: { peso: 60, tf: ['aplicativo comunicacao escola familia','app escola familia','comunicacao escolar digital','plataforma comunicacao escolar','mensagens pais alunos sistema','notificacoes escolares app','superapp escolar','app educacional escola','aplicativo escola pais','comunicacao digital escola familia'], tr: ['comunicacao escolar','escola familia','app escola','plataforma educacional escola','portal pais alunos'] },
+      secretaria: { peso: 55, tf: ['secretaria escolar digital','secretaria digital escola','matricula online escolar','matricula digital escola','rematricula digital','documentos escolares digitais','declaracoes escolares digitais','sistema matricula digital'], tr: ['secretaria escolar','matricula escolar digital','documentos escola','rematricula'] },
+      gestaoAcademica: { peso: 45, tf: ['notas boletim digital','frequencia digital aluno','diario de classe digital','registro aulas digital','calendario escolar digital','agenda escolar digital','boletim digital escolar','frequencia online aluno','diario digital professor'], tr: ['boletim','frequencia escolar','notas escolares','diario classe','agenda escolar'] },
+      portalEducacional: { peso: 40, tf: ['portal do aluno municipal','plataforma digital educacional municipal','plataforma educacional municipal','ambiente virtual aprendizagem municipal','ava municipal'], tr: ['portal aluno','plataforma educacional','ava','ambiente aprendizagem','educacao digital'] },
+      merenda: { peso: 30, tf: ['cardapio merenda digital','gestao merenda escolar sistema','pnae sistema','merenda escolar digital'], tr: ['merenda','cardapio escolar','alimentacao escolar digital'] }
     }
   }
-  return { score: melhorScore, empresa: melhorEmpresa, kwsEncontradas: todasKws };
+};
+
+/* Pré-filtro TI: sem isso o objeto não é edital de software */
+const _PRE_TI = ['sistema','software','plataforma','solucao','aplicativo','aplicacao','modulo','licenca','implantacao','saas','erp','sgm','suporte tecnico sistema','manutencao sistema','hospedagem','tecnologia informacao','governo digital','municipio digital'];
+
+/* Termos de exclusão: editais que NÃO são TI mesmo com palavras-chave comuns */
+const _EXCLUSAO = ['manutencao predial','manutencao eletrica','manutencao hidraulica','obra civil','construcao civil','reforma predial','pavimentacao','calcamento','limpeza urbana','coleta lixo','combustivel veiculo','uniformes escolares','material escritorio','equipamentos medicos aquisicao','medicamentos aquisicao','exame laboratorial','servico medico assistencia'];
+
+/* ── calcularScore v2 ── */
+function calcularScore(objeto, uf) {
+  if (!objeto) return { score: 0, empresa: '', kwsEncontradas: [] };
+  const tx = objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+  // Pré-filtro exclusão
+  const ehExclusao = _EXCLUSAO.some(t => tx.includes(t));
+  const ehTI = _PRE_TI.some(t => tx.includes(t));
+  if (ehExclusao && !ehTI) return { score: 0, empresa: '', kwsEncontradas: [] };
+
+  let melhorScore = 0, melhorEmpresa = '', melhorKws = [];
+
+  for (const [empresa, perfil] of Object.entries(PORTFOLIO_EMPRESAS)) {
+    if (perfil.restricaoUF && uf !== perfil.restricaoUF) continue;
+
+    let pts = 0, kwsE = [];
+
+    for (const cat of Object.values(perfil.categorias)) {
+      const hF = cat.tf.filter(t => tx.includes(t));
+      const hW = cat.tr.filter(t => tx.includes(t));
+      if (!hF.length && !hW.length) continue;
+
+      // Pontuação por categoria
+      const fF = Math.min(hF.length / Math.max(cat.tf.length * 0.25, 1), 1);
+      const fW = Math.min(hW.length / Math.max(cat.tr.length * 0.4, 1), 0.6);
+      pts += Math.round(cat.peso * fF * 0.85 + cat.peso * fW * 0.3 + hF.length * 10 + hW.length * 4);
+      kwsE = [...kwsE, ...hF, ...hW];
+    }
+
+    // Bônus TI + keywords do usuário
+    if (ehTI && pts > 0) pts += 8;
+    const kwU = (obterKwsAtivas()[empresa] || []).map(k => k.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase());
+    const hU = kwU.filter(k => tx.includes(k));
+    pts += hU.length * 15;
+    kwsE = [...kwsE, ...hU];
+
+    const sf = Math.min(100, pts);
+    if (sf > melhorScore) { melhorScore = sf; melhorEmpresa = empresa; melhorKws = [...new Set(kwsE)].slice(0,6); }
+  }
+
+  return { score: melhorScore, empresa: melhorEmpresa, kwsEncontradas: melhorKws };
 }
 
 /* ====================== UTILITIES ====================== */
