@@ -1478,7 +1478,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
       </button>
       <button class="nav-item" onclick="filtrarFeed(this,'urgente')">
         <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-        Encerrando &lt; 5 dias
+        Encerrando ≤ 5 dias
         <span class="nav-count" id="nav-cnt-urgente">—</span>
       </button>
       <button class="nav-item" onclick="filtrarFeed(this,'alta')">
@@ -1571,6 +1571,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <span><b id="topbar-portais">1</b> portal</span>
       </div>
 
+      <button class="debug-toggle" id="debugToggle" title="Modo diagnóstico — exibe campo de origem dos valores">⚙ Debug</button>
       <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema" title="Alternar tema (Shift+D)">
         <span class="knob">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -1657,7 +1658,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <div class="kpi-foot"><span>score ≥ 70%</span></div>
       </div>
       <div class="kpi" style="--kpi-accent:var(--live)">
-        <div class="kpi-label">Prazo &lt; 5 dias</div>
+        <div class="kpi-label">Prazo ≤ 5 dias</div>
         <div class="kpi-value" id="m-urgentes">—</div>
         <div class="kpi-foot"><span>atenção imediata</span></div>
       </div>
@@ -1850,7 +1851,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 
 <script>
 /* ====================== VERSÃO ====================== */
-console.log('%c[Monitor]%c v4.4-proxy carregado com sucesso',
+console.log('%c[Monitor]%c v4.5-corrigido carregado com sucesso',
   'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
   'color:inherit');
 
@@ -1874,7 +1875,7 @@ const PERFIS = {
 
 let estadosAtivos = new Set(['PR','RS','SP','MG','RJ','PE','PA','AP']);
 let filtroAtual   = 'todos';
-let portaisBusca  = new Set(['pncp','pcp']);
+let portaisBusca  = new Set(['pncp']); /* 'pcp' removido — API exige auth corporativa, CORS bloqueado (corr. C4) */
 let apiKey        = localStorage.getItem('ml_api_key') || '';
 let editaisCarregados = [];
 let descartados   = JSON.parse(localStorage.getItem('ml_descartados') || '[]');
@@ -1887,17 +1888,13 @@ let muniNomeAtivo = '';
 
 // Inicialização do estado da IA (executa após DOMContentLoaded via init)
 function atualizarEstadoIA() {
-  const notice = document.getElementById('api-notice-inline');
+  /* #api-notice-inline removido do HTML — referências limpas (corr. C2) */
   const remover = document.getElementById('ia-key-remover');
   const input = document.getElementById('api-key-input');
   if (apiKey) {
-    // IA configurada: notice some, botão remover aparece no modal
-    if (notice) notice.style.display = 'none';
     if (remover) remover.style.display = 'block';
     if (input) input.value = apiKey;
   } else {
-    // Sem chave: esconde notice inline até que o usuário tente usar IA
-    if (notice) notice.style.display = 'none';
     if (remover) remover.style.display = 'none';
   }
 }
@@ -1941,9 +1938,6 @@ function salvarKey(v) {
       // Fecha modal automaticamente após salvar
       const modal = document.getElementById('ia-modal');
       if (modal && modal.style.display !== 'none') modal.style.display = 'none';
-      // Esconde notice inline se estava aparecendo
-      const notice = document.getElementById('api-notice-inline');
-      if (notice) notice.style.display = 'none';
     }, 800);
   }
 }
@@ -2247,14 +2241,11 @@ async function buscarValorDetalhe(numeroControle) {
   }
   const seqLimpo = parseInt(seq, 10);
 
-  // O PNCP tem múltiplos endpoints possíveis. Tentamos em ordem:
-  // 1. /api/pncp/v1/ — endpoint atual recomendado
-  // 2. /api/consulta/v1/ — endpoint legado, frequentemente retorna 500 hoje
-  // 3. /pncp-api/v1/ — variante observada em alguns ambientes
+  // CORREÇÃO C5 (28/04/2026): Apenas /api/consulta/v1/ retorna HTTP 200.
+  // /api/pncp/v1/ e /pncp-api/v1/ retornam HTTP 301 opaqueredirect (CORS bloqueado).
+  // Diagnóstico confirmado via DevTools — ver relatório de inspeção.
   const urls = [
-    `${PROXY_PNCP}/api/pncp/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`,
     `${PROXY_PNCP}/api/consulta/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`,
-    `${PROXY_PNCP}/pncp-api/v1/orgaos/${cnpj}/compras/${ano}/${seqLimpo}`
   ];
   // Loga as 5 primeiras tentativas para diagnóstico (em vez de 3)
   const logar = (window._ML_LOG_DETALHE_COUNT = (window._ML_LOG_DETALHE_COUNT||0)) < 5;
