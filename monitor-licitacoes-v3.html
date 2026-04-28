@@ -1845,7 +1845,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 
 <script>
 /* ====================== VERSÃO ====================== */
-console.log('%c[Monitor]%c v4.7-proxy-clean carregado com sucesso',
+console.log('%c[Monitor]%c v4.8-scoring-calibrado carregado com sucesso',
   'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
   'color:inherit');
 
@@ -2078,8 +2078,39 @@ const PORTFOLIO_EMPRESAS = {
   govbr: {
     restricaoUF: null,
     categorias: {
-      gestaoERP: { peso: 40, tf: ['sistema integrado gestao municipal','erp municipal','solucao integrada municipal','sistema de gestao municipal','plataforma municipal integrada','sistema informatizado gestao publica','gestao publica integrada','plataforma governanca municipal','pronim','sistema administracao municipal'], tr: ['sistema municipal','gestao municipal','software municipal','prefeitura sistema','municipio solucao','erp publico'] },
-      financeiro: { peso: 40, tf: ['contabilidade publica','execucao orcamentaria','pcasp','lrf','siconfi','siafic','rreo','rgf','balancete municipal','nota de empenho','liquidacao despesa','contabilidade municipal','empenho orcamentario'], tr: ['financeiro municipal','orcamento municipal','planejamento orcamentario','ppa','ldo','loa','execucao financeira'] },
+      gestaoERP: { peso: 40, tf: [
+          // Termos específicos e compostos
+          'sistema integrado gestao municipal','erp municipal','solucao integrada municipal',
+          'sistema de gestao municipal','plataforma municipal integrada',
+          'sistema informatizado gestao publica','gestao publica integrada',
+          'plataforma governanca municipal','pronim','sistema administracao municipal',
+          // Padrões reais de editais PNCP — genéricos mas inequívocos
+          'software de gestao publica','software de gestao municipal',
+          'sistema de gestao publica','solucao de gestao publica',
+          'licenciamento de uso de software','licenciamento de software de gestao',
+          'software erp municipal','software gestao publica',
+          'licenca de uso de software de gestao'
+        ], tr: [
+          'sistema municipal','gestao municipal','software municipal',
+          'prefeitura sistema','municipio solucao','erp publico',
+          // Termos genéricos presentes em editais reais sem especificar módulo
+          'gestao publica','licenciamento','locacao de software',
+          'software publico','gestao administrativa municipal',
+          'suporte e atendimento tecnico','implantacao treinamento suporte'
+        ] },
+      licenciamentoERP: { peso: 45,
+        tf: [
+          'software de gestao publica','licenciamento de uso de software de gestao',
+          'sistema integrado de gestao municipal','software de gestao municipal integrado',
+          'erp de gestao publica','solucao integrada de gestao publica',
+          'software de administracao publica','sistema de administracao publica municipal'
+        ],
+        tr: [
+          'licenciamento de software','locacao de software','software de gestao',
+          'gestao publica software','sistema gestao publica','software erp',
+          'software municipio','solucao municipal informatizada'
+        ] },
+            financeiro: { peso: 40, tf: ['contabilidade publica','execucao orcamentaria','pcasp','lrf','siconfi','siafic','rreo','rgf','balancete municipal','nota de empenho','liquidacao despesa','contabilidade municipal','empenho orcamentario'], tr: ['financeiro municipal','orcamento municipal','planejamento orcamentario','ppa','ldo','loa','execucao financeira'] },
       tributario: { peso: 35, tf: ['iptu','issqn','iss municipal','itbi','nota fiscal eletronica servico','nfse','divida ativa municipal','cadin municipal','lancamento tributario','arrecadacao tributaria','imposto predial'], tr: ['tributario','tributos municipais','gestao tributaria','receitas municipais','arrecadacao municipal','fiscalizacao tributaria','cadastro imobiliario'] },
       rhfolha: { peso: 35, tf: ['folha de pagamento','folha pagamento prefeitura','holerite servidor','contracheque servidor','rescisao contratual servidor','previdencia municipal','rpps','ponto eletronico servidor','servidor publico municipal','folha mensal servidores'], tr: ['recursos humanos','gestao de pessoal','rh municipal','pagamento servidores','gestao funcional','admissao demissao'] },
       compras: { peso: 30, tf: ['compras publicas municipais','sistema de licitacoes municipais','gestao de contratos municipais','almoxarifado municipal','controle de estoque municipal','patrimonio municipal','inventario patrimonial','cotacao de precos'], tr: ['compras municipais','licitacoes municipais','contratos administrativos','suprimentos municipais'] },
