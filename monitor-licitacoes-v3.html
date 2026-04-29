@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://api.groq.com https://monitor.patrickbjp.workers.dev; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob:; connect-src 'self' https://pncp.gov.br https://www.portaldecompraspublicas.com.br https://compras.api.portaldecompraspublicas.com.br https://api.groq.com https://monitor.patrickbjp.workers.dev; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:;">
 <title>Monitor de Licitações — v4</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1550,6 +1550,10 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
           <span class="company-dot" style="background:var(--info)"></span>
           PNCP <span style="color:var(--ok);margin-left:auto;font-size:9px;font-family:var(--ff-mono)">●</span>
         </button>
+        <button class="company-item" id="btn-pcp" onclick="togglePortalBusca(this,'pcp')">
+          <span class="company-dot" style="background:var(--ok)"></span>
+          Portal CP <span style="color:var(--ok);margin-left:auto;font-size:9px;font-family:var(--ff-mono)">●</span>
+        </button>
       </div>
     </nav>
 
@@ -1568,7 +1572,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
       <div class="topbar-meta">
         <span id="topbar-date">—</span>
         <span><b id="topbar-bids">—</b> bids</span>
-        <span><b id="topbar-portais">1</b> portal</span>
+        <span><b id="topbar-portais">2</b> portais</span>
       </div>
 
       <button class="debug-toggle" id="debugToggle" title="Modo diagnóstico — exibe campo de origem dos valores">⚙ Debug</button>
@@ -1678,6 +1682,7 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
           <span class="chip-dot" style="background:var(--live)"></span> Urgente
         </button>
         <button class="chip" onclick="filtrarFeed(this,'pncp')">PNCP</button>
+        <button class="chip" onclick="filtrarFeed(this,'pcp')">Portal CP</button>
       </div>
       <!-- Seletor de ordenação -->
       <div class="ordem-seletor" title="Ordenar resultados">
@@ -1845,13 +1850,15 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
 
 <script>
 /* ====================== VERSÃO ====================== */
-console.log('%c[Monitor]%c v4.8-scoring-calibrado carregado com sucesso',
+console.log('%c[Monitor]%c v4.9-pcp-integrado carregado com sucesso',
   'background:#d4ff3a;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold',
   'color:inherit');
 
 /* ====================== CONFIG ====================== */
 const PNCP_SEARCH = 'https://pncp.gov.br/api/search/';
-const PCP_BASE    = 'https://www.portaldecompraspublicas.com.br/api/v2';
+const PCP_BASE    = 'https://www.portaldecompraspublicas.com.br/api/v2'; // legado
+const PCP_API     = 'https://compras.api.portaldecompraspublicas.com.br/v2/licitacao/processos';
+const PCP_WEB     = 'https://www.portaldecompraspublicas.com.br';
 
 /* Proxy Cloudflare Workers — atua como intermediário para:
    - IA Groq (esconde a chave que está como Secret no Worker)
@@ -1869,7 +1876,7 @@ const PERFIS = {
 
 let estadosAtivos = new Set(['PR','RS','SP','MG','RJ','PE','PA','AP']);
 let filtroAtual   = 'todos';
-let portaisBusca  = new Set(['pncp']); /* 'pcp' removido — API exige auth corporativa, CORS bloqueado (corr. C4) */
+let portaisBusca  = new Set(['pncp','pcp']); /* PCP reativado — API pública confirmada (29/04/2026) */
 /* apiKey removida — chave Groq gerenciada pelo Cloudflare Worker Secret (não exposta ao frontend) */
 let editaisCarregados = [];
 let descartados   = JSON.parse(localStorage.getItem('ml_descartados') || '[]');
@@ -2544,8 +2551,49 @@ async function buscarPNCP(uf) {
 }
 
 async function buscarPortalCP() {
-  const data = await xhrGet(`${PCP_BASE}/licitacoes?status=aberta&limite=50`);
-  return data.data || data.licitacoes || data || [];
+  /* Portal de Compras Públicas — API: compras.api.portaldecompraspublicas.com.br
+     Endpoint: GET /v2/licitacao/processos
+     CORS: aberto, sem autenticação.
+     Parâmetros confirmados:
+       codigoStatus=1  → Recebendo Propostas (único filtro de status funcional)
+       objeto=<termo>  → busca no resumo (case-insensitive, aceita acentos)
+       limitePagina=50 → máximo por página
+     Filtro de UF: feito localmente (parâmetro uf= não funciona na API)
+     Queries com maior retorno de editais de TI pública:
+       "software"(34), "gestão pública"(12), "folha de pagamento"(16),
+       "sistema informatizado"(6), "contabilidade"(4)
+  */
+  const queries = [
+    'software',
+    'gestão pública',
+    'folha de pagamento',
+    'sistema informatizado',
+    'contabilidade',
+    'prontuário',
+    'gestão escolar',
+    'assistência social',
+  ];
+
+  const todosItens = [];
+  const idsVistos  = new Set();
+
+  for (const q of queries) {
+    try {
+      const url = `${PCP_API}?limitePagina=50&pagina=1&codigoStatus=1&objeto=${encodeURIComponent(q)}`;
+      const data = await xhrGet(url);
+      const itens = data.result || [];
+      for (const item of itens) {
+        const id = String(item.codigoLicitacao || Math.random());
+        if (!idsVistos.has(id)) {
+          idsVistos.add(id);
+          todosItens.push(item);
+        }
+      }
+    } catch(e) {
+      // Ignora falha em query individual
+    }
+  }
+  return todosItens;
 }
 
 /* ====================== NORMALIZAÇÃO ====================== */
@@ -2645,29 +2693,90 @@ function normPNCP(item, uf) {
 }
 
 function normPCP(item) {
-  const obj  = item.objeto || item.descricao || item.titulo || '';
-  const orgao= item.orgao || item.entidade || '';
-  const val  = extrairValor(item);
-  const dtAb = item.dataAbertura || item.dataFim || item.prazo;
-  const prazo= calcPrazo(dtAb);
-  prazo.tipo = 'abertura';
-  const sc   = calcularScore(obj, 'RS');
-  const link = item.url || item.link ||
-    (item.id ? `https://www.portaldecompraspublicas.com.br/18/compras/${item.id}` : 'https://www.portaldecompraspublicas.com.br/18/compras');
+  /* API compras.api.portaldecompraspublicas.com.br — nova estrutura (29/04/2026)
+     Campos: codigoLicitacao, resumo, razaoSocial, unidadeCompradora.{uf,cidade},
+     dataHoraFinalPropostas, dataHoraInicioPropostas, dataHoraPublicacao,
+     tipoLicitacao.tipoLicitacao, urlReferencia, status.descricao
+     SEM campo valor na listagem (retorna só no detalhe). */
+
+  // Detectar se é item do novo formato (API v2 real) ou legado (fallback/demo)
+  const ehNovoFormato = item && item.codigoLicitacao;
+
+  if (!ehNovoFormato) {
+    // Formato legado — manter compatibilidade com gerarFallbackPCP
+    const obj   = item?.objeto || item?.descricao || item?.titulo || '';
+    const orgao = item?.orgao  || item?.entidade  || '';
+    const val   = extrairValor(item);
+    const dtAb  = item?.dataAbertura || item?.dataFim || item?.prazo;
+    const prazo = calcPrazo(dtAb); prazo.tipo = 'abertura';
+    const sc    = calcularScore(obj, item?.uf || 'RS');
+    const link  = item?.url || item?.link ||
+      (item?.id ? `${PCP_WEB}/18/compras/${item.id}` : `${PCP_WEB}/processos`);
+    return {
+      id: `pcp-${item?.id || Math.random()}`,
+      titulo: obj.length > 130 ? obj.substring(0,130)+'…' : obj,
+      tituloFull: obj, orgao, municipio: '', uf: item?.uf || item?.estado || 'RS',
+      valor: val, valorFmt: formatValor(val), prazo,
+      portal: 'Portal CP', portalClass: 'pcp', portalTipo: 'pcp', link,
+      score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
+      urgente: prazo.urgente, encerrado: prazo.dias !== null && prazo.dias < 0,
+      dataAbertura: dtAb, dataAberturaFmt: formatData(dtAb),
+      dataEncerramento: '', dataEncerramentoFmt: '',
+      dataPublicacao: '', dataPublicacaoFmt: '',
+      modalidade: '', numeroEdital: item?.numero || '',
+      numeroControle: String(item?.id || '')
+    };
+  }
+
+  // ── Novo formato API v2 real ──────────────────────────────────────────
+  const obj   = item.resumo || '';
+  const orgao = item.razaoSocial || item.nomeUnidade || '';
+  const uf    = item.unidadeCompradora?.uf || '';
+  const mun   = item.unidadeCompradora?.cidade || '';
+
+  const dtEnc = item.dataHoraFinalPropostas   || '';
+  const dtAb  = item.dataHoraInicioPropostas  || '';
+  const dtPub = item.dataHoraPublicacao       || '';
+
+  const agora = new Date();
+  const aberturaOcorreu = dtAb && new Date(dtAb) <= agora;
+  const dataParaPrazo   = aberturaOcorreu ? (dtEnc || dtAb) : (dtAb || dtEnc);
+  const prazo = calcPrazo(dataParaPrazo);
+  prazo.tipo  = aberturaOcorreu ? 'encerramento' : 'abertura';
+
+  // Regra D+1 igual ao PNCP
+  let encerrado = false;
+  if (dtEnc) {
+    const enc = new Date(dtEnc);
+    if (!isNaN(enc)) {
+      const corte = new Date(enc); corte.setHours(0,0,0,0);
+      corte.setDate(corte.getDate() + 1);
+      if (corte <= agora) encerrado = true;
+    }
+  }
+
+  const sc   = calcularScore(obj, uf);
+  const link = item.urlReferencia
+    ? `${PCP_WEB}${item.urlReferencia}`
+    : `${PCP_WEB}/processos`;
+
+  const titulo = obj.length > 130 ? obj.substring(0,130)+'…' : obj;
   return {
-    id: `pcp-${item.id || Math.random()}`,
-    titulo: obj.length > 130 ? obj.substring(0,130)+'…' : obj,
-    tituloFull: obj, orgao, municipio: '', uf: item.uf || item.estado || 'RS',
-    valor: val, valorFmt: formatValor(val), prazo,
-    portal: 'Portal CP/RS', portalClass: 'pcp', portalTipo: 'pcp',
-    link,
+    id: `pcp-${item.codigoLicitacao}`,
+    titulo, tituloFull: obj,
+    orgao: `${orgao}${mun ? ' · ' + mun : ''}`,
+    municipio: mun, uf,
+    valor: 0, valorFmt: '—',
+    prazo, encerrado,
+    portal: 'Portal CP', portalClass: 'pcp', portalTipo: 'pcp', link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
     urgente: prazo.urgente,
-    encerrado: prazo.dias !== null && prazo.dias < 0,
-    dataAbertura: dtAb, dataAberturaFmt: formatData(dtAb),
-    dataEncerramento: '', dataEncerramentoFmt: '',
-    dataPublicacao: '', dataPublicacaoFmt: '',
-    numeroControle: item.numero || item.id || ''
+    dataAbertura: dtAb,   dataAberturaFmt: formatData(dtAb),
+    dataEncerramento: dtEnc, dataEncerramentoFmt: formatData(dtEnc),
+    dataPublicacao: dtPub,  dataPublicacaoFmt: formatData(dtPub),
+    modalidade: item.tipoLicitacao?.tipoLicitacao || '',
+    numeroEdital: item.numero || '',
+    numeroControle: String(item.codigoLicitacao || '')
   };
 }
 
@@ -2833,11 +2942,30 @@ async function executarBusca() {
     }
   }
   if (portaisBusca.has('pcp')) {
-    // Portal de Compras Públicas foi removido como fonte de busca ativa —
-    // a API pública exige autenticação corporativa e retorna CORS bloqueado.
-    // Deixamos a flag setada só por compatibilidade com estado antigo de usuários;
-    // a busca em si não é mais feita (economiza 30-90s de timeout).
-    // Ver ROADMAP.md seção "Portais não-implementados" para contexto.
+    document.getElementById('loading-msg').textContent = 'Portal Compras Públicas…';
+    try {
+      const itemsPCP = await buscarPortalCP();
+      const novosPCP = [];
+      for (const item of itemsPCP) {
+        const uf = item.unidadeCompradora?.uf || '';
+        if (!estadosAtivos.has(uf)) continue;          // filtro de UF local
+        const e = normPCP(item);
+        if (e && e.titulo.length > 8 && !idsGlobais.has(e.link)) {
+          idsGlobais.add(e.link);
+          novosPCP.push(e);
+        }
+      }
+      editaisCarregados.push(...novosPCP);
+      // Atualizar badges de UF para editais do PCP
+      const cntPorUF = {};
+      novosPCP.forEach(e => { cntPorUF[e.uf] = (cntPorUF[e.uf]||0) + 1; });
+      Object.entries(cntPorUF).forEach(([uf, n]) => atualizarCntUF(uf, n));
+      if (novosPCP.length > 0)
+        console.log(`%c[PCP]%c ${novosPCP.length} editais carregados`,
+          'background:#4ade80;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold','color:inherit');
+    } catch(err) {
+      console.warn('[PCP] Falha na busca:', err.message);
+    }
   }
 
   // Marca cada edital com flags persistentes (acompanhando, dispensado, visto)
@@ -2865,7 +2993,14 @@ async function executarBusca() {
 
   const agora = new Date().toLocaleString('pt-BR');
   document.getElementById('last-update').textContent = `Última atualização: ${agora}`;
-  document.getElementById('sidebar-status').textContent = `Sincronizado · ${new Date().toLocaleTimeString('pt-BR')}`;
+  const _qtdPNCP = editaisCarregados.filter(e=>e.portalTipo==='pncp').length;
+  const _qtdPCP  = editaisCarregados.filter(e=>e.portalTipo==='pcp').length;
+  const _partes  = [];
+  if (_qtdPNCP > 0) _partes.push(`PNCP:${_qtdPNCP}`);
+  if (_qtdPCP  > 0) _partes.push(`PCP:${_qtdPCP}`);
+  document.getElementById('sidebar-status').textContent =
+    `Sincronizado · ${new Date().toLocaleTimeString('pt-BR')}` +
+    (_partes.length > 1 ? ` · ${_partes.join(' ')}` : '');
   localStorage.setItem('ml_ultima_busca', agora);
   localStorage.setItem('ml_cache_editais', JSON.stringify(editaisCarregados));
   localStorage.setItem('ml_cache_ts', Date.now().toString());
