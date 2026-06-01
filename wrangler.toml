@@ -1,0 +1,18 @@
+# wrangler.toml — Worker: monitor.patrickbjp.workers.dev
+# Repositório: github.com/patrick-bjp/aprendizado
+# Atualizado: 01/06/2026
+
+name = "monitor"
+main = "worker-monitor.js"
+compatibility_date = "2026-04-23"
+
+# KV Namespace binding — usado pelo contador de acessos e presença online
+# Nome da variável no código: env.ML_KV
+# Namespace: monitor-kv
+[[kv_namespaces]]
+binding = "ML_KV"
+id = "880b27fdf32b4fb3b94466c818d8fa06"
+
+# Secrets (NÃO colocar valores aqui — ficam no painel do Cloudflare)
+# Workers → monitor → Configurações → Variáveis e segredos
+#   GROQ_API_KEY = gsk_... (tipo: Secreto, não Variável)
