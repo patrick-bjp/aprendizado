@@ -2108,14 +2108,24 @@ const PORTFOLIO_EMPRESAS = {
           'sistema de gestao publica','solucao de gestao publica',
           'licenciamento de uso de software','licenciamento de software de gestao',
           'software erp municipal','software gestao publica',
-          'licenca de uso de software de gestao'
+          'licenca de uso de software de gestao',
+          // Linguajar comum em editais reais de prefeituras
+          'cessao de uso de sistema de gestao','cessao de uso de software de gestao',
+          'sistema integrado municipal','contratacao de sistema municipal',
+          'implantacao de sistema de gestao municipal','solucao tecnologica gestao publica',
+          'sistema de informacoes municipais','software de administracao municipal'
         ], tr: [
           'sistema municipal','gestao municipal','software municipal',
           'prefeitura sistema','municipio solucao','erp publico',
           // Termos genéricos presentes em editais reais sem especificar módulo
           'gestao publica','licenciamento','locacao de software',
           'software publico','gestao administrativa municipal',
-          'suporte e atendimento tecnico','implantacao treinamento suporte'
+          'suporte e atendimento tecnico','implantacao treinamento suporte',
+          // Termos de serviços de TI — cobrem editais sem nome de produto
+          'servicos de informatica','servicos de tecnologia da informacao',
+          'cessao de uso','locacao de licenca','manutencao e suporte de sistema',
+          'informatica municipal','tecnologia da informacao municipal',
+          'servicos continuados de ti','sistema para prefeitura'
         ] },
       licenciamentoERP: { peso: 45,
         tf: [
@@ -2177,7 +2187,7 @@ const PORTFOLIO_EMPRESAS = {
 };
 
 /* Pré-filtro TI: sem isso o objeto não é edital de software */
-const _PRE_TI = ['sistema','software','plataforma','solucao','aplicativo','aplicacao','modulo','licenca','implantacao','saas','erp','sgm','suporte tecnico sistema','manutencao sistema','hospedagem','tecnologia informacao','governo digital','municipio digital'];
+const _PRE_TI = ['sistema','software','plataforma','solucao','aplicativo','aplicacao','modulo','licenca','implantacao','saas','erp','sgm','suporte tecnico sistema','manutencao sistema','hospedagem','tecnologia informacao','tecnologia da informacao','informatica','cessao de uso de sistema','cessao de uso de software','servicos de ti','servicos de tecnologia','governo digital','municipio digital','gestao eletronicade documentos','automatizacao de processos'];
 
 /* Termos de exclusão: editais que NÃO são TI mesmo com palavras-chave comuns */
 const _EXCLUSAO = [
@@ -2212,20 +2222,33 @@ const _EXCLUSAO = [
   'locacao de veiculos','locacao de maquinas'
 ];
 
-/* ── calcularScore v2 ── */
+/* ── calcularScore v3 ── */
+
+// Termos âncora por empresa — match único já indica alta relevância
+const _ANCORAS = {
+  govbr:     ['pronim','sistema integrado gestao municipal','erp municipal',
+               'software de gestao municipal','sistema de gestao municipal',
+               'solucao de gestao publica','cessao de uso de software de gestao',
+               'software de gestao publica','sistema integrado municipal',
+               'licenca de uso de software de gestao','software erp municipal',
+               'suporte de sistemas municipais','manutencao de sistemas municipais',
+               'suporte tecnico de sistemas municipais','servicos de ti para gestao municipal'],
+  equiplano: ['tce-pr','tribunal de contas do parana','e-sfinge','sagres'],
+  ids:       ['prontuario eletronico do paciente','pep saude','regulacao de saude',
+               'atencao primaria saude','farmacia basica municipal',
+               'cras sistema','creas sistema','suas sistema'],
+  layers:    ['aplicativo comunicacao escola familia','app escola familia',
+               'secretaria escolar digital','matricula digital escola']
+};
+
 function calcularScore(objeto, uf) {
   if (!objeto) return { score: 0, empresa: '', kwsEncontradas: [] };
   const tx = objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
   // Pré-filtro exclusão — obras físicas e aquisições de bens NÃO são TI
-  // Regra: se tem termo de exclusão E não tem contexto inequívoco de software → zera
   const ehExclusao = _EXCLUSAO.some(t => tx.includes(t));
   const ehTI = _PRE_TI.some(t => tx.includes(t));
   if (ehExclusao && !ehTI) return { score: 0, empresa: '', kwsEncontradas: [] };
-
-  // Guard adicional: objetos sem qualquer sinal de TI têm score zerado
-  // (evita que matches de área temática — 'cras', 'assistência social' — pontuem em obras físicas
-  //  que não caíram na exclusão explícita acima)
   if (!ehTI) return { score: 0, empresa: '', kwsEncontradas: [] };
 
   let melhorScore = 0, melhorEmpresa = '', melhorKws = [];
@@ -2240,11 +2263,20 @@ function calcularScore(objeto, uf) {
       const hW = cat.tr.filter(t => tx.includes(t));
       if (!hF.length && !hW.length) continue;
 
-      // Pontuação por categoria
-      const fF = Math.min(hF.length / Math.max(cat.tf.length * 0.25, 1), 1);
-      const fW = Math.min(hW.length / Math.max(cat.tr.length * 0.4, 1), 0.6);
+      // Pontuação por categoria — divisor 0.15 (era 0.25) para evitar subpontuação
+      // quando há poucos hits em listas grandes de termos
+      const fF = Math.min(hF.length / Math.max(cat.tf.length * 0.15, 1), 1);
+      const fW = Math.min(hW.length / Math.max(cat.tr.length * 0.3, 1), 0.6);
       pts += Math.round(cat.peso * fF * 0.85 + cat.peso * fW * 0.3 + hF.length * 10 + hW.length * 4);
       kwsE = [...kwsE, ...hF, ...hW];
+    }
+
+    // Bônus âncora — termo inequívoco da empresa detectado (+35 pts)
+    const ancorasEmp = _ANCORAS[empresa] || [];
+    const hAncora = ancorasEmp.filter(a => tx.includes(a));
+    if (hAncora.length > 0) {
+      pts += 35;
+      kwsE = [...kwsE, ...hAncora];
     }
 
     // Bônus TI + keywords do usuário
