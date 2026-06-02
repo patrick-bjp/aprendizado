@@ -232,6 +232,13 @@ body::before {
   70%  { box-shadow: 0 0 0 8px transparent; }
   100% { box-shadow: 0 0 0 0 transparent; }
 }
+.pulse-sm {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ok); vertical-align: middle; margin-right: 3px;
+  box-shadow: 0 0 0 0 var(--ok-pulse);
+  animation: pulse 2s infinite;
+}
+#m-online-wrap { display: inline-flex; align-items: center; gap: 3px; }
 
 /* ============== MAIN ============== */
 .main { padding: 24px 32px 40px; min-width: 0; }
@@ -1665,6 +1672,11 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <div class="kpi-value" id="m-valor">—</div>
         <div class="kpi-foot"><span id="m-sub-valor">após busca</span></div>
       </div>
+      <div class="kpi" style="--kpi-accent:var(--ok)">
+        <div class="kpi-label">Acessos totais</div>
+        <div class="kpi-value" id="m-acessos">—</div>
+        <div class="kpi-foot"><span id="m-online-wrap"><span class="pulse pulse-sm"></span> <span id="m-online-val">—</span> online agora</span></div>
+      </div>
     </div>
 
     <!-- TOOLBAR busca + filtros -->
@@ -2168,17 +2180,53 @@ const PORTFOLIO_EMPRESAS = {
 const _PRE_TI = ['sistema','software','plataforma','solucao','aplicativo','aplicacao','modulo','licenca','implantacao','saas','erp','sgm','suporte tecnico sistema','manutencao sistema','hospedagem','tecnologia informacao','governo digital','municipio digital'];
 
 /* Termos de exclusão: editais que NÃO são TI mesmo com palavras-chave comuns */
-const _EXCLUSAO = ['manutencao predial','manutencao eletrica','manutencao hidraulica','obra civil','construcao civil','reforma predial','pavimentacao','calcamento','limpeza urbana','coleta lixo','combustivel veiculo','uniformes escolares','material escritorio','equipamentos medicos aquisicao','medicamentos aquisicao','exame laboratorial','servico medico assistencia'];
+const _EXCLUSAO = [
+  // Obras e construção física
+  'empreitada global','empreitada integral','regime de empreitada',
+  'mao de obra e material','mao-de-obra e material',
+  'obra civil','construcao civil','construcao do centro','construcao de centro',
+  'construcao de escola','construcao de ubs','construcao de cras',
+  'reforma predial','reforma da escola','reforma da ubs','reforma do cras',
+  'reforma do predio','ampliacao do predio','ampliacao da escola',
+  'pavimentacao','calcamento','asfaltamento','recapeamento',
+  'drenagem pluvial','esgoto sanitario','saneamento basico',
+  'pintura predial','cobertura predial','telhado','alvenaria',
+  'instalacao eletrica predial','instalacao hidraulica predial',
+  'fundacao','estrutura metalica','obras civis',
+  // Manutenção predial/veicular (não de software)
+  'manutencao predial','manutencao eletrica','manutencao hidraulica',
+  'manutencao de veiculos','manutencao corretiva predial',
+  // Aquisição de bens físicos
+  'aquisicao de medicamentos','fornecimento de medicamentos',
+  'aquisicao de insumos','aquisicao de equipamentos medicos',
+  'aquisicao de equipamentos hospitalares','aquisicao de mobiliario',
+  'aquisicao de veiculos','aquisicao de onibus','aquisicao de caminhao',
+  'fornecimento de material de construcao','aquisicao de material de construcao',
+  'equipamentos medicos aquisicao','medicamentos aquisicao',
+  // Serviços não-TI
+  'limpeza urbana','coleta lixo','coleta de residuos',
+  'combustivel veiculo','fornecimento de combustivel',
+  'uniformes escolares','material escritorio',
+  'exame laboratorial','servico medico assistencia',
+  'servico de vigilancia patrimonial','servico de limpeza e conservacao',
+  'locacao de veiculos','locacao de maquinas'
+];
 
 /* ── calcularScore v2 ── */
 function calcularScore(objeto, uf) {
   if (!objeto) return { score: 0, empresa: '', kwsEncontradas: [] };
   const tx = objeto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 
-  // Pré-filtro exclusão
+  // Pré-filtro exclusão — obras físicas e aquisições de bens NÃO são TI
+  // Regra: se tem termo de exclusão E não tem contexto inequívoco de software → zera
   const ehExclusao = _EXCLUSAO.some(t => tx.includes(t));
   const ehTI = _PRE_TI.some(t => tx.includes(t));
   if (ehExclusao && !ehTI) return { score: 0, empresa: '', kwsEncontradas: [] };
+
+  // Guard adicional: objetos sem qualquer sinal de TI têm score zerado
+  // (evita que matches de área temática — 'cras', 'assistência social' — pontuem em obras físicas
+  //  que não caíram na exclusão explícita acima)
+  if (!ehTI) return { score: 0, empresa: '', kwsEncontradas: [] };
 
   let melhorScore = 0, melhorEmpresa = '', melhorKws = [];
 
@@ -2711,7 +2759,9 @@ function normPCP(item) {
     const prazo = calcPrazo(dtAb); prazo.tipo = 'abertura';
     const sc    = calcularScore(obj, item?.uf || 'RS');
     const link  = item?.url || item?.link ||
-      (item?.id ? `${PCP_WEB}/18/compras/${item.id}` : `${PCP_WEB}/processos`);
+      (item?.numero
+        ? `${PCP_WEB}/18/licitacoes?search=${encodeURIComponent(item.numero)}`
+        : `${PCP_WEB}/processos`);
     return {
       id: `pcp-${item?.id || Math.random()}`,
       titulo: obj.length > 130 ? obj.substring(0,130)+'…' : obj,
@@ -3984,9 +4034,111 @@ async function perguntarIA() {
     if (!e.target.closest('.export-dropdown')) fecharMenuExport();
   });
 
+  // ── Contador de acessos e presença online ─────────────────────────────
+  iniciarContadorAcessos();
+
   // Restaurar estado da URL (deep-linking)
   restaurarURLState();
 })();
+
+/* ── CONTADOR DE ACESSOS E PRESENÇA ONLINE ─────────────────────────────────
+ *
+ * Usa o Cloudflare Worker existente (monitor.patrickbjp.workers.dev) com duas
+ * rotas novas no Worker:
+ *
+ *   POST /contador/acesso
+ *     Body: { sessao: "<uuid>" }
+ *     Resposta: { acessos: 1234, online: 5 }
+ *     Comportamento no Worker:
+ *       - Incrementa KV "ml:acessos_total" em +1 (se sessao nunca vista)
+ *       - Atualiza KV "ml:hb:<sessao>" com TTL de 120s (heartbeat)
+ *       - Conta chaves "ml:hb:*" ativas = usuários online
+ *
+ *   GET /contador/stats
+ *     Resposta: { acessos: 1234, online: 5 }
+ *     Sem efeitos colaterais — só leitura
+ *
+ * CÓDIGO DO WORKER A ADICIONAR (cole no worker existente):
+ * ──────────────────────────────────────────────────────
+ * // Rota POST /contador/acesso
+ * if (method === 'POST' && path === '/contador/acesso') {
+ *   const { sessao } = await request.json().catch(() => ({}));
+ *   if (sessao) {
+ *     const jaVisto = await env.ML_KV.get(`ml:sess:${sessao}`);
+ *     if (!jaVisto) {
+ *       const total = parseInt(await env.ML_KV.get('ml:acessos_total') || '0') + 1;
+ *       await env.ML_KV.put('ml:acessos_total', String(total));
+ *       await env.ML_KV.put(`ml:sess:${sessao}`, '1', { expirationTtl: 86400 });
+ *     }
+ *     await env.ML_KV.put(`ml:hb:${sessao}`, '1', { expirationTtl: 120 });
+ *   }
+ *   const acessos = parseInt(await env.ML_KV.get('ml:acessos_total') || '0');
+ *   const hbKeys  = await env.ML_KV.list({ prefix: 'ml:hb:' });
+ *   const online  = hbKeys.keys.length;
+ *   return jsonResp({ acessos, online });
+ * }
+ * // Rota GET /contador/stats
+ * if (method === 'GET' && path === '/contador/stats') {
+ *   const acessos = parseInt(await env.ML_KV.get('ml:acessos_total') || '0');
+ *   const hbKeys  = await env.ML_KV.list({ prefix: 'ml:hb:' });
+ *   const online  = hbKeys.keys.length;
+ *   return jsonResp({ acessos, online });
+ * }
+ * ──────────────────────────────────────────────────────
+ */
+function iniciarContadorAcessos() {
+  const WORKER = PROXY_BASE; // https://monitor.patrickbjp.workers.dev
+
+  // Gerar/recuperar UUID de sessão (persiste no sessionStorage — nova aba = nova sessão)
+  let sessao = sessionStorage.getItem('ml_sessao');
+  if (!sessao) {
+    sessao = crypto.randomUUID
+      ? crypto.randomUUID()
+      : Date.now().toString(36) + Math.random().toString(36).slice(2);
+    sessionStorage.setItem('ml_sessao', sessao);
+  }
+
+  function atualizarKPIs(data) {
+    if (!data) return;
+    const elAcessos = document.getElementById('m-acessos');
+    const elOnline  = document.getElementById('m-online-val');
+    if (elAcessos && data.acessos != null) {
+      elAcessos.textContent = data.acessos >= 1000
+        ? (data.acessos / 1000).toFixed(1) + 'k'
+        : data.acessos;
+    }
+    if (elOnline && data.online != null) {
+      elOnline.textContent = data.online;
+    }
+  }
+
+  // Registrar acesso (POST) — conta a sessão e faz o primeiro heartbeat
+  async function registrarAcesso() {
+    try {
+      const r = await fetch(`${WORKER}/contador/acesso`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessao })
+      });
+      if (r.ok) atualizarKPIs(await r.json());
+    } catch { /* silencioso — não bloqueia o painel */ }
+  }
+
+  // Heartbeat (POST a cada 60s) — mantém sessão "online"
+  async function heartbeat() {
+    try {
+      const r = await fetch(`${WORKER}/contador/acesso`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessao })
+      });
+      if (r.ok) atualizarKPIs(await r.json());
+    } catch { /* silencioso */ }
+  }
+
+  registrarAcesso();
+  setInterval(heartbeat, 60_000); // heartbeat a cada 60s (TTL do KV é 120s)
+}
 </script>
 </body>
 </html>
