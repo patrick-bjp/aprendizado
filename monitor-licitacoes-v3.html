@@ -2838,8 +2838,13 @@ function normPCP(item) {
   }
 
   const sc   = calcularScore(obj, uf);
-  const link = item.urlReferencia
-    ? `${PCP_WEB}${item.urlReferencia}`
+  // urlReferencia da API retorna sem prefixo /processos (ex: "/mg/prefeitura.../pmp-019-2026")
+  // A URL real do portal exige /processos antes do path
+  const urlRef = item.urlReferencia
+    ? (item.urlReferencia.startsWith('/processos') ? item.urlReferencia : '/processos' + item.urlReferencia)
+    : null;
+  const link = urlRef
+    ? `${PCP_WEB}${urlRef}`
     : `${PCP_WEB}/processos`;
 
   const titulo = obj.length > 130 ? obj.substring(0,130)+'…' : obj;
