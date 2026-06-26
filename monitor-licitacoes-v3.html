@@ -145,6 +145,18 @@ body::before {
   width: 100%; text-align: left;
 }
 .nav-item:hover { background: var(--bg-2); color: var(--ink-hi); }
+.nav-item.cliente-govbr-nav .nav-count {
+  background: rgba(249,115,22,.15);
+  color: #f97316;
+  border-color: rgba(249,115,22,.3);
+}
+.nav-item.cliente-govbr-nav.active {
+  color: #f97316;
+}
+.nav-item.cliente-govbr-nav.active::before {
+  background: #f97316;
+}
+
 .nav-item.active {
   background: var(--bg-2); color: var(--ink-hi);
 }
@@ -1295,6 +1307,26 @@ body.debug-ativo .detail-value.money:not(.vazio)::after {
 }
 
 /* ---------- BADGE "NOVO" (A4) ---------- */
+
+/* ── Cliente GOVBR — risco de churn ── */
+.cliente-govbr-badge {
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: #f97316;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.edital.cliente-govbr {
+  border-left: 3px solid #f97316;
+}
+
 .novo-badge {
   font-family: var(--ff-mono);
   font-size: 10px;
@@ -1492,6 +1524,11 @@ input[type="text"]::-webkit-inner-spin-button { display: none; }
         <svg class="icon" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
         Alta relevância
         <span class="nav-count" id="nav-cnt-alta">—</span>
+      </button>
+      <button class="nav-item cliente-govbr-nav" onclick="filtrarFeed(this,'clienteGOVBR')" title="Editais de municípios que já são clientes GovernançaBrasil — risco de churn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Risco GOVBR
+        <span class="nav-count" id="nav-cnt-clienteGOVBR">—</span>
       </button>
       <button class="nav-item" onclick="filtrarFeed(this,'acompanhando')" title="Editais que você pinou para acompanhar">
         <svg class="icon" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
@@ -2087,6 +2124,27 @@ function abrirPainelKws() {
    Score semântico baseado no portfólio real das empresas.
    Fonte: sites oficiais + linguagem real de editais PNCP.
    ========================================================= */
+
+/* ── CLIENTES GOVBR — detecção de risco de churn ─────────────
+   JSON carregado do GitHub: clientes-govbr.json
+   CNPJs normalizados (só dígitos) para comparação rápida.
+   ────────────────────────────────────────────────────────── */
+let CLIENTES_GOVBR = new Set();
+
+(async function carregarClientesGOVBR() {
+  try {
+    const url = 'https://raw.githubusercontent.com/patrick-bjp/aprendizado/main/clientes-govbr.json';
+    const res  = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    CLIENTES_GOVBR = new Set(
+      (data.clientes || []).map(c => c.cnpj.replace(/\D/g, ''))
+    );
+    console.log('[Monitor] Clientes GOVBR carregados:', CLIENTES_GOVBR.size);
+  } catch (err) {
+    console.warn('[Monitor] Não foi possível carregar clientes GOVBR:', err.message);
+  }
+})();
 
 /* ── PORTFÓLIO REAL DAS EMPRESAS ──────────────────────────
    Cada empresa tem categorias de produto com termos fortes
@@ -2754,6 +2812,8 @@ function normPNCP(item, uf) {
   }
 
   const titulo = obj.length > 130 ? obj.substring(0,130)+'\u2026' : obj;
+  const cnpjOrgao = (item.orgao_cnpj || item.cnpjOrgao || item.orgao?.cnpj || '').replace(/\D/g, '');
+  const ehClienteGOVBR = cnpjOrgao.length > 0 && CLIENTES_GOVBR.has(cnpjOrgao);
   return {
     id: `pncp-${num || Math.random()}`,
     titulo, tituloFull: obj,
@@ -2764,6 +2824,7 @@ function normPNCP(item, uf) {
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
     urgente: prazo.urgente,
     encerrado: estaEncerrado,
+    ehClienteGOVBR,
     dataAbertura: dtAbertura, dataAberturaFmt: formatData(dtAbertura),
     dataEncerramento: dtEncerramento, dataEncerramentoFmt: formatData(dtEncerramento),
     dataPublicacao: dtPublicacao, dataPublicacaoFmt: formatData(dtPublicacao),
@@ -2848,6 +2909,8 @@ function normPCP(item) {
     : `${PCP_WEB}/processos`;
 
   const titulo = obj.length > 130 ? obj.substring(0,130)+'…' : obj;
+  const cnpjOrgaoPCP = (item.cnpj || item.cnpjOrgao || '').replace(/\D/g, '');
+  const ehClienteGOVBR = cnpjOrgaoPCP.length > 0 && CLIENTES_GOVBR.has(cnpjOrgaoPCP);
   return {
     id: `pcp-${item.codigoLicitacao}`,
     titulo, tituloFull: obj,
@@ -2858,6 +2921,7 @@ function normPCP(item) {
     portal: 'Portal CP', portalClass: 'pcp', portalTipo: 'pcp', link,
     score: sc.score, empresa: sc.empresa, kwsEncontradas: sc.kwsEncontradas,
     urgente: prazo.urgente,
+    ehClienteGOVBR,
     dataAbertura: dtAb,   dataAberturaFmt: formatData(dtAb),
     dataEncerramento: dtEnc, dataEncerramentoFmt: formatData(dtEnc),
     dataPublicacao: dtPub,  dataPublicacaoFmt: formatData(dtPub),
@@ -3550,13 +3614,14 @@ function renderCard(e, i) {
     ? `${Math.abs(e.prazo.dias)} dia${Math.abs(e.prazo.dias) !== 1 ? 's' : ''}`
     : e.prazo.label;
 
-  return `<article class="edital${urg}${vis}${e.encerrado ? ' encerrado' : ''}${e.novo ? ' novo' : ''}${e.acompanhando ? ' acompanhando' : ''}${e.dispensado ? ' dispensado' : ''}"
+  return `<article class="edital${urg}${vis}${e.encerrado ? ' encerrado' : ''}${e.novo ? ' novo' : ''}${e.acompanhando ? ' acompanhando' : ''}${e.dispensado ? ' dispensado' : ''}${e.ehClienteGOVBR ? ' cliente-govbr' : ''}"
     data-uf="${e.uf}" data-score="${e.score}"
     data-urgente="${e.urgente?1:0}" data-encerrado="${e.encerrado?1:0}"
     data-novo="${e.novo?1:0}"
     data-acompanhando="${e.acompanhando?1:0}"
     data-dispensado="${e.dispensado?1:0}"
     data-empresa="${e.empresa}"
+    data-cliente-govbr="${e.ehClienteGOVBR?1:0}"
     data-portal="${e.portalTipo}" id="edital-${i}"
     style="--score:${e.score}; --score-color:${scoreColor}">
 
@@ -3568,6 +3633,7 @@ function renderCard(e, i) {
     <div class="bid-body" onclick="analisarEdital(${i})">
       <div class="bid-meta">
         ${e.novo ? '<span class="novo-badge">✨ Novo</span>' : ''}
+        ${e.ehClienteGOVBR ? '<span class="cliente-govbr-badge">⚠️ Cliente GOVBR</span>' : ''}
         ${tagPort}
         <span class="orgao-line">${orgaoCompleto} <span class="sep">·</span> ${e.uf}${e.numeroEdital ? ` <span class="sep">·</span> ${e.numeroEdital}` : ''}</span>
         ${statusPill}
@@ -3684,6 +3750,9 @@ function atualizarMetricas() {
   document.getElementById('nav-cnt-acompanhando').textContent = acomps.length || '—';
   document.getElementById('nav-cnt-encerrado').textContent   = encerr.length || '—';
   document.getElementById('nav-cnt-dispensado').textContent  = dispens.length || '—';
+  const clientesRisco = ativos.filter(e => e.ehClienteGOVBR && e.score > 0).length;
+  const elCR = document.getElementById('nav-cnt-clienteGOVBR');
+  if (elCR) elCR.textContent = clientesRisco || '—';
 
   ['govbr','equiplano','ids','layers'].forEach(emp => {
     const n = ativos.filter(e => e.empresa === emp).length;
@@ -3729,6 +3798,7 @@ function aplicarFiltros() {
     else if (['govbr','equiplano','ids','layers'].includes(filtroAtual)) fOk = emp === filtroAtual && !enc && !disp;
     else if (filtroAtual === 'pncp')         fOk = port === 'pncp' && !enc && !disp;
     else if (filtroAtual === 'pcp')          fOk = port === 'pcp' && !enc && !disp;
+    else if (filtroAtual === 'clienteGOVBR') fOk = el.dataset.clienteGovbr === '1' && sc > 0 && !enc && !disp;
     else if (filtroAtual === 'todos')        fOk = !enc && !disp;  // padrão esconde encerrados E dispensados
     else fOk = !enc && !disp;
 
@@ -3764,6 +3834,7 @@ function filtrarFeed(btn, f) {
     'acompanhando': 'Editais que você está acompanhando',
     'encerrado':    'Editais encerrados (histórico)',
     'dispensado':   'Editais dispensados — você pode restaurar qualquer um',
+    'clienteGOVBR': '⚠️ Risco de churn — Municípios clientes GOVBR',
     'govbr':        'Editais · GovernançaBrasil',
     'equiplano':    'Editais · Equiplano',
     'ids':          'Editais · IDS',
