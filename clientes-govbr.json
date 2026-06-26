@@ -1,0 +1,3627 @@
+{
+  "atualizado": "2026-06-26",
+  "fonte": "Base_Clientes.xlsx - GovernançaBrasil",
+  "total": 905,
+  "clientes": [
+    {
+      "cnpj": "78.121.936/0001-68",
+      "nome": "PM TRES BARRAS DO PARANA"
+    },
+    {
+      "cnpj": "80.869.621/0001-45",
+      "nome": "PM CAMPO BONITO"
+    },
+    {
+      "cnpj": "88.488.341/0001-07",
+      "nome": "PM FAXINAL DO SOTURNO"
+    },
+    {
+      "cnpj": "92.123.926/0001-92",
+      "nome": "PM ALTO FELIZ"
+    },
+    {
+      "cnpj": "87.613.360/0001-47",
+      "nome": "PM SEVERIANO DE ALMEIDA"
+    },
+    {
+      "cnpj": "87.612.842/0001-82",
+      "nome": "PM CANDIDO GODOI"
+    },
+    {
+      "cnpj": "88.768.080/0001-70",
+      "nome": "PM SAO GABRIEL"
+    },
+    {
+      "cnpj": "45.732.013/0001-93",
+      "nome": "PM CHARQUEADA"
+    },
+    {
+      "cnpj": "46.634.119/0001-17",
+      "nome": "PM CONCHAS"
+    },
+    {
+      "cnpj": "95.585.477/0001-92",
+      "nome": "PM SAUDADE DO IGUACU"
+    },
+    {
+      "cnpj": "29.114.121/0001-46",
+      "nome": "PM MIRACEMA"
+    },
+    {
+      "cnpj": "04.219.099/0001-78",
+      "nome": "PM PEDRAS ALTAS"
+    },
+    {
+      "cnpj": "28.741.098/0001-57",
+      "nome": "PM SILVA JARDIM"
+    },
+    {
+      "cnpj": "87.896.882/0001-01",
+      "nome": "PM SAO FRANCISCO DE ASSIS"
+    },
+    {
+      "cnpj": "46.449.682/0001-15",
+      "nome": "PM ESTRELA DO NORTE"
+    },
+    {
+      "cnpj": "88.117.726/0001-50",
+      "nome": "PM GENERAL CAMARA"
+    },
+    {
+      "cnpj": "87.613.576/0001-02",
+      "nome": "PM MACHADINHO"
+    },
+    {
+      "cnpj": "46.179.966/0001-39",
+      "nome": "PM CRUZALIA"
+    },
+    {
+      "cnpj": "67.168.856/0001-41",
+      "nome": "PM ESTIVA GERBI"
+    },
+    {
+      "cnpj": "20.896.031/0001-80",
+      "nome": "CM ARCOS"
+    },
+    {
+      "cnpj": "57.264.889/0001-31",
+      "nome": "CM SALTO GRANDE"
+    },
+    {
+      "cnpj": "31.505.068/0001-56",
+      "nome": "CM QUISSAMA"
+    },
+    {
+      "cnpj": "49.898.489/0001-50",
+      "nome": "CM CRUZALIA"
+    },
+    {
+      "cnpj": "95.725.024/0001-14",
+      "nome": "PM RAMILANDIA"
+    },
+    {
+      "cnpj": "95.640.132/0001-94",
+      "nome": "PM RANCHO ALEGRE D OESTE"
+    },
+    {
+      "cnpj": "53.303.376/0001-31",
+      "nome": "CM ALVARES MACHADO"
+    },
+    {
+      "cnpj": "91.110.296/0001-59",
+      "nome": "PM NOVA ROMA DO SUL"
+    },
+    {
+      "cnpj": "28.916.716/0001-52",
+      "nome": "PM ITAPERUNA"
+    },
+    {
+      "cnpj": "87.612.859/0001-30",
+      "nome": "PM CAMPINA DAS MISSOES"
+    },
+    {
+      "cnpj": "75.425.322/0001-81",
+      "nome": "CM SANTA TEREZINHA ITAIPU"
+    },
+    {
+      "cnpj": "49.677.917/0001-14",
+      "nome": "CM VOTUPORANGA"
+    },
+    {
+      "cnpj": "01.701.521/0001-39",
+      "nome": "CM URUGUAIANA"
+    },
+    {
+      "cnpj": "78.678.174/0001-03",
+      "nome": "CM TRES BARRAS DO PARANA"
+    },
+    {
+      "cnpj": "78.106.069/0001-91",
+      "nome": "CM JESUITAS"
+    },
+    {
+      "cnpj": "88.141.460/0001-80",
+      "nome": "PM SANTANA DA BOA VISTA"
+    },
+    {
+      "cnpj": "27.964.923/0001-10",
+      "nome": "CM VASSOURAS"
+    },
+    {
+      "cnpj": "90.320.847/0001-46",
+      "nome": "CM CANGUCU"
+    },
+    {
+      "cnpj": "89.696.470/0001-45",
+      "nome": "CM SANTANA DO LIVRAMENTO"
+    },
+    {
+      "cnpj": "52.156.114/0001-29",
+      "nome": "SMTCA ARARAS"
+    },
+    {
+      "cnpj": "77.844.280/0001-49",
+      "nome": "CM PEROLA"
+    },
+    {
+      "cnpj": "90.544.057/0001-44",
+      "nome": "CM VACARIA"
+    },
+    {
+      "cnpj": "51.892.487/0001-03",
+      "nome": "CM SAO SEBASTIAO DA GRAMA"
+    },
+    {
+      "cnpj": "28.561.041/0001-76",
+      "nome": "PM BOM JARDIM"
+    },
+    {
+      "cnpj": "27.759.281/0001-17",
+      "nome": "INST BENF ASSIS CABO FRIO - IBASCAF"
+    },
+    {
+      "cnpj": "44.544.690/0001-15",
+      "nome": "PM TAIACU"
+    },
+    {
+      "cnpj": "77.819.605/0001-33",
+      "nome": "PM SAO JOSE DAS PALMEIRAS"
+    },
+    {
+      "cnpj": "75.845.511/0001-03",
+      "nome": "PM LUPIONOPOLIS"
+    },
+    {
+      "cnpj": "01.575.172/0001-56",
+      "nome": "CM PORECATU"
+    },
+    {
+      "cnpj": "75.771.477/0001-70",
+      "nome": "PM LONDRINA"
+    },
+    {
+      "cnpj": "75.392.019/0001-20",
+      "nome": "PM SANTA MARIANA"
+    },
+    {
+      "cnpj": "04.684.563/0001-05",
+      "nome": "FDO PREV CAFEARA"
+    },
+    {
+      "cnpj": "95.595.013/0001-67",
+      "nome": "PM IGUATU"
+    },
+    {
+      "cnpj": "09.093.161/0001-41",
+      "nome": "FDO PREV CRUZEIRO DO OESTE"
+    },
+    {
+      "cnpj": "76.970.375/0001-46",
+      "nome": "PM SANTO INACIO"
+    },
+    {
+      "cnpj": "01.201.556/0001-09",
+      "nome": "CM CIDADE GAUCHA"
+    },
+    {
+      "cnpj": "48.813.638/0001-78",
+      "nome": "PM REGENTE FEIJO"
+    },
+    {
+      "cnpj": "78.673.159/0001-64",
+      "nome": "CM CATANDUVAS - PR"
+    },
+    {
+      "cnpj": "75.798.355/0001-77",
+      "nome": "PM INDIANOPOLIS"
+    },
+    {
+      "cnpj": "76.995.323/0001-24",
+      "nome": "PM MARIOPOLIS"
+    },
+    {
+      "cnpj": "48.664.304/0001-80",
+      "nome": "PM GUARIBA"
+    },
+    {
+      "cnpj": "01.641.655/0001-01",
+      "nome": "CM PORTO BARREIRO"
+    },
+    {
+      "cnpj": "27.792.290/0001-00",
+      "nome": "CM SAQUAREMA"
+    },
+    {
+      "cnpj": "58.977.166/0001-42",
+      "nome": "CM GUAREI"
+    },
+    {
+      "cnpj": "00.653.833/0001-51",
+      "nome": "CM SAO JOSE DO NORTE"
+    },
+    {
+      "cnpj": "01.649.446/0001-04",
+      "nome": "CM CORONEL DOMINGOS SOARES"
+    },
+    {
+      "cnpj": "03.331.336/0001-25",
+      "nome": "FDO APOS PEROLA - FASPEL"
+    },
+    {
+      "cnpj": "01.040.648/0001-54",
+      "nome": "CM NOVA ESPERANCA DO SUDOESTE"
+    },
+    {
+      "cnpj": "30.417.224/0001-64",
+      "nome": "CM ITALVA"
+    },
+    {
+      "cnpj": "74.191.362/0001-43",
+      "nome": "CM MOEMA"
+    },
+    {
+      "cnpj": "95.640.215/0001-83",
+      "nome": "CM RANCHO ALEGRE D'OESTE"
+    },
+    {
+      "cnpj": "11.936.116/0001-53",
+      "nome": "FDO CULT QUISSAMA"
+    },
+    {
+      "cnpj": "88.824.099/0001-97",
+      "nome": "PM SANTA VITORIA DO PALMAR"
+    },
+    {
+      "cnpj": "90.738.196/0001-09",
+      "nome": "PM IJUI"
+    },
+    {
+      "cnpj": "92.457.217/0001-43",
+      "nome": "PM SILVEIRA MARTINS"
+    },
+    {
+      "cnpj": "28.645.786/0001-13",
+      "nome": "FDO SAO SEBASTIAO ALTO-CRIANCA E ADOLESC"
+    },
+    {
+      "cnpj": "75.771.212/0001-71",
+      "nome": "PM RIO BOM"
+    },
+    {
+      "cnpj": "91.551.762/0001-31",
+      "nome": "PM MANOEL VIANA"
+    },
+    {
+      "cnpj": "10.585.587/0001-00",
+      "nome": "FDO HABIT QUISSAMA"
+    },
+    {
+      "cnpj": "01.612.370/0001-42",
+      "nome": "PM CATAS ALTAS"
+    },
+    {
+      "cnpj": "75.743.567/0001-57",
+      "nome": "PM ABATIA"
+    },
+    {
+      "cnpj": "52.846.144/0001-67",
+      "nome": "PM MONTE ALEGRE DO SUL"
+    },
+    {
+      "cnpj": "67.662.569/0001-93",
+      "nome": "CM EMILIANOPOLIS"
+    },
+    {
+      "cnpj": "01.432.222/0001-46",
+      "nome": "CM TERRA RICA"
+    },
+    {
+      "cnpj": "04.350.463/0001-34",
+      "nome": "CM ESMERALDA"
+    },
+    {
+      "cnpj": "77.774.610/0001-77",
+      "nome": "CM GUAPIRAMA"
+    },
+    {
+      "cnpj": "01.614.415/0001-18",
+      "nome": "PM CORONEL DOMINGOS SOARES"
+    },
+    {
+      "cnpj": "76.205.707/0001-04",
+      "nome": "PM SALTO DO LONTRA"
+    },
+    {
+      "cnpj": "95.589.289/0001-32",
+      "nome": "PM NOVA ESPERANCA SUDOESTE"
+    },
+    {
+      "cnpj": "78.113.834/0001-09",
+      "nome": "PM PRANCHITA"
+    },
+    {
+      "cnpj": "01.141.176/0001-26",
+      "nome": "CM LUPIONOPOLIS"
+    },
+    {
+      "cnpj": "76.978.881/0001-81",
+      "nome": "PM TERRA RICA"
+    },
+    {
+      "cnpj": "78.279.981/0001-45",
+      "nome": "PM CANTAGALO PR"
+    },
+    {
+      "cnpj": "89.250.690/0001-40",
+      "nome": "CM RESTINGA SECA"
+    },
+    {
+      "cnpj": "01.368.028/0001-49",
+      "nome": "CM GUAPOREMA"
+    },
+    {
+      "cnpj": "08.741.527/0001-89",
+      "nome": "CM PINHEIRO MACHADO"
+    },
+    {
+      "cnpj": "18.295.287/0001-90",
+      "nome": "PM ACAIACA"
+    },
+    {
+      "cnpj": "76.175.892/0001-23",
+      "nome": "PM IMBITUVA"
+    },
+    {
+      "cnpj": "76.247.360/0001-54",
+      "nome": "PM XAMBRE"
+    },
+    {
+      "cnpj": "04.217.901/0001-90",
+      "nome": "PM JACUIZINHO"
+    },
+    {
+      "cnpj": "18.116.929/0001-46",
+      "nome": "FDO DESENVOLVIMENTO OLINDA"
+    },
+    {
+      "cnpj": "87.530.978/0001-43",
+      "nome": "CACHOEIRA DO SUL"
+    },
+    {
+      "cnpj": "77.673.358/0001-00",
+      "nome": "CM ROLANDIA"
+    },
+    {
+      "cnpj": "21.611.579/0001-07",
+      "nome": "FDCAO CULT CARLOS DRUMOND DE ANDRADE"
+    },
+    {
+      "cnpj": "72.430.390/0001-40",
+      "nome": "CM ALTONIA"
+    },
+    {
+      "cnpj": "78.121.878/0001-72",
+      "nome": "PM CAFELANDIA"
+    },
+    {
+      "cnpj": "87.613.253/0001-19",
+      "nome": "PM AJURICABA"
+    },
+    {
+      "cnpj": "46.634.150/0001-58",
+      "nome": "PM PARDINHO"
+    },
+    {
+      "cnpj": "92.871.466/0001-80",
+      "nome": "PM PICADA CAFE"
+    },
+    {
+      "cnpj": "05.121.991/0001-84",
+      "nome": "PM CASTANHAL"
+    },
+    {
+      "cnpj": "95.590.832/0001-11",
+      "nome": "PM PINHAL DE SAO BENTO"
+    },
+    {
+      "cnpj": "94.068.277/0001-08",
+      "nome": "PM SENTINELA DO SUL"
+    },
+    {
+      "cnpj": "02.044.316/0001-00",
+      "nome": "CM XAMBRE"
+    },
+    {
+      "cnpj": "24.413.538/0001-96",
+      "nome": "FDO DESENV ECONOMICO QUISSAMA FMDE"
+    },
+    {
+      "cnpj": "80.874.100/0001-86",
+      "nome": "PM BOM SUCESSO DO SUL"
+    },
+    {
+      "cnpj": "80.542.764/0001-48",
+      "nome": "PM PORECATU"
+    },
+    {
+      "cnpj": "76.105.584/0001-21",
+      "nome": "PM TIJUCAS DO SUL"
+    },
+    {
+      "cnpj": "39.554.597/0001-51",
+      "nome": "PM COMENDADOR LEVY GASPARIAN"
+    },
+    {
+      "cnpj": "11.527.108/0001-53",
+      "nome": "CM OLINDA"
+    },
+    {
+      "cnpj": "30.407.753/0001-87",
+      "nome": "CM ITAPERUNA"
+    },
+    {
+      "cnpj": "29.893.617/0001-65",
+      "nome": "CM MACAE"
+    },
+    {
+      "cnpj": "07.779.296/0001-30",
+      "nome": "FDO TRANSITO E TANSPORTE MACAE"
+    },
+    {
+      "cnpj": "19.297.980/0001-64",
+      "nome": "CONS INTER CASA LAR"
+    },
+    {
+      "cnpj": "95.685.798/0001-69",
+      "nome": "PM VENTANIA"
+    },
+    {
+      "cnpj": "11.256.062/0001-85",
+      "nome": "PM IBIRAJUBA"
+    },
+    {
+      "cnpj": "31.505.027/0001-60",
+      "nome": "PROC GERAL QUISSAMA"
+    },
+    {
+      "cnpj": "78.101.847/0001-50",
+      "nome": "PM MISSAL"
+    },
+    {
+      "cnpj": "76.245.042/0001-54",
+      "nome": "PM JATAIZINHO"
+    },
+    {
+      "cnpj": "29.115.474/0001-60",
+      "nome": "FDO MUNICIPAL DE HABITACAO E INTERESSE"
+    },
+    {
+      "cnpj": "32.147.670/0001-21",
+      "nome": "PM SAQUAREMA"
+    },
+    {
+      "cnpj": "88.811.930/0001-76",
+      "nome": "PM BARRA DO RIBEIRO"
+    },
+    {
+      "cnpj": "15.403.041/0001-04",
+      "nome": "PM ITAQUIRAI"
+    },
+    {
+      "cnpj": "83.102.301/0001-53",
+      "nome": "PM ILHOTA"
+    },
+    {
+      "cnpj": "05.193.057/0001-78",
+      "nome": "PM PARAGOMINAS"
+    },
+    {
+      "cnpj": "95.684.544/0001-26",
+      "nome": "PM SANTA MARIA DO OESTE"
+    },
+    {
+      "cnpj": "74.125.063/0001-00",
+      "nome": "INST PESQ E PLANEJ LONDRINA"
+    },
+    {
+      "cnpj": "01.612.911/0001-32",
+      "nome": "PM RESERVA DO IGUACU"
+    },
+    {
+      "cnpj": "76.995.422/0001-06",
+      "nome": "PM SAO JOAO"
+    },
+    {
+      "cnpj": "76.169.879/0001-61",
+      "nome": "PM RESERVA"
+    },
+    {
+      "cnpj": "77.774.560/0001-28",
+      "nome": "CM TEIXEIRA SOARES"
+    },
+    {
+      "cnpj": "77.774.453/0001-08",
+      "nome": "CM JABOTI"
+    },
+    {
+      "cnpj": "01.629.082/0001-09",
+      "nome": "CM MARQUINHO"
+    },
+    {
+      "cnpj": "80.926.934/0001-98",
+      "nome": "CM SANTA AMELIA"
+    },
+    {
+      "cnpj": "04.942.517/0001-50",
+      "nome": "FDO PREV MUN DE TURVO"
+    },
+    {
+      "cnpj": "02.318.953/0001-28",
+      "nome": "FDO ASSIST E PREV FERNANDES PINHEIRO"
+    },
+    {
+      "cnpj": "01.632.524/0001-68",
+      "nome": "CM PARDINHO"
+    },
+    {
+      "cnpj": "95.587.689/0001-09",
+      "nome": "CM VIRMOND"
+    },
+    {
+      "cnpj": "95.587.705/0001-63",
+      "nome": "CM RIO BONITO DO IGUACU"
+    },
+    {
+      "cnpj": "67.996.363/0001-08",
+      "nome": "PM ENGENHEIRO COELHO"
+    },
+    {
+      "cnpj": "87.862.397/0001-09",
+      "nome": "PM GUAPORE"
+    },
+    {
+      "cnpj": "88.488.366/0001-00",
+      "nome": "PM SANTA MARIA"
+    },
+    {
+      "cnpj": "88.568.902/0001-70",
+      "nome": "PM SAO JOSE DO NORTE"
+    },
+    {
+      "cnpj": "76.205.673/0001-40",
+      "nome": "PM REALEZA"
+    },
+    {
+      "cnpj": "91.338.558/0001-37",
+      "nome": "PM GLORINHA"
+    },
+    {
+      "cnpj": "00.579.769/0001-06",
+      "nome": "CM DIVINOLANDIA"
+    },
+    {
+      "cnpj": "89.234.660/0001-40",
+      "nome": "CM ROSARIO DO SUL"
+    },
+    {
+      "cnpj": "05.472.631/0001-27",
+      "nome": "FDO PREV XAMBRE"
+    },
+    {
+      "cnpj": "04.216.419/0001-36",
+      "nome": "PM BOZANO"
+    },
+    {
+      "cnpj": "04.443.748/0001-10",
+      "nome": "CM CATAS ALTAS"
+    },
+    {
+      "cnpj": "49.893.233/0001-50",
+      "nome": "CM PLATINA"
+    },
+    {
+      "cnpj": "20.296.760/0001-03",
+      "nome": "CM CARANGOLA"
+    },
+    {
+      "cnpj": "14.255.117/0001-20",
+      "nome": "FDO ASS SOCIAL  MACUCO"
+    },
+    {
+      "cnpj": "90.152.240/0001-02",
+      "nome": "PM CRISTAL"
+    },
+    {
+      "cnpj": "01.605.306/0001-34",
+      "nome": "PM ITAARA"
+    },
+    {
+      "cnpj": "01.601.856/0001-85",
+      "nome": "PM NOVO CABRAIS"
+    },
+    {
+      "cnpj": "28.531.762/0001-33",
+      "nome": "SOMAR - ARARUAMA"
+    },
+    {
+      "cnpj": "02.442.324/0001-05",
+      "nome": "CM PALMARES DO SUL"
+    },
+    {
+      "cnpj": "77.774.511/0001-95",
+      "nome": "CM CHOPINZINHO"
+    },
+    {
+      "cnpj": "07.926.117/0001-40",
+      "nome": "CONS INTER CENTRO SUL - CAMAQUA"
+    },
+    {
+      "cnpj": "49.225.238/0001-04",
+      "nome": "CM TAIACU"
+    },
+    {
+      "cnpj": "09.403.680/0001-69",
+      "nome": "FDCAO CULT SAO SEBASTIAO DEODATO SANTANA"
+    },
+    {
+      "cnpj": "12.313.901/0001-12",
+      "nome": "CM CATUIPE"
+    },
+    {
+      "cnpj": "44.872.778/0001-66",
+      "nome": "PM SANDOVALINA"
+    },
+    {
+      "cnpj": "44.933.679/0001-47",
+      "nome": "CM PRESIDENTE EPITACIO"
+    },
+    {
+      "cnpj": "51.500.643/0001-35",
+      "nome": "CM BORA"
+    },
+    {
+      "cnpj": "01.575.416/0001-09",
+      "nome": "CM REGENTE FEIJO"
+    },
+    {
+      "cnpj": "02.624.843/0001-94",
+      "nome": "CAIXA PREV VARRE-SAI"
+    },
+    {
+      "cnpj": "77.778.686/0001-70",
+      "nome": "CM IMBITUVA"
+    },
+    {
+      "cnpj": "04.213.870/0001-08",
+      "nome": "PM PINHAL DA SERRA"
+    },
+    {
+      "cnpj": "95.684.619/0001-79",
+      "nome": "CM CANTAGALO-PR"
+    },
+    {
+      "cnpj": "02.427.834/0001-03",
+      "nome": "FDO PREV RANCHO ALEGRE D'OESTE"
+    },
+    {
+      "cnpj": "76.205.640/0001-08",
+      "nome": "DOIS VIZINHOS"
+    },
+    {
+      "cnpj": "06.183.433/0001-06",
+      "nome": "CM DOM PEDRITO"
+    },
+    {
+      "cnpj": "02.401.428/0001-71",
+      "nome": "CM GENERAL CAMARA"
+    },
+    {
+      "cnpj": "49.893.225/0001-03",
+      "nome": "CM PALMITAL"
+    },
+    {
+      "cnpj": "65.174.518/0001-97",
+      "nome": "CM CAETE"
+    },
+    {
+      "cnpj": "75.927.582/0001-55",
+      "nome": "PM SANTO ANTONIO DO SUDOESTE"
+    },
+    {
+      "cnpj": "27.776.996/0001-88",
+      "nome": "CM SAO SEBASTIAO DO ALTO"
+    },
+    {
+      "cnpj": "04.241.539/0001-93",
+      "nome": "CM PEDRAS ALTAS"
+    },
+    {
+      "cnpj": "77.774.669/0001-65",
+      "nome": "CM MARIOPOLIS"
+    },
+    {
+      "cnpj": "89.601.140/0001-29",
+      "nome": "CM FORMIGUEIRO"
+    },
+    {
+      "cnpj": "93.203.966/0001-07",
+      "nome": "CM ELDORADO DO SUL"
+    },
+    {
+      "cnpj": "88.861.448/0001-40",
+      "nome": "PM PIRATINI"
+    },
+    {
+      "cnpj": "05.147.344/0001-41",
+      "nome": "CM RIO PARDO"
+    },
+    {
+      "cnpj": "87.488.938/0001-80",
+      "nome": "PM DONA FRANCISCA"
+    },
+    {
+      "cnpj": "88.861.430/0001-49",
+      "nome": "PM CANGUCU"
+    },
+    {
+      "cnpj": "18.715.508/0001-31",
+      "nome": "PM CONTAGEM"
+    },
+    {
+      "cnpj": "88.427.018/0001-15",
+      "nome": "PM TAVARES-RS"
+    },
+    {
+      "cnpj": "90.152.950/0001-24",
+      "nome": "PM ARAMBARE"
+    },
+    {
+      "cnpj": "88.227.756/0001-19",
+      "nome": "PM JULIO DE CASTILHOS"
+    },
+    {
+      "cnpj": "31.501.612/0001-91",
+      "nome": "CM MIRACEMA"
+    },
+    {
+      "cnpj": "05.797.356/0001-11",
+      "nome": "FDCAO JOSE KEZEN"
+    },
+    {
+      "cnpj": "02.246.138/0001-09",
+      "nome": "FDCAO CULT RIO DAS OSTRAS"
+    },
+    {
+      "cnpj": "11.639.339/0001-59",
+      "nome": "INST PREV LEME - LEMEPREV"
+    },
+    {
+      "cnpj": "95.640.736/0001-30",
+      "nome": "PM ALTO PARAISO"
+    },
+    {
+      "cnpj": "04.623.501/0001-85",
+      "nome": "CM ACAIACA"
+    },
+    {
+      "cnpj": "04.832.360/0001-00",
+      "nome": "CM COMENDADOR LEVY GASPARIAN"
+    },
+    {
+      "cnpj": "77.778.637/0001-38",
+      "nome": "CM CORONEL VIVIDA"
+    },
+    {
+      "cnpj": "88.201.298/0001-49",
+      "nome": "REG PREV LAVRAS DO SUL FPSM - RPPS"
+    },
+    {
+      "cnpj": "09.473.270/0001-94",
+      "nome": "CM JAGUARAO"
+    },
+    {
+      "cnpj": "46.634.481/0001-98",
+      "nome": "PM PORTO FELIZ"
+    },
+    {
+      "cnpj": "46.612.032/0001-49",
+      "nome": "PM MIRASSOL"
+    },
+    {
+      "cnpj": "44.470.300/0001-00",
+      "nome": "PM ECHAPORA"
+    },
+    {
+      "cnpj": "51.863.884/0001-49",
+      "nome": "CM VARZEA PAULISTA"
+    },
+    {
+      "cnpj": "39.217.831/0001-55",
+      "nome": "PM VARRE-SAI"
+    },
+    {
+      "cnpj": "45.780.079/0001-59",
+      "nome": "PM JARINU"
+    },
+    {
+      "cnpj": "88.859.962/0001-41",
+      "nome": "PM PEDRO OSORIO"
+    },
+    {
+      "cnpj": "18.128.207/0001-01",
+      "nome": "PM UBA"
+    },
+    {
+      "cnpj": "88.131.164/0001-07",
+      "nome": "PM URUGUAIANA"
+    },
+    {
+      "cnpj": "81.478.133/0001-70",
+      "nome": "PM PEROLA"
+    },
+    {
+      "cnpj": "88.756.929/0001-96",
+      "nome": "PM CAMBARA DO SUL"
+    },
+    {
+      "cnpj": "88.142.302/0001-45",
+      "nome": "PM CACAPAVA DO SUL"
+    },
+    {
+      "cnpj": "46.435.921/0001-88",
+      "nome": "PM DIVINOLANDIA"
+    },
+    {
+      "cnpj": "76.995.430/0001-52",
+      "nome": "PM ITAPEJARA D'OESTE"
+    },
+    {
+      "cnpj": "80.869.886/0001-43",
+      "nome": "PM SULINA"
+    },
+    {
+      "cnpj": "01.611.828/0001-49",
+      "nome": "PM NOVA RAMADA"
+    },
+    {
+      "cnpj": "44.853.331/0001-40",
+      "nome": "PM ANHUMAS"
+    },
+    {
+      "cnpj": "18.334.268/0001-25",
+      "nome": "PM CARATINGA"
+    },
+    {
+      "cnpj": "03.348.670/0001-91",
+      "nome": "CM PEDRO OSORIO"
+    },
+    {
+      "cnpj": "31.384.511/0001-88",
+      "nome": "INST PREV VIAMAO - IPREV"
+    },
+    {
+      "cnpj": "09.516.868/0001-13",
+      "nome": "CM EUGENIO DE CASTRO"
+    },
+    {
+      "cnpj": "01.615.560/0001-13",
+      "nome": "CM FOZ DO JORDAO"
+    },
+    {
+      "cnpj": "75.624.478/0001-91",
+      "nome": "SAAE BANDEIRANTES"
+    },
+    {
+      "cnpj": "76.460.526/0001-16",
+      "nome": "PM PLANALTO"
+    },
+    {
+      "cnpj": "95.543.427/0001-42",
+      "nome": "PM PITANGUEIRAS-PR"
+    },
+    {
+      "cnpj": "78.103.579/0001-05",
+      "nome": "CM DOIS VIZINHOS"
+    },
+    {
+      "cnpj": "00.957.866/0001-95",
+      "nome": "CM PRANCHITA"
+    },
+    {
+      "cnpj": "66.229.857/0001-96",
+      "nome": "CM CARATINGA"
+    },
+    {
+      "cnpj": "10.091.494/0001-10",
+      "nome": "PM AGRESTINA"
+    },
+    {
+      "cnpj": "90.836.701/0001-58",
+      "nome": "PM PALMARES DO SUL"
+    },
+    {
+      "cnpj": "76.995.414/0001-60",
+      "nome": "PM CHOPINZINHO"
+    },
+    {
+      "cnpj": "76.175.926/0001-80",
+      "nome": "PM CANDIDO DE ABREU"
+    },
+    {
+      "cnpj": "25.218.645/0001-26",
+      "nome": "CM MONTES CLAROS"
+    },
+    {
+      "cnpj": "91.551.119/0001-08",
+      "nome": "CM ALEGRETE"
+    },
+    {
+      "cnpj": "01.839.446/0001-77",
+      "nome": "CM BOITUVA"
+    },
+    {
+      "cnpj": "01.510.404/0001-98",
+      "nome": "CM JACAREZINHO"
+    },
+    {
+      "cnpj": "36.285.062/0001-34",
+      "nome": "CM SANTO ANTONIO DE PADUA"
+    },
+    {
+      "cnpj": "18.338.178/0001-02",
+      "nome": "PM JUIZ DE FORA"
+    },
+    {
+      "cnpj": "17.570.845/0001-15",
+      "nome": "FUNDO ESPECIAL CAMARA MUNICIPAL DE SAQUA"
+    },
+    {
+      "cnpj": "95.590.998/0001-38",
+      "nome": "CM SANTO ANTONIO DO SUDOESTE"
+    },
+    {
+      "cnpj": "01.545.843/0001-36",
+      "nome": "CM QUEDAS DO IGUACU"
+    },
+    {
+      "cnpj": "76.966.860/0001-46",
+      "nome": "PM JACAREZINHO"
+    },
+    {
+      "cnpj": "02.015.603/0001-92",
+      "nome": "CM MANFRINOPOLIS"
+    },
+    {
+      "cnpj": "95.595.278/0001-65",
+      "nome": "CM IGUATU"
+    },
+    {
+      "cnpj": "02.015.629/0001-30",
+      "nome": "CM PINHAL DE SAO BENTO"
+    },
+    {
+      "cnpj": "76.205.962/0001-49",
+      "nome": "PM QUEDAS DO IGUACU"
+    },
+    {
+      "cnpj": "04.226.625/0001-27",
+      "nome": "CM GUARANI DAS MISSOES"
+    },
+    {
+      "cnpj": "75.845.503/0001-67",
+      "nome": "PM CENTENARIO DO SUL"
+    },
+    {
+      "cnpj": "03.803.987/0001-70",
+      "nome": "CM AJURICABA"
+    },
+    {
+      "cnpj": "05.048.928/0001-60",
+      "nome": "CM PANTANO GRANDE"
+    },
+    {
+      "cnpj": "15.372.714/0001-06",
+      "nome": "INST PREV SAO SEBASTIAO"
+    },
+    {
+      "cnpj": "08.435.854/0001-02",
+      "nome": "TRANSCON"
+    },
+    {
+      "cnpj": "39.942.591/0001-51",
+      "nome": "CM NOVO XINGU"
+    },
+    {
+      "cnpj": "75.425.314/0001-35",
+      "nome": "PM SANTA TEREZINHA DE ITAIPU"
+    },
+    {
+      "cnpj": "80.926.926/0001-41",
+      "nome": "CM BANDEIRANTES"
+    },
+    {
+      "cnpj": "80.871.080/0001-90",
+      "nome": "CM SAO JOAO"
+    },
+    {
+      "cnpj": "01.528.063/0001-88",
+      "nome": "CM RONDON"
+    },
+    {
+      "cnpj": "30.169.320/0001-30",
+      "nome": "CM SILVA JARDIM"
+    },
+    {
+      "cnpj": "12.195.823/0001-07",
+      "nome": "FDO URBANIZACAO LONDRINA"
+    },
+    {
+      "cnpj": "00.495.116/0001-49",
+      "nome": "CM BOM JARDIM"
+    },
+    {
+      "cnpj": "76.995.380/0001-03",
+      "nome": "PM DE SAO JORGE DO OESTE"
+    },
+    {
+      "cnpj": "01.563.059/0001-50",
+      "nome": "CM SANTA MARIANA"
+    },
+    {
+      "cnpj": "46.410.775/0001-36",
+      "nome": "PM PEDREIRA"
+    },
+    {
+      "cnpj": "01.491.938/0001-14",
+      "nome": "CM SANTA LUCIA"
+    },
+    {
+      "cnpj": "05.058.441/0001-68",
+      "nome": "PM ANANINDEUA"
+    },
+    {
+      "cnpj": "67.168.872/0001-34",
+      "nome": "CM ESTIVA GERBI"
+    },
+    {
+      "cnpj": "54.672.993/0001-77",
+      "nome": "CM CONCHAL"
+    },
+    {
+      "cnpj": "02.242.589/0001-60",
+      "nome": "CM SULINA"
+    },
+    {
+      "cnpj": "92.324.706/0001-27",
+      "nome": "PM ELDORADO DO SUL"
+    },
+    {
+      "cnpj": "45.176.153/0001-22",
+      "nome": "UNIVERSIDADE DE TAUBATE - UNITAU"
+    },
+    {
+      "cnpj": "08.690.876/0001-19",
+      "nome": "INST PREV ROLANDIA"
+    },
+    {
+      "cnpj": "46.634.309/0001-34",
+      "nome": "PM PARANAPANEMA"
+    },
+    {
+      "cnpj": "92.406.438/0001-92",
+      "nome": "PM TUNAS"
+    },
+    {
+      "cnpj": "23.639.923/0001-93",
+      "nome": "CONS INTER DESENV PAMPA GAUCHO"
+    },
+    {
+      "cnpj": "89.498.232/0001-25",
+      "nome": "CM SAO GABRIEL"
+    },
+    {
+      "cnpj": "10.122.661/0001-43",
+      "nome": "PM SAO JOAQUIM DO MONTE"
+    },
+    {
+      "cnpj": "09.643.276/0001-62",
+      "nome": "CM SAO MARTINHO DA SERRA"
+    },
+    {
+      "cnpj": "11.443.167/0001-43",
+      "nome": "FDO ASSIS SOCIAL OLINDA"
+    },
+    {
+      "cnpj": "89.201.180/0001-83",
+      "nome": "CM CACHOEIRA DO SUL"
+    },
+    {
+      "cnpj": "00.921.263/0001-33",
+      "nome": "CM SALTO DO LONTRA"
+    },
+    {
+      "cnpj": "57.317.984/0001-56",
+      "nome": "CM ANHUMAS"
+    },
+    {
+      "cnpj": "00.949.401/0001-92",
+      "nome": "CM CRUZEIRO DO OESTE"
+    },
+    {
+      "cnpj": "77.774.487/0001-94",
+      "nome": "CM SAPOPEMA"
+    },
+    {
+      "cnpj": "00.276.597/0001-00",
+      "nome": "CM UNIFLOR - GEM"
+    },
+    {
+      "cnpj": "45.780.095/0001-41",
+      "nome": "PM CAMPO LIMPO PAULISTA"
+    },
+    {
+      "cnpj": "28.919.637/0001-03",
+      "nome": "PM LAJE DO MURIAE"
+    },
+    {
+      "cnpj": "18.301.044/0001-17",
+      "nome": "PM MOEMA"
+    },
+    {
+      "cnpj": "01.607.629/0001-67",
+      "nome": "CM GOIOXIM"
+    },
+    {
+      "cnpj": "36.330.988/0001-02",
+      "nome": "CONS INTER SAUDE DO PARANA - CIS5RS"
+    },
+    {
+      "cnpj": "80.909.658/0001-50",
+      "nome": "SER AUT MUNIC JAPURA - SAMAE"
+    },
+    {
+      "cnpj": "14.033.215/0001-13",
+      "nome": "FDO PREV CURIUVA - CURIUVAPREV"
+    },
+    {
+      "cnpj": "04.887.994/0001-60",
+      "nome": "PREV SOCIAL SERV PUBLICOS MUNIC PALMITAL"
+    },
+    {
+      "cnpj": "07.966.651/0001-80",
+      "nome": "INST PREV PRUDENTOPOLIS"
+    },
+    {
+      "cnpj": "02.847.548/0001-05",
+      "nome": "CM BARRA DO RIBEIRO"
+    },
+    {
+      "cnpj": "18.349.944/0001-34",
+      "nome": "PM RUBIM"
+    },
+    {
+      "cnpj": "77.878.023/0001-28",
+      "nome": "EMDUR"
+    },
+    {
+      "cnpj": "01.612.388/0001-44",
+      "nome": "PM ARAPUA"
+    },
+    {
+      "cnpj": "16.725.392/0001-96",
+      "nome": "PM ALVINOPOLIS"
+    },
+    {
+      "cnpj": "76.407.568/0001-93",
+      "nome": "PM BARRA DO JACARE"
+    },
+    {
+      "cnpj": "77.003.424/0001-34",
+      "nome": "PM PRUDENTOPOLIS"
+    },
+    {
+      "cnpj": "75.458.836/0001-33",
+      "nome": "PM ITAUNA DO SUL"
+    },
+    {
+      "cnpj": "80.887.805/0001-38",
+      "nome": "CM JAPURA"
+    },
+    {
+      "cnpj": "76.413.061/0001-42",
+      "nome": "PM NOVA ALIANACA DO IVAI"
+    },
+    {
+      "cnpj": "78.009.354/0001-94",
+      "nome": "CM ALVORADA DO SUL"
+    },
+    {
+      "cnpj": "77.780.161/0001-70",
+      "nome": "CM RESERVA"
+    },
+    {
+      "cnpj": "00.421.500/0001-05",
+      "nome": "CM TURVO PR"
+    },
+    {
+      "cnpj": "01.616.302/0001-51",
+      "nome": "CM GUAMIRANGA"
+    },
+    {
+      "cnpj": "32.412.819/0001-52",
+      "nome": "PM VASSOURAS"
+    },
+    {
+      "cnpj": "46.415.998/0001-96",
+      "nome": "PM SAO PEDRO"
+    },
+    {
+      "cnpj": "24.380.651/0001-12",
+      "nome": "PM SAO GONCALO DO RIO ABAIXO"
+    },
+    {
+      "cnpj": "76.235.746/0001-46",
+      "nome": "PM SANTA AMELIA"
+    },
+    {
+      "cnpj": "95.594.776/0001-93",
+      "nome": "PM SANTA LUCIA"
+    },
+    {
+      "cnpj": "01.612.906/0001-20",
+      "nome": "PM BOA VENTURA DE SAO ROQUE"
+    },
+    {
+      "cnpj": "02.270.246/0001-09",
+      "nome": "CM DE ITAPERUCU"
+    },
+    {
+      "cnpj": "22.678.874/0001-35",
+      "nome": "PM MONTES CLAROS"
+    },
+    {
+      "cnpj": "75.972.760/0001-60",
+      "nome": "PM CAPANEMA PR"
+    },
+    {
+      "cnpj": "76.208.495/0001-00",
+      "nome": "PM FORMOSA DO OESTE"
+    },
+    {
+      "cnpj": "76.175.918/0001-33",
+      "nome": "PM IVAI"
+    },
+    {
+      "cnpj": "87.613.030/0001-51",
+      "nome": "PM GUARANI DAS MISSOES"
+    },
+    {
+      "cnpj": "01.509.149/0001-63",
+      "nome": "CONS DESENV QUARTA COLONIA"
+    },
+    {
+      "cnpj": "32.412.819/0013-96",
+      "nome": "SECRET EDUCACAO VASSOURAS"
+    },
+    {
+      "cnpj": "09.592.369/0001-05",
+      "nome": "FDCAO APOIO PESQ TEC INOV UNITAU-FAPETI"
+    },
+    {
+      "cnpj": "24.151.929/0001-80",
+      "nome": "CM VALE DO SOL"
+    },
+    {
+      "cnpj": "03.681.582/0001-07",
+      "nome": "PM RIO BRILHANTE"
+    },
+    {
+      "cnpj": "77.778.629/0001-91",
+      "nome": "CM ITAPEJARA D OESTE"
+    },
+    {
+      "cnpj": "84.139.625/0001-29",
+      "nome": "CM GOIANESIA DO PARA"
+    },
+    {
+      "cnpj": "02.188.778/0001-00",
+      "nome": "FDO PREV MUNICIPIO DE PLANALTO"
+    },
+    {
+      "cnpj": "05.115.903/0001-31",
+      "nome": "INST PREV QUITANDINHA"
+    },
+    {
+      "cnpj": "11.344.494/0001-48",
+      "nome": "CONSORCIO PUBL INTER DESEN IVAI"
+    },
+    {
+      "cnpj": "11.269.152/0001-00",
+      "nome": "INST PREV SERV PUBL CANTAGALO - IPSM"
+    },
+    {
+      "cnpj": "39.421.813/0001-90",
+      "nome": "FDO APOS E PENSOES SANTO ANTONIO PADUA"
+    },
+    {
+      "cnpj": "14.152.116/0001-50",
+      "nome": "FDO ASS.SOCIAL VASSOURAS"
+    },
+    {
+      "cnpj": "76.408.061/0001-54",
+      "nome": "PM JUNDIAI DO SUL"
+    },
+    {
+      "cnpj": "77.402.196/0001-75",
+      "nome": "CM TOLEDO"
+    },
+    {
+      "cnpj": "39.554.605/0001-60",
+      "nome": "PM AREAL"
+    },
+    {
+      "cnpj": "89.348.957/0001-37",
+      "nome": "CM TUPANCIRETA"
+    },
+    {
+      "cnpj": "00.980.909/0001-53",
+      "nome": "CM RAMILANDIA"
+    },
+    {
+      "cnpj": "09.466.431/0001-12",
+      "nome": "CM VILA NOVA DO SUL"
+    },
+    {
+      "cnpj": "95.587.663/0001-60",
+      "nome": "CM NOVA LARANJEIRAS"
+    },
+    {
+      "cnpj": "21.353.335/0001-63",
+      "nome": "FDO CRIANCA ADOLECENTE QUISSAMA"
+    },
+    {
+      "cnpj": "29.138.385/0001-30",
+      "nome": "PM PARAIBA DO SUL"
+    },
+    {
+      "cnpj": "01.616.255/0001-46",
+      "nome": "PM GUAMIRANGA"
+    },
+    {
+      "cnpj": "78.279.973/0001-07",
+      "nome": "PM TURVO"
+    },
+    {
+      "cnpj": "91.262.154/0001-07",
+      "nome": "CM SAO FRANCISCO DE ASSIS"
+    },
+    {
+      "cnpj": "02.010.385/0001-01",
+      "nome": "CM FERNANDES PINHEIRO"
+    },
+    {
+      "cnpj": "76.968.064/0001-42",
+      "nome": "PM RIBEIRAO DO PINHAL"
+    },
+    {
+      "cnpj": "40.527.279/0001-80",
+      "nome": "PREV JUIZ DE FORA"
+    },
+    {
+      "cnpj": "39.223.581/0001-66",
+      "nome": "PM RIO DAS OSTRAS"
+    },
+    {
+      "cnpj": "97.228.126/0001-50",
+      "nome": "PM FORMIGUEIRO"
+    },
+    {
+      "cnpj": "87.566.188/0001-18",
+      "nome": "PM PEJUCARA"
+    },
+    {
+      "cnpj": "77.778.793/0001-07",
+      "nome": "CM CARLOPOLIS"
+    },
+    {
+      "cnpj": "05.131.180/0001-64",
+      "nome": "PM OBIDOS"
+    },
+    {
+      "cnpj": "94.444.189/0001-55",
+      "nome": "PM VILA NOVA DO SUL"
+    },
+    {
+      "cnpj": "07.424.321/0001-62",
+      "nome": "FDO PREV RIO BONITO DO IGUACU"
+    },
+    {
+      "cnpj": "75.388.850/0001-08",
+      "nome": "PM LEOPOLIS"
+    },
+    {
+      "cnpj": "80.611.635/0001-64",
+      "nome": "CM ITAUNA DO SUL"
+    },
+    {
+      "cnpj": "28.273.794/0001-86",
+      "nome": "FDCAO MUNIC GUARDA MIRIM DE CURIUVA"
+    },
+    {
+      "cnpj": "02.494.988/0001-18",
+      "nome": "SERCOMTEL CELULAR S.A. - LONDRINA"
+    },
+    {
+      "cnpj": "01.507.331/0001-85",
+      "nome": "CM CAFELANDIA"
+    },
+    {
+      "cnpj": "27.188.003/0001-57",
+      "nome": "FDO PREV CHOPINZINHO"
+    },
+    {
+      "cnpj": "01.612.908/0001-19",
+      "nome": "CM BOA VENTURA DE SAO ROQUE"
+    },
+    {
+      "cnpj": "01.663.274/0001-23",
+      "nome": "CM CAMPINA DO SIMAO"
+    },
+    {
+      "cnpj": "05.220.745/0001-80",
+      "nome": "INST PREV SERV PUBL JAPURA - JAPURAPREV"
+    },
+    {
+      "cnpj": "01.327.072/0001-00",
+      "nome": "CM GUAIRACA"
+    },
+    {
+      "cnpj": "08.885.045/0001-00",
+      "nome": "FDO APOS SERV PUBL TOLEDO - FAPES"
+    },
+    {
+      "cnpj": "12.928.334/0001-09",
+      "nome": "FDO ASSIS SOCIAL DE AREAL - FMAS"
+    },
+    {
+      "cnpj": "52.169.886/0001-03",
+      "nome": "CONS INTER CISAS - IBAITI"
+    },
+    {
+      "cnpj": "67.662.437/0001-61",
+      "nome": "PM EUCLIDES DA CUNHA PAULISTA"
+    },
+    {
+      "cnpj": "05.483.042/0001-44",
+      "nome": "FDO ASSIST.SOCIAL ARARUAMA"
+    },
+    {
+      "cnpj": "88.414.552/0001-97",
+      "nome": "PM JAGUARAO"
+    },
+    {
+      "cnpj": "94.577.574/0001-70",
+      "nome": "PM VALE DO SOL"
+    },
+    {
+      "cnpj": "88.117.718/0001-03",
+      "nome": "PM BUTIA"
+    },
+    {
+      "cnpj": "01.613.067/0001-64",
+      "nome": "PM TURUCU"
+    },
+    {
+      "cnpj": "76.911.676/0001-07",
+      "nome": "PM SENGES"
+    },
+    {
+      "cnpj": "87.613.501/0001-21",
+      "nome": "PM SELBACH"
+    },
+    {
+      "cnpj": "87.613.410/0001-96",
+      "nome": "PM GETULIO VARGAS"
+    },
+    {
+      "cnpj": "20.715.561/0001-84",
+      "nome": "FDO SAUDE ARCOS FUMUSA"
+    },
+    {
+      "cnpj": "92.911.684/0001-00",
+      "nome": "FDCAO MEDICO HOSPITALAR LAVRAS DO SUL"
+    },
+    {
+      "cnpj": "29.505.936/0001-56",
+      "nome": "FDO EDUCACAO CASTANHAL"
+    },
+    {
+      "cnpj": "04.249.257/0001-32",
+      "nome": "FDO SAUDE SANTO ANTONIO DE PADUA"
+    },
+    {
+      "cnpj": "19.843.891/0001-76",
+      "nome": "FDCAO SAUDE SAO SEBASTIAO"
+    },
+    {
+      "cnpj": "22.959.877/0001-47",
+      "nome": "FMS PARAIBA DO SUL"
+    },
+    {
+      "cnpj": "44.699.908/0001-00",
+      "nome": "SAAE ARARAS"
+    },
+    {
+      "cnpj": "11.892.333/0001-99",
+      "nome": "FDO SAUDE QUISSAMA"
+    },
+    {
+      "cnpj": "30.903.506/0001-71",
+      "nome": "SEC EDUCACAO QUISSAMA"
+    },
+    {
+      "cnpj": "19.893.791/0001-54",
+      "nome": "SAAE CAETE"
+    },
+    {
+      "cnpj": "45.122.942/0001-80",
+      "nome": "PM PINDORAMA"
+    },
+    {
+      "cnpj": "81.478.059/0001-91",
+      "nome": "PM ALTONIA"
+    },
+    {
+      "cnpj": "45.331.188/0001-99",
+      "nome": "PM CONCHAL"
+    },
+    {
+      "cnpj": "75.738.484/0001-70",
+      "nome": "PM IPORA"
+    },
+    {
+      "cnpj": "45.370.087/0001-27",
+      "nome": "PM BARRINHA"
+    },
+    {
+      "cnpj": "29.114.139/0001-48",
+      "nome": "PM SANTO ANTONIO DE PADUA"
+    },
+    {
+      "cnpj": "43.206.424/0001-10",
+      "nome": "PM ALVARES MACHADO"
+    },
+    {
+      "cnpj": "87.838.330/0001-39",
+      "nome": "PM FELIZ"
+    },
+    {
+      "cnpj": "67.160.481/0001-73",
+      "nome": "PM TUIUTI"
+    },
+    {
+      "cnpj": "36.287.704/0001-34",
+      "nome": "FDO CRIANCA E ADOLESCENTE DE MIRACEMA"
+    },
+    {
+      "cnpj": "10.404.184/0001-09",
+      "nome": "PM OLINDA"
+    },
+    {
+      "cnpj": "01.611.538/0001-03",
+      "nome": "PM UBIRETAMA"
+    },
+    {
+      "cnpj": "04.216.132/0001-06",
+      "nome": "PM BOA VISTA DO CADEADO"
+    },
+    {
+      "cnpj": "90.544.511/0001-67",
+      "nome": "PM IPE"
+    },
+    {
+      "cnpj": "94.707.627/0001-20",
+      "nome": "PM MORRO REUTER"
+    },
+    {
+      "cnpj": "87.613.493/0001-13",
+      "nome": "PM TAPERA"
+    },
+    {
+      "cnpj": "11.431.771/0001-50",
+      "nome": "FDO ASSIST SOCIAL CASTANHAL"
+    },
+    {
+      "cnpj": "28.931.425/0001-33",
+      "nome": "SUPERMOC"
+    },
+    {
+      "cnpj": "88.821.079/0001-62",
+      "nome": "PM RIO PARDO"
+    },
+    {
+      "cnpj": "88.123.492/0001-53",
+      "nome": "PM QUARAI"
+    },
+    {
+      "cnpj": "55.293.427/0001-17",
+      "nome": "PM PRESIDENTE EPITACIO"
+    },
+    {
+      "cnpj": "08.890.062/0001-28",
+      "nome": "CONS INTER ATERRO SANIT JOAQUIM TAVORA"
+    },
+    {
+      "cnpj": "75.969.667/0001-04",
+      "nome": "PM JABOTI"
+    },
+    {
+      "cnpj": "95.422.846/0001-26",
+      "nome": "PM ITAPERUCU"
+    },
+    {
+      "cnpj": "02.001.489/0001-41",
+      "nome": "CM ARAPUA"
+    },
+    {
+      "cnpj": "76.179.837/0001-01",
+      "nome": "PM PORTO AMAZONAS"
+    },
+    {
+      "cnpj": "02.936.023/0001-38",
+      "nome": "SAMAE DE PORTO BARREIRO"
+    },
+    {
+      "cnpj": "87.613.063/0001-00",
+      "nome": "PM CATUIPE"
+    },
+    {
+      "cnpj": "01.612.634/0001-68",
+      "nome": "PM ESPIGAO ALTO DO IGUACU"
+    },
+    {
+      "cnpj": "78.009.149/0001-29",
+      "nome": "SAAE ALVORADA DO SUL"
+    },
+    {
+      "cnpj": "00.126.737/0001-55",
+      "nome": "CISNOP"
+    },
+    {
+      "cnpj": "20.181.624/0001-60",
+      "nome": "FDO EDUC CIDADES DOS MENINOS"
+    },
+    {
+      "cnpj": "94.446.804/0001-62",
+      "nome": "CONS INTER REGIAO CENTRO RS - CI/CENTRO"
+    },
+    {
+      "cnpj": "04.211.210/0001-80",
+      "nome": "SAMAE BOA VENTURA DE SAO ROQUE"
+    },
+    {
+      "cnpj": "76.002.674/0001-97",
+      "nome": "PM QUITANDINHA"
+    },
+    {
+      "cnpj": "95.679.759/0001-59",
+      "nome": "FDO CRIANCA E ADOLESCENTE IBAITI-FACAI"
+    },
+    {
+      "cnpj": "94.704.277/0001-49",
+      "nome": "PM LAGOA DOS TRES CANTOS"
+    },
+    {
+      "cnpj": "87.531.976/0001-79",
+      "nome": "PM AGUDO"
+    },
+    {
+      "cnpj": "77.816.510/0001-66",
+      "nome": "PM FRANCISCO BELTRAO"
+    },
+    {
+      "cnpj": "75.381.178/0001-29",
+      "nome": "PM SAO TOME"
+    },
+    {
+      "cnpj": "75.740.811/0001-28",
+      "nome": "PM MANOEL RIBAS"
+    },
+    {
+      "cnpj": "18.299.446/0001-24",
+      "nome": "PM ITABIRA"
+    },
+    {
+      "cnpj": "07.496.630/0001-48",
+      "nome": "FDCAO IRAILDA RIBEIRO DOS SANTOS FUNIR"
+    },
+    {
+      "cnpj": "18.401.059/0001-57",
+      "nome": "PM JOAO MONLEVADE"
+    },
+    {
+      "cnpj": "45.146.271/0001-98",
+      "nome": "PM NHANDEARA"
+    },
+    {
+      "cnpj": "11.420.915/0001-72",
+      "nome": "FUND MUN DE SAUDE DE ALVORADA DO SUL"
+    },
+    {
+      "cnpj": "76.002.658/0001-02",
+      "nome": "PM DE CAMPO DO TENENTE"
+    },
+    {
+      "cnpj": "75.377.200/0001-67",
+      "nome": "PM CIDADE GAUCHA"
+    },
+    {
+      "cnpj": "88.437.926/0001-90",
+      "nome": "PM CONDOR"
+    },
+    {
+      "cnpj": "87.482.535/0001-24",
+      "nome": "PM DOM PEDRITO"
+    },
+    {
+      "cnpj": "91.900.886/0001-85",
+      "nome": "CM TRIUNFO"
+    },
+    {
+      "cnpj": "09.133.168/0001-40",
+      "nome": "CM DOM PEDRO DE ALCANTARA"
+    },
+    {
+      "cnpj": "03.656.200/0001-95",
+      "nome": "CONS INTER ALTO JACUI-COMAJA"
+    },
+    {
+      "cnpj": "50.804.079/0001-81",
+      "nome": "CM SAO ROQUE"
+    },
+    {
+      "cnpj": "64.612.823/0001-50",
+      "nome": "CM PRESIDENTE BERNARDES"
+    },
+    {
+      "cnpj": "08.876.702/0001-45",
+      "nome": "INST LAJE DO MURIAE"
+    },
+    {
+      "cnpj": "05.152.243/0001-69",
+      "nome": "INST PREV PARANAPANEMA - IPESPEM"
+    },
+    {
+      "cnpj": "04.778.819/0001-35",
+      "nome": "INST PREV IJUI"
+    },
+    {
+      "cnpj": "07.902.163/0001-09",
+      "nome": "INST PREV SILVA JARDIM"
+    },
+    {
+      "cnpj": "30.731.795/0001-79",
+      "nome": "INT PREV PATO BRANCO"
+    },
+    {
+      "cnpj": "30.022.783/0001-75",
+      "nome": "SEC EDUC ITALVA - SEMEDUC"
+    },
+    {
+      "cnpj": "50.634.611/0001-60",
+      "nome": "FDO EDUCACAO ARARUAMA - FME"
+    },
+    {
+      "cnpj": "03.608.586/0001-60",
+      "nome": "FDO ESP LONDRINA"
+    },
+    {
+      "cnpj": "80.505.431/0001-49",
+      "nome": "SAMAE ABATIA"
+    },
+    {
+      "cnpj": "80.617.319/0001-08",
+      "nome": "FDO HOSPITALAR IBAITI"
+    },
+    {
+      "cnpj": "78.402.252/0001-34",
+      "nome": "SAAE JATAIZINHO"
+    },
+    {
+      "cnpj": "09.070.880/0001-47",
+      "nome": "FDO SAUDE FORMOSA DO OESTE"
+    },
+    {
+      "cnpj": "18.296.665/0001-50",
+      "nome": "PM MORADA NOVA DE MINAS"
+    },
+    {
+      "cnpj": "95.684.536/0001-80",
+      "nome": "PM LARANJAL"
+    },
+    {
+      "cnpj": "77.008.068/0001-41",
+      "nome": "PM IBAITI"
+    },
+    {
+      "cnpj": "89.348.932/0001-33",
+      "nome": "CM JULIO DE CASTILHOS"
+    },
+    {
+      "cnpj": "77.878.320/0001-73",
+      "nome": "CM ASSIS CHATEAUBRIAND"
+    },
+    {
+      "cnpj": "07.524.591/0001-45",
+      "nome": "CM AMARAL FERRADOR"
+    },
+    {
+      "cnpj": "91.571.653/0001-86",
+      "nome": "CM HERVAL"
+    },
+    {
+      "cnpj": "03.567.964/0001-04",
+      "nome": "INST PREV SERV MACAE"
+    },
+    {
+      "cnpj": "66.489.741/0001-96",
+      "nome": "INST PREV MONTES CLAROS"
+    },
+    {
+      "cnpj": "09.124.319/0001-01",
+      "nome": "CM TAVARES"
+    },
+    {
+      "cnpj": "93.245.421/0001-63",
+      "nome": "CM QUARAI"
+    },
+    {
+      "cnpj": "09.566.723/0001-27",
+      "nome": "CM SAO LOURENCO DO SUL"
+    },
+    {
+      "cnpj": "05.400.781/0001-25",
+      "nome": "FDO PREV ITALVA"
+    },
+    {
+      "cnpj": "28.746.249/0001-60",
+      "nome": "FDO PREV MIRACEMA"
+    },
+    {
+      "cnpj": "14.827.712/0001-93",
+      "nome": "INST PREV ITABIRA"
+    },
+    {
+      "cnpj": "02.122.662/0001-60",
+      "nome": "INST PREV DOS FUNC DE TAIACU"
+    },
+    {
+      "cnpj": "39.691.605/0001-01",
+      "nome": "INST PREV RIO DAS OSTRAS"
+    },
+    {
+      "cnpj": "17.329.329/0001-01",
+      "nome": "AG REG SERV DELEG SAO GABRIEL - AGESG"
+    },
+    {
+      "cnpj": "51.278.885/0001-26",
+      "nome": "CM CAMPO LIMPO PAULISTA"
+    },
+    {
+      "cnpj": "46.634.499/0001-90",
+      "nome": "PM BOITUVA"
+    },
+    {
+      "cnpj": "39.224.175/0001-18",
+      "nome": "FDO MACAE-CRIANCA E ADOLESC"
+    },
+    {
+      "cnpj": "19.065.011/0001-88",
+      "nome": "REG PREV AGRESTINA - AGRESTIPREV"
+    },
+    {
+      "cnpj": "22.943.229/0001-00",
+      "nome": "CM BARCARENA"
+    },
+    {
+      "cnpj": "75.845.545/0001-06",
+      "nome": "PM CAFEARA"
+    },
+    {
+      "cnpj": "01.617.237/0001-89",
+      "nome": "FDO DIR CRIANCA ADOLESCENTE MACUCO"
+    },
+    {
+      "cnpj": "01.591.618/0001-36",
+      "nome": "PM PORTO BARREIRO"
+    },
+    {
+      "cnpj": "77.778.777/0001-06",
+      "nome": "CM JUNDIAI DO SUL"
+    },
+    {
+      "cnpj": "04.829.381/0001-77",
+      "nome": "FD DE PREV DE RESERVA DO IGUACU-FUNPRI"
+    },
+    {
+      "cnpj": "86.816.204/0001-10",
+      "nome": "CM TUIUTI"
+    },
+    {
+      "cnpj": "06.057.728/0001-36",
+      "nome": "FUNPREV - GUAMIRANGA"
+    },
+    {
+      "cnpj": "77.778.660/0001-22",
+      "nome": "CM PALMITAL PR"
+    },
+    {
+      "cnpj": "95.589.370/0001-12",
+      "nome": "CM CRUZEIRO DO IGUACU"
+    },
+    {
+      "cnpj": "04.996.792/0001-57",
+      "nome": "TIBAGI PREV"
+    },
+    {
+      "cnpj": "80.507.775/0001-97",
+      "nome": "AUTARQUIA ALVORADA DO SUL"
+    },
+    {
+      "cnpj": "39.831.953/0001-37",
+      "nome": "INST SAO SEBASTIAO DO ALTO"
+    },
+    {
+      "cnpj": "04.539.825/0001-30",
+      "nome": "INST BOM JARDIM - RIO"
+    },
+    {
+      "cnpj": "12.630.502/0001-85",
+      "nome": "FDO CONS AMB ARARUAMA - FUCAM"
+    },
+    {
+      "cnpj": "04.993.852/0001-88",
+      "nome": "INST PREV JABOTI"
+    },
+    {
+      "cnpj": "11.420.927/0001-05",
+      "nome": "AUTARQUIA MUN DE EDUC DE ALVORADA DO SUL"
+    },
+    {
+      "cnpj": "95.589.230/0001-44",
+      "nome": "PM CRUZEIRO DO IGUACU"
+    },
+    {
+      "cnpj": "76.002.666/0001-40",
+      "nome": "PM PIEN"
+    },
+    {
+      "cnpj": "04.877.728/0001-57",
+      "nome": "PREVI-MARQUINHO"
+    },
+    {
+      "cnpj": "94.188.208/0001-20",
+      "nome": "CONS PUBL SANTA ROSA - COFRON"
+    },
+    {
+      "cnpj": "00.994.916/0001-04",
+      "nome": "CM VERE"
+    },
+    {
+      "cnpj": "01.637.740/0001-04",
+      "nome": "CM SAO PEDRO"
+    },
+    {
+      "cnpj": "11.049.372/0001-29",
+      "nome": "CM MORRO REDONDO"
+    },
+    {
+      "cnpj": "89.363.642/0001-69",
+      "nome": "PM ENCRUZILHADA DO SUL"
+    },
+    {
+      "cnpj": "19.462.106/0001-35",
+      "nome": "DEP ENERGIA IJUI-DEMEI GERACAO"
+    },
+    {
+      "cnpj": "75.968.412/0001-19",
+      "nome": "PM CONSELHEIRO MAIRINCK"
+    },
+    {
+      "cnpj": "77.774.602/0001-20",
+      "nome": "CM CURIUVA"
+    },
+    {
+      "cnpj": "81.756.884/0001-00",
+      "nome": "CM ABATIA"
+    },
+    {
+      "cnpj": "01.494.725/0001-46",
+      "nome": "CM SANTO INACIO"
+    },
+    {
+      "cnpj": "83.073.536/0001-64",
+      "nome": "SERRANA ENGENHARIA LTDA"
+    },
+    {
+      "cnpj": "04.337.607/0001-12",
+      "nome": "FDO MUNIC PREV BOA VENTURA SAO ROQUE"
+    },
+    {
+      "cnpj": "01.659.932/0001-03",
+      "nome": "CM GUARIBA"
+    },
+    {
+      "cnpj": "04.106.469/0001-60",
+      "nome": "FDO PREV CONCHAL"
+    },
+    {
+      "cnpj": "44.518.488/0001-19",
+      "nome": "PM ALVARO DE CARVALHO"
+    },
+    {
+      "cnpj": "05.119.717/0001-70",
+      "nome": "INST PREV DIVINOLANDIA"
+    },
+    {
+      "cnpj": "02.264.781/0001-57",
+      "nome": "CONS INTER SAUDE DAS MISSOES"
+    },
+    {
+      "cnpj": "09.309.271/0001-06",
+      "nome": "FDO SAUDE JACAREZINHO"
+    },
+    {
+      "cnpj": "46.634.127/0001-63",
+      "nome": "PM ITATINGA"
+    },
+    {
+      "cnpj": "78.686.557/0001-15",
+      "nome": "CM FRANCISCO BELTRAO"
+    },
+    {
+      "cnpj": "11.759.979/0001-00",
+      "nome": "CONS PUBL INTERMUNICIPAL CASA LAR"
+    },
+    {
+      "cnpj": "77.778.736/0001-10",
+      "nome": "CM SENGES"
+    },
+    {
+      "cnpj": "06.810.909/0001-91",
+      "nome": "FDO SAUDE DE AREAL"
+    },
+    {
+      "cnpj": "39.415.260/0001-63",
+      "nome": "FDO EDUC MIRACEMA"
+    },
+    {
+      "cnpj": "07.381.646/0001-05",
+      "nome": "INST PREV PORTO FELIZ"
+    },
+    {
+      "cnpj": "83.366.013/0001-06",
+      "nome": "INST PREV SERV ANANINDEUA"
+    },
+    {
+      "cnpj": "01.219.954/0001-52",
+      "nome": "CM CANDIOTA"
+    },
+    {
+      "cnpj": "04.767.377/0001-21",
+      "nome": "FDO APOS E PENSOES IPORA"
+    },
+    {
+      "cnpj": "07.329.693/0001-00",
+      "nome": "CM VICTOR GRAEFF"
+    },
+    {
+      "cnpj": "76.170.240/0001-04",
+      "nome": "PM TELEMACO BORBA"
+    },
+    {
+      "cnpj": "13.562.650/0001-72",
+      "nome": "FDO ASSIST STA MARIA MADALENA"
+    },
+    {
+      "cnpj": "75.963.850/0001-94",
+      "nome": "PM TEIXEIRA SOARES"
+    },
+    {
+      "cnpj": "77.778.702/0001-25",
+      "nome": "CM IVAI"
+    },
+    {
+      "cnpj": "45.301.264/0001-13",
+      "nome": "PM MOGI-GUACU"
+    },
+    {
+      "cnpj": "09.072.998/0001-04",
+      "nome": "FDO MEIO AMBIENTE DE MACAE"
+    },
+    {
+      "cnpj": "17.757.258/0001-30",
+      "nome": "CM PIRAQUARA"
+    },
+    {
+      "cnpj": "18.180.942/0001-64",
+      "nome": "FDO ASSIST SOCIAL BARCARENA"
+    },
+    {
+      "cnpj": "77.651.602/0001-33",
+      "nome": "ADM CEMITERIOS LONDRINA"
+    },
+    {
+      "cnpj": "06.134.286/0001-84",
+      "nome": "FDO PREV VASSOURAS - FUPREVAS"
+    },
+    {
+      "cnpj": "51.389.039/0001-83",
+      "nome": "CM OSVALDO CRUZ"
+    },
+    {
+      "cnpj": "92.891.092/0001-65",
+      "nome": "CM GARRUCHOS"
+    },
+    {
+      "cnpj": "23.726.764/0001-64",
+      "nome": "AMASBE"
+    },
+    {
+      "cnpj": "31.272.438/0001-52",
+      "nome": "CM LAJE DO MURIAE"
+    },
+    {
+      "cnpj": "89.378.251/0001-18",
+      "nome": "CM CACAPAVA DO SUL"
+    },
+    {
+      "cnpj": "00.060.981/0001-62",
+      "nome": "CM COSMOPOLIS"
+    },
+    {
+      "cnpj": "77.814.820/0001-41",
+      "nome": "CM MEDIANEIRA"
+    },
+    {
+      "cnpj": "87.613.584/0001-59",
+      "nome": "PM IBIRAIARAS"
+    },
+    {
+      "cnpj": "12.256.568/0001-57",
+      "nome": "FDO ASSIST SOCIAL AGRESTINA"
+    },
+    {
+      "cnpj": "90.832.619/0001-55",
+      "nome": "PM CAMPO BOM"
+    },
+    {
+      "cnpj": "70.946.009/0001-75",
+      "nome": "PM SAO ROQUE"
+    },
+    {
+      "cnpj": "14.790.462/0001-64",
+      "nome": "FDO HABIT INTERESSE SOCIAL ARARUAMA"
+    },
+    {
+      "cnpj": "75.907.576/0001-36",
+      "nome": "ASSOC CASCAVEL"
+    },
+    {
+      "cnpj": "81.878.738/0001-58",
+      "nome": "CM RIO BOM"
+    },
+    {
+      "cnpj": "51.637.593/0001-32",
+      "nome": "FDCAO BENEF SERV UNIVERS TAUBATE"
+    },
+    {
+      "cnpj": "34.823.005/0001-36",
+      "nome": "INST CASTANHAL"
+    },
+    {
+      "cnpj": "32.123.684/0001-05",
+      "nome": "FDO MEIO AMBIENTE QUISSAMA"
+    },
+    {
+      "cnpj": "00.550.694/0001-30",
+      "nome": "CM VIAMAO"
+    },
+    {
+      "cnpj": "01.044.179/0001-41",
+      "nome": "CM CHARQUEADA"
+    },
+    {
+      "cnpj": "24.333.428/0001-14",
+      "nome": "FDO ESPECIAL CM ARARUAMA - FECMA"
+    },
+    {
+      "cnpj": "00.883.377/0001-36",
+      "nome": "CM LAVRAS DO SUL"
+    },
+    {
+      "cnpj": "76.898.196/0001-45",
+      "nome": "CM PATO BRANCO"
+    },
+    {
+      "cnpj": "04.232.213/0001-08",
+      "nome": "CM BOA VISTA DO CADEADO"
+    },
+    {
+      "cnpj": "89.250.708/0001-04",
+      "nome": "CM SANTA MARIA"
+    },
+    {
+      "cnpj": "01.614.343/0001-09",
+      "nome": "PM MANFRINOPOLIS"
+    },
+    {
+      "cnpj": "14.218.461/0001-40",
+      "nome": "REG PREV ITAPERUNA"
+    },
+    {
+      "cnpj": "01.816.270/0001-38",
+      "nome": "CM PARANAPANEMA"
+    },
+    {
+      "cnpj": "48.806.335/0001-28",
+      "nome": "CM TEODORO SAMPAIO"
+    },
+    {
+      "cnpj": "00.791.289/0001-04",
+      "nome": "CM SAUDADE DO IGUACU"
+    },
+    {
+      "cnpj": "67.662.528/0001-05",
+      "nome": "CM EUCLIDES DA CUNHA PAULISTA"
+    },
+    {
+      "cnpj": "30.173.207/0001-29",
+      "nome": "CM ARARUAMA"
+    },
+    {
+      "cnpj": "72.430.382/0001-02",
+      "nome": "CM IPORA"
+    },
+    {
+      "cnpj": "01.569.688/0001-98",
+      "nome": "CM JARINU"
+    },
+    {
+      "cnpj": "80.403.330/0001-67",
+      "nome": "CM FORMOSA DO OESTE"
+    },
+    {
+      "cnpj": "94.449.030/0001-23",
+      "nome": "PM VITORIA DAS MISSOES"
+    },
+    {
+      "cnpj": "88.225.149/0001-10",
+      "nome": "PM ESMERALDA"
+    },
+    {
+      "cnpj": "13.994.299/0001-99",
+      "nome": "FDO ASS SOCIAL ITALVA"
+    },
+    {
+      "cnpj": "87.738.530/0001-10",
+      "nome": "PM SOLEDADE"
+    },
+    {
+      "cnpj": "46.482.832/0001-92",
+      "nome": "PM SAO SEBASTIAO"
+    },
+    {
+      "cnpj": "44.543.999/0001-90",
+      "nome": "PM PLATINA"
+    },
+    {
+      "cnpj": "45.290.426/0001-65",
+      "nome": "PM PEDRA BELA"
+    },
+    {
+      "cnpj": "88.572.748/0001-00",
+      "nome": "PM NOVA PETROPOLIS"
+    },
+    {
+      "cnpj": "94.702.784/0001-43",
+      "nome": "PM HULHA NEGRA"
+    },
+    {
+      "cnpj": "75.636.530/0001-20",
+      "nome": "PM DE VERE"
+    },
+    {
+      "cnpj": "92.000.223/0001-77",
+      "nome": "PM CERRO BRANCO"
+    },
+    {
+      "cnpj": "95.684.478/0001-94",
+      "nome": "PM CANDOI"
+    },
+    {
+      "cnpj": "76.205.970/0001-95",
+      "nome": "PM DE LARANJEIRAS DO SUL"
+    },
+    {
+      "cnpj": "28.946.916/0001-58",
+      "nome": "SEPOF"
+    },
+    {
+      "cnpj": "90.895.905/0001-60",
+      "nome": "PM MONTENEGRO"
+    },
+    {
+      "cnpj": "01.619.323/0001-20",
+      "nome": "PM FERNANDES PINHEIRO"
+    },
+    {
+      "cnpj": "87.896.874/0001-57",
+      "nome": "PM ALEGRETE"
+    },
+    {
+      "cnpj": "77.902.914/0001-72",
+      "nome": "UNIVERSIDADE UNICENTRO"
+    },
+    {
+      "cnpj": "76.167.725/0001-30",
+      "nome": "PM CURIUVA"
+    },
+    {
+      "cnpj": "76.178.029/0001-20",
+      "nome": "INACIO MARTINS PREF GABINETE DO PREFEITO"
+    },
+    {
+      "cnpj": "29.088.855/0001-06",
+      "nome": "FDO ESPECIAL PROC GERAL ARARUAMA - FEPGA"
+    },
+    {
+      "cnpj": "76.208.842/0001-03",
+      "nome": "PM CATANDUVAS"
+    },
+    {
+      "cnpj": "09.166.107/0001-89",
+      "nome": "FDO PREV MUNICIPIO DE CAFELANDIA"
+    },
+    {
+      "cnpj": "01.613.768/0001-01",
+      "nome": "CM IMBAU"
+    },
+    {
+      "cnpj": "07.602.215/0001-21",
+      "nome": "REG PREV SOCIAL FOZ DO JORDAO PREVFOZ"
+    },
+    {
+      "cnpj": "01.579.444/0001-96",
+      "nome": "CM MISSAL"
+    },
+    {
+      "cnpj": "80.909.617/0001-63",
+      "nome": "PM SAO MANOEL DO PARANA"
+    },
+    {
+      "cnpj": "10.984.874/0001-84",
+      "nome": "CONS PUBL MUNIC PROCAXIAS - COMPRO"
+    },
+    {
+      "cnpj": "66.998.097/0001-81",
+      "nome": "CM JABORANDI"
+    },
+    {
+      "cnpj": "06.136.952/0001-13",
+      "nome": "CM AREAL"
+    },
+    {
+      "cnpj": "19.013.550/0001-73",
+      "nome": "CM ARROIO GRANDE"
+    },
+    {
+      "cnpj": "10.554.276/0001-75",
+      "nome": "FDO PREV OLINDA - FUNDPREV"
+    },
+    {
+      "cnpj": "01.612.815/0001-94",
+      "nome": "CM ESPIGAO ALTO DO IGUACU"
+    },
+    {
+      "cnpj": "01.536.649/0001-94",
+      "nome": "CM CAMPO DO TENENTE"
+    },
+    {
+      "cnpj": "77.774.636/0001-15",
+      "nome": "CM MANOEL RIBAS"
+    },
+    {
+      "cnpj": "00.141.217/0001-11",
+      "nome": "CM LEOPOLIS"
+    },
+    {
+      "cnpj": "76.167.733/0001-87",
+      "nome": "PM SAPOPEMA"
+    },
+    {
+      "cnpj": "01.612.552/0001-13",
+      "nome": "PM MARQUINHO"
+    },
+    {
+      "cnpj": "77.778.678/0001-24",
+      "nome": "CM PRUDENTOPOLIS"
+    },
+    {
+      "cnpj": "01.613.136/0001-30",
+      "nome": "PM PRADO FERREIRA"
+    },
+    {
+      "cnpj": "01.951.066/0001-20",
+      "nome": "CM RANCHO ALEGRE"
+    },
+    {
+      "cnpj": "01.508.970/0001-65",
+      "nome": "CM SAO TOME"
+    },
+    {
+      "cnpj": "77.774.461/0001-46",
+      "nome": "CM JAPIRA"
+    },
+    {
+      "cnpj": "72.096.043/0001-23",
+      "nome": "CAIXA DE ASS SERV MUNIC DE TOLEDO - CAST"
+    },
+    {
+      "cnpj": "01.071.994/0001-08",
+      "nome": "FDCAO HOSP DA FRANTEIRA - PRANCHITA"
+    },
+    {
+      "cnpj": "01.755.525/0001-08",
+      "nome": "SAMAE PRADO FERREIRA"
+    },
+    {
+      "cnpj": "02.402.788/0001-98",
+      "nome": "CM MIRASSELVA"
+    },
+    {
+      "cnpj": "02.017.041/0001-16",
+      "nome": "SERV AUT AGUA ESG. PRES CASTELO BRANCO"
+    },
+    {
+      "cnpj": "00.452.810/0001-89",
+      "nome": "CM REALEZA"
+    },
+    {
+      "cnpj": "02.232.834/0001-58",
+      "nome": "CM SAO JORGE D'OESTE"
+    },
+    {
+      "cnpj": "07.761.989/0001-03",
+      "nome": "RESERVA PREV"
+    },
+    {
+      "cnpj": "00.340.121/0001-82",
+      "nome": "INST PREV GUAIRACA"
+    },
+    {
+      "cnpj": "00.942.397/0001-30",
+      "nome": "CM QUITANDINHA"
+    },
+    {
+      "cnpj": "73.897.589/0001-46",
+      "nome": "SERV AUT AGUA E ESG. TERRA RICA - SAMAE"
+    },
+    {
+      "cnpj": "02.074.206/0001-91",
+      "nome": "CM CAFEARA"
+    },
+    {
+      "cnpj": "80.920.473/0001-46",
+      "nome": "CM URAI"
+    },
+    {
+      "cnpj": "75.969.881/0001-52",
+      "nome": "PM JAPIRA"
+    },
+    {
+      "cnpj": "80.892.110/0001-44",
+      "nome": "CM PRESIDENTE CASTELO BRANCO"
+    },
+    {
+      "cnpj": "11.910.971/0001-95",
+      "nome": "FDO PREV TEIXEIRA SOARES - FPMTS"
+    },
+    {
+      "cnpj": "11.269.697/0001-17",
+      "nome": "CONS INTER DES ECOC SOCIAL EDUC CIDERSOP"
+    },
+    {
+      "cnpj": "63.783.232/0001-83",
+      "nome": "INST PROJ AVANCADOS INPACTA"
+    },
+    {
+      "cnpj": "77.819.761/0001-02",
+      "nome": "CM SAO JOSE DAS PALMEIRAS"
+    },
+    {
+      "cnpj": "02.508.169/0001-82",
+      "nome": "CM IBIRAIARAS"
+    },
+    {
+      "cnpj": "94.721.388/0001-63",
+      "nome": "PM CORONEL BARROS"
+    },
+    {
+      "cnpj": "67.662.544/0001-90",
+      "nome": "PM EMILIANOPOLIS"
+    },
+    {
+      "cnpj": "88.860.366/0001-81",
+      "nome": "PM ARROIO GRANDE"
+    },
+    {
+      "cnpj": "78.634.771/0001-28",
+      "nome": "CAIXA ASSIST APOS LONDRINA - CAPSML"
+    },
+    {
+      "cnpj": "76.933.969/0001-87",
+      "nome": "INST DESENV DE LONDRINA"
+    },
+    {
+      "cnpj": "44.544.906/0001-42",
+      "nome": "PM BORA"
+    },
+    {
+      "cnpj": "02.856.827/0001-27",
+      "nome": "CM MONTENEGRO"
+    },
+    {
+      "cnpj": "01.603.097/0001-90",
+      "nome": "CM PIEN"
+    },
+    {
+      "cnpj": "90.153.008/0001-80",
+      "nome": "CM SENTINELA DO SUL"
+    },
+    {
+      "cnpj": "46.137.451/0001-76",
+      "nome": "PM PIRATININGA"
+    },
+    {
+      "cnpj": "07.145.704/0001-00",
+      "nome": "CONS INTER REGIAO CARBONIFERA CIGA"
+    },
+    {
+      "cnpj": "00.999.114/0001-97",
+      "nome": "CM CENTENARIO DO SUL"
+    },
+    {
+      "cnpj": "18.249.792/0001-06",
+      "nome": "FDO MEIO AMBIENTE CASTANHAL"
+    },
+    {
+      "cnpj": "75.132.860/0001-88",
+      "nome": "PM ALVORADA DO SUL"
+    },
+    {
+      "cnpj": "78.638.707/0001-15",
+      "nome": "AUTARQUIA LONDRINA"
+    },
+    {
+      "cnpj": "30.134.050/0001-22",
+      "nome": "INST PREV RIO DE JANEIRO - IPALERJ"
+    },
+    {
+      "cnpj": "95.587.770/0001-99",
+      "nome": "PM DE RIO BONITO DO IGUACU"
+    },
+    {
+      "cnpj": "88.370.879/0001-04",
+      "nome": "PM SAO SEBASTIAO DO CAI"
+    },
+    {
+      "cnpj": "55.251.185/0001-07",
+      "nome": "PM PRESIDENTE BERNARDES"
+    },
+    {
+      "cnpj": "11.903.351/0001-29",
+      "nome": "FDO SAUDE CANAA DOS CARAJAS"
+    },
+    {
+      "cnpj": "04.870.834/0001-09",
+      "nome": "INST PREV SANTA MARIA"
+    },
+    {
+      "cnpj": "01.613.770/0001-72",
+      "nome": "PM IMBAU"
+    },
+    {
+      "cnpj": "88.227.764/0001-65",
+      "nome": "PM TUPANCIRETA"
+    },
+    {
+      "cnpj": "87.866.745/0001-16",
+      "nome": "PM VACARIA"
+    },
+    {
+      "cnpj": "19.871.680/0001-47",
+      "nome": "CM IPATINGA"
+    },
+    {
+      "cnpj": "74.011.024/0001-82",
+      "nome": "CM SAO GONCALO DO RIO ABAIXO"
+    },
+    {
+      "cnpj": "19.775.709/0001-97",
+      "nome": "CM SANTOS DUMONT"
+    },
+    {
+      "cnpj": "01.630.769/0001-56",
+      "nome": "CM CONCHAS"
+    },
+    {
+      "cnpj": "49.226.772/0001-35",
+      "nome": "CM BARRINHA"
+    },
+    {
+      "cnpj": "61.217.399/0001-51",
+      "nome": "SAAE SAO GONCALO DO RIO ABAIXO"
+    },
+    {
+      "cnpj": "87.612.750/0001-00",
+      "nome": "PM ARVOREZINHA"
+    },
+    {
+      "cnpj": "13.537.034/0001-61",
+      "nome": "FDO ASSIS SOCIAL QUISSAMA  FMAS"
+    },
+    {
+      "cnpj": "44.543.981/0001-99",
+      "nome": "PM PALMITAL"
+    },
+    {
+      "cnpj": "88.363.189/0001-28",
+      "nome": "PM TRIUNFO"
+    },
+    {
+      "cnpj": "94.703.519/0001-80",
+      "nome": "CM SELBACH"
+    },
+    {
+      "cnpj": "21.155.528/0001-00",
+      "nome": "FDCAO CULT CAETE"
+    },
+    {
+      "cnpj": "51.301.463/0001-24",
+      "nome": "CM MONTE ALEGRE DO SUL"
+    },
+    {
+      "cnpj": "77.398.154/0001-08",
+      "nome": "PM JESUITAS"
+    },
+    {
+      "cnpj": "87.613.352/0001-09",
+      "nome": "PM VIADUTOS"
+    },
+    {
+      "cnpj": "91.574.764/0001-46",
+      "nome": "PM QUINZE DE NOVEMBRO"
+    },
+    {
+      "cnpj": "76.995.455/0001-56",
+      "nome": "PM CORONEL VIVIDA"
+    },
+    {
+      "cnpj": "91.342.667/0001-28",
+      "nome": "PM PANTANO GRANDE"
+    },
+    {
+      "cnpj": "76.205.806/0001-88",
+      "nome": "PM TOLEDO"
+    },
+    {
+      "cnpj": "01.640.339/0001-15",
+      "nome": "PM DOM PEDRO DE ALCANTARA"
+    },
+    {
+      "cnpj": "04.207.526/0001-06",
+      "nome": "PM NOVO XINGU"
+    },
+    {
+      "cnpj": "88.080.379/0001-38",
+      "nome": "PM HERVAL"
+    },
+    {
+      "cnpj": "88.138.292/0001-74",
+      "nome": "PM ROSARIO DO SUL"
+    },
+    {
+      "cnpj": "88.811.948/0001-78",
+      "nome": "PM TAPES"
+    },
+    {
+      "cnpj": "88.199.971/0001-53",
+      "nome": "PM TRES COROAS"
+    },
+    {
+      "cnpj": "89.971.766/0001-27",
+      "nome": "EUGENIO DE CASTRO"
+    },
+    {
+      "cnpj": "95.684.585/0001-12",
+      "nome": "CM SANTA MARIA DO OESTE"
+    },
+    {
+      "cnpj": "78.316.064/0001-93",
+      "nome": "CM LONDRINA"
+    },
+    {
+      "cnpj": "01.565.333/0001-20",
+      "nome": "CM INDIANOPOLIS-PR"
+    },
+    {
+      "cnpj": "04.958.548/0001-08",
+      "nome": "INST PREV SERV PUBL LARANJEIRAS DO SUL"
+    },
+    {
+      "cnpj": "12.674.690/0001-43",
+      "nome": "FDO PREV SOCIAL DOS SERV MUNIC DE LONDRI"
+    },
+    {
+      "cnpj": "95.587.622/0001-74",
+      "nome": "PM VIRMOND"
+    },
+    {
+      "cnpj": "21.514.376/0001-94",
+      "nome": "LONDRINA ILUMINACAO S.A."
+    },
+    {
+      "cnpj": "01.566.281/0001-07",
+      "nome": "CM CAPANEMA"
+    },
+    {
+      "cnpj": "78.114.121/0001-51",
+      "nome": "CM PLANALTO"
+    },
+    {
+      "cnpj": "78.119.336/0001-65",
+      "nome": "CM LARANJEIRAS DO SUL"
+    },
+    {
+      "cnpj": "75.788.349/0001-39",
+      "nome": "PM JAPURA"
+    },
+    {
+      "cnpj": "22.257.307/0001-05",
+      "nome": "FDO EDUC CAETE"
+    },
+    {
+      "cnpj": "60.947.575/0001-48",
+      "nome": "FDCAO APOIO ATIV SEG PUBLICA DO PR"
+    },
+    {
+      "cnpj": "77.774.552/0001-81",
+      "nome": "CM RIO AZUL"
+    },
+    {
+      "cnpj": "89.971.782/0001-10",
+      "nome": "PM ENTRE-IJUIS"
+    },
+    {
+      "cnpj": "75.380.071/0001-66",
+      "nome": "PM RONDON"
+    },
+    {
+      "cnpj": "28.645.760/0001-75",
+      "nome": "PM SANTA MARIA MADALENA"
+    },
+    {
+      "cnpj": "01.607.627/0001-78",
+      "nome": "PM GOIOXIM"
+    },
+    {
+      "cnpj": "92.000.207/0001-84",
+      "nome": "PM PARAISO DO SUL"
+    },
+    {
+      "cnpj": "75.963.256/0001-01",
+      "nome": "PM RIO AZUL"
+    },
+    {
+      "cnpj": "06.105.564/0001-75",
+      "nome": "FDO MUN.DE ASS.SOC. DE MIRACEMA"
+    },
+    {
+      "cnpj": "75.680.025/0001-82",
+      "nome": "PM PALMITAL PR"
+    },
+    {
+      "cnpj": "18.960.233/0001-00",
+      "nome": "CONS OESTE PAULISTA - CIOP"
+    },
+    {
+      "cnpj": "20.431.334/0001-27",
+      "nome": "CM JUIZ DE FORA"
+    },
+    {
+      "cnpj": "09.131.027/0001-98",
+      "nome": "FDO CRIANCA E ADOLESCENTE OLINDA"
+    },
+    {
+      "cnpj": "01.606.399/0001-11",
+      "nome": "PM CHUI"
+    },
+    {
+      "cnpj": "09.260.420/0001-81",
+      "nome": "FDO DIR CRIAN ADOLES ARARUAMA"
+    },
+    {
+      "cnpj": "02.239.631/0001-93",
+      "nome": "CM CANDIDO DE ABREU"
+    },
+    {
+      "cnpj": "64.613.151/0001-06",
+      "nome": "CM ESTRELA DO NORTE"
+    },
+    {
+      "cnpj": "95.640.744/0001-87",
+      "nome": "CM ALTO PARAISO"
+    },
+    {
+      "cnpj": "95.289.500/0001-00",
+      "nome": "DEP ENERGIA IJUI-DEMEI"
+    },
+    {
+      "cnpj": "14.662.467/0001-01",
+      "nome": "CONS DESENV SUST SERRA GAUCHA - CISGA"
+    },
+    {
+      "cnpj": "11.504.310/0001-60",
+      "nome": "FDO SAUDE MACUCO"
+    },
+    {
+      "cnpj": "05.211.356/0001-98",
+      "nome": "SAAE SAO PEDRO"
+    },
+    {
+      "cnpj": "02.231.696/0001-92",
+      "nome": "CONS INTER SAUDE NOROESTE RS - CISA"
+    },
+    {
+      "cnpj": "11.183.882/0001-94",
+      "nome": "FDO SAUDE STA MARIA MADALENA"
+    },
+    {
+      "cnpj": "51.848.497/0001-33",
+      "nome": "CM MONTE APRAZIVEL"
+    },
+    {
+      "cnpj": "02.652.664/0001-60",
+      "nome": "CM ECHAPORA"
+    },
+    {
+      "cnpj": "06.284.346/0001-45",
+      "nome": "FDO PREVIDENCIARIO MUN.DE TERRA RICA"
+    },
+    {
+      "cnpj": "32.558.355/0001-97",
+      "nome": "CM SANTA MARIA MADALENA"
+    },
+    {
+      "cnpj": "07.918.201/0001-11",
+      "nome": "FDO SAUDE CASTANHAL"
+    },
+    {
+      "cnpj": "01.129.740/0001-95",
+      "nome": "CM CAMPO BONITO"
+    },
+    {
+      "cnpj": "88.186.754/0001-29",
+      "nome": "PM PUTINGA"
+    },
+    {
+      "cnpj": "90.152.299/0001-92",
+      "nome": "PM AMARAL FERRADOR"
+    },
+    {
+      "cnpj": "87.490.306/0001-51",
+      "nome": "PM RESTINGA SECA"
+    },
+    {
+      "cnpj": "00.423.755/0001-07",
+      "nome": "CM ANANINDEUA"
+    },
+    {
+      "cnpj": "90.161.332/0001-40",
+      "nome": "CM TAPERA"
+    },
+    {
+      "cnpj": "92.406.511/0001-26",
+      "nome": "PM SAO JOSE DO HERVAL"
+    },
+    {
+      "cnpj": "01.429.167/0001-35",
+      "nome": "FUNDO ASSIST.MACAE"
+    },
+    {
+      "cnpj": "08.943.130/0001-70",
+      "nome": "FDO HOSPITALAR SAO JOSE"
+    },
+    {
+      "cnpj": "92.891.035/0001-86",
+      "nome": "PM GARRUCHOS"
+    },
+    {
+      "cnpj": "06.309.481/0001-06",
+      "nome": "FDO PREV AREAL"
+    },
+    {
+      "cnpj": "88.000.922/0001-40",
+      "nome": "PM MOSTARDAS"
+    },
+    {
+      "cnpj": "88.084.942/0001-46",
+      "nome": "PM PINHEIRO MACHADO"
+    },
+    {
+      "cnpj": "94.444.403/0001-73",
+      "nome": "PM SAO MARTINHO DA SERRA"
+    },
+    {
+      "cnpj": "88.000.914/0001-01",
+      "nome": "PM VIAMAO"
+    },
+    {
+      "cnpj": "91.566.893/0001-92",
+      "nome": "PM FAGUNDES VARELA"
+    },
+    {
+      "cnpj": "87.613.485/0001-77",
+      "nome": "PM VICTOR GRAEFF"
+    },
+    {
+      "cnpj": "45.741.527/0001-05",
+      "nome": "PM SAO SEBASTIAO DA GRAMA"
+    },
+    {
+      "cnpj": "43.162.791/0001-69",
+      "nome": "PM ALFREDO MARCONDES"
+    },
+    {
+      "cnpj": "44.544.005/0001-50",
+      "nome": "SAAE PALMITAL"
+    },
+    {
+      "cnpj": "34.870.246/0001-36",
+      "nome": "TCE AMAPA"
+    },
+    {
+      "cnpj": "14.986.862/0001-40",
+      "nome": "FDO I.S.A.V.M. ARARAQUARA - FUNGOTA"
+    },
+    {
+      "cnpj": "20.959.219/0001-20",
+      "nome": "SAAE ITABIRA"
+    },
+    {
+      "cnpj": "03.681.070/0001-40",
+      "nome": "CONS INTER SAUDE BX FLUMINENSE - CISBAF"
+    },
+    {
+      "cnpj": "39.217.278/0001-50",
+      "nome": "FDCAO UNIVERSITARIA  ITAPERUNA"
+    },
+    {
+      "cnpj": "10.225.695/0001-63",
+      "nome": "FDO SAUDE AGRESTINA"
+    },
+    {
+      "cnpj": "05.150.569/0001-57",
+      "nome": "INST PREV SERV SAO GABRIEL - IPRESG"
+    },
+    {
+      "cnpj": "98.661.366/0001-06",
+      "nome": "PM VERA CRUZ"
+    },
+    {
+      "cnpj": "13.841.174/0001-29",
+      "nome": "CM BARROS CASSAL"
+    },
+    {
+      "cnpj": "36.292.589/0001-96",
+      "nome": "FDO SAUDE MACAE"
+    },
+    {
+      "cnpj": "11.885.839/0001-70",
+      "nome": "FDO SAUDE ARARUAMA"
+    },
+    {
+      "cnpj": "76.238.443/0001-87",
+      "nome": "PM GUAIRACA"
+    },
+    {
+      "cnpj": "07.051.788/0001-04",
+      "nome": "CONS INT DE PARA DESENV REGIONAL CONDER"
+    },
+    {
+      "cnpj": "07.664.821/0001-71",
+      "nome": "CONS SAUDE VALE DO RIO PARDO - CISVALE"
+    },
+    {
+      "cnpj": "01.611.489/0001-09",
+      "nome": "PM CAMPINA DO SIMAO"
+    },
+    {
+      "cnpj": "76.235.753/0001-48",
+      "nome": "PM BANDEIRANTES"
+    },
+    {
+      "cnpj": "88.488.358/0001-56",
+      "nome": "PM NOVA PALMA"
+    },
+    {
+      "cnpj": "91.900.381/0001-10",
+      "nome": "PM MINAS DO LEAO"
+    },
+    {
+      "cnpj": "01.603.719/0001-80",
+      "nome": "PM FOZ DO JORDAO"
+    },
+    {
+      "cnpj": "87.612.735/0001-54",
+      "nome": "PM BARROS CASSAL"
+    },
+    {
+      "cnpj": "46.675.997/0001-80",
+      "nome": "SAAE LEME"
+    },
+    {
+      "cnpj": "39.215.827/0001-58",
+      "nome": "FDO SAUDE ITAPERUNA"
+    },
+    {
+      "cnpj": "20.918.413/0001-67",
+      "nome": "SAAE MOEMA"
+    },
+    {
+      "cnpj": "01.587.762/0001-07",
+      "nome": "CM CAMBE"
+    },
+    {
+      "cnpj": "75.378.844/0001-70",
+      "nome": "PM GUAPOREMA"
+    },
+    {
+      "cnpj": "95.587.648/0001-12",
+      "nome": "PM NOVA LARANJEIRAS"
+    },
+    {
+      "cnpj": "36.285.484/0001-00",
+      "nome": "FDO MUN.DE SAUDE DE MIRACEMA"
+    },
+    {
+      "cnpj": "10.411.707/0001-44",
+      "nome": "FDO SAUDE ITALVA"
+    },
+    {
+      "cnpj": "29.134.183/0001-10",
+      "nome": "SAAE RIO DAS OSTRAS"
+    },
+    {
+      "cnpj": "20.353.488/0001-48",
+      "nome": "CM UBA"
+    },
+    {
+      "cnpj": "22.862.949/0001-33",
+      "nome": "CM PIRATINI"
+    },
+    {
+      "cnpj": "04.919.126/0001-15",
+      "nome": "INST PREV SERV PUBL MUNIC IBAITI"
+    },
+    {
+      "cnpj": "86.731.320/0001-37",
+      "nome": "COMP MUNIC DE TRANS E URB - CMTU-LD"
+    },
+    {
+      "cnpj": "76.721.570/0001-32",
+      "nome": "CM NOVA ALIANCA DO IVAI"
+    },
+    {
+      "cnpj": "75.845.529/0001-05",
+      "nome": "PM MIRASELVA"
+    },
+    {
+      "cnpj": "80.880.354/0001-07",
+      "nome": "FDCAO DESEN DE SUST CIEN TOLEDO - FUNTEC"
+    },
+    {
+      "cnpj": "15.276.747/0001-44",
+      "nome": "FDO REEQ CORP BOMB TOLEDO - FUNREBOM"
+    },
+    {
+      "cnpj": "77.778.827/0001-55",
+      "nome": "CM INACIO MARTINS"
+    },
+    {
+      "cnpj": "95.684.775/0001-30",
+      "nome": "CM LARANJAL"
+    },
+    {
+      "cnpj": "03.434.792/0001-09",
+      "nome": "PM PONTA PORA"
+    },
+    {
+      "cnpj": "87.893.111/0001-52",
+      "nome": "PM SAO LOURENCO DO SUL"
+    },
+    {
+      "cnpj": "01.603.319/0001-74",
+      "nome": "CM PORTO FELIZ"
+    },
+    {
+      "cnpj": "07.900.983/0001-61",
+      "nome": "FDO SAUDE VARRE-SAI"
+    },
+    {
+      "cnpj": "10.717.725/0001-59",
+      "nome": "CM UBIRETAMA"
+    },
+    {
+      "cnpj": "76.279.959/0001-70",
+      "nome": "PM PRESIDENTE CASTELO BRANCO"
+    },
+    {
+      "cnpj": "75.829.416/0001-16",
+      "nome": "PM RANCHO ALEGRE"
+    },
+    {
+      "cnpj": "00.136.452/0001-03",
+      "nome": "CM PEDRA BELA"
+    },
+    {
+      "cnpj": "16.728.798/0001-22",
+      "nome": "FDO PREV SOCIAL DE IPE"
+    },
+    {
+      "cnpj": "28.989.567/0001-51",
+      "nome": "SEMAD"
+    },
+    {
+      "cnpj": "23.804.149/0001-29",
+      "nome": "PM PONTE NOVA"
+    },
+    {
+      "cnpj": "47.261.292/0001-80",
+      "nome": "SERVICO FUNERARIO MUN.DE SAO PAULO"
+    },
+    {
+      "cnpj": "44.951.515/0001-42",
+      "nome": "PM TEODORO SAMPAIO"
+    },
+    {
+      "cnpj": "76.208.479/0001-18",
+      "nome": "PM ASSIS CHATEAUBRIAND"
+    },
+    {
+      "cnpj": "09.131.029/0001-87",
+      "nome": "FDO SAUDE OLINDA"
+    },
+    {
+      "cnpj": "76.030.717/0001-48",
+      "nome": "EQUIPLANO"
+    },
+    {
+      "cnpj": "19.556.698/0001-54",
+      "nome": "LEVY PREV"
+    },
+    {
+      "cnpj": "78.680.337/0001-84",
+      "nome": "UNIVERSIDADE UNIOESTE"
+    },
+    {
+      "cnpj": "05.586.308/0001-84",
+      "nome": "INST PREV DE UBA"
+    },
+    {
+      "cnpj": "05.125.657/0001-07",
+      "nome": "CONSELHO ITAPERUNA"
+    },
+    {
+      "cnpj": "75.424.507/0001-71",
+      "nome": "PM URAI"
+    },
+    {
+      "cnpj": "08.976.528/0001-02",
+      "nome": "CIVARC CONS INTERMUNI VALE DO RIO CINZAS"
+    },
+    {
+      "cnpj": "04.874.895/0001-44",
+      "nome": "FSO PREV MUNIC LARANJAL - FUNPRELAR"
+    },
+    {
+      "cnpj": "00.814.688/0001-43",
+      "nome": "CM BARRA DO JACARE"
+    },
+    {
+      "cnpj": "12.674.736/0001-24",
+      "nome": "FDO ASSIST SAUDE SERV DE LONDRINA"
+    },
+    {
+      "cnpj": "49.196.894/0001-26",
+      "nome": "INST PESQ PLAN FRANCISCO BELTRAO - IPPUB"
+    },
+    {
+      "cnpj": "01.594.672/0001-35",
+      "nome": "CM TIJUCAS DO SUL"
+    },
+    {
+      "cnpj": "17.695.008/0001-12",
+      "nome": "PM TRES MARIAS"
+    },
+    {
+      "cnpj": "44.827.478/0001-65",
+      "nome": "FDO EDUCACAO MACUCO"
+    },
+    {
+      "cnpj": "17.058.641/0001-08",
+      "nome": "CAMINHOS DO TIBAGI"
+    },
+    {
+      "cnpj": "13.064.477/0001-82",
+      "nome": "REGENPREV"
+    },
+    {
+      "cnpj": "45.479.391/0001-07",
+      "nome": "SAAE PORTO FELIZ"
+    },
+    {
+      "cnpj": "05.666.925/0001-90",
+      "nome": "SELUMA-SERV.DE LIMP.URBANA DE MAFRA LTDA"
+    },
+    {
+      "cnpj": "87.812.947/0001-85",
+      "nome": "CAIXA PREV STA VIITORIA PALMAR -CASERVIM"
+    },
+    {
+      "cnpj": "35.306.813/0001-99",
+      "nome": "INST PREV QUISSAMA"
+    },
+    {
+      "cnpj": "77.774.677/0001-01",
+      "nome": "CM IBAITI"
+    },
+    {
+      "cnpj": "01.613.112/0001-80",
+      "nome": "CM PRADO FERREIRA"
+    },
+    {
+      "cnpj": "00.380.488/0001-20",
+      "nome": "CM JATAIZINHO"
+    },
+    {
+      "cnpj": "02.322.413/0001-18",
+      "nome": "ASSISCOP"
+    },
+    {
+      "cnpj": "02.096.844/0001-03",
+      "nome": "FDO FINANC TEIXEIRA SOARES-FUMAP"
+    },
+    {
+      "cnpj": "05.281.320/0001-80",
+      "nome": "INST PREV JATAIZINHO"
+    },
+    {
+      "cnpj": "32.286.364/0001-76",
+      "nome": "PORTOBARREIROPREV"
+    },
+    {
+      "cnpj": "72.376.882/0001-03",
+      "nome": "CM VENTANIA"
+    },
+    {
+      "cnpj": "07.795.416/0001-92",
+      "nome": "FUNPREV"
+    },
+    {
+      "cnpj": "01.615.659/0001-15",
+      "nome": "CM RESERVA DO IGUACU"
+    },
+    {
+      "cnpj": "93.204.030/0001-09",
+      "nome": "CM TAPES"
+    },
+    {
+      "cnpj": "04.424.482/0001-68",
+      "nome": "FDO PREV ITAUNA DO SUL"
+    },
+    {
+      "cnpj": "08.579.909/0001-58",
+      "nome": "CM ARROIO DO SAL"
+    },
+    {
+      "cnpj": "09.284.796/0001-26",
+      "nome": "CM MANOEL VIANA"
+    },
+    {
+      "cnpj": "11.323.261/0001-69",
+      "nome": "FDO MUNIC DE SAUDE DE LONDRINA"
+    },
+    {
+      "cnpj": "02.791.062/0001-94",
+      "nome": "INST PREV SERV PUBL CAMPO DO TENENTE"
+    },
+    {
+      "cnpj": "76.279.975/0001-62",
+      "nome": "PM UNIFLOR"
+    },
+    {
+      "cnpj": "20.198.897/0001-17",
+      "nome": "CONS INTER RESIUOD SOLIDOS - CIRES"
+    },
+    {
+      "cnpj": "08.885.069/0001-51",
+      "nome": "FDO MUNC TRANS TOLEDO"
+    },
+    {
+      "cnpj": "14.472.792/0001-01",
+      "nome": "INST PREV SERV PUBL PIEN - PIENPREV"
+    },
+    {
+      "cnpj": "04.261.480/0001-03",
+      "nome": "PREV SOCIAL FRANCISCO BELTRAO PREVBEL"
+    },
+    {
+      "cnpj": "08.236.352/0001-52",
+      "nome": "CONS DE RESIDUOS SOLIDOS COMANDAI"
+    },
+    {
+      "cnpj": "45.664.616/0001-03",
+      "nome": "INST PREV SAO ROQUE"
+    },
+    {
+      "cnpj": "07.646.426/0001-66",
+      "nome": "INST PREV ENGENHEIRO COELHO"
+    },
+    {
+      "cnpj": "32.412.819/0007-48",
+      "nome": "SECRET SAUDE VASSOURAS"
+    },
+    {
+      "cnpj": "16.845.679/0001-50",
+      "nome": "CM ITABIRA"
+    },
+    {
+      "cnpj": "03.125.683/0001-00",
+      "nome": "CM TURUCU"
+    },
+    {
+      "cnpj": "27.963.040/0001-95",
+      "nome": "CM PARABA DO SUL"
+    },
+    {
+      "cnpj": "39.218.821/0001-34",
+      "nome": "CM VARRE-SAI"
+    },
+    {
+      "cnpj": "01.656.027/0001-08",
+      "nome": "CM JOIA"
+    },
+    {
+      "cnpj": "89.648.968/0001-32",
+      "nome": "CM IJUI"
+    },
+    {
+      "cnpj": "92.921.998/0001-85",
+      "nome": "CM HULHA NEGRA"
+    },
+    {
+      "cnpj": "09.012.116/0001-15",
+      "nome": "CM IPE"
+    },
+    {
+      "cnpj": "30.449.862/0001-67",
+      "nome": "ASS LEG  ESTADO DO RIO DE JANEIRO ALERJ"
+    },
+    {
+      "cnpj": "09.248.948/0001-35",
+      "nome": "CM BUTIA"
+    },
+    {
+      "cnpj": "10.579.180/0001-61",
+      "nome": "FDO PREV GUARANI DAS MISSOES - FPMS"
+    },
+    {
+      "cnpj": "30.597.686/0001-00",
+      "nome": "INST BENF ASSIS ARARUAMA - IBASMA"
+    },
+    {
+      "cnpj": "05.198.472/0001-14",
+      "nome": "CM ENCRUZILHADA DO SUL"
+    },
+    {
+      "cnpj": "01.751.704/0001-69",
+      "nome": "CM MACUCO"
+    },
+    {
+      "cnpj": "09.541.789/0001-62",
+      "nome": "FDO PREV CAMPO BONITO"
+    },
+    {
+      "cnpj": "07.561.774/0001-30",
+      "nome": "CM ARAMBARE"
+    },
+    {
+      "cnpj": "50.320.332/0001-21",
+      "nome": "CM SAO SEBASTIAO"
+    },
+    {
+      "cnpj": "46.362.661/0001-68",
+      "nome": "PM LEME"
+    },
+    {
+      "cnpj": "76.995.448/0001-54",
+      "nome": "PM PATO BRANCO"
+    },
+    {
+      "cnpj": "66.998.030/0001-47",
+      "nome": "INST JABORANDI"
+    },
+    {
+      "cnpj": "15.458.221/0001-85",
+      "nome": "INST PREV SERV PUBL TIJUCAS DO SUL"
+    },
+    {
+      "cnpj": "42.418.849/0001-20",
+      "nome": "FDO SEGURANCA PUBLICA QUISSAMA"
+    },
+    {
+      "cnpj": "95.684.486/0001-30",
+      "nome": "CM CANDOI"
+    },
+    {
+      "cnpj": "08.962.568/0001-03",
+      "nome": "FDO PREV REGIME CAMPINA DO SIMAO"
+    },
+    {
+      "cnpj": "78.616.760/0001-15",
+      "nome": "COMP HAB DE LONDRINA - COHAB LD"
+    },
+    {
+      "cnpj": "77.778.751/0001-68",
+      "nome": "CM RIBEIRAO DO PINHAL"
+    },
+    {
+      "cnpj": "51.042.737/0001-08",
+      "nome": "CM LEME"
+    },
+    {
+      "cnpj": "01.309.021/0001-56",
+      "nome": "CM SAO MANOEL DO PARANA"
+    },
+    {
+      "cnpj": "04.958.376/0001-64",
+      "nome": "FDO PREV SAO TOME - FUNPREST"
+    },
+    {
+      "cnpj": "87.613.246/0001-17",
+      "nome": "PM AUGUSTO PESTANA"
+    },
+    {
+      "cnpj": "18.302.299/0001-02",
+      "nome": "PM CAETE"
+    },
+    {
+      "cnpj": "75.443.812/0001-00",
+      "nome": "PM GUAPIRAMA"
+    },
+    {
+      "cnpj": "05.058.458/0001-15",
+      "nome": "PM BARCARENA"
+    },
+    {
+      "cnpj": "87.613.386/0001-95",
+      "nome": "PM MARIANO MORO"
+    },
+    {
+      "cnpj": "91.558.650/0001-02",
+      "nome": "PM MORRO REDONDO"
+    },
+    {
+      "cnpj": "76.288.760/0001-08",
+      "nome": "PM ROLANDIA"
+    },
+    {
+      "cnpj": "91.103.093/0001-35",
+      "nome": "PM ARROIO DO SAL"
+    },
+    {
+      "cnpj": "89.650.121/0001-92",
+      "nome": "PM JOIA"
+    },
+    {
+      "cnpj": "18.306.662/0001-50",
+      "nome": "PM ARCOS"
+    },
+    {
+      "cnpj": "30.417.158/0001-22",
+      "nome": "PM ITALVA"
+    },
+    {
+      "cnpj": "46.634.267/0001-31",
+      "nome": "PM GUAREI"
+    },
+    {
+      "cnpj": "77.778.801/0001-07",
+      "nome": "CM CONSELHEIRO MAIRINCK"
+    },
+    {
+      "cnpj": "06.074.903/0001-01",
+      "nome": "INST PREV INACIO MARTINS"
+    },
+    {
+      "cnpj": "02.443.819/0001-59",
+      "nome": "CM CRISTAL"
+    },
+    {
+      "cnpj": "77.778.611/0001-90",
+      "nome": "CM PORTO AMAZONAS"
+    },
+    {
+      "cnpj": "09.003.619/0001-24",
+      "nome": "FDO PREV UNIFLOR"
+    },
+    {
+      "cnpj": "82.892.274/0001-05",
+      "nome": "PM SAO JOSE"
+    },
+    {
+      "cnpj": "01.371.416/0001-89",
+      "nome": "SERCOMTEL - PM LONDRINA"
+    },
+    {
+      "cnpj": "11.468.330/0001-22",
+      "nome": "FDO PREV DO MUNICIPIO DE RIO AZUL"
+    },
+    {
+      "cnpj": "08.549.559/0001-87",
+      "nome": "FDO MUNIC DE SAUDE DE SANTO INACIO"
+    },
+    {
+      "cnpj": "18.241.349/0001-80",
+      "nome": "PM SAO SEBASTIAO DO PARAISO"
+    },
+    {
+      "cnpj": "03.379.099/0001-72",
+      "nome": "SERV AUT AGUA E ESG MIRASELVA - SAMAE"
+    },
+    {
+      "cnpj": "17.709.197/0001-35",
+      "nome": "PM ALEM PARAIBA"
+    },
+    {
+      "cnpj": "03.311.327/0001-72",
+      "nome": "COMP TECN DESENV SA - LONDRINA"
+    },
+    {
+      "cnpj": "31.838.469/0001-28",
+      "nome": "CM CANTAGALO"
+    }
+  ]
+}
