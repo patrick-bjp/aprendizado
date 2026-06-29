@@ -2131,7 +2131,8 @@ function abrirPainelKws() {
    ────────────────────────────────────────────────────────── */
 let CLIENTES_GOVBR = new Set();
 
-(async function carregarClientesGOVBR() {
+// Promise global — permite aguardar o carregamento antes de processar editais
+const clientesGOVBRPronto = (async function carregarClientesGOVBR() {
   try {
     const url = 'https://raw.githubusercontent.com/patrick-bjp/aprendizado/main/clientes-govbr.json';
     const res  = await fetch(url);
@@ -3066,6 +3067,9 @@ async function executarBusca() {
   editaisCarregados = [];
   const erros = [];
   const idsGlobais = new Set();
+
+  // Aguarda base de clientes GOVBR antes de processar (evita race condition)
+  await clientesGOVBRPronto;
 
   if (portaisBusca.has('pncp')) {
     for (const uf of [...estadosAtivos]) {
