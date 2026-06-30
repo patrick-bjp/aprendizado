@@ -1,3635 +1,5449 @@
 {
-  "atualizado": "2026-06-26T17:05:16",
+  "atualizado": "2026-06-30T14:47:21",
   "fonte": "SQL Server GQ_BSC — último mês disponível",
   "total": 907,
   "clientes": [
     {
       "cnpj": "77.651.602/0001-33",
-      "nome": "ADM CEMITERIOS LONDRINA"
+      "nome": "ADM CEMITERIOS LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "17.329.329/0001-01",
-      "nome": "AG REG SERV DELEG SAO GABRIEL - AGESG"
+      "nome": "AG REG SERV DELEG SAO GABRIEL - AGESG",
+      "uf": "RS",
+      "municipio": "SAO GABRIEL"
     },
     {
       "cnpj": "23.726.764/0001-64",
-      "nome": "AMASBE"
+      "nome": "AMASBE",
+      "uf": "MG",
+      "municipio": "MONTES CLAROS"
     },
     {
       "cnpj": "30.449.862/0001-67",
-      "nome": "ASS LEG  ESTADO DO RIO DE JANEIRO ALERJ"
+      "nome": "ASS LEG  ESTADO DO RIO DE JANEIRO ALERJ",
+      "uf": "RJ",
+      "municipio": "RIO DE JANEIRO"
     },
     {
       "cnpj": "02.322.413/0001-18",
-      "nome": "ASSISCOP"
+      "nome": "ASSISCOP",
+      "uf": "PR",
+      "municipio": "LARANJEIRAS DO SUL"
     },
     {
       "cnpj": "75.907.576/0001-36",
-      "nome": "ASSOC CASCAVEL"
+      "nome": "ASSOC CASCAVEL",
+      "uf": "PR",
+      "municipio": "CASCAVEL"
     },
     {
       "cnpj": "80.507.775/0001-97",
-      "nome": "AUTARQUIA ALVORADA DO SUL"
+      "nome": "AUTARQUIA ALVORADA DO SUL",
+      "uf": "PR",
+      "municipio": "ALVORADA DO SUL"
     },
     {
       "cnpj": "78.638.707/0001-15",
-      "nome": "AUTARQUIA LONDRINA"
+      "nome": "AUTARQUIA LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "11.420.927/0001-05",
-      "nome": "AUTARQUIA MUN DE EDUC DE ALVORADA DO SUL"
+      "nome": "AUTARQUIA MUN DE EDUC DE ALVORADA DO SUL",
+      "uf": "PR",
+      "municipio": "ALVORADA DO SUL"
     },
     {
       "cnpj": "87.530.978/0001-43",
-      "nome": "CACHOEIRA DO SUL"
+      "nome": "CACHOEIRA DO SUL",
+      "uf": "RS",
+      "municipio": "CACHOEIRA DO SUL"
     },
     {
       "cnpj": "78.634.771/0001-28",
-      "nome": "CAIXA ASSIST APOS LONDRINA - CAPSML"
+      "nome": "CAIXA ASSIST APOS LONDRINA - CAPSML",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "12.674.690/0001-43",
-      "nome": "CAIXA ASSIST, APOS E PENSOES CAAPSML"
+      "nome": "CAIXA ASSIST, APOS E PENSOES CAAPSML",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "72.096.043/0001-23",
-      "nome": "CAIXA DE ASS SERV MUNIC DE TOLEDO - CAST"
+      "nome": "CAIXA DE ASS SERV MUNIC DE TOLEDO - CAST",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "87.812.947/0001-85",
-      "nome": "CAIXA PREV STA VIITORIA PALMAR -CASERVIM"
+      "nome": "CAIXA PREV STA VIITORIA PALMAR -CASERVIM",
+      "uf": "RS",
+      "municipio": "SANTA VITORIA DO PALMAR"
     },
     {
       "cnpj": "02.624.843/0001-94",
-      "nome": "CAIXA PREV VARRE-SAI"
+      "nome": "CAIXA PREV VARRE-SAI",
+      "uf": "RJ",
+      "municipio": "VARRE-SAI"
     },
     {
       "cnpj": "17.058.641/0001-08",
-      "nome": "CAMINHOS DO TIBAGI"
+      "nome": "CAMINHOS DO TIBAGI",
+      "uf": "PR",
+      "municipio": "RESERVA"
     },
     {
       "cnpj": "29.128.741/0001-34",
-      "nome": "CARMO GABINETE DO PREFEITO"
+      "nome": "CARMO GABINETE DO PREFEITO",
+      "uf": "RJ",
+      "municipio": "CARMO"
     },
     {
       "cnpj": "29.115.474/0001-60",
-      "nome": "CEJUR MACAE"
+      "nome": "CEJUR MACAE",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "00.126.737/0001-55",
-      "nome": "CISNOP"
+      "nome": "CISNOP",
+      "uf": "PR",
+      "municipio": "CORNELIO PROCOPIO"
     },
     {
       "cnpj": "08.976.528/0001-02",
-      "nome": "CIVARC CONS INTERMUNI VALE DO RIO CINZAS"
+      "nome": "CIVARC CONS INTERMUNI VALE DO RIO CINZAS",
+      "uf": "PR",
+      "municipio": "JAPIRA"
     },
     {
       "cnpj": "81.756.884/0001-00",
-      "nome": "CM ABATIA"
+      "nome": "CM ABATIA",
+      "uf": "PR",
+      "municipio": "ABATIA"
     },
     {
       "cnpj": "04.623.501/0001-85",
-      "nome": "CM ACAIACA"
+      "nome": "CM ACAIACA",
+      "uf": "MG",
+      "municipio": "ACAIACA"
     },
     {
       "cnpj": "03.803.987/0001-70",
-      "nome": "CM AJURICABA"
+      "nome": "CM AJURICABA",
+      "uf": "RS",
+      "municipio": "AJURICABA"
     },
     {
       "cnpj": "91.551.119/0001-08",
-      "nome": "CM ALEGRETE"
+      "nome": "CM ALEGRETE",
+      "uf": "RS",
+      "municipio": "ALEGRETE"
     },
     {
       "cnpj": "95.640.744/0001-87",
-      "nome": "CM ALTO PARAISO"
+      "nome": "CM ALTO PARAISO",
+      "uf": "PR",
+      "municipio": "ALTO PARAISO"
     },
     {
       "cnpj": "72.430.390/0001-40",
-      "nome": "CM ALTONIA"
+      "nome": "CM ALTONIA",
+      "uf": "PR",
+      "municipio": "ALTONIA"
     },
     {
       "cnpj": "53.303.376/0001-31",
-      "nome": "CM ALVARES MACHADO"
+      "nome": "CM ALVARES MACHADO",
+      "uf": "SP",
+      "municipio": "ALVARES MACHADO"
     },
     {
       "cnpj": "78.009.354/0001-94",
-      "nome": "CM ALVORADA DO SUL"
+      "nome": "CM ALVORADA DO SUL",
+      "uf": "PR",
+      "municipio": "ALVORADA DO SUL"
     },
     {
       "cnpj": "07.524.591/0001-45",
-      "nome": "CM AMARAL FERRADOR"
+      "nome": "CM AMARAL FERRADOR",
+      "uf": "RS",
+      "municipio": "AMARAL FERRADOR"
     },
     {
       "cnpj": "00.423.755/0001-07",
-      "nome": "CM ANANINDEUA"
+      "nome": "CM ANANINDEUA",
+      "uf": "PA",
+      "municipio": "ANANINDEUA"
     },
     {
       "cnpj": "57.317.984/0001-56",
-      "nome": "CM ANHUMAS"
+      "nome": "CM ANHUMAS",
+      "uf": "SP",
+      "municipio": "ANHUMAS"
     },
     {
       "cnpj": "07.561.774/0001-30",
-      "nome": "CM ARAMBARE"
+      "nome": "CM ARAMBARE",
+      "uf": "RS",
+      "municipio": "ARAMBARE"
     },
     {
       "cnpj": "02.001.489/0001-41",
-      "nome": "CM ARAPUA"
+      "nome": "CM ARAPUA",
+      "uf": "PR",
+      "municipio": "ARAPUA"
     },
     {
       "cnpj": "30.173.207/0001-29",
-      "nome": "CM ARARUAMA"
+      "nome": "CM ARARUAMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "20.896.031/0001-80",
-      "nome": "CM ARCOS"
+      "nome": "CM ARCOS",
+      "uf": "MG",
+      "municipio": "ARCOS"
     },
     {
       "cnpj": "06.136.952/0001-13",
-      "nome": "CM AREAL"
+      "nome": "CM AREAL",
+      "uf": "RJ",
+      "municipio": "AREAL"
     },
     {
       "cnpj": "08.579.909/0001-58",
-      "nome": "CM ARROIO DO SAL"
+      "nome": "CM ARROIO DO SAL",
+      "uf": "RS",
+      "municipio": "ARROIO DO SAL"
     },
     {
       "cnpj": "19.013.550/0001-73",
-      "nome": "CM ARROIO GRANDE"
+      "nome": "CM ARROIO GRANDE",
+      "uf": "RS",
+      "municipio": "ARROIO GRANDE"
     },
     {
       "cnpj": "77.878.320/0001-73",
-      "nome": "CM ASSIS CHATEAUBRIAND"
+      "nome": "CM ASSIS CHATEAUBRIAND",
+      "uf": "PR",
+      "municipio": "ASSIS CHATEAUBRIAND"
     },
     {
       "cnpj": "80.926.926/0001-41",
-      "nome": "CM BANDEIRANTES"
+      "nome": "CM BANDEIRANTES",
+      "uf": "PR",
+      "municipio": "BANDEIRANTES"
     },
     {
       "cnpj": "22.943.229/0001-00",
-      "nome": "CM BARCARENA"
+      "nome": "CM BARCARENA",
+      "uf": "PA",
+      "municipio": "BARCARENA"
     },
     {
       "cnpj": "00.814.688/0001-43",
-      "nome": "CM BARRA DO JACARE"
+      "nome": "CM BARRA DO JACARE",
+      "uf": "PR",
+      "municipio": "BARRA DO JACARE"
     },
     {
       "cnpj": "02.847.548/0001-05",
-      "nome": "CM BARRA DO RIBEIRO"
+      "nome": "CM BARRA DO RIBEIRO",
+      "uf": "RS",
+      "municipio": "BARRA DO RIBEIRO"
     },
     {
       "cnpj": "49.226.772/0001-35",
-      "nome": "CM BARRINHA"
+      "nome": "CM BARRINHA",
+      "uf": "SP",
+      "municipio": "BARRINHA"
     },
     {
       "cnpj": "13.841.174/0001-29",
-      "nome": "CM BARROS CASSAL"
+      "nome": "CM BARROS CASSAL",
+      "uf": "RS",
+      "municipio": "BARROS CASSAL"
     },
     {
       "cnpj": "01.612.908/0001-19",
-      "nome": "CM BOA VENTURA DE SAO ROQUE"
+      "nome": "CM BOA VENTURA DE SAO ROQUE",
+      "uf": "PR",
+      "municipio": "BOA VENTURA DE SAO ROQUE"
     },
     {
       "cnpj": "04.232.213/0001-08",
-      "nome": "CM BOA VISTA DO CADEADO"
+      "nome": "CM BOA VISTA DO CADEADO",
+      "uf": "RS",
+      "municipio": "BOA VISTA DO CADEADO"
     },
     {
       "cnpj": "01.839.446/0001-77",
-      "nome": "CM BOITUVA"
+      "nome": "CM BOITUVA",
+      "uf": "SP",
+      "municipio": "BOITUVA"
     },
     {
       "cnpj": "00.495.116/0001-49",
-      "nome": "CM BOM JARDIM"
+      "nome": "CM BOM JARDIM",
+      "uf": "RJ",
+      "municipio": "BOM JARDIM"
     },
     {
       "cnpj": "51.500.643/0001-35",
-      "nome": "CM BORA"
+      "nome": "CM BORA",
+      "uf": "SP",
+      "municipio": "BORA"
     },
     {
       "cnpj": "09.248.948/0001-35",
-      "nome": "CM BUTIA"
+      "nome": "CM BUTIA",
+      "uf": "RS",
+      "municipio": "BUTIA"
     },
     {
       "cnpj": "89.378.251/0001-18",
-      "nome": "CM CACAPAVA DO SUL"
+      "nome": "CM CACAPAVA DO SUL",
+      "uf": "RS",
+      "municipio": "CACAPAVA DO SUL"
     },
     {
       "cnpj": "89.201.180/0001-83",
-      "nome": "CM CACHOEIRA DO SUL"
+      "nome": "CM CACHOEIRA DO SUL",
+      "uf": "RS",
+      "municipio": "CACHOEIRA DO SUL"
     },
     {
       "cnpj": "65.174.518/0001-97",
-      "nome": "CM CAETE"
+      "nome": "CM CAETE",
+      "uf": "MG",
+      "municipio": "CAETE"
     },
     {
       "cnpj": "02.074.206/0001-91",
-      "nome": "CM CAFEARA"
+      "nome": "CM CAFEARA",
+      "uf": "PR",
+      "municipio": "CAFEARA"
     },
     {
       "cnpj": "01.507.331/0001-85",
-      "nome": "CM CAFELANDIA"
+      "nome": "CM CAFELANDIA",
+      "uf": "PR",
+      "municipio": "CAFELANDIA"
     },
     {
       "cnpj": "01.587.762/0001-07",
-      "nome": "CM CAMBE"
+      "nome": "CM CAMBE",
+      "uf": "PR",
+      "municipio": "CAMBE"
     },
     {
       "cnpj": "01.663.274/0001-23",
-      "nome": "CM CAMPINA DO SIMAO"
+      "nome": "CM CAMPINA DO SIMAO",
+      "uf": "PR",
+      "municipio": "CAMPINA DO SIMAO"
     },
     {
       "cnpj": "01.129.740/0001-95",
-      "nome": "CM CAMPO BONITO"
+      "nome": "CM CAMPO BONITO",
+      "uf": "PR",
+      "municipio": "CAMPO BONITO"
     },
     {
       "cnpj": "01.536.649/0001-94",
-      "nome": "CM CAMPO DO TENENTE"
+      "nome": "CM CAMPO DO TENENTE",
+      "uf": "PR",
+      "municipio": "CAMPO DO TENENTE"
     },
     {
       "cnpj": "51.278.885/0001-26",
-      "nome": "CM CAMPO LIMPO PAULISTA"
+      "nome": "CM CAMPO LIMPO PAULISTA",
+      "uf": "SP",
+      "municipio": "CAMPO LIMPO PAULISTA"
     },
     {
       "cnpj": "02.239.631/0001-93",
-      "nome": "CM CANDIDO DE ABREU"
+      "nome": "CM CANDIDO DE ABREU",
+      "uf": "PR",
+      "municipio": "CANDIDO DE ABREU"
     },
     {
       "cnpj": "01.219.954/0001-52",
-      "nome": "CM CANDIOTA"
+      "nome": "CM CANDIOTA",
+      "uf": "RS",
+      "municipio": "CANDIOTA"
     },
     {
       "cnpj": "95.684.486/0001-30",
-      "nome": "CM CANDOI"
+      "nome": "CM CANDOI",
+      "uf": "PR",
+      "municipio": "CANDOI"
     },
     {
       "cnpj": "90.320.847/0001-46",
-      "nome": "CM CANGUCU"
+      "nome": "CM CANGUCU",
+      "uf": "RS",
+      "municipio": "CANGUCU"
     },
     {
       "cnpj": "31.838.469/0001-28",
-      "nome": "CM CANTAGALO"
+      "nome": "CM CANTAGALO",
+      "uf": "RJ",
+      "municipio": "CANTAGALO"
     },
     {
       "cnpj": "95.684.619/0001-79",
-      "nome": "CM CANTAGALO-PR"
+      "nome": "CM CANTAGALO-PR",
+      "uf": "PR",
+      "municipio": "CANTAGALO"
     },
     {
       "cnpj": "01.566.281/0001-07",
-      "nome": "CM CAPANEMA"
+      "nome": "CM CAPANEMA",
+      "uf": "PR",
+      "municipio": "CAPANEMA"
     },
     {
       "cnpj": "20.296.760/0001-03",
-      "nome": "CM CARANGOLA"
+      "nome": "CM CARANGOLA",
+      "uf": "MG",
+      "municipio": "CARANGOLA"
     },
     {
       "cnpj": "66.229.857/0001-96",
-      "nome": "CM CARATINGA"
+      "nome": "CM CARATINGA",
+      "uf": "MG",
+      "municipio": "CARATINGA"
     },
     {
       "cnpj": "77.778.793/0001-07",
-      "nome": "CM CARLOPOLIS"
+      "nome": "CM CARLOPOLIS",
+      "uf": "PR",
+      "municipio": "CARLOPOLIS"
     },
     {
       "cnpj": "01.004.783/0001-44",
-      "nome": "CM CARMO"
+      "nome": "CM CARMO",
+      "uf": "RJ",
+      "municipio": "CARMO"
     },
     {
       "cnpj": "78.673.159/0001-64",
-      "nome": "CM CATANDUVAS - PR"
+      "nome": "CM CATANDUVAS - PR",
+      "uf": "PR",
+      "municipio": "CATANDUVAS"
     },
     {
       "cnpj": "04.443.748/0001-10",
-      "nome": "CM CATAS ALTAS"
+      "nome": "CM CATAS ALTAS",
+      "uf": "MG",
+      "municipio": "CATAS ALTAS"
     },
     {
       "cnpj": "12.313.901/0001-12",
-      "nome": "CM CATUIPE"
+      "nome": "CM CATUIPE",
+      "uf": "RS",
+      "municipio": "CATUIPE"
     },
     {
       "cnpj": "00.999.114/0001-97",
-      "nome": "CM CENTENARIO DO SUL"
+      "nome": "CM CENTENARIO DO SUL",
+      "uf": "PR",
+      "municipio": "CENTENARIO DO SUL"
     },
     {
       "cnpj": "01.044.179/0001-41",
-      "nome": "CM CHARQUEADA"
+      "nome": "CM CHARQUEADA",
+      "uf": "SP",
+      "municipio": "CHARQUEADA"
     },
     {
       "cnpj": "77.774.511/0001-95",
-      "nome": "CM CHOPINZINHO"
+      "nome": "CM CHOPINZINHO",
+      "uf": "PR",
+      "municipio": "CHOPINZINHO"
     },
     {
       "cnpj": "01.201.556/0001-09",
-      "nome": "CM CIDADE GAUCHA"
+      "nome": "CM CIDADE GAUCHA",
+      "uf": "PR",
+      "municipio": "CIDADE GAUCHA"
     },
     {
       "cnpj": "04.832.360/0001-00",
-      "nome": "CM COMENDADOR LEVY GASPARIAN"
+      "nome": "CM COMENDADOR LEVY GASPARIAN",
+      "uf": "RJ",
+      "municipio": "COMENDADOR LEVY GASPARIAN"
     },
     {
       "cnpj": "54.672.993/0001-77",
-      "nome": "CM CONCHAL"
+      "nome": "CM CONCHAL",
+      "uf": "SP",
+      "municipio": "CONCHAL"
     },
     {
       "cnpj": "01.630.769/0001-56",
-      "nome": "CM CONCHAS"
+      "nome": "CM CONCHAS",
+      "uf": "SP",
+      "municipio": "CONCHAS"
     },
     {
       "cnpj": "77.778.801/0001-07",
-      "nome": "CM CONSELHEIRO MAIRINCK"
+      "nome": "CM CONSELHEIRO MAIRINCK",
+      "uf": "PR",
+      "municipio": "CONSELHEIRO MAIRINCK"
     },
     {
       "cnpj": "01.649.446/0001-04",
-      "nome": "CM CORONEL DOMINGOS SOARES"
+      "nome": "CM CORONEL DOMINGOS SOARES",
+      "uf": "PR",
+      "municipio": "CORONEL DOMINGOS SOARES"
     },
     {
       "cnpj": "77.778.637/0001-38",
-      "nome": "CM CORONEL VIVIDA"
+      "nome": "CM CORONEL VIVIDA",
+      "uf": "PR",
+      "municipio": "CORONEL VIVIDA"
     },
     {
       "cnpj": "00.060.981/0001-62",
-      "nome": "CM COSMOPOLIS"
+      "nome": "CM COSMOPOLIS",
+      "uf": "SP",
+      "municipio": "COSMOPOLIS"
     },
     {
       "cnpj": "02.443.819/0001-59",
-      "nome": "CM CRISTAL"
+      "nome": "CM CRISTAL",
+      "uf": "RS",
+      "municipio": "CRISTAL"
     },
     {
       "cnpj": "49.898.489/0001-50",
-      "nome": "CM CRUZALIA"
+      "nome": "CM CRUZALIA",
+      "uf": "SP",
+      "municipio": "CRUZALIA"
     },
     {
       "cnpj": "95.589.370/0001-12",
-      "nome": "CM CRUZEIRO DO IGUACU"
+      "nome": "CM CRUZEIRO DO IGUACU",
+      "uf": "PR",
+      "municipio": "CRUZEIRO DO IGUACU"
     },
     {
       "cnpj": "00.949.401/0001-92",
-      "nome": "CM CRUZEIRO DO OESTE"
+      "nome": "CM CRUZEIRO DO OESTE",
+      "uf": "PR",
+      "municipio": "CRUZEIRO DO OESTE"
     },
     {
       "cnpj": "77.774.602/0001-20",
-      "nome": "CM CURIUVA"
+      "nome": "CM CURIUVA",
+      "uf": "PR",
+      "municipio": "CURIUVA"
     },
     {
       "cnpj": "02.270.246/0001-09",
-      "nome": "CM DE ITAPERUCU"
+      "nome": "CM DE ITAPERUCU",
+      "uf": "PR",
+      "municipio": "ITAPERUCU"
     },
     {
       "cnpj": "00.579.769/0001-06",
-      "nome": "CM DIVINOLANDIA"
+      "nome": "CM DIVINOLANDIA",
+      "uf": "SP",
+      "municipio": "DIVINOLANDIA"
     },
     {
       "cnpj": "78.103.579/0001-05",
-      "nome": "CM DOIS VIZINHOS"
+      "nome": "CM DOIS VIZINHOS",
+      "uf": "PR",
+      "municipio": "DOIS VIZINHOS"
     },
     {
       "cnpj": "06.183.433/0001-06",
-      "nome": "CM DOM PEDRITO"
+      "nome": "CM DOM PEDRITO",
+      "uf": "RS",
+      "municipio": "DOM PEDRITO"
     },
     {
       "cnpj": "09.133.168/0001-40",
-      "nome": "CM DOM PEDRO DE ALCANTARA"
+      "nome": "CM DOM PEDRO DE ALCANTARA",
+      "uf": "RS",
+      "municipio": "DOM PEDRO DE ALCANTARA"
     },
     {
       "cnpj": "02.652.664/0001-60",
-      "nome": "CM ECHAPORA"
+      "nome": "CM ECHAPORA",
+      "uf": "SP",
+      "municipio": "ECHAPORA"
     },
     {
       "cnpj": "93.203.966/0001-07",
-      "nome": "CM ELDORADO DO SUL"
+      "nome": "CM ELDORADO DO SUL",
+      "uf": "RS",
+      "municipio": "ELDORADO DO SUL"
     },
     {
       "cnpj": "67.662.569/0001-93",
-      "nome": "CM EMILIANOPOLIS"
+      "nome": "CM EMILIANOPOLIS",
+      "uf": "SP",
+      "municipio": "EMILIANOPOLIS"
     },
     {
       "cnpj": "05.198.472/0001-14",
-      "nome": "CM ENCRUZILHADA DO SUL"
+      "nome": "CM ENCRUZILHADA DO SUL",
+      "uf": "RS",
+      "municipio": "ENCRUZILHADA DO SUL"
     },
     {
       "cnpj": "04.350.463/0001-34",
-      "nome": "CM ESMERALDA"
+      "nome": "CM ESMERALDA",
+      "uf": "RS",
+      "municipio": "ESMERALDA"
     },
     {
       "cnpj": "01.612.815/0001-94",
-      "nome": "CM ESPIGAO ALTO DO IGUACU"
+      "nome": "CM ESPIGAO ALTO DO IGUACU",
+      "uf": "PR",
+      "municipio": "ESPIGAO ALTO DO IGUACU"
     },
     {
       "cnpj": "67.168.872/0001-34",
-      "nome": "CM ESTIVA GERBI"
+      "nome": "CM ESTIVA GERBI",
+      "uf": "SP",
+      "municipio": "ESTIVA GERBI"
     },
     {
       "cnpj": "64.613.151/0001-06",
-      "nome": "CM ESTRELA DO NORTE"
+      "nome": "CM ESTRELA DO NORTE",
+      "uf": "SP",
+      "municipio": "ESTRELA DO NORTE"
     },
     {
       "cnpj": "67.662.528/0001-05",
-      "nome": "CM EUCLIDES DA CUNHA PAULISTA"
+      "nome": "CM EUCLIDES DA CUNHA PAULISTA",
+      "uf": "SP",
+      "municipio": "EUCLIDES DA CUNHA PAULISTA"
     },
     {
       "cnpj": "09.516.868/0001-13",
-      "nome": "CM EUGENIO DE CASTRO"
+      "nome": "CM EUGENIO DE CASTRO",
+      "uf": "RS",
+      "municipio": "EUGENIO DE CASTRO"
     },
     {
       "cnpj": "02.010.385/0001-01",
-      "nome": "CM FERNANDES PINHEIRO"
+      "nome": "CM FERNANDES PINHEIRO",
+      "uf": "PR",
+      "municipio": "FERNANDES PINHEIRO"
     },
     {
       "cnpj": "89.601.140/0001-29",
-      "nome": "CM FORMIGUEIRO"
+      "nome": "CM FORMIGUEIRO",
+      "uf": "RS",
+      "municipio": "FORMIGUEIRO"
     },
     {
       "cnpj": "80.403.330/0001-67",
-      "nome": "CM FORMOSA DO OESTE"
+      "nome": "CM FORMOSA DO OESTE",
+      "uf": "PR",
+      "municipio": "FORMOSA DO OESTE"
     },
     {
       "cnpj": "01.615.560/0001-13",
-      "nome": "CM FOZ DO JORDAO"
+      "nome": "CM FOZ DO JORDAO",
+      "uf": "PR",
+      "municipio": "FOZ DO JORDAO"
     },
     {
       "cnpj": "78.686.557/0001-15",
-      "nome": "CM FRANCISCO BELTRAO"
+      "nome": "CM FRANCISCO BELTRAO",
+      "uf": "PR",
+      "municipio": "FRANCISCO BELTRAO"
     },
     {
       "cnpj": "92.891.092/0001-65",
-      "nome": "CM GARRUCHOS"
+      "nome": "CM GARRUCHOS",
+      "uf": "RS",
+      "municipio": "GARRUCHOS"
     },
     {
       "cnpj": "02.401.428/0001-71",
-      "nome": "CM GENERAL CAMARA"
+      "nome": "CM GENERAL CAMARA",
+      "uf": "RS",
+      "municipio": "GENERAL CAMARA"
     },
     {
       "cnpj": "84.139.625/0001-29",
-      "nome": "CM GOIANESIA DO PARA"
+      "nome": "CM GOIANESIA DO PARA",
+      "uf": "PA",
+      "municipio": "GOIANESIA DO PARA"
     },
     {
       "cnpj": "01.607.629/0001-67",
-      "nome": "CM GOIOXIM"
+      "nome": "CM GOIOXIM",
+      "uf": "PR",
+      "municipio": "GOIOXIM"
     },
     {
       "cnpj": "01.327.072/0001-00",
-      "nome": "CM GUAIRACA"
+      "nome": "CM GUAIRACA",
+      "uf": "PR",
+      "municipio": "GUAIRACA"
     },
     {
       "cnpj": "01.616.302/0001-51",
-      "nome": "CM GUAMIRANGA"
+      "nome": "CM GUAMIRANGA",
+      "uf": "PR",
+      "municipio": "GUAMIRANGA"
     },
     {
       "cnpj": "77.774.610/0001-77",
-      "nome": "CM GUAPIRAMA"
+      "nome": "CM GUAPIRAMA",
+      "uf": "PR",
+      "municipio": "GUAPIRAMA"
     },
     {
       "cnpj": "01.368.028/0001-49",
-      "nome": "CM GUAPOREMA"
+      "nome": "CM GUAPOREMA",
+      "uf": "PR",
+      "municipio": "GUAPOREMA"
     },
     {
       "cnpj": "04.226.625/0001-27",
-      "nome": "CM GUARANI DAS MISSOES"
+      "nome": "CM GUARANI DAS MISSOES",
+      "uf": "RS",
+      "municipio": "GUARANI DAS MISSOES"
     },
     {
       "cnpj": "58.977.166/0001-42",
-      "nome": "CM GUAREI"
+      "nome": "CM GUAREI",
+      "uf": "SP",
+      "municipio": "GUAREI"
     },
     {
       "cnpj": "01.659.932/0001-03",
-      "nome": "CM GUARIBA"
+      "nome": "CM GUARIBA",
+      "uf": "SP",
+      "municipio": "GUARIBA"
     },
     {
       "cnpj": "91.571.653/0001-86",
-      "nome": "CM HERVAL"
+      "nome": "CM HERVAL",
+      "uf": "RS",
+      "municipio": "HERVAL"
     },
     {
       "cnpj": "92.921.998/0001-85",
-      "nome": "CM HULHA NEGRA"
+      "nome": "CM HULHA NEGRA",
+      "uf": "RS",
+      "municipio": "HULHA NEGRA"
     },
     {
       "cnpj": "77.774.677/0001-01",
-      "nome": "CM IBAITI"
+      "nome": "CM IBAITI",
+      "uf": "PR",
+      "municipio": "IBAITI"
     },
     {
       "cnpj": "02.508.169/0001-82",
-      "nome": "CM IBIRAIARAS"
+      "nome": "CM IBIRAIARAS",
+      "uf": "RS",
+      "municipio": "IBIRAIARAS"
     },
     {
       "cnpj": "95.595.278/0001-65",
-      "nome": "CM IGUATU"
+      "nome": "CM IGUATU",
+      "uf": "PR",
+      "municipio": "IGUATU"
     },
     {
       "cnpj": "89.648.968/0001-32",
-      "nome": "CM IJUI"
+      "nome": "CM IJUI",
+      "uf": "RS",
+      "municipio": "IJUI"
     },
     {
       "cnpj": "01.613.768/0001-01",
-      "nome": "CM IMBAU"
+      "nome": "CM IMBAU",
+      "uf": "PR",
+      "municipio": "IMBAU"
     },
     {
       "cnpj": "77.778.686/0001-70",
-      "nome": "CM IMBITUVA"
+      "nome": "CM IMBITUVA",
+      "uf": "PR",
+      "municipio": "IMBITUVA"
     },
     {
       "cnpj": "77.778.827/0001-55",
-      "nome": "CM INACIO MARTINS"
+      "nome": "CM INACIO MARTINS",
+      "uf": "PR",
+      "municipio": "INACIO MARTINS"
     },
     {
       "cnpj": "01.565.333/0001-20",
-      "nome": "CM INDIANOPOLIS-PR"
+      "nome": "CM INDIANOPOLIS-PR",
+      "uf": "PR",
+      "municipio": "INDIANOPOLIS"
     },
     {
       "cnpj": "19.871.680/0001-47",
-      "nome": "CM IPATINGA"
+      "nome": "CM IPATINGA",
+      "uf": "MG",
+      "municipio": "IPATINGA"
     },
     {
       "cnpj": "09.012.116/0001-15",
-      "nome": "CM IPE"
+      "nome": "CM IPE",
+      "uf": "RS",
+      "municipio": "IPE"
     },
     {
       "cnpj": "72.430.382/0001-02",
-      "nome": "CM IPORA"
+      "nome": "CM IPORA",
+      "uf": "PR",
+      "municipio": "IPORA"
     },
     {
       "cnpj": "16.845.679/0001-50",
-      "nome": "CM ITABIRA"
+      "nome": "CM ITABIRA",
+      "uf": "MG",
+      "municipio": "ITABIRA"
     },
     {
       "cnpj": "30.417.224/0001-64",
-      "nome": "CM ITALVA"
+      "nome": "CM ITALVA",
+      "uf": "RJ",
+      "municipio": "ITALVA"
     },
     {
       "cnpj": "77.778.629/0001-91",
-      "nome": "CM ITAPEJARA D OESTE"
+      "nome": "CM ITAPEJARA D OESTE",
+      "uf": "PR",
+      "municipio": "ITAPEJARA D OESTE"
     },
     {
       "cnpj": "30.407.753/0001-87",
-      "nome": "CM ITAPERUNA"
+      "nome": "CM ITAPERUNA",
+      "uf": "RJ",
+      "municipio": "ITAPERUNA"
     },
     {
       "cnpj": "80.611.635/0001-64",
-      "nome": "CM ITAUNA DO SUL"
+      "nome": "CM ITAUNA DO SUL",
+      "uf": "PR",
+      "municipio": "ITAUNA DO SUL"
     },
     {
       "cnpj": "77.778.702/0001-25",
-      "nome": "CM IVAI"
+      "nome": "CM IVAI",
+      "uf": "PR",
+      "municipio": "IVAI"
     },
     {
       "cnpj": "66.998.097/0001-81",
-      "nome": "CM JABORANDI"
+      "nome": "CM JABORANDI",
+      "uf": "SP",
+      "municipio": "JABORANDI"
     },
     {
       "cnpj": "77.774.453/0001-08",
-      "nome": "CM JABOTI"
+      "nome": "CM JABOTI",
+      "uf": "PR",
+      "municipio": "JABOTI"
     },
     {
       "cnpj": "01.510.404/0001-98",
-      "nome": "CM JACAREZINHO"
+      "nome": "CM JACAREZINHO",
+      "uf": "PR",
+      "municipio": "JACAREZINHO"
     },
     {
       "cnpj": "09.473.270/0001-94",
-      "nome": "CM JAGUARAO"
+      "nome": "CM JAGUARAO",
+      "uf": "RS",
+      "municipio": "JAGUARAO"
     },
     {
       "cnpj": "77.774.461/0001-46",
-      "nome": "CM JAPIRA"
+      "nome": "CM JAPIRA",
+      "uf": "PR",
+      "municipio": "JAPIRA"
     },
     {
       "cnpj": "80.887.805/0001-38",
-      "nome": "CM JAPURA"
+      "nome": "CM JAPURA",
+      "uf": "PR",
+      "municipio": "JAPURA"
     },
     {
       "cnpj": "01.569.688/0001-98",
-      "nome": "CM JARINU"
+      "nome": "CM JARINU",
+      "uf": "SP",
+      "municipio": "JARINU"
     },
     {
       "cnpj": "00.380.488/0001-20",
-      "nome": "CM JATAIZINHO"
+      "nome": "CM JATAIZINHO",
+      "uf": "PR",
+      "municipio": "JATAIZINHO"
     },
     {
       "cnpj": "78.106.069/0001-91",
-      "nome": "CM JESUITAS"
+      "nome": "CM JESUITAS",
+      "uf": "PR",
+      "municipio": "JESUITAS"
     },
     {
       "cnpj": "01.656.027/0001-08",
-      "nome": "CM JOIA"
+      "nome": "CM JOIA",
+      "uf": "RS",
+      "municipio": "JOIA"
     },
     {
       "cnpj": "20.431.334/0001-27",
-      "nome": "CM JUIZ DE FORA"
+      "nome": "CM JUIZ DE FORA",
+      "uf": "MG",
+      "municipio": "JUIZ DE FORA"
     },
     {
       "cnpj": "89.348.932/0001-33",
-      "nome": "CM JULIO DE CASTILHOS"
+      "nome": "CM JULIO DE CASTILHOS",
+      "uf": "RS",
+      "municipio": "JULIO DE CASTILHOS"
     },
     {
       "cnpj": "77.778.777/0001-06",
-      "nome": "CM JUNDIAI DO SUL"
+      "nome": "CM JUNDIAI DO SUL",
+      "uf": "PR",
+      "municipio": "JUNDIAI DO SUL"
     },
     {
       "cnpj": "31.272.438/0001-52",
-      "nome": "CM LAJE DO MURIAE"
+      "nome": "CM LAJE DO MURIAE",
+      "uf": "RJ",
+      "municipio": "LAJE DO MURIAE"
     },
     {
       "cnpj": "95.684.775/0001-30",
-      "nome": "CM LARANJAL"
+      "nome": "CM LARANJAL",
+      "uf": "PR",
+      "municipio": "LARANJAL"
     },
     {
       "cnpj": "78.119.336/0001-65",
-      "nome": "CM LARANJEIRAS DO SUL"
+      "nome": "CM LARANJEIRAS DO SUL",
+      "uf": "PR",
+      "municipio": "LARANJEIRAS DO SUL"
     },
     {
       "cnpj": "00.883.377/0001-36",
-      "nome": "CM LAVRAS DO SUL"
+      "nome": "CM LAVRAS DO SUL",
+      "uf": "RS",
+      "municipio": "LAVRAS DO SUL"
     },
     {
       "cnpj": "51.042.737/0001-08",
-      "nome": "CM LEME"
+      "nome": "CM LEME",
+      "uf": "SP",
+      "municipio": "LEME"
     },
     {
       "cnpj": "00.141.217/0001-11",
-      "nome": "CM LEOPOLIS"
+      "nome": "CM LEOPOLIS",
+      "uf": "PR",
+      "municipio": "LEOPOLIS"
     },
     {
       "cnpj": "78.316.064/0001-93",
-      "nome": "CM LONDRINA"
+      "nome": "CM LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "01.141.176/0001-26",
-      "nome": "CM LUPIONOPOLIS"
+      "nome": "CM LUPIONOPOLIS",
+      "uf": "PR",
+      "municipio": "LUPIONOPOLIS"
     },
     {
       "cnpj": "29.893.617/0001-65",
-      "nome": "CM MACAE"
+      "nome": "CM MACAE",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "01.751.704/0001-69",
-      "nome": "CM MACUCO"
+      "nome": "CM MACUCO",
+      "uf": "RJ",
+      "municipio": "MACUCO"
     },
     {
       "cnpj": "02.015.603/0001-92",
-      "nome": "CM MANFRINOPOLIS"
+      "nome": "CM MANFRINOPOLIS",
+      "uf": "PR",
+      "municipio": "MANFRINOPOLIS"
     },
     {
       "cnpj": "77.774.636/0001-15",
-      "nome": "CM MANOEL RIBAS"
+      "nome": "CM MANOEL RIBAS",
+      "uf": "PR",
+      "municipio": "MANOEL RIBAS"
     },
     {
       "cnpj": "09.284.796/0001-26",
-      "nome": "CM MANOEL VIANA"
+      "nome": "CM MANOEL VIANA",
+      "uf": "RS",
+      "municipio": "MANOEL VIANA"
     },
     {
       "cnpj": "77.774.669/0001-65",
-      "nome": "CM MARIOPOLIS"
+      "nome": "CM MARIOPOLIS",
+      "uf": "PR",
+      "municipio": "MARIOPOLIS"
     },
     {
       "cnpj": "01.629.082/0001-09",
-      "nome": "CM MARQUINHO"
+      "nome": "CM MARQUINHO",
+      "uf": "PR",
+      "municipio": "MARQUINHO"
     },
     {
       "cnpj": "77.814.820/0001-41",
-      "nome": "CM MEDIANEIRA"
+      "nome": "CM MEDIANEIRA",
+      "uf": "PR",
+      "municipio": "MEDIANEIRA"
     },
     {
       "cnpj": "31.501.612/0001-91",
-      "nome": "CM MIRACEMA"
+      "nome": "CM MIRACEMA",
+      "uf": "RJ",
+      "municipio": "MIRACEMA"
     },
     {
       "cnpj": "02.402.788/0001-98",
-      "nome": "CM MIRASSELVA"
+      "nome": "CM MIRASSELVA",
+      "uf": "PR",
+      "municipio": "MIRASELVA"
     },
     {
       "cnpj": "01.579.444/0001-96",
-      "nome": "CM MISSAL"
+      "nome": "CM MISSAL",
+      "uf": "PR",
+      "municipio": "MISSAL"
     },
     {
       "cnpj": "74.191.362/0001-43",
-      "nome": "CM MOEMA"
+      "nome": "CM MOEMA",
+      "uf": "MG",
+      "municipio": "MOEMA"
     },
     {
       "cnpj": "51.301.463/0001-24",
-      "nome": "CM MONTE ALEGRE DO SUL"
+      "nome": "CM MONTE ALEGRE DO SUL",
+      "uf": "SP",
+      "municipio": "MONTE ALEGRE DO SUL"
     },
     {
       "cnpj": "51.848.497/0001-33",
-      "nome": "CM MONTE APRAZIVEL"
+      "nome": "CM MONTE APRAZIVEL",
+      "uf": "SP",
+      "municipio": "MONTE APRAZIVEL"
     },
     {
       "cnpj": "02.856.827/0001-27",
-      "nome": "CM MONTENEGRO"
+      "nome": "CM MONTENEGRO",
+      "uf": "RS",
+      "municipio": "MONTENEGRO"
     },
     {
       "cnpj": "25.218.645/0001-26",
-      "nome": "CM MONTES CLAROS"
+      "nome": "CM MONTES CLAROS",
+      "uf": "MG",
+      "municipio": "MONTES CLAROS"
     },
     {
       "cnpj": "11.049.372/0001-29",
-      "nome": "CM MORRO REDONDO"
+      "nome": "CM MORRO REDONDO",
+      "uf": "RS",
+      "municipio": "MORRO REDONDO"
     },
     {
       "cnpj": "76.721.570/0001-32",
-      "nome": "CM NOVA ALIANCA DO IVAI"
+      "nome": "CM NOVA ALIANCA DO IVAI",
+      "uf": "PR",
+      "municipio": "NOVA ALIANCA DO IVAI"
     },
     {
       "cnpj": "01.040.648/0001-54",
-      "nome": "CM NOVA ESPERANCA DO SUDOESTE"
+      "nome": "CM NOVA ESPERANCA DO SUDOESTE",
+      "uf": "PR",
+      "municipio": "NOVA ESPERANCA DO SUDOESTE"
     },
     {
       "cnpj": "95.587.663/0001-60",
-      "nome": "CM NOVA LARANJEIRAS"
+      "nome": "CM NOVA LARANJEIRAS",
+      "uf": "PR",
+      "municipio": "NOVA LARANJEIRAS"
     },
     {
       "cnpj": "39.942.591/0001-51",
-      "nome": "CM NOVO XINGU"
+      "nome": "CM NOVO XINGU",
+      "uf": "RS",
+      "municipio": "NOVO XINGU"
     },
     {
       "cnpj": "11.527.108/0001-53",
-      "nome": "CM OLINDA"
+      "nome": "CM OLINDA",
+      "uf": "PE",
+      "municipio": "OLINDA"
     },
     {
       "cnpj": "51.389.039/0001-83",
-      "nome": "CM OSVALDO CRUZ"
+      "nome": "CM OSVALDO CRUZ",
+      "uf": "SP",
+      "municipio": "OSVALDO CRUZ"
     },
     {
       "cnpj": "02.442.324/0001-05",
-      "nome": "CM PALMARES DO SUL"
+      "nome": "CM PALMARES DO SUL",
+      "uf": "RS",
+      "municipio": "PALMARES DO SUL"
     },
     {
       "cnpj": "49.893.225/0001-03",
-      "nome": "CM PALMITAL"
+      "nome": "CM PALMITAL",
+      "uf": "SP",
+      "municipio": "PALMITAL"
     },
     {
       "cnpj": "77.778.660/0001-22",
-      "nome": "CM PALMITAL PR"
+      "nome": "CM PALMITAL PR",
+      "uf": "PR",
+      "municipio": "PALMITAL"
     },
     {
       "cnpj": "05.048.928/0001-60",
-      "nome": "CM PANTANO GRANDE"
+      "nome": "CM PANTANO GRANDE",
+      "uf": "RS",
+      "municipio": "PANTANO GRANDE"
     },
     {
       "cnpj": "27.963.040/0001-95",
-      "nome": "CM PARABA DO SUL"
+      "nome": "CM PARABA DO SUL",
+      "uf": "RJ",
+      "municipio": "PARAIBA DO SUL"
     },
     {
       "cnpj": "01.816.270/0001-38",
-      "nome": "CM PARANAPANEMA"
+      "nome": "CM PARANAPANEMA",
+      "uf": "SP",
+      "municipio": "PARANAPANEMA"
     },
     {
       "cnpj": "01.632.524/0001-68",
-      "nome": "CM PARDINHO"
+      "nome": "CM PARDINHO",
+      "uf": "SP",
+      "municipio": "PARDINHO"
     },
     {
       "cnpj": "76.898.196/0001-45",
-      "nome": "CM PATO BRANCO"
+      "nome": "CM PATO BRANCO",
+      "uf": "PR",
+      "municipio": "PATO BRANCO"
     },
     {
       "cnpj": "00.136.452/0001-03",
-      "nome": "CM PEDRA BELA"
+      "nome": "CM PEDRA BELA",
+      "uf": "SP",
+      "municipio": "PEDRA BELA"
     },
     {
       "cnpj": "04.241.539/0001-93",
-      "nome": "CM PEDRAS ALTAS"
+      "nome": "CM PEDRAS ALTAS",
+      "uf": "RS",
+      "municipio": "PEDRAS ALTAS"
     },
     {
       "cnpj": "03.348.670/0001-91",
-      "nome": "CM PEDRO OSORIO"
+      "nome": "CM PEDRO OSORIO",
+      "uf": "RS",
+      "municipio": "PEDRO OSORIO"
     },
     {
       "cnpj": "77.844.280/0001-49",
-      "nome": "CM PEROLA"
+      "nome": "CM PEROLA",
+      "uf": "PR",
+      "municipio": "PEROLA"
     },
     {
       "cnpj": "01.603.097/0001-90",
-      "nome": "CM PIEN"
+      "nome": "CM PIEN",
+      "uf": "PR",
+      "municipio": "PIEN"
     },
     {
       "cnpj": "02.015.629/0001-30",
-      "nome": "CM PINHAL DE SAO BENTO"
+      "nome": "CM PINHAL DE SAO BENTO",
+      "uf": "PR",
+      "municipio": "PINHAL DE SAO BENTO"
     },
     {
       "cnpj": "08.741.527/0001-89",
-      "nome": "CM PINHEIRO MACHADO"
+      "nome": "CM PINHEIRO MACHADO",
+      "uf": "RS",
+      "municipio": "PINHEIRO MACHADO"
     },
     {
       "cnpj": "17.757.258/0001-30",
-      "nome": "CM PIRAQUARA"
+      "nome": "CM PIRAQUARA",
+      "uf": "PR",
+      "municipio": "PIRAQUARA"
     },
     {
       "cnpj": "22.862.949/0001-33",
-      "nome": "CM PIRATINI"
+      "nome": "CM PIRATINI",
+      "uf": "RS",
+      "municipio": "PIRATINI"
     },
     {
       "cnpj": "78.114.121/0001-51",
-      "nome": "CM PLANALTO"
+      "nome": "CM PLANALTO",
+      "uf": "PR",
+      "municipio": "PLANALTO"
     },
     {
       "cnpj": "49.893.233/0001-50",
-      "nome": "CM PLATINA"
+      "nome": "CM PLATINA",
+      "uf": "SP",
+      "municipio": "PLATINA"
     },
     {
       "cnpj": "01.575.172/0001-56",
-      "nome": "CM PORECATU"
+      "nome": "CM PORECATU",
+      "uf": "PR",
+      "municipio": "PORECATU"
     },
     {
       "cnpj": "77.778.611/0001-90",
-      "nome": "CM PORTO AMAZONAS"
+      "nome": "CM PORTO AMAZONAS",
+      "uf": "PR",
+      "municipio": "PORTO AMAZONAS"
     },
     {
       "cnpj": "01.641.655/0001-01",
-      "nome": "CM PORTO BARREIRO"
+      "nome": "CM PORTO BARREIRO",
+      "uf": "PR",
+      "municipio": "PORTO BARREIRO"
     },
     {
       "cnpj": "01.603.319/0001-74",
-      "nome": "CM PORTO FELIZ"
+      "nome": "CM PORTO FELIZ",
+      "uf": "SP",
+      "municipio": "PORTO FELIZ"
     },
     {
       "cnpj": "01.613.112/0001-80",
-      "nome": "CM PRADO FERREIRA"
+      "nome": "CM PRADO FERREIRA",
+      "uf": "PR",
+      "municipio": "PRADO FERREIRA"
     },
     {
       "cnpj": "00.957.866/0001-95",
-      "nome": "CM PRANCHITA"
+      "nome": "CM PRANCHITA",
+      "uf": "PR",
+      "municipio": "PRANCHITA"
     },
     {
       "cnpj": "64.612.823/0001-50",
-      "nome": "CM PRESIDENTE BERNARDES"
+      "nome": "CM PRESIDENTE BERNARDES",
+      "uf": "SP",
+      "municipio": "PRESIDENTE BERNARDES"
     },
     {
       "cnpj": "80.892.110/0001-44",
-      "nome": "CM PRESIDENTE CASTELO BRANCO"
+      "nome": "CM PRESIDENTE CASTELO BRANCO",
+      "uf": "PR",
+      "municipio": "PRESIDENTE CASTELO BRANCO"
     },
     {
       "cnpj": "44.933.679/0001-47",
-      "nome": "CM PRESIDENTE EPITACIO"
+      "nome": "CM PRESIDENTE EPITACIO",
+      "uf": "SP",
+      "municipio": "PRESIDENTE EPITACIO"
     },
     {
       "cnpj": "77.778.678/0001-24",
-      "nome": "CM PRUDENTOPOLIS"
+      "nome": "CM PRUDENTOPOLIS",
+      "uf": "PR",
+      "municipio": "PRUDENTOPOLIS"
     },
     {
       "cnpj": "93.245.421/0001-63",
-      "nome": "CM QUARAI"
+      "nome": "CM QUARAI",
+      "uf": "RS",
+      "municipio": "QUARAI"
     },
     {
       "cnpj": "01.545.843/0001-36",
-      "nome": "CM QUEDAS DO IGUACU"
+      "nome": "CM QUEDAS DO IGUACU",
+      "uf": "PR",
+      "municipio": "QUEDAS DO IGUACU"
     },
     {
       "cnpj": "31.505.068/0001-56",
-      "nome": "CM QUISSAMA"
+      "nome": "CM QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "00.942.397/0001-30",
-      "nome": "CM QUITANDINHA"
+      "nome": "CM QUITANDINHA",
+      "uf": "PR",
+      "municipio": "QUITANDINHA"
     },
     {
       "cnpj": "00.980.909/0001-53",
-      "nome": "CM RAMILANDIA"
+      "nome": "CM RAMILANDIA",
+      "uf": "PR",
+      "municipio": "RAMILANDIA"
     },
     {
       "cnpj": "01.951.066/0001-20",
-      "nome": "CM RANCHO ALEGRE"
+      "nome": "CM RANCHO ALEGRE",
+      "uf": "PR",
+      "municipio": "RANCHO ALEGRE"
     },
     {
       "cnpj": "95.640.215/0001-83",
-      "nome": "CM RANCHO ALEGRE D'OESTE"
+      "nome": "CM RANCHO ALEGRE D'OESTE",
+      "uf": "PR",
+      "municipio": "RANCHO ALEGRE D OESTE"
     },
     {
       "cnpj": "00.452.810/0001-89",
-      "nome": "CM REALEZA"
+      "nome": "CM REALEZA",
+      "uf": "PR",
+      "municipio": "REALEZA"
     },
     {
       "cnpj": "01.575.416/0001-09",
-      "nome": "CM REGENTE FEIJO"
+      "nome": "CM REGENTE FEIJO",
+      "uf": "SP",
+      "municipio": "REGENTE FEIJO"
     },
     {
       "cnpj": "77.780.161/0001-70",
-      "nome": "CM RESERVA"
+      "nome": "CM RESERVA",
+      "uf": "PR",
+      "municipio": "RESERVA"
     },
     {
       "cnpj": "01.615.659/0001-15",
-      "nome": "CM RESERVA DO IGUACU"
+      "nome": "CM RESERVA DO IGUACU",
+      "uf": "PR",
+      "municipio": "RESERVA DO IGUACU"
     },
     {
       "cnpj": "89.250.690/0001-40",
-      "nome": "CM RESTINGA SECA"
+      "nome": "CM RESTINGA SECA",
+      "uf": "RS",
+      "municipio": "RESTINGA SECA"
     },
     {
       "cnpj": "77.778.751/0001-68",
-      "nome": "CM RIBEIRAO DO PINHAL"
+      "nome": "CM RIBEIRAO DO PINHAL",
+      "uf": "PR",
+      "municipio": "RIBEIRAO DO PINHAL"
     },
     {
       "cnpj": "77.774.552/0001-81",
-      "nome": "CM RIO AZUL"
+      "nome": "CM RIO AZUL",
+      "uf": "PR",
+      "municipio": "RIO AZUL"
     },
     {
       "cnpj": "81.878.738/0001-58",
-      "nome": "CM RIO BOM"
+      "nome": "CM RIO BOM",
+      "uf": "PR",
+      "municipio": "RIO BOM"
     },
     {
       "cnpj": "95.587.705/0001-63",
-      "nome": "CM RIO BONITO DO IGUACU"
+      "nome": "CM RIO BONITO DO IGUACU",
+      "uf": "PR",
+      "municipio": "RIO BONITO DO IGUACU"
     },
     {
       "cnpj": "05.147.344/0001-41",
-      "nome": "CM RIO PARDO"
+      "nome": "CM RIO PARDO",
+      "uf": "RS",
+      "municipio": "RIO PARDO"
     },
     {
       "cnpj": "77.673.358/0001-00",
-      "nome": "CM ROLANDIA"
+      "nome": "CM ROLANDIA",
+      "uf": "PR",
+      "municipio": "ROLANDIA"
     },
     {
       "cnpj": "01.528.063/0001-88",
-      "nome": "CM RONDON"
+      "nome": "CM RONDON",
+      "uf": "PR",
+      "municipio": "RONDON"
     },
     {
       "cnpj": "89.234.660/0001-40",
-      "nome": "CM ROSARIO DO SUL"
+      "nome": "CM ROSARIO DO SUL",
+      "uf": "RS",
+      "municipio": "ROSARIO DO SUL"
     },
     {
       "cnpj": "00.921.263/0001-33",
-      "nome": "CM SALTO DO LONTRA"
+      "nome": "CM SALTO DO LONTRA",
+      "uf": "PR",
+      "municipio": "SALTO DO LONTRA"
     },
     {
       "cnpj": "57.264.889/0001-31",
-      "nome": "CM SALTO GRANDE"
+      "nome": "CM SALTO GRANDE",
+      "uf": "SP",
+      "municipio": "SALTO GRANDE"
     },
     {
       "cnpj": "80.926.934/0001-98",
-      "nome": "CM SANTA AMELIA"
+      "nome": "CM SANTA AMELIA",
+      "uf": "PR",
+      "municipio": "SANTA AMELIA"
     },
     {
       "cnpj": "01.491.938/0001-14",
-      "nome": "CM SANTA LUCIA"
+      "nome": "CM SANTA LUCIA",
+      "uf": "PR",
+      "municipio": "SANTA LUCIA"
     },
     {
       "cnpj": "89.250.708/0001-04",
-      "nome": "CM SANTA MARIA"
+      "nome": "CM SANTA MARIA",
+      "uf": "RS",
+      "municipio": "SANTA MARIA"
     },
     {
       "cnpj": "95.684.585/0001-12",
-      "nome": "CM SANTA MARIA DO OESTE"
+      "nome": "CM SANTA MARIA DO OESTE",
+      "uf": "PR",
+      "municipio": "SANTA MARIA DO OESTE"
     },
     {
       "cnpj": "32.558.355/0001-97",
-      "nome": "CM SANTA MARIA MADALENA"
+      "nome": "CM SANTA MARIA MADALENA",
+      "uf": "RJ",
+      "municipio": "SANTA MARIA MADALENA"
     },
     {
       "cnpj": "01.563.059/0001-50",
-      "nome": "CM SANTA MARIANA"
+      "nome": "CM SANTA MARIANA",
+      "uf": "PR",
+      "municipio": "SANTA MARIANA"
     },
     {
       "cnpj": "75.425.322/0001-81",
-      "nome": "CM SANTA TEREZINHA ITAIPU"
+      "nome": "CM SANTA TEREZINHA ITAIPU",
+      "uf": "PR",
+      "municipio": "SANTA TEREZINHA DE ITAIPU"
     },
     {
       "cnpj": "89.696.470/0001-45",
-      "nome": "CM SANTANA DO LIVRAMENTO"
+      "nome": "CM SANTANA DO LIVRAMENTO",
+      "uf": "RS",
+      "municipio": "SANTANA DO LIVRAMENTO"
     },
     {
       "cnpj": "36.285.062/0001-34",
-      "nome": "CM SANTO ANTONIO DE PADUA"
+      "nome": "CM SANTO ANTONIO DE PADUA",
+      "uf": "RJ",
+      "municipio": "SANTO ANTONIO DE PADUA"
     },
     {
       "cnpj": "95.590.998/0001-38",
-      "nome": "CM SANTO ANTONIO DO SUDOESTE"
+      "nome": "CM SANTO ANTONIO DO SUDOESTE",
+      "uf": "PR",
+      "municipio": "SANTO ANTONIO DO SUDOESTE"
     },
     {
       "cnpj": "01.494.725/0001-46",
-      "nome": "CM SANTO INACIO"
+      "nome": "CM SANTO INACIO",
+      "uf": "PR",
+      "municipio": "SANTO INACIO"
     },
     {
       "cnpj": "19.775.709/0001-97",
-      "nome": "CM SANTOS DUMONT"
+      "nome": "CM SANTOS DUMONT",
+      "uf": "MG",
+      "municipio": "SANTOS DUMONT"
     },
     {
       "cnpj": "91.262.154/0001-07",
-      "nome": "CM SAO FRANCISCO DE ASSIS"
+      "nome": "CM SAO FRANCISCO DE ASSIS",
+      "uf": "RS",
+      "municipio": "SAO FRANCISCO DE ASSIS"
     },
     {
       "cnpj": "89.498.232/0001-25",
-      "nome": "CM SAO GABRIEL"
+      "nome": "CM SAO GABRIEL",
+      "uf": "RS",
+      "municipio": "SAO GABRIEL"
     },
     {
       "cnpj": "74.011.024/0001-82",
-      "nome": "CM SAO GONCALO DO RIO ABAIXO"
+      "nome": "CM SAO GONCALO DO RIO ABAIXO",
+      "uf": "MG",
+      "municipio": "SAO GONCALO DO RIO ABAIXO"
     },
     {
       "cnpj": "80.871.080/0001-90",
-      "nome": "CM SAO JOAO"
+      "nome": "CM SAO JOAO",
+      "uf": "PR",
+      "municipio": "SAO JOAO"
     },
     {
       "cnpj": "02.232.834/0001-58",
-      "nome": "CM SAO JORGE D'OESTE"
+      "nome": "CM SAO JORGE D'OESTE",
+      "uf": "PR",
+      "municipio": "SAO JORGE D OESTE"
     },
     {
       "cnpj": "77.819.761/0001-02",
-      "nome": "CM SAO JOSE DAS PALMEIRAS"
+      "nome": "CM SAO JOSE DAS PALMEIRAS",
+      "uf": "PR",
+      "municipio": "SAO JOSE DAS PALMEIRAS"
     },
     {
       "cnpj": "00.653.833/0001-51",
-      "nome": "CM SAO JOSE DO NORTE"
+      "nome": "CM SAO JOSE DO NORTE",
+      "uf": "RS",
+      "municipio": "SAO JOSE DO NORTE"
     },
     {
       "cnpj": "09.566.723/0001-27",
-      "nome": "CM SAO LOURENCO DO SUL"
+      "nome": "CM SAO LOURENCO DO SUL",
+      "uf": "RS",
+      "municipio": "SAO LOURENCO DO SUL"
     },
     {
       "cnpj": "01.309.021/0001-56",
-      "nome": "CM SAO MANOEL DO PARANA"
+      "nome": "CM SAO MANOEL DO PARANA",
+      "uf": "PR",
+      "municipio": "SAO MANOEL DO PARANA"
     },
     {
       "cnpj": "09.643.276/0001-62",
-      "nome": "CM SAO MARTINHO DA SERRA"
+      "nome": "CM SAO MARTINHO DA SERRA",
+      "uf": "RS",
+      "municipio": "SAO MARTINHO DA SERRA"
     },
     {
       "cnpj": "01.637.740/0001-04",
-      "nome": "CM SAO PEDRO"
+      "nome": "CM SAO PEDRO",
+      "uf": "SP",
+      "municipio": "SAO PEDRO"
     },
     {
       "cnpj": "50.804.079/0001-81",
-      "nome": "CM SAO ROQUE"
+      "nome": "CM SAO ROQUE",
+      "uf": "SP",
+      "municipio": "SAO ROQUE"
     },
     {
       "cnpj": "50.320.332/0001-21",
-      "nome": "CM SAO SEBASTIAO"
+      "nome": "CM SAO SEBASTIAO",
+      "uf": "SP",
+      "municipio": "SAO SEBASTIAO"
     },
     {
       "cnpj": "51.892.487/0001-03",
-      "nome": "CM SAO SEBASTIAO DA GRAMA"
+      "nome": "CM SAO SEBASTIAO DA GRAMA",
+      "uf": "SP",
+      "municipio": "SAO SEBASTIAO DA GRAMA"
     },
     {
       "cnpj": "27.776.996/0001-88",
-      "nome": "CM SAO SEBASTIAO DO ALTO"
+      "nome": "CM SAO SEBASTIAO DO ALTO",
+      "uf": "RJ",
+      "municipio": "SAO SEBASTIAO DO ALTO"
     },
     {
       "cnpj": "01.508.970/0001-65",
-      "nome": "CM SAO TOME"
+      "nome": "CM SAO TOME",
+      "uf": "PR",
+      "municipio": "SAO TOME"
     },
     {
       "cnpj": "77.774.487/0001-94",
-      "nome": "CM SAPOPEMA"
+      "nome": "CM SAPOPEMA",
+      "uf": "PR",
+      "municipio": "SAPOPEMA"
     },
     {
       "cnpj": "27.792.290/0001-00",
-      "nome": "CM SAQUAREMA"
+      "nome": "CM SAQUAREMA",
+      "uf": "RJ",
+      "municipio": "SAQUAREMA"
     },
     {
       "cnpj": "00.791.289/0001-04",
-      "nome": "CM SAUDADE DO IGUACU"
+      "nome": "CM SAUDADE DO IGUACU",
+      "uf": "PR",
+      "municipio": "SAUDADE DO IGUACU"
     },
     {
       "cnpj": "94.703.519/0001-80",
-      "nome": "CM SELBACH"
+      "nome": "CM SELBACH",
+      "uf": "RS",
+      "municipio": "SELBACH"
     },
     {
       "cnpj": "77.778.736/0001-10",
-      "nome": "CM SENGES"
+      "nome": "CM SENGES",
+      "uf": "PR",
+      "municipio": "SENGES"
     },
     {
       "cnpj": "90.153.008/0001-80",
-      "nome": "CM SENTINELA DO SUL"
+      "nome": "CM SENTINELA DO SUL",
+      "uf": "RS",
+      "municipio": "SENTINELA DO SUL"
     },
     {
       "cnpj": "30.169.320/0001-30",
-      "nome": "CM SILVA JARDIM"
+      "nome": "CM SILVA JARDIM",
+      "uf": "RJ",
+      "municipio": "SILVA JARDIM"
     },
     {
       "cnpj": "02.242.589/0001-60",
-      "nome": "CM SULINA"
+      "nome": "CM SULINA",
+      "uf": "PR",
+      "municipio": "SULINA"
     },
     {
       "cnpj": "49.225.238/0001-04",
-      "nome": "CM TAIACU"
+      "nome": "CM TAIACU",
+      "uf": "SP",
+      "municipio": "TAIACU"
     },
     {
       "cnpj": "90.161.332/0001-40",
-      "nome": "CM TAPERA"
+      "nome": "CM TAPERA",
+      "uf": "RS",
+      "municipio": "TAPERA"
     },
     {
       "cnpj": "93.204.030/0001-09",
-      "nome": "CM TAPES"
+      "nome": "CM TAPES",
+      "uf": "RS",
+      "municipio": "TAPES"
     },
     {
       "cnpj": "09.124.319/0001-01",
-      "nome": "CM TAVARES"
+      "nome": "CM TAVARES",
+      "uf": "RS",
+      "municipio": "TAVARES"
     },
     {
       "cnpj": "77.774.560/0001-28",
-      "nome": "CM TEIXEIRA SOARES"
+      "nome": "CM TEIXEIRA SOARES",
+      "uf": "PR",
+      "municipio": "TEIXEIRA SOARES"
     },
     {
       "cnpj": "48.806.335/0001-28",
-      "nome": "CM TEODORO SAMPAIO"
+      "nome": "CM TEODORO SAMPAIO",
+      "uf": "SP",
+      "municipio": "TEODORO SAMPAIO"
     },
     {
       "cnpj": "01.432.222/0001-46",
-      "nome": "CM TERRA RICA"
+      "nome": "CM TERRA RICA",
+      "uf": "PR",
+      "municipio": "TERRA RICA"
     },
     {
       "cnpj": "01.594.672/0001-35",
-      "nome": "CM TIJUCAS DO SUL"
+      "nome": "CM TIJUCAS DO SUL",
+      "uf": "PR",
+      "municipio": "TIJUCAS DO SUL"
     },
     {
       "cnpj": "77.402.196/0001-75",
-      "nome": "CM TOLEDO"
+      "nome": "CM TOLEDO",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "78.678.174/0001-03",
-      "nome": "CM TRES BARRAS DO PARANA"
+      "nome": "CM TRES BARRAS DO PARANA",
+      "uf": "PR",
+      "municipio": "TRES BARRAS DO PARANA"
     },
     {
       "cnpj": "91.900.886/0001-85",
-      "nome": "CM TRIUNFO"
+      "nome": "CM TRIUNFO",
+      "uf": "RS",
+      "municipio": "TRIUNFO"
     },
     {
       "cnpj": "86.816.204/0001-10",
-      "nome": "CM TUIUTI"
+      "nome": "CM TUIUTI",
+      "uf": "SP",
+      "municipio": "TUIUTI"
     },
     {
       "cnpj": "89.348.957/0001-37",
-      "nome": "CM TUPANCIRETA"
+      "nome": "CM TUPANCIRETA",
+      "uf": "RS",
+      "municipio": "TUPANCIRETA"
     },
     {
       "cnpj": "03.125.683/0001-00",
-      "nome": "CM TURUCU"
+      "nome": "CM TURUCU",
+      "uf": "RS",
+      "municipio": "TURUCU"
     },
     {
       "cnpj": "00.421.500/0001-05",
-      "nome": "CM TURVO PR"
+      "nome": "CM TURVO PR",
+      "uf": "PR",
+      "municipio": "TURVO"
     },
     {
       "cnpj": "20.353.488/0001-48",
-      "nome": "CM UBA"
+      "nome": "CM UBA",
+      "uf": "MG",
+      "municipio": "UBA"
     },
     {
       "cnpj": "10.717.725/0001-59",
-      "nome": "CM UBIRETAMA"
+      "nome": "CM UBIRETAMA",
+      "uf": "RS",
+      "municipio": "UBIRETAMA"
     },
     {
       "cnpj": "00.276.597/0001-00",
-      "nome": "CM UNIFLOR - GEM"
+      "nome": "CM UNIFLOR - GEM",
+      "uf": "PR",
+      "municipio": "UNIFLOR"
     },
     {
       "cnpj": "80.920.473/0001-46",
-      "nome": "CM URAI"
+      "nome": "CM URAI",
+      "uf": "PR",
+      "municipio": "URAI"
     },
     {
       "cnpj": "01.701.521/0001-39",
-      "nome": "CM URUGUAIANA"
+      "nome": "CM URUGUAIANA",
+      "uf": "RS",
+      "municipio": "URUGUAIANA"
     },
     {
       "cnpj": "90.544.057/0001-44",
-      "nome": "CM VACARIA"
+      "nome": "CM VACARIA",
+      "uf": "RS",
+      "municipio": "VACARIA"
     },
     {
       "cnpj": "24.151.929/0001-80",
-      "nome": "CM VALE DO SOL"
+      "nome": "CM VALE DO SOL",
+      "uf": "RS",
+      "municipio": "VALE DO SOL"
     },
     {
       "cnpj": "39.218.821/0001-34",
-      "nome": "CM VARRE-SAI"
+      "nome": "CM VARRE-SAI",
+      "uf": "RJ",
+      "municipio": "VARRE-SAI"
     },
     {
       "cnpj": "51.863.884/0001-49",
-      "nome": "CM VARZEA PAULISTA"
+      "nome": "CM VARZEA PAULISTA",
+      "uf": "SP",
+      "municipio": "VARZEA PAULISTA"
     },
     {
       "cnpj": "27.964.923/0001-10",
-      "nome": "CM VASSOURAS"
+      "nome": "CM VASSOURAS",
+      "uf": "RJ",
+      "municipio": "VASSOURAS"
     },
     {
       "cnpj": "72.376.882/0001-03",
-      "nome": "CM VENTANIA"
+      "nome": "CM VENTANIA",
+      "uf": "PR",
+      "municipio": "VENTANIA"
     },
     {
       "cnpj": "00.994.916/0001-04",
-      "nome": "CM VERE"
+      "nome": "CM VERE",
+      "uf": "PR",
+      "municipio": "VERE"
     },
     {
       "cnpj": "00.550.694/0001-30",
-      "nome": "CM VIAMAO"
+      "nome": "CM VIAMAO",
+      "uf": "RS",
+      "municipio": "VIAMAO"
     },
     {
       "cnpj": "07.329.693/0001-00",
-      "nome": "CM VICTOR GRAEFF"
+      "nome": "CM VICTOR GRAEFF",
+      "uf": "RS",
+      "municipio": "VICTOR GRAEFF"
     },
     {
       "cnpj": "09.466.431/0001-12",
-      "nome": "CM VILA NOVA DO SUL"
+      "nome": "CM VILA NOVA DO SUL",
+      "uf": "RS",
+      "municipio": "VILA NOVA DO SUL"
     },
     {
       "cnpj": "95.587.689/0001-09",
-      "nome": "CM VIRMOND"
+      "nome": "CM VIRMOND",
+      "uf": "PR",
+      "municipio": "VIRMOND"
     },
     {
       "cnpj": "49.677.917/0001-14",
-      "nome": "CM VOTUPORANGA"
+      "nome": "CM VOTUPORANGA",
+      "uf": "SP",
+      "municipio": "VOTUPORANGA"
     },
     {
       "cnpj": "02.044.316/0001-00",
-      "nome": "CM XAMBRE"
+      "nome": "CM XAMBRE",
+      "uf": "PR",
+      "municipio": "XAMBRE"
     },
     {
       "cnpj": "78.616.760/0001-15",
-      "nome": "COMP HAB DE LONDRINA - COHAB LD"
+      "nome": "COMP HAB DE LONDRINA - COHAB LD",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "86.731.320/0001-37",
-      "nome": "COMP MUNIC DE TRANS E URB - CMTU-LD"
+      "nome": "COMP MUNIC DE TRANS E URB - CMTU-LD",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "03.311.327/0001-72",
-      "nome": "COMP TECN DESENV SA - LONDRINA"
+      "nome": "COMP TECN DESENV SA - LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "08.236.352/0001-52",
-      "nome": "CONS DE RESIDUOS SOLIDOS COMANDAI"
+      "nome": "CONS DE RESIDUOS SOLIDOS COMANDAI",
+      "uf": "RS",
+      "municipio": "GUARANI DAS MISSOES"
     },
     {
       "cnpj": "01.509.149/0001-63",
-      "nome": "CONS DESENV QUARTA COLONIA"
+      "nome": "CONS DESENV QUARTA COLONIA",
+      "uf": "RS",
+      "municipio": "SAO JOAO DO POLESINE"
     },
     {
       "cnpj": "14.662.467/0001-01",
-      "nome": "CONS DESENV SUST SERRA GAUCHA - CISGA"
+      "nome": "CONS DESENV SUST SERRA GAUCHA - CISGA",
+      "uf": "RS",
+      "municipio": "GARIBALDI"
     },
     {
       "cnpj": "07.051.788/0001-04",
-      "nome": "CONS INT DE PARA DESENV REGIONAL CONDER"
+      "nome": "CONS INT DE PARA DESENV REGIONAL CONDER",
+      "uf": "PR",
+      "municipio": "IRATI"
     },
     {
       "cnpj": "03.656.200/0001-95",
-      "nome": "CONS INTER ALTO JACUI-COMAJA"
+      "nome": "CONS INTER ALTO JACUI-COMAJA",
+      "uf": "RS",
+      "municipio": "IBIRUBA"
     },
     {
       "cnpj": "08.890.062/0001-28",
-      "nome": "CONS INTER ATERRO SANIT JOAQUIM TAVORA"
+      "nome": "CONS INTER ATERRO SANIT JOAQUIM TAVORA",
+      "uf": "PR",
+      "municipio": "JOAQUIM TAVORA"
     },
     {
       "cnpj": "19.297.980/0001-64",
-      "nome": "CONS INTER CASA LAR"
+      "nome": "CONS INTER CASA LAR",
+      "uf": "PR",
+      "municipio": "TOMAZINA"
     },
     {
       "cnpj": "07.926.117/0001-40",
-      "nome": "CONS INTER CENTRO SUL - CAMAQUA"
+      "nome": "CONS INTER CENTRO SUL - CAMAQUA",
+      "uf": "RS",
+      "municipio": "CAMAQUA"
     },
     {
       "cnpj": "52.169.886/0001-03",
-      "nome": "CONS INTER CISAS - IBAITI"
+      "nome": "CONS INTER CISAS - IBAITI",
+      "uf": "PR",
+      "municipio": "IBAITI"
     },
     {
       "cnpj": "11.269.697/0001-17",
-      "nome": "CONS INTER DES ECOC SOCIAL EDUC CIDERSOP"
+      "nome": "CONS INTER DES ECOC SOCIAL EDUC CIDERSOP",
+      "uf": "PR",
+      "municipio": "VERA CRUZ DO OESTE"
     },
     {
       "cnpj": "23.639.923/0001-93",
-      "nome": "CONS INTER DESENV PAMPA GAUCHO"
+      "nome": "CONS INTER DESENV PAMPA GAUCHO",
+      "uf": "RS",
+      "municipio": "BAGE"
     },
     {
       "cnpj": "07.145.704/0001-00",
-      "nome": "CONS INTER REGIAO CARBONIFERA CIGA"
+      "nome": "CONS INTER REGIAO CARBONIFERA CIGA",
+      "uf": "RS",
+      "municipio": "SAO JERONIMO"
     },
     {
       "cnpj": "94.446.804/0001-62",
-      "nome": "CONS INTER REGIAO CENTRO RS - CI/CENTRO"
+      "nome": "CONS INTER REGIAO CENTRO RS - CI/CENTRO",
+      "uf": "RS",
+      "municipio": "SANTA MARIA"
     },
     {
       "cnpj": "20.198.897/0001-17",
-      "nome": "CONS INTER RESIUOD SOLIDOS - CIRES"
+      "nome": "CONS INTER RESIUOD SOLIDOS - CIRES",
+      "uf": "PR",
+      "municipio": "PRADO FERREIRA"
     },
     {
       "cnpj": "03.681.070/0001-40",
-      "nome": "CONS INTER SAUDE BX FLUMINENSE - CISBAF"
+      "nome": "CONS INTER SAUDE BX FLUMINENSE - CISBAF",
+      "uf": "RJ",
+      "municipio": "NOVA IGUACU"
     },
     {
       "cnpj": "02.264.781/0001-57",
-      "nome": "CONS INTER SAUDE DAS MISSOES"
+      "nome": "CONS INTER SAUDE DAS MISSOES",
+      "uf": "RS",
+      "municipio": "ENTRE-IJUIS"
     },
     {
       "cnpj": "36.330.988/0001-02",
-      "nome": "CONS INTER SAUDE DO PARANA - CIS5RS"
+      "nome": "CONS INTER SAUDE DO PARANA - CIS5RS",
+      "uf": "PR",
+      "municipio": "GUARAPUAVA"
     },
     {
       "cnpj": "02.231.696/0001-92",
-      "nome": "CONS INTER SAUDE NOROESTE RS - CISA"
+      "nome": "CONS INTER SAUDE NOROESTE RS - CISA",
+      "uf": "RS",
+      "municipio": "IJUI"
     },
     {
       "cnpj": "18.960.233/0001-00",
-      "nome": "CONS OESTE PAULISTA - CIOP"
+      "nome": "CONS OESTE PAULISTA - CIOP",
+      "uf": "SP",
+      "municipio": "PRESIDENTE PRUDENTE"
     },
     {
       "cnpj": "11.759.979/0001-00",
-      "nome": "CONS PUBL INTERMUNICIPAL CASA LAR"
+      "nome": "CONS PUBL INTERMUNICIPAL CASA LAR",
+      "uf": "PR",
+      "municipio": "SALTO DO LONTRA"
     },
     {
       "cnpj": "10.984.874/0001-84",
-      "nome": "CONS PUBL MUNIC PROCAXIAS - COMPRO"
+      "nome": "CONS PUBL MUNIC PROCAXIAS - COMPRO",
+      "uf": "PR",
+      "municipio": "CAPITAO LEONIDAS MARQUES"
     },
     {
       "cnpj": "94.188.208/0001-20",
-      "nome": "CONS PUBL SANTA ROSA - COFRON"
+      "nome": "CONS PUBL SANTA ROSA - COFRON",
+      "uf": "RS",
+      "municipio": "SANTA ROSA"
     },
     {
       "cnpj": "07.664.821/0001-71",
-      "nome": "CONS SAUDE VALE DO RIO PARDO - CISVALE"
+      "nome": "CONS SAUDE VALE DO RIO PARDO - CISVALE",
+      "uf": "RS",
+      "municipio": "SANTA CRUZ DO SUL"
     },
     {
       "cnpj": "05.125.657/0001-07",
-      "nome": "CONSELHO ITAPERUNA"
+      "nome": "CONSELHO ITAPERUNA",
+      "uf": "RJ",
+      "municipio": "ITAPERUNA"
     },
     {
       "cnpj": "11.344.494/0001-48",
-      "nome": "CONSORCIO PUBL INTER DESEN IVAI"
+      "nome": "CONSORCIO PUBL INTER DESEN IVAI",
+      "uf": "PR",
+      "municipio": "IVAIPORA"
     },
     {
       "cnpj": "95.289.500/0001-00",
-      "nome": "DEP ENERGIA IJUI-DEMEI"
+      "nome": "DEP ENERGIA IJUI-DEMEI",
+      "uf": "RS",
+      "municipio": "IJUI"
     },
     {
       "cnpj": "19.462.106/0001-35",
-      "nome": "DEP ENERGIA IJUI-DEMEI GERACAO"
+      "nome": "DEP ENERGIA IJUI-DEMEI GERACAO",
+      "uf": "RS",
+      "municipio": "IJUI"
     },
     {
       "cnpj": "48.813.638/0001-78",
-      "nome": "DIV EDUC REGENTE FEIJO"
+      "nome": "DIV EDUC REGENTE FEIJO",
+      "uf": "SP",
+      "municipio": "REGENTE FEIJO"
     },
     {
       "cnpj": "76.205.640/0001-08",
-      "nome": "DOIS VIZINHOS"
+      "nome": "DOIS VIZINHOS",
+      "uf": "PR",
+      "municipio": "DOIS VIZINHOS"
     },
     {
       "cnpj": "77.878.023/0001-28",
-      "nome": "EMDUR"
+      "nome": "EMDUR",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "28.531.762/0001-33",
-      "nome": "EMPRESA TUR SOTUR -  ARARUAMA"
+      "nome": "EMPRESA TUR SOTUR -  ARARUAMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "76.030.717/0001-48",
-      "nome": "EQUIPLANO"
+      "nome": "EQUIPLANO",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "89.971.766/0001-27",
-      "nome": "EUGENIO DE CASTRO"
+      "nome": "EUGENIO DE CASTRO",
+      "uf": "RS",
+      "municipio": "EUGENIO DE CASTRO"
     },
     {
       "cnpj": "04.829.381/0001-77",
-      "nome": "FD DE PREV DE RESERVA DO IGUACU-FUNPRI"
+      "nome": "FD DE PREV DE RESERVA DO IGUACU-FUNPRI",
+      "uf": "PR",
+      "municipio": "RESERVA DO IGUACU"
     },
     {
       "cnpj": "60.947.575/0001-48",
-      "nome": "FDCAO APOIO ATIV SEG PUBLICA DO PR"
+      "nome": "FDCAO APOIO ATIV SEG PUBLICA DO PR",
+      "uf": "PR",
+      "municipio": "CURITIBA"
     },
     {
       "cnpj": "09.592.369/0001-05",
-      "nome": "FDCAO APOIO PESQ TEC INOV UNITAU-FAPETI"
+      "nome": "FDCAO APOIO PESQ TEC INOV UNITAU-FAPETI",
+      "uf": "SP",
+      "municipio": "TAUBATE"
     },
     {
       "cnpj": "51.637.593/0001-32",
-      "nome": "FDCAO BENEF SERV UNIVERS TAUBATE"
+      "nome": "FDCAO BENEF SERV UNIVERS TAUBATE",
+      "uf": "SP",
+      "municipio": "TAUBATE"
     },
     {
       "cnpj": "21.155.528/0001-00",
-      "nome": "FDCAO CULT CAETE"
+      "nome": "FDCAO CULT CAETE",
+      "uf": "MG",
+      "municipio": "CAETE"
     },
     {
       "cnpj": "21.611.579/0001-07",
-      "nome": "FDCAO CULT CARLOS DRUMOND DE ANDRADE"
+      "nome": "FDCAO CULT CARLOS DRUMOND DE ANDRADE",
+      "uf": "MG",
+      "municipio": "ITABIRA"
     },
     {
       "cnpj": "02.246.138/0001-09",
-      "nome": "FDCAO CULT RIO DAS OSTRAS"
+      "nome": "FDCAO CULT RIO DAS OSTRAS",
+      "uf": "RJ",
+      "municipio": "RIO DAS OSTRAS"
     },
     {
       "cnpj": "09.403.680/0001-69",
-      "nome": "FDCAO CULT SAO SEBASTIAO DEODATO SANTANA"
+      "nome": "FDCAO CULT SAO SEBASTIAO DEODATO SANTANA",
+      "uf": "SP",
+      "municipio": "SAO SEBASTIAO"
     },
     {
       "cnpj": "80.880.354/0001-07",
-      "nome": "FDCAO DESEN DE SUST CIEN TOLEDO - FUNTEC"
+      "nome": "FDCAO DESEN DE SUST CIEN TOLEDO - FUNTEC",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "01.071.994/0001-08",
-      "nome": "FDCAO HOSP DA FRANTEIRA - PRANCHITA"
+      "nome": "FDCAO HOSP DA FRANTEIRA - PRANCHITA",
+      "uf": "PR",
+      "municipio": "PRANCHITA"
     },
     {
       "cnpj": "07.496.630/0001-48",
-      "nome": "FDCAO IRAILDA RIBEIRO DOS SANTOS FUNIR"
+      "nome": "FDCAO IRAILDA RIBEIRO DOS SANTOS FUNIR",
+      "uf": "MG",
+      "municipio": "UBA"
     },
     {
       "cnpj": "05.797.356/0001-11",
-      "nome": "FDCAO JOSE KEZEN"
+      "nome": "FDCAO JOSE KEZEN",
+      "uf": "RJ",
+      "municipio": "SANTO ANTONIO DE PADUA"
     },
     {
       "cnpj": "92.911.684/0001-00",
-      "nome": "FDCAO MEDICO HOSPITALAR LAVRAS DO SUL"
+      "nome": "FDCAO MEDICO HOSPITALAR LAVRAS DO SUL",
+      "uf": "RS",
+      "municipio": "LAVRAS DO SUL"
     },
     {
       "cnpj": "28.273.794/0001-86",
-      "nome": "FDCAO MUNIC GUARDA MIRIM DE CURIUVA"
+      "nome": "FDCAO MUNIC GUARDA MIRIM DE CURIUVA",
+      "uf": "PR",
+      "municipio": "CURIUVA"
     },
     {
       "cnpj": "19.843.891/0001-76",
-      "nome": "FDCAO SAUDE SAO SEBASTIAO"
+      "nome": "FDCAO SAUDE SAO SEBASTIAO",
+      "uf": "SP",
+      "municipio": "SAO SEBASTIAO"
     },
     {
       "cnpj": "39.217.278/0001-50",
-      "nome": "FDCAO UNIVERSITARIA  ITAPERUNA"
+      "nome": "FDCAO UNIVERSITARIA  ITAPERUNA",
+      "uf": "RJ",
+      "municipio": "ITAPERUNA"
     },
     {
       "cnpj": "04.767.377/0001-21",
-      "nome": "FDO APOS E PENSOES IPORA"
+      "nome": "FDO APOS E PENSOES IPORA",
+      "uf": "PR",
+      "municipio": "IPORA"
     },
     {
       "cnpj": "39.421.813/0001-90",
-      "nome": "FDO APOS E PENSOES SANTO ANTONIO PADUA"
+      "nome": "FDO APOS E PENSOES SANTO ANTONIO PADUA",
+      "uf": "RJ",
+      "municipio": "SANTO ANTONIO DE PADUA"
     },
     {
       "cnpj": "75.798.355/0001-77",
-      "nome": "FDO APOS INDIANOPOLIS"
+      "nome": "FDO APOS INDIANOPOLIS",
+      "uf": "PR",
+      "municipio": "INDIANOPOLIS"
     },
     {
       "cnpj": "03.331.336/0001-25",
-      "nome": "FDO APOS PEROLA - FASPEL"
+      "nome": "FDO APOS PEROLA - FASPEL",
+      "uf": "PR",
+      "municipio": "PEROLA"
     },
     {
       "cnpj": "08.885.045/0001-00",
-      "nome": "FDO APOS SERV PUBL TOLEDO - FAPES"
+      "nome": "FDO APOS SERV PUBL TOLEDO - FAPES",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "14.255.117/0001-20",
-      "nome": "FDO ASS SOCIAL  MACUCO"
+      "nome": "FDO ASS SOCIAL  MACUCO",
+      "uf": "RJ",
+      "municipio": "MACUCO"
     },
     {
       "cnpj": "13.994.299/0001-99",
-      "nome": "FDO ASS SOCIAL ITALVA"
+      "nome": "FDO ASS SOCIAL ITALVA",
+      "uf": "RJ",
+      "municipio": "ITALVA"
     },
     {
       "cnpj": "14.152.116/0001-50",
-      "nome": "FDO ASS.SOCIAL VASSOURAS"
+      "nome": "FDO ASS.SOCIAL VASSOURAS",
+      "uf": "RJ",
+      "municipio": "VASSOURAS"
     },
     {
       "cnpj": "12.928.334/0001-09",
-      "nome": "FDO ASSIS SOCIAL DE AREAL - FMAS"
+      "nome": "FDO ASSIS SOCIAL DE AREAL - FMAS",
+      "uf": "RJ",
+      "municipio": "AREAL"
     },
     {
       "cnpj": "11.443.167/0001-43",
-      "nome": "FDO ASSIS SOCIAL OLINDA"
+      "nome": "FDO ASSIS SOCIAL OLINDA",
+      "uf": "PE",
+      "municipio": "OLINDA"
     },
     {
       "cnpj": "13.537.034/0001-61",
-      "nome": "FDO ASSIS SOCIAL QUISSAMA  FMAS"
+      "nome": "FDO ASSIS SOCIAL QUISSAMA  FMAS",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "02.318.953/0001-28",
-      "nome": "FDO ASSIST E PREV FERNANDES PINHEIRO"
+      "nome": "FDO ASSIST E PREV FERNANDES PINHEIRO",
+      "uf": "PR",
+      "municipio": "FERNANDES PINHEIRO"
     },
     {
       "cnpj": "28.645.786/0001-13",
-      "nome": "FDO ASSIST SAO SEBASTIAO DO ALTO"
+      "nome": "FDO ASSIST SAO SEBASTIAO DO ALTO",
+      "uf": "RJ",
+      "municipio": "SAO SEBASTIAO DO ALTO"
     },
     {
       "cnpj": "12.674.736/0001-24",
-      "nome": "FDO ASSIST SAUDE SERV DE LONDRINA"
+      "nome": "FDO ASSIST SAUDE SERV DE LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "12.256.568/0001-57",
-      "nome": "FDO ASSIST SOCIAL AGRESTINA"
+      "nome": "FDO ASSIST SOCIAL AGRESTINA",
+      "uf": "PE",
+      "municipio": "AGRESTINA"
     },
     {
       "cnpj": "18.180.942/0001-64",
-      "nome": "FDO ASSIST SOCIAL BARCARENA"
+      "nome": "FDO ASSIST SOCIAL BARCARENA",
+      "uf": "PA",
+      "municipio": "BARCARENA"
     },
     {
       "cnpj": "11.431.771/0001-50",
-      "nome": "FDO ASSIST SOCIAL CASTANHAL"
+      "nome": "FDO ASSIST SOCIAL CASTANHAL",
+      "uf": "PA",
+      "municipio": "CASTANHAL"
     },
     {
       "cnpj": "13.562.650/0001-72",
-      "nome": "FDO ASSIST STA MARIA MADALENA"
+      "nome": "FDO ASSIST STA MARIA MADALENA",
+      "uf": "RJ",
+      "municipio": "SANTA MARIA MADALENA"
     },
     {
       "cnpj": "05.483.042/0001-44",
-      "nome": "FDO ASSIST.SOCIAL ARARUAMA"
+      "nome": "FDO ASSIST.SOCIAL ARARUAMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "12.630.502/0001-85",
-      "nome": "FDO CONS AMB ARARUAMA - FUCAM"
+      "nome": "FDO CONS AMB ARARUAMA - FUCAM",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "21.353.335/0001-63",
-      "nome": "FDO CRIANCA ADOLECENTE QUISSAMA"
+      "nome": "FDO CRIANCA ADOLECENTE QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "28.645.760/0001-75",
-      "nome": "FDO CRIANCA E ADOLESC MADALENA"
+      "nome": "FDO CRIANCA E ADOLESC MADALENA",
+      "uf": "RJ",
+      "municipio": "SANTA MARIA MADALENA"
     },
     {
       "cnpj": "36.287.704/0001-34",
-      "nome": "FDO CRIANCA E ADOLESCENTE DE MIRACEMA"
+      "nome": "FDO CRIANCA E ADOLESCENTE DE MIRACEMA",
+      "uf": "RJ",
+      "municipio": "MIRACEMA"
     },
     {
       "cnpj": "95.679.759/0001-59",
-      "nome": "FDO CRIANCA E ADOLESCENTE IBAITI-FACAI"
+      "nome": "FDO CRIANCA E ADOLESCENTE IBAITI-FACAI",
+      "uf": "PR",
+      "municipio": "IBAITI"
     },
     {
       "cnpj": "09.131.027/0001-98",
-      "nome": "FDO CRIANCA E ADOLESCENTE OLINDA"
+      "nome": "FDO CRIANCA E ADOLESCENTE OLINDA",
+      "uf": "PE",
+      "municipio": "OLINDA"
     },
     {
       "cnpj": "11.936.116/0001-53",
-      "nome": "FDO CULT QUISSAMA"
+      "nome": "FDO CULT QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "24.413.538/0001-96",
-      "nome": "FDO DESENV ECONOMICO QUISSAMA FMDE"
+      "nome": "FDO DESENV ECONOMICO QUISSAMA FMDE",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "18.116.929/0001-46",
-      "nome": "FDO DESENVOLVIMENTO OLINDA"
+      "nome": "FDO DESENVOLVIMENTO OLINDA",
+      "uf": "PE",
+      "municipio": "OLINDA"
     },
     {
       "cnpj": "09.260.420/0001-81",
-      "nome": "FDO DIR CRIAN ADOLES ARARUAMA"
+      "nome": "FDO DIR CRIAN ADOLES ARARUAMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "01.617.237/0001-89",
-      "nome": "FDO DIR CRIANCA ADOLESCENTE MACUCO"
+      "nome": "FDO DIR CRIANCA ADOLESCENTE MACUCO",
+      "uf": "RJ",
+      "municipio": "MACUCO"
     },
     {
       "cnpj": "22.257.307/0001-05",
-      "nome": "FDO EDUC CAETE"
+      "nome": "FDO EDUC CAETE",
+      "uf": "MG",
+      "municipio": "CAETE"
     },
     {
       "cnpj": "20.181.624/0001-60",
-      "nome": "FDO EDUC CIDADES DOS MENINOS"
+      "nome": "FDO EDUC CIDADES DOS MENINOS",
+      "uf": "MG",
+      "municipio": "CARATINGA"
     },
     {
       "cnpj": "39.415.260/0001-63",
-      "nome": "FDO EDUC MIRACEMA"
+      "nome": "FDO EDUC MIRACEMA",
+      "uf": "RJ",
+      "municipio": "MIRACEMA"
     },
     {
       "cnpj": "50.634.611/0001-60",
-      "nome": "FDO EDUCACAO ARARUAMA - FME"
+      "nome": "FDO EDUCACAO ARARUAMA - FME",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "29.505.936/0001-56",
-      "nome": "FDO EDUCACAO CASTANHAL"
+      "nome": "FDO EDUCACAO CASTANHAL",
+      "uf": "PA",
+      "municipio": "CASTANHAL"
     },
     {
       "cnpj": "44.827.478/0001-65",
-      "nome": "FDO EDUCACAO MACUCO"
+      "nome": "FDO EDUCACAO MACUCO",
+      "uf": "RJ",
+      "municipio": "MACUCO"
     },
     {
       "cnpj": "03.608.586/0001-60",
-      "nome": "FDO ESP LONDRINA"
+      "nome": "FDO ESP LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "24.333.428/0001-14",
-      "nome": "FDO ESPECIAL CM ARARUAMA - FECMA"
+      "nome": "FDO ESPECIAL CM ARARUAMA - FECMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "29.088.855/0001-06",
-      "nome": "FDO ESPECIAL PROC GERAL ARARUAMA - FEPGA"
+      "nome": "FDO ESPECIAL PROC GERAL ARARUAMA - FEPGA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "02.096.844/0001-03",
-      "nome": "FDO FINANC TEIXEIRA SOARES-FUMAP"
+      "nome": "FDO FINANC TEIXEIRA SOARES-FUMAP",
+      "uf": "PR",
+      "municipio": "TEIXEIRA SOARES"
     },
     {
       "cnpj": "14.790.462/0001-64",
-      "nome": "FDO HABIT INTERESSE SOCIAL ARARUAMA"
+      "nome": "FDO HABIT INTERESSE SOCIAL ARARUAMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "10.585.587/0001-00",
-      "nome": "FDO HABIT QUISSAMA"
+      "nome": "FDO HABIT QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "80.617.319/0001-08",
-      "nome": "FDO HOSPITALAR IBAITI"
+      "nome": "FDO HOSPITALAR IBAITI",
+      "uf": "PR",
+      "municipio": "IBAITI"
     },
     {
       "cnpj": "08.943.130/0001-70",
-      "nome": "FDO HOSPITALAR SAO JOSE"
+      "nome": "FDO HOSPITALAR SAO JOSE",
+      "uf": "RS",
+      "municipio": "CAMBARA DO SUL"
     },
     {
       "cnpj": "14.986.862/0001-40",
-      "nome": "FDO I.S.A.V.M. ARARAQUARA - FUNGOTA"
+      "nome": "FDO I.S.A.V.M. ARARAQUARA - FUNGOTA",
+      "uf": "SP",
+      "municipio": "ARARAQUARA"
     },
     {
       "cnpj": "39.224.175/0001-18",
-      "nome": "FDO MACAE-CRIANCA E ADOLESC"
+      "nome": "FDO MACAE-CRIANCA E ADOLESC",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "18.249.792/0001-06",
-      "nome": "FDO MEIO AMBIENTE CASTANHAL"
+      "nome": "FDO MEIO AMBIENTE CASTANHAL",
+      "uf": "PA",
+      "municipio": "CASTANHAL"
     },
     {
       "cnpj": "09.072.998/0001-04",
-      "nome": "FDO MEIO AMBIENTE DE MACAE"
+      "nome": "FDO MEIO AMBIENTE DE MACAE",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "32.123.684/0001-05",
-      "nome": "FDO MEIO AMBIENTE QUISSAMA"
+      "nome": "FDO MEIO AMBIENTE QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "06.105.564/0001-75",
-      "nome": "FDO MUN.DE ASS.SOC. DE MIRACEMA"
+      "nome": "FDO MUN.DE ASS.SOC. DE MIRACEMA",
+      "uf": "RJ",
+      "municipio": "MIRACEMA"
     },
     {
       "cnpj": "36.285.484/0001-00",
-      "nome": "FDO MUN.DE SAUDE DE MIRACEMA"
+      "nome": "FDO MUN.DE SAUDE DE MIRACEMA",
+      "uf": "RJ",
+      "municipio": "MIRACEMA"
     },
     {
       "cnpj": "08.885.069/0001-51",
-      "nome": "FDO MUNC TRANS TOLEDO"
+      "nome": "FDO MUNC TRANS TOLEDO",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "11.323.261/0001-69",
-      "nome": "FDO MUNIC DE SAUDE DE LONDRINA"
+      "nome": "FDO MUNIC DE SAUDE DE LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "08.549.559/0001-87",
-      "nome": "FDO MUNIC DE SAUDE DE SANTO INACIO"
+      "nome": "FDO MUNIC DE SAUDE DE SANTO INACIO",
+      "uf": "PR",
+      "municipio": "SANTO INACIO"
     },
     {
       "cnpj": "04.337.607/0001-12",
-      "nome": "FDO MUNIC PREV BOA VENTURA SAO ROQUE"
+      "nome": "FDO MUNIC PREV BOA VENTURA SAO ROQUE",
+      "uf": "PR",
+      "municipio": "BOA VENTURA DE SAO ROQUE"
     },
     {
       "cnpj": "06.309.481/0001-06",
-      "nome": "FDO PREV AREAL"
+      "nome": "FDO PREV AREAL",
+      "uf": "RJ",
+      "municipio": "AREAL"
     },
     {
       "cnpj": "04.684.563/0001-05",
-      "nome": "FDO PREV CAFEARA"
+      "nome": "FDO PREV CAFEARA",
+      "uf": "PR",
+      "municipio": "CAFEARA"
     },
     {
       "cnpj": "09.541.789/0001-62",
-      "nome": "FDO PREV CAMPO BONITO"
+      "nome": "FDO PREV CAMPO BONITO",
+      "uf": "PR",
+      "municipio": "CAMPO BONITO"
     },
     {
       "cnpj": "76.208.842/0001-03",
-      "nome": "FDO PREV CATANDUVAS-PR"
+      "nome": "FDO PREV CATANDUVAS-PR",
+      "uf": "PR",
+      "municipio": "CATANDUVAS"
     },
     {
       "cnpj": "27.188.003/0001-57",
-      "nome": "FDO PREV CHOPINZINHO"
+      "nome": "FDO PREV CHOPINZINHO",
+      "uf": "PR",
+      "municipio": "CHOPINZINHO"
     },
     {
       "cnpj": "04.106.469/0001-60",
-      "nome": "FDO PREV CONCHAL"
+      "nome": "FDO PREV CONCHAL",
+      "uf": "SP",
+      "municipio": "CONCHAL"
     },
     {
       "cnpj": "09.093.161/0001-41",
-      "nome": "FDO PREV CRUZEIRO DO OESTE"
+      "nome": "FDO PREV CRUZEIRO DO OESTE",
+      "uf": "PR",
+      "municipio": "CRUZEIRO DO OESTE"
     },
     {
       "cnpj": "14.033.215/0001-13",
-      "nome": "FDO PREV CURIUVA - CURIUVAPREV"
+      "nome": "FDO PREV CURIUVA - CURIUVAPREV",
+      "uf": "PR",
+      "municipio": "CURIUVA"
     },
     {
       "cnpj": "11.468.330/0001-22",
-      "nome": "FDO PREV DO MUNICIPIO DE RIO AZUL"
+      "nome": "FDO PREV DO MUNICIPIO DE RIO AZUL",
+      "uf": "PR",
+      "municipio": "RIO AZUL"
     },
     {
       "cnpj": "10.579.180/0001-61",
-      "nome": "FDO PREV GUARANI DAS MISSOES - FPMS"
+      "nome": "FDO PREV GUARANI DAS MISSOES - FPMS",
+      "uf": "RS",
+      "municipio": "GUARANI DAS MISSOES"
     },
     {
       "cnpj": "05.400.781/0001-25",
-      "nome": "FDO PREV ITALVA"
+      "nome": "FDO PREV ITALVA",
+      "uf": "RJ",
+      "municipio": "ITALVA"
     },
     {
       "cnpj": "04.424.482/0001-68",
-      "nome": "FDO PREV ITAUNA DO SUL"
+      "nome": "FDO PREV ITAUNA DO SUL",
+      "uf": "PR",
+      "municipio": "ITAUNA DO SUL"
     },
     {
       "cnpj": "76.995.323/0001-24",
-      "nome": "FDO PREV MARIOPOLIS"
+      "nome": "FDO PREV MARIOPOLIS",
+      "uf": "PR",
+      "municipio": "MARIOPOLIS"
     },
     {
       "cnpj": "28.746.249/0001-60",
-      "nome": "FDO PREV MIRACEMA"
+      "nome": "FDO PREV MIRACEMA",
+      "uf": "RJ",
+      "municipio": "MIRACEMA"
     },
     {
       "cnpj": "04.942.517/0001-50",
-      "nome": "FDO PREV MUN DE TURVO"
+      "nome": "FDO PREV MUN DE TURVO",
+      "uf": "PR",
+      "municipio": "TURVO"
     },
     {
       "cnpj": "09.166.107/0001-89",
-      "nome": "FDO PREV MUNICIPIO DE CAFELANDIA"
+      "nome": "FDO PREV MUNICIPIO DE CAFELANDIA",
+      "uf": "PR",
+      "municipio": "CAFELANDIA"
     },
     {
       "cnpj": "02.188.778/0001-00",
-      "nome": "FDO PREV MUNICIPIO DE PLANALTO"
+      "nome": "FDO PREV MUNICIPIO DE PLANALTO",
+      "uf": "PR",
+      "municipio": "PLANALTO"
     },
     {
       "cnpj": "10.554.276/0001-75",
-      "nome": "FDO PREV OLINDA - FUNDPREV"
+      "nome": "FDO PREV OLINDA - FUNDPREV",
+      "uf": "PE",
+      "municipio": "OLINDA"
     },
     {
       "cnpj": "02.427.834/0001-03",
-      "nome": "FDO PREV RANCHO ALEGRE D'OESTE"
+      "nome": "FDO PREV RANCHO ALEGRE D'OESTE",
+      "uf": "PR",
+      "municipio": "RANCHO ALEGRE D OESTE"
     },
     {
       "cnpj": "08.962.568/0001-03",
-      "nome": "FDO PREV REGIME CAMPINA DO SIMAO"
+      "nome": "FDO PREV REGIME CAMPINA DO SIMAO",
+      "uf": "PR",
+      "municipio": "CAMPINA DO SIMAO"
     },
     {
       "cnpj": "07.424.321/0001-62",
-      "nome": "FDO PREV RIO BONITO DO IGUACU"
+      "nome": "FDO PREV RIO BONITO DO IGUACU",
+      "uf": "PR",
+      "municipio": "RIO BONITO DO IGUACU"
     },
     {
       "cnpj": "04.958.376/0001-64",
-      "nome": "FDO PREV SAO TOME - FUNPREST"
+      "nome": "FDO PREV SAO TOME - FUNPREST",
+      "uf": "PR",
+      "municipio": "SAO TOME"
     },
     {
       "cnpj": "16.728.798/0001-22",
-      "nome": "FDO PREV SOCIAL DE IPE"
+      "nome": "FDO PREV SOCIAL DE IPE",
+      "uf": "RS",
+      "municipio": "IPE"
     },
     {
       "cnpj": "11.910.971/0001-95",
-      "nome": "FDO PREV TEIXEIRA SOARES - FPMTS"
+      "nome": "FDO PREV TEIXEIRA SOARES - FPMTS",
+      "uf": "PR",
+      "municipio": "TEIXEIRA SOARES"
     },
     {
       "cnpj": "09.003.619/0001-24",
-      "nome": "FDO PREV UNIFLOR"
+      "nome": "FDO PREV UNIFLOR",
+      "uf": "PR",
+      "municipio": "UNIFLOR"
     },
     {
       "cnpj": "06.134.286/0001-84",
-      "nome": "FDO PREV VASSOURAS - FUPREVAS"
+      "nome": "FDO PREV VASSOURAS - FUPREVAS",
+      "uf": "RJ",
+      "municipio": "VASSOURAS"
     },
     {
       "cnpj": "05.472.631/0001-27",
-      "nome": "FDO PREV XAMBRE"
+      "nome": "FDO PREV XAMBRE",
+      "uf": "PR",
+      "municipio": "XAMBRE"
     },
     {
       "cnpj": "06.284.346/0001-45",
-      "nome": "FDO PREVIDENCIARIO MUN.DE TERRA RICA"
+      "nome": "FDO PREVIDENCIARIO MUN.DE TERRA RICA",
+      "uf": "PR",
+      "municipio": "TERRA RICA"
     },
     {
       "cnpj": "15.276.747/0001-44",
-      "nome": "FDO REEQ CORP BOMB TOLEDO - FUNREBOM"
+      "nome": "FDO REEQ CORP BOMB TOLEDO - FUNREBOM",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "10.225.695/0001-63",
-      "nome": "FDO SAUDE AGRESTINA"
+      "nome": "FDO SAUDE AGRESTINA",
+      "uf": "PE",
+      "municipio": "AGRESTINA"
     },
     {
       "cnpj": "11.885.839/0001-70",
-      "nome": "FDO SAUDE ARARUAMA"
+      "nome": "FDO SAUDE ARARUAMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "20.715.561/0001-84",
-      "nome": "FDO SAUDE ARCOS FUMUSA"
+      "nome": "FDO SAUDE ARCOS FUMUSA",
+      "uf": "MG",
+      "municipio": "ARCOS"
     },
     {
       "cnpj": "11.903.351/0001-29",
-      "nome": "FDO SAUDE CANAA DOS CARAJAS"
+      "nome": "FDO SAUDE CANAA DOS CARAJAS",
+      "uf": "PA",
+      "municipio": "CANAA DOS CARAJAS"
     },
     {
       "cnpj": "07.918.201/0001-11",
-      "nome": "FDO SAUDE CASTANHAL"
+      "nome": "FDO SAUDE CASTANHAL",
+      "uf": "PA",
+      "municipio": "CASTANHAL"
     },
     {
       "cnpj": "06.810.909/0001-91",
-      "nome": "FDO SAUDE DE AREAL"
+      "nome": "FDO SAUDE DE AREAL",
+      "uf": "RJ",
+      "municipio": "AREAL"
     },
     {
       "cnpj": "09.070.880/0001-47",
-      "nome": "FDO SAUDE FORMOSA DO OESTE"
+      "nome": "FDO SAUDE FORMOSA DO OESTE",
+      "uf": "PR",
+      "municipio": "FORMOSA DO OESTE"
     },
     {
       "cnpj": "10.411.707/0001-44",
-      "nome": "FDO SAUDE ITALVA"
+      "nome": "FDO SAUDE ITALVA",
+      "uf": "RJ",
+      "municipio": "ITALVA"
     },
     {
       "cnpj": "39.215.827/0001-58",
-      "nome": "FDO SAUDE ITAPERUNA"
+      "nome": "FDO SAUDE ITAPERUNA",
+      "uf": "RJ",
+      "municipio": "ITAPERUNA"
     },
     {
       "cnpj": "09.309.271/0001-06",
-      "nome": "FDO SAUDE JACAREZINHO"
+      "nome": "FDO SAUDE JACAREZINHO",
+      "uf": "PR",
+      "municipio": "JACAREZINHO"
     },
     {
       "cnpj": "36.292.589/0001-96",
-      "nome": "FDO SAUDE MACAE"
+      "nome": "FDO SAUDE MACAE",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "11.504.310/0001-60",
-      "nome": "FDO SAUDE MACUCO"
+      "nome": "FDO SAUDE MACUCO",
+      "uf": "RJ",
+      "municipio": "MACUCO"
     },
     {
       "cnpj": "09.131.029/0001-87",
-      "nome": "FDO SAUDE OLINDA"
+      "nome": "FDO SAUDE OLINDA",
+      "uf": "PE",
+      "municipio": "OLINDA"
     },
     {
       "cnpj": "11.892.333/0001-99",
-      "nome": "FDO SAUDE QUISSAMA"
+      "nome": "FDO SAUDE QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "04.249.257/0001-32",
-      "nome": "FDO SAUDE SANTO ANTONIO DE PADUA"
+      "nome": "FDO SAUDE SANTO ANTONIO DE PADUA",
+      "uf": "RJ",
+      "municipio": "SANTO ANTONIO DE PADUA"
     },
     {
       "cnpj": "11.183.882/0001-94",
-      "nome": "FDO SAUDE STA MARIA MADALENA"
+      "nome": "FDO SAUDE STA MARIA MADALENA",
+      "uf": "RJ",
+      "municipio": "SANTA MARIA MADALENA"
     },
     {
       "cnpj": "07.900.983/0001-61",
-      "nome": "FDO SAUDE VARRE-SAI"
+      "nome": "FDO SAUDE VARRE-SAI",
+      "uf": "RJ",
+      "municipio": "VARRE-SAI"
     },
     {
       "cnpj": "42.418.849/0001-20",
-      "nome": "FDO SEGURANCA PUBLICA QUISSAMA"
+      "nome": "FDO SEGURANCA PUBLICA QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "07.779.296/0001-30",
-      "nome": "FDO TRANSITO E TANSPORTE MACAE"
+      "nome": "FDO TRANSITO E TANSPORTE MACAE",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "10.404.184/0001-09",
-      "nome": "FDO TRANSITO OLINDA"
+      "nome": "FDO TRANSITO OLINDA",
+      "uf": "PE",
+      "municipio": "OLINDA"
     },
     {
       "cnpj": "12.195.823/0001-07",
-      "nome": "FDO URBANIZACAO LONDRINA"
+      "nome": "FDO URBANIZACAO LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "28.916.716/0001-52",
-      "nome": "FDO.ASSIST.SOCIAL ITAPERUNA"
+      "nome": "FDO.ASSIST.SOCIAL ITAPERUNA",
+      "uf": "RJ",
+      "municipio": "ITAPERUNA"
     },
     {
       "cnpj": "22.959.877/0001-47",
-      "nome": "FMS PARAIBA DO SUL"
+      "nome": "FMS PARAIBA DO SUL",
+      "uf": "RJ",
+      "municipio": "PARAIBA DO SUL"
     },
     {
       "cnpj": "04.874.895/0001-44",
-      "nome": "FSO PREV MUNIC LARANJAL - FUNPRELAR"
+      "nome": "FSO PREV MUNIC LARANJAL - FUNPRELAR",
+      "uf": "PR",
+      "municipio": "LARANJAL"
     },
     {
       "cnpj": "11.420.915/0001-72",
-      "nome": "FUND MUN DE SAUDE DE ALVORADA DO SUL"
+      "nome": "FUND MUN DE SAUDE DE ALVORADA DO SUL",
+      "uf": "PR",
+      "municipio": "ALVORADA DO SUL"
     },
     {
       "cnpj": "01.429.167/0001-35",
-      "nome": "FUNDO ASSIST.MACAE"
+      "nome": "FUNDO ASSIST.MACAE",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "17.570.845/0001-15",
-      "nome": "FUNDO ESPECIAL CAMARA MUNICIPAL DE SAQUA"
+      "nome": "FUNDO ESPECIAL CAMARA MUNICIPAL DE SAQUA",
+      "uf": "RJ",
+      "municipio": "SAQUAREMA"
     },
     {
       "cnpj": "07.795.416/0001-92",
-      "nome": "FUNPREV"
+      "nome": "FUNPREV",
+      "uf": "PR",
+      "municipio": "IMBITUVA"
     },
     {
       "cnpj": "06.057.728/0001-36",
-      "nome": "FUNPREV - GUAMIRANGA"
+      "nome": "FUNPREV - GUAMIRANGA",
+      "uf": "PR",
+      "municipio": "GUAMIRANGA"
     },
     {
       "cnpj": "76.178.029/0001-20",
-      "nome": "INACIO MARTINS PREF GABINETE DO PREFEITO"
+      "nome": "INACIO MARTINS PREF GABINETE DO PREFEITO",
+      "uf": "PR",
+      "municipio": "INACIO MARTINS"
     },
     {
       "cnpj": "30.597.686/0001-00",
-      "nome": "INST BENF ASSIS ARARUAMA - IBASMA"
+      "nome": "INST BENF ASSIS ARARUAMA - IBASMA",
+      "uf": "RJ",
+      "municipio": "ARARUAMA"
     },
     {
       "cnpj": "27.759.281/0001-17",
-      "nome": "INST BENF ASSIS CABO FRIO - IBASCAF"
+      "nome": "INST BENF ASSIS CABO FRIO - IBASCAF",
+      "uf": "RJ",
+      "municipio": "CABO FRIO"
     },
     {
       "cnpj": "04.539.825/0001-30",
-      "nome": "INST BOM JARDIM - RIO"
+      "nome": "INST BOM JARDIM - RIO",
+      "uf": "RJ",
+      "municipio": "BOM JARDIM"
     },
     {
       "cnpj": "34.823.005/0001-36",
-      "nome": "INST CASTANHAL"
+      "nome": "INST CASTANHAL",
+      "uf": "PA",
+      "municipio": "CASTANHAL"
     },
     {
       "cnpj": "76.933.969/0001-87",
-      "nome": "INST DESENV DE LONDRINA"
+      "nome": "INST DESENV DE LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "66.998.030/0001-47",
-      "nome": "INST JABORANDI"
+      "nome": "INST JABORANDI",
+      "uf": "SP",
+      "municipio": "JABORANDI"
     },
     {
       "cnpj": "08.876.702/0001-45",
-      "nome": "INST LAJE DO MURIAE"
+      "nome": "INST LAJE DO MURIAE",
+      "uf": "RJ",
+      "municipio": "LAJE DO MURIAE"
     },
     {
       "cnpj": "74.125.063/0001-00",
-      "nome": "INST PESQ E PLANEJ LONDRINA"
+      "nome": "INST PESQ E PLANEJ LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "49.196.894/0001-26",
-      "nome": "INST PESQ PLAN FRANCISCO BELTRAO - IPPUB"
+      "nome": "INST PESQ PLAN FRANCISCO BELTRAO - IPPUB",
+      "uf": "PR",
+      "municipio": "FRANCISCO BELTRAO"
     },
     {
       "cnpj": "05.586.308/0001-84",
-      "nome": "INST PREV DE UBA"
+      "nome": "INST PREV DE UBA",
+      "uf": "MG",
+      "municipio": "UBA"
     },
     {
       "cnpj": "05.119.717/0001-70",
-      "nome": "INST PREV DIVINOLANDIA"
+      "nome": "INST PREV DIVINOLANDIA",
+      "uf": "SP",
+      "municipio": "DIVINOLANDIA"
     },
     {
       "cnpj": "02.122.662/0001-60",
-      "nome": "INST PREV DOS FUNC DE TAIACU"
+      "nome": "INST PREV DOS FUNC DE TAIACU",
+      "uf": "SP",
+      "municipio": "TAIACU"
     },
     {
       "cnpj": "07.646.426/0001-66",
-      "nome": "INST PREV ENGENHEIRO COELHO"
+      "nome": "INST PREV ENGENHEIRO COELHO",
+      "uf": "SP",
+      "municipio": "ENGENHEIRO COELHO"
     },
     {
       "cnpj": "00.340.121/0001-82",
-      "nome": "INST PREV GUAIRACA"
+      "nome": "INST PREV GUAIRACA",
+      "uf": "PR",
+      "municipio": "GUAIRACA"
     },
     {
       "cnpj": "04.778.819/0001-35",
-      "nome": "INST PREV IJUI"
+      "nome": "INST PREV IJUI",
+      "uf": "RS",
+      "municipio": "IJUI"
     },
     {
       "cnpj": "06.074.903/0001-01",
-      "nome": "INST PREV INACIO MARTINS"
+      "nome": "INST PREV INACIO MARTINS",
+      "uf": "PR",
+      "municipio": "INACIO MARTINS"
     },
     {
       "cnpj": "14.827.712/0001-93",
-      "nome": "INST PREV ITABIRA"
+      "nome": "INST PREV ITABIRA",
+      "uf": "MG",
+      "municipio": "ITABIRA"
     },
     {
       "cnpj": "04.993.852/0001-88",
-      "nome": "INST PREV JABOTI"
+      "nome": "INST PREV JABOTI",
+      "uf": "PR",
+      "municipio": "JABOTI"
     },
     {
       "cnpj": "05.281.320/0001-80",
-      "nome": "INST PREV JATAIZINHO"
+      "nome": "INST PREV JATAIZINHO",
+      "uf": "PR",
+      "municipio": "JATAIZINHO"
     },
     {
       "cnpj": "11.639.339/0001-59",
-      "nome": "INST PREV LEME - LEMEPREV"
+      "nome": "INST PREV LEME - LEMEPREV",
+      "uf": "SP",
+      "municipio": "LEME"
     },
     {
       "cnpj": "66.489.741/0001-96",
-      "nome": "INST PREV MONTES CLAROS"
+      "nome": "INST PREV MONTES CLAROS",
+      "uf": "MG",
+      "municipio": "MONTES CLAROS"
     },
     {
       "cnpj": "05.152.243/0001-69",
-      "nome": "INST PREV PARANAPANEMA - IPESPEM"
+      "nome": "INST PREV PARANAPANEMA - IPESPEM",
+      "uf": "SP",
+      "municipio": "PARANAPANEMA"
     },
     {
       "cnpj": "07.381.646/0001-05",
-      "nome": "INST PREV PORTO FELIZ"
+      "nome": "INST PREV PORTO FELIZ",
+      "uf": "SP",
+      "municipio": "PORTO FELIZ"
     },
     {
       "cnpj": "07.966.651/0001-80",
-      "nome": "INST PREV PRUDENTOPOLIS"
+      "nome": "INST PREV PRUDENTOPOLIS",
+      "uf": "PR",
+      "municipio": "PRUDENTOPOLIS"
     },
     {
       "cnpj": "35.306.813/0001-99",
-      "nome": "INST PREV QUISSAMA"
+      "nome": "INST PREV QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "05.115.903/0001-31",
-      "nome": "INST PREV QUITANDINHA"
+      "nome": "INST PREV QUITANDINHA",
+      "uf": "PR",
+      "municipio": "QUITANDINHA"
     },
     {
       "cnpj": "39.691.605/0001-01",
-      "nome": "INST PREV RIO DAS OSTRAS"
+      "nome": "INST PREV RIO DAS OSTRAS",
+      "uf": "RJ",
+      "municipio": "RIO DAS OSTRAS"
     },
     {
       "cnpj": "30.134.050/0001-22",
-      "nome": "INST PREV RIO DE JANEIRO - IPALERJ"
+      "nome": "INST PREV RIO DE JANEIRO - IPALERJ",
+      "uf": "RJ",
+      "municipio": "RIO DE JANEIRO"
     },
     {
       "cnpj": "08.690.876/0001-19",
-      "nome": "INST PREV ROLANDIA"
+      "nome": "INST PREV ROLANDIA",
+      "uf": "PR",
+      "municipio": "ROLANDIA"
     },
     {
       "cnpj": "04.870.834/0001-09",
-      "nome": "INST PREV SANTA MARIA"
+      "nome": "INST PREV SANTA MARIA",
+      "uf": "RS",
+      "municipio": "SANTA MARIA"
     },
     {
       "cnpj": "45.664.616/0001-03",
-      "nome": "INST PREV SAO ROQUE"
+      "nome": "INST PREV SAO ROQUE",
+      "uf": "SP",
+      "municipio": "SAO ROQUE"
     },
     {
       "cnpj": "15.372.714/0001-06",
-      "nome": "INST PREV SAO SEBASTIAO"
+      "nome": "INST PREV SAO SEBASTIAO",
+      "uf": "SP",
+      "municipio": "SAO SEBASTIAO"
     },
     {
       "cnpj": "83.366.013/0001-06",
-      "nome": "INST PREV SERV ANANINDEUA"
+      "nome": "INST PREV SERV ANANINDEUA",
+      "uf": "PA",
+      "municipio": "ANANINDEUA"
     },
     {
       "cnpj": "03.567.964/0001-04",
-      "nome": "INST PREV SERV MACAE"
+      "nome": "INST PREV SERV MACAE",
+      "uf": "RJ",
+      "municipio": "MACAE"
     },
     {
       "cnpj": "02.791.062/0001-94",
-      "nome": "INST PREV SERV PUBL CAMPO DO TENENTE"
+      "nome": "INST PREV SERV PUBL CAMPO DO TENENTE",
+      "uf": "PR",
+      "municipio": "CAMPO DO TENENTE"
     },
     {
       "cnpj": "11.269.152/0001-00",
-      "nome": "INST PREV SERV PUBL CANTAGALO - IPSM"
+      "nome": "INST PREV SERV PUBL CANTAGALO - IPSM",
+      "uf": "PR",
+      "municipio": "CANTAGALO"
     },
     {
       "cnpj": "05.220.745/0001-80",
-      "nome": "INST PREV SERV PUBL JAPURA - JAPURAPREV"
+      "nome": "INST PREV SERV PUBL JAPURA - JAPURAPREV",
+      "uf": "PR",
+      "municipio": "JAPURA"
     },
     {
       "cnpj": "04.958.548/0001-08",
-      "nome": "INST PREV SERV PUBL LARANJEIRAS DO SUL"
+      "nome": "INST PREV SERV PUBL LARANJEIRAS DO SUL",
+      "uf": "PR",
+      "municipio": "LARANJEIRAS DO SUL"
     },
     {
       "cnpj": "04.919.126/0001-15",
-      "nome": "INST PREV SERV PUBL MUNIC IBAITI"
+      "nome": "INST PREV SERV PUBL MUNIC IBAITI",
+      "uf": "PR",
+      "municipio": "IBAITI"
     },
     {
       "cnpj": "14.472.792/0001-01",
-      "nome": "INST PREV SERV PUBL PIEN - PIENPREV"
+      "nome": "INST PREV SERV PUBL PIEN - PIENPREV",
+      "uf": "PR",
+      "municipio": "PIEN"
     },
     {
       "cnpj": "15.458.221/0001-85",
-      "nome": "INST PREV SERV PUBL TIJUCAS DO SUL"
+      "nome": "INST PREV SERV PUBL TIJUCAS DO SUL",
+      "uf": "PR",
+      "municipio": "TIJUCAS DO SUL"
     },
     {
       "cnpj": "05.150.569/0001-57",
-      "nome": "INST PREV SERV SAO GABRIEL - IPRESG"
+      "nome": "INST PREV SERV SAO GABRIEL - IPRESG",
+      "uf": "RS",
+      "municipio": "SAO GABRIEL"
     },
     {
       "cnpj": "07.902.163/0001-09",
-      "nome": "INST PREV SILVA JARDIM"
+      "nome": "INST PREV SILVA JARDIM",
+      "uf": "RJ",
+      "municipio": "SILVA JARDIM"
     },
     {
       "cnpj": "31.384.511/0001-88",
-      "nome": "INST PREV VIAMAO - IPREV"
+      "nome": "INST PREV VIAMAO - IPREV",
+      "uf": "RS",
+      "municipio": "VIAMAO"
     },
     {
       "cnpj": "63.783.232/0001-83",
-      "nome": "INST PROJ AVANCADOS INPACTA"
+      "nome": "INST PROJ AVANCADOS INPACTA",
+      "uf": "PR",
+      "municipio": "MARINGA"
     },
     {
       "cnpj": "39.831.953/0001-37",
-      "nome": "INST SAO SEBASTIAO DO ALTO"
+      "nome": "INST SAO SEBASTIAO DO ALTO",
+      "uf": "RJ",
+      "municipio": "SAO SEBASTIAO DO ALTO"
     },
     {
       "cnpj": "30.731.795/0001-79",
-      "nome": "INT PREV PATO BRANCO"
+      "nome": "INT PREV PATO BRANCO",
+      "uf": "PR",
+      "municipio": "PATO BRANCO"
     },
     {
       "cnpj": "19.556.698/0001-54",
-      "nome": "LEVY PREV"
+      "nome": "LEVY PREV",
+      "uf": "RJ",
+      "municipio": "COMENDADOR LEVY GASPARIAN"
     },
     {
       "cnpj": "21.514.376/0001-94",
-      "nome": "LONDRINA ILUMINACAO S.A."
+      "nome": "LONDRINA ILUMINACAO S.A.",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "75.743.567/0001-57",
-      "nome": "PM ABATIA"
+      "nome": "PM ABATIA",
+      "uf": "PR",
+      "municipio": "ABATIA"
     },
     {
       "cnpj": "18.295.287/0001-90",
-      "nome": "PM ACAIACA"
+      "nome": "PM ACAIACA",
+      "uf": "MG",
+      "municipio": "ACAIACA"
     },
     {
       "cnpj": "10.091.494/0001-10",
-      "nome": "PM AGRESTINA"
+      "nome": "PM AGRESTINA",
+      "uf": "PE",
+      "municipio": "AGRESTINA"
     },
     {
       "cnpj": "87.531.976/0001-79",
-      "nome": "PM AGUDO"
+      "nome": "PM AGUDO",
+      "uf": "RS",
+      "municipio": "AGUDO"
     },
     {
       "cnpj": "87.613.253/0001-19",
-      "nome": "PM AJURICABA"
+      "nome": "PM AJURICABA",
+      "uf": "RS",
+      "municipio": "AJURICABA"
     },
     {
       "cnpj": "87.896.874/0001-57",
-      "nome": "PM ALEGRETE"
+      "nome": "PM ALEGRETE",
+      "uf": "RS",
+      "municipio": "ALEGRETE"
     },
     {
       "cnpj": "17.709.197/0001-35",
-      "nome": "PM ALEM PARAIBA"
+      "nome": "PM ALEM PARAIBA",
+      "uf": "MG",
+      "municipio": "ALEM PARAIBA"
     },
     {
       "cnpj": "43.162.791/0001-69",
-      "nome": "PM ALFREDO MARCONDES"
+      "nome": "PM ALFREDO MARCONDES",
+      "uf": "SP",
+      "municipio": "ALFREDO MARCONDES"
     },
     {
       "cnpj": "92.123.926/0001-92",
-      "nome": "PM ALTO FELIZ"
+      "nome": "PM ALTO FELIZ",
+      "uf": "RS",
+      "municipio": "ALTO FELIZ"
     },
     {
       "cnpj": "95.640.736/0001-30",
-      "nome": "PM ALTO PARAISO"
+      "nome": "PM ALTO PARAISO",
+      "uf": "PR",
+      "municipio": "ALTO PARAISO"
     },
     {
       "cnpj": "81.478.059/0001-91",
-      "nome": "PM ALTONIA"
+      "nome": "PM ALTONIA",
+      "uf": "PR",
+      "municipio": "ALTONIA"
     },
     {
       "cnpj": "43.206.424/0001-10",
-      "nome": "PM ALVARES MACHADO"
+      "nome": "PM ALVARES MACHADO",
+      "uf": "SP",
+      "municipio": "ALVARES MACHADO"
     },
     {
       "cnpj": "44.518.488/0001-19",
-      "nome": "PM ALVARO DE CARVALHO"
+      "nome": "PM ALVARO DE CARVALHO",
+      "uf": "SP",
+      "municipio": "ALVARO DE CARVALHO"
     },
     {
       "cnpj": "16.725.392/0001-96",
-      "nome": "PM ALVINOPOLIS"
+      "nome": "PM ALVINOPOLIS",
+      "uf": "MG",
+      "municipio": "ALVINOPOLIS"
     },
     {
       "cnpj": "75.132.860/0001-88",
-      "nome": "PM ALVORADA DO SUL"
+      "nome": "PM ALVORADA DO SUL",
+      "uf": "PR",
+      "municipio": "ALVORADA DO SUL"
     },
     {
       "cnpj": "90.152.299/0001-92",
-      "nome": "PM AMARAL FERRADOR"
+      "nome": "PM AMARAL FERRADOR",
+      "uf": "RS",
+      "municipio": "AMARAL FERRADOR"
     },
     {
       "cnpj": "05.058.441/0001-68",
-      "nome": "PM ANANINDEUA"
+      "nome": "PM ANANINDEUA",
+      "uf": "PA",
+      "municipio": "ANANINDEUA"
     },
     {
       "cnpj": "44.853.331/0001-40",
-      "nome": "PM ANHUMAS"
+      "nome": "PM ANHUMAS",
+      "uf": "SP",
+      "municipio": "ANHUMAS"
     },
     {
       "cnpj": "90.152.950/0001-24",
-      "nome": "PM ARAMBARE"
+      "nome": "PM ARAMBARE",
+      "uf": "RS",
+      "municipio": "ARAMBARE"
     },
     {
       "cnpj": "01.612.388/0001-44",
-      "nome": "PM ARAPUA"
+      "nome": "PM ARAPUA",
+      "uf": "PR",
+      "municipio": "ARAPUA"
     },
     {
       "cnpj": "18.306.662/0001-50",
-      "nome": "PM ARCOS"
+      "nome": "PM ARCOS",
+      "uf": "MG",
+      "municipio": "ARCOS"
     },
     {
       "cnpj": "39.554.605/0001-60",
-      "nome": "PM AREAL"
+      "nome": "PM AREAL",
+      "uf": "RJ",
+      "municipio": "AREAL"
     },
     {
       "cnpj": "91.103.093/0001-35",
-      "nome": "PM ARROIO DO SAL"
+      "nome": "PM ARROIO DO SAL",
+      "uf": "RS",
+      "municipio": "ARROIO DO SAL"
     },
     {
       "cnpj": "88.860.366/0001-81",
-      "nome": "PM ARROIO GRANDE"
+      "nome": "PM ARROIO GRANDE",
+      "uf": "RS",
+      "municipio": "ARROIO GRANDE"
     },
     {
       "cnpj": "87.612.750/0001-00",
-      "nome": "PM ARVOREZINHA"
+      "nome": "PM ARVOREZINHA",
+      "uf": "RS",
+      "municipio": "ARVOREZINHA"
     },
     {
       "cnpj": "76.208.479/0001-18",
-      "nome": "PM ASSIS CHATEAUBRIAND"
+      "nome": "PM ASSIS CHATEAUBRIAND",
+      "uf": "PR",
+      "municipio": "ASSIS CHATEAUBRIAND"
     },
     {
       "cnpj": "87.613.246/0001-17",
-      "nome": "PM AUGUSTO PESTANA"
+      "nome": "PM AUGUSTO PESTANA",
+      "uf": "RS",
+      "municipio": "AUGUSTO PESTANA"
     },
     {
       "cnpj": "76.235.753/0001-48",
-      "nome": "PM BANDEIRANTES"
+      "nome": "PM BANDEIRANTES",
+      "uf": "PR",
+      "municipio": "BANDEIRANTES"
     },
     {
       "cnpj": "05.058.458/0001-15",
-      "nome": "PM BARCARENA"
+      "nome": "PM BARCARENA",
+      "uf": "PA",
+      "municipio": "BARCARENA"
     },
     {
       "cnpj": "76.407.568/0001-93",
-      "nome": "PM BARRA DO JACARE"
+      "nome": "PM BARRA DO JACARE",
+      "uf": "PR",
+      "municipio": "BARRA DO JACARE"
     },
     {
       "cnpj": "88.811.930/0001-76",
-      "nome": "PM BARRA DO RIBEIRO"
+      "nome": "PM BARRA DO RIBEIRO",
+      "uf": "RS",
+      "municipio": "BARRA DO RIBEIRO"
     },
     {
       "cnpj": "45.370.087/0001-27",
-      "nome": "PM BARRINHA"
+      "nome": "PM BARRINHA",
+      "uf": "SP",
+      "municipio": "BARRINHA"
     },
     {
       "cnpj": "87.612.735/0001-54",
-      "nome": "PM BARROS CASSAL"
+      "nome": "PM BARROS CASSAL",
+      "uf": "RS",
+      "municipio": "BARROS CASSAL"
     },
     {
       "cnpj": "01.612.906/0001-20",
-      "nome": "PM BOA VENTURA DE SAO ROQUE"
+      "nome": "PM BOA VENTURA DE SAO ROQUE",
+      "uf": "PR",
+      "municipio": "BOA VENTURA DE SAO ROQUE"
     },
     {
       "cnpj": "04.216.132/0001-06",
-      "nome": "PM BOA VISTA DO CADEADO"
+      "nome": "PM BOA VISTA DO CADEADO",
+      "uf": "RS",
+      "municipio": "BOA VISTA DO CADEADO"
     },
     {
       "cnpj": "46.634.499/0001-90",
-      "nome": "PM BOITUVA"
+      "nome": "PM BOITUVA",
+      "uf": "SP",
+      "municipio": "BOITUVA"
     },
     {
       "cnpj": "28.561.041/0001-76",
-      "nome": "PM BOM JARDIM"
+      "nome": "PM BOM JARDIM",
+      "uf": "RJ",
+      "municipio": "BOM JARDIM"
     },
     {
       "cnpj": "80.874.100/0001-86",
-      "nome": "PM BOM SUCESSO DO SUL"
+      "nome": "PM BOM SUCESSO DO SUL",
+      "uf": "PR",
+      "municipio": "BOM SUCESSO DO SUL"
     },
     {
       "cnpj": "44.544.906/0001-42",
-      "nome": "PM BORA"
+      "nome": "PM BORA",
+      "uf": "SP",
+      "municipio": "BORA"
     },
     {
       "cnpj": "04.216.419/0001-36",
-      "nome": "PM BOZANO"
+      "nome": "PM BOZANO",
+      "uf": "RS",
+      "municipio": "BOZANO"
     },
     {
       "cnpj": "88.117.718/0001-03",
-      "nome": "PM BUTIA"
+      "nome": "PM BUTIA",
+      "uf": "RS",
+      "municipio": "BUTIA"
     },
     {
       "cnpj": "88.142.302/0001-45",
-      "nome": "PM CACAPAVA DO SUL"
+      "nome": "PM CACAPAVA DO SUL",
+      "uf": "RS",
+      "municipio": "CACAPAVA DO SUL"
     },
     {
       "cnpj": "18.302.299/0001-02",
-      "nome": "PM CAETE"
+      "nome": "PM CAETE",
+      "uf": "MG",
+      "municipio": "CAETE"
     },
     {
       "cnpj": "75.845.545/0001-06",
-      "nome": "PM CAFEARA"
+      "nome": "PM CAFEARA",
+      "uf": "PR",
+      "municipio": "CAFEARA"
     },
     {
       "cnpj": "78.121.878/0001-72",
-      "nome": "PM CAFELANDIA"
+      "nome": "PM CAFELANDIA",
+      "uf": "PR",
+      "municipio": "CAFELANDIA"
     },
     {
       "cnpj": "88.756.929/0001-96",
-      "nome": "PM CAMBARA DO SUL"
+      "nome": "PM CAMBARA DO SUL",
+      "uf": "RS",
+      "municipio": "CAMBARA DO SUL"
     },
     {
       "cnpj": "87.612.859/0001-30",
-      "nome": "PM CAMPINA DAS MISSOES"
+      "nome": "PM CAMPINA DAS MISSOES",
+      "uf": "RS",
+      "municipio": "CAMPINA DAS MISSOES"
     },
     {
       "cnpj": "01.611.489/0001-09",
-      "nome": "PM CAMPINA DO SIMAO"
+      "nome": "PM CAMPINA DO SIMAO",
+      "uf": "PR",
+      "municipio": "CAMPINA DO SIMAO"
     },
     {
       "cnpj": "90.832.619/0001-55",
-      "nome": "PM CAMPO BOM"
+      "nome": "PM CAMPO BOM",
+      "uf": "RS",
+      "municipio": "CAMPO BOM"
     },
     {
       "cnpj": "80.869.621/0001-45",
-      "nome": "PM CAMPO BONITO"
+      "nome": "PM CAMPO BONITO",
+      "uf": "PR",
+      "municipio": "CAMPO BONITO"
     },
     {
       "cnpj": "45.780.095/0001-41",
-      "nome": "PM CAMPO LIMPO PAULISTA"
+      "nome": "PM CAMPO LIMPO PAULISTA",
+      "uf": "SP",
+      "municipio": "CAMPO LIMPO PAULISTA"
     },
     {
       "cnpj": "76.175.926/0001-80",
-      "nome": "PM CANDIDO DE ABREU"
+      "nome": "PM CANDIDO DE ABREU",
+      "uf": "PR",
+      "municipio": "CANDIDO DE ABREU"
     },
     {
       "cnpj": "87.612.842/0001-82",
-      "nome": "PM CANDIDO GODOI"
+      "nome": "PM CANDIDO GODOI",
+      "uf": "RS",
+      "municipio": "CANDIDO GODOI"
     },
     {
       "cnpj": "95.684.478/0001-94",
-      "nome": "PM CANDOI"
+      "nome": "PM CANDOI",
+      "uf": "PR",
+      "municipio": "CANDOI"
     },
     {
       "cnpj": "88.861.430/0001-49",
-      "nome": "PM CANGUCU"
+      "nome": "PM CANGUCU",
+      "uf": "RS",
+      "municipio": "CANGUCU"
     },
     {
       "cnpj": "78.279.981/0001-45",
-      "nome": "PM CANTAGALO PR"
+      "nome": "PM CANTAGALO PR",
+      "uf": "PR",
+      "municipio": "CANTAGALO"
     },
     {
       "cnpj": "75.972.760/0001-60",
-      "nome": "PM CAPANEMA PR"
+      "nome": "PM CAPANEMA PR",
+      "uf": "PR",
+      "municipio": "CAPANEMA"
     },
     {
       "cnpj": "18.334.268/0001-25",
-      "nome": "PM CARATINGA"
+      "nome": "PM CARATINGA",
+      "uf": "MG",
+      "municipio": "CARATINGA"
     },
     {
       "cnpj": "05.121.991/0001-84",
-      "nome": "PM CASTANHAL"
+      "nome": "PM CASTANHAL",
+      "uf": "PA",
+      "municipio": "CASTANHAL"
     },
     {
       "cnpj": "01.612.370/0001-42",
-      "nome": "PM CATAS ALTAS"
+      "nome": "PM CATAS ALTAS",
+      "uf": "MG",
+      "municipio": "CATAS ALTAS"
     },
     {
       "cnpj": "87.613.063/0001-00",
-      "nome": "PM CATUIPE"
+      "nome": "PM CATUIPE",
+      "uf": "RS",
+      "municipio": "CATUIPE"
     },
     {
       "cnpj": "75.845.503/0001-67",
-      "nome": "PM CENTENARIO DO SUL"
+      "nome": "PM CENTENARIO DO SUL",
+      "uf": "PR",
+      "municipio": "CENTENARIO DO SUL"
     },
     {
       "cnpj": "92.000.223/0001-77",
-      "nome": "PM CERRO BRANCO"
+      "nome": "PM CERRO BRANCO",
+      "uf": "RS",
+      "municipio": "CERRO BRANCO"
     },
     {
       "cnpj": "45.732.013/0001-93",
-      "nome": "PM CHARQUEADA"
+      "nome": "PM CHARQUEADA",
+      "uf": "SP",
+      "municipio": "CHARQUEADA"
     },
     {
       "cnpj": "76.995.414/0001-60",
-      "nome": "PM CHOPINZINHO"
+      "nome": "PM CHOPINZINHO",
+      "uf": "PR",
+      "municipio": "CHOPINZINHO"
     },
     {
       "cnpj": "01.606.399/0001-11",
-      "nome": "PM CHUI"
+      "nome": "PM CHUI",
+      "uf": "RS",
+      "municipio": "CHUI"
     },
     {
       "cnpj": "75.377.200/0001-67",
-      "nome": "PM CIDADE GAUCHA"
+      "nome": "PM CIDADE GAUCHA",
+      "uf": "PR",
+      "municipio": "CIDADE GAUCHA"
     },
     {
       "cnpj": "39.554.597/0001-51",
-      "nome": "PM COMENDADOR LEVY GASPARIAN"
+      "nome": "PM COMENDADOR LEVY GASPARIAN",
+      "uf": "RJ",
+      "municipio": "COMENDADOR LEVY GASPARIAN"
     },
     {
       "cnpj": "45.331.188/0001-99",
-      "nome": "PM CONCHAL"
+      "nome": "PM CONCHAL",
+      "uf": "SP",
+      "municipio": "CONCHAL"
     },
     {
       "cnpj": "46.634.119/0001-17",
-      "nome": "PM CONCHAS"
+      "nome": "PM CONCHAS",
+      "uf": "SP",
+      "municipio": "CONCHAS"
     },
     {
       "cnpj": "88.437.926/0001-90",
-      "nome": "PM CONDOR"
+      "nome": "PM CONDOR",
+      "uf": "RS",
+      "municipio": "CONDOR"
     },
     {
       "cnpj": "75.968.412/0001-19",
-      "nome": "PM CONSELHEIRO MAIRINCK"
+      "nome": "PM CONSELHEIRO MAIRINCK",
+      "uf": "PR",
+      "municipio": "CONSELHEIRO MAIRINCK"
     },
     {
       "cnpj": "18.715.508/0001-31",
-      "nome": "PM CONTAGEM"
+      "nome": "PM CONTAGEM",
+      "uf": "MG",
+      "municipio": "CONTAGEM"
     },
     {
       "cnpj": "94.721.388/0001-63",
-      "nome": "PM CORONEL BARROS"
+      "nome": "PM CORONEL BARROS",
+      "uf": "RS",
+      "municipio": "CORONEL BARROS"
     },
     {
       "cnpj": "01.614.415/0001-18",
-      "nome": "PM CORONEL DOMINGOS SOARES"
+      "nome": "PM CORONEL DOMINGOS SOARES",
+      "uf": "PR",
+      "municipio": "CORONEL DOMINGOS SOARES"
     },
     {
       "cnpj": "76.995.455/0001-56",
-      "nome": "PM CORONEL VIVIDA"
+      "nome": "PM CORONEL VIVIDA",
+      "uf": "PR",
+      "municipio": "CORONEL VIVIDA"
     },
     {
       "cnpj": "90.152.240/0001-02",
-      "nome": "PM CRISTAL"
+      "nome": "PM CRISTAL",
+      "uf": "RS",
+      "municipio": "CRISTAL"
     },
     {
       "cnpj": "46.179.966/0001-39",
-      "nome": "PM CRUZALIA"
+      "nome": "PM CRUZALIA",
+      "uf": "SP",
+      "municipio": "CRUZALIA"
     },
     {
       "cnpj": "95.589.230/0001-44",
-      "nome": "PM CRUZEIRO DO IGUACU"
+      "nome": "PM CRUZEIRO DO IGUACU",
+      "uf": "PR",
+      "municipio": "CRUZEIRO DO IGUACU"
     },
     {
       "cnpj": "76.167.725/0001-30",
-      "nome": "PM CURIUVA"
+      "nome": "PM CURIUVA",
+      "uf": "PR",
+      "municipio": "CURIUVA"
     },
     {
       "cnpj": "76.002.658/0001-02",
-      "nome": "PM DE CAMPO DO TENENTE"
+      "nome": "PM DE CAMPO DO TENENTE",
+      "uf": "PR",
+      "municipio": "CAMPO DO TENENTE"
     },
     {
       "cnpj": "76.205.970/0001-95",
-      "nome": "PM DE LARANJEIRAS DO SUL"
+      "nome": "PM DE LARANJEIRAS DO SUL",
+      "uf": "PR",
+      "municipio": "LARANJEIRAS DO SUL"
     },
     {
       "cnpj": "95.587.770/0001-99",
-      "nome": "PM DE RIO BONITO DO IGUACU"
+      "nome": "PM DE RIO BONITO DO IGUACU",
+      "uf": "PR",
+      "municipio": "RIO BONITO DO IGUACU"
     },
     {
       "cnpj": "76.995.380/0001-03",
-      "nome": "PM DE SAO JORGE DO OESTE"
+      "nome": "PM DE SAO JORGE DO OESTE",
+      "uf": "PR",
+      "municipio": "SAO JORGE D OESTE"
     },
     {
       "cnpj": "75.636.530/0001-20",
-      "nome": "PM DE VERE"
+      "nome": "PM DE VERE",
+      "uf": "PR",
+      "municipio": "VERE"
     },
     {
       "cnpj": "46.435.921/0001-88",
-      "nome": "PM DIVINOLANDIA"
+      "nome": "PM DIVINOLANDIA",
+      "uf": "SP",
+      "municipio": "DIVINOLANDIA"
     },
     {
       "cnpj": "87.482.535/0001-24",
-      "nome": "PM DOM PEDRITO"
+      "nome": "PM DOM PEDRITO",
+      "uf": "RS",
+      "municipio": "DOM PEDRITO"
     },
     {
       "cnpj": "01.640.339/0001-15",
-      "nome": "PM DOM PEDRO DE ALCANTARA"
+      "nome": "PM DOM PEDRO DE ALCANTARA",
+      "uf": "RS",
+      "municipio": "DOM PEDRO DE ALCANTARA"
     },
     {
       "cnpj": "87.488.938/0001-80",
-      "nome": "PM DONA FRANCISCA"
+      "nome": "PM DONA FRANCISCA",
+      "uf": "RS",
+      "municipio": "DONA FRANCISCA"
     },
     {
       "cnpj": "44.470.300/0001-00",
-      "nome": "PM ECHAPORA"
+      "nome": "PM ECHAPORA",
+      "uf": "SP",
+      "municipio": "ECHAPORA"
     },
     {
       "cnpj": "92.324.706/0001-27",
-      "nome": "PM ELDORADO DO SUL"
+      "nome": "PM ELDORADO DO SUL",
+      "uf": "RS",
+      "municipio": "ELDORADO DO SUL"
     },
     {
       "cnpj": "67.662.544/0001-90",
-      "nome": "PM EMILIANOPOLIS"
+      "nome": "PM EMILIANOPOLIS",
+      "uf": "SP",
+      "municipio": "EMILIANOPOLIS"
     },
     {
       "cnpj": "89.363.642/0001-69",
-      "nome": "PM ENCRUZILHADA DO SUL"
+      "nome": "PM ENCRUZILHADA DO SUL",
+      "uf": "RS",
+      "municipio": "ENCRUZILHADA DO SUL"
     },
     {
       "cnpj": "67.996.363/0001-08",
-      "nome": "PM ENGENHEIRO COELHO"
+      "nome": "PM ENGENHEIRO COELHO",
+      "uf": "SP",
+      "municipio": "ENGENHEIRO COELHO"
     },
     {
       "cnpj": "89.971.782/0001-10",
-      "nome": "PM ENTRE-IJUIS"
+      "nome": "PM ENTRE-IJUIS",
+      "uf": "RS",
+      "municipio": "ENTRE-IJUIS"
     },
     {
       "cnpj": "88.225.149/0001-10",
-      "nome": "PM ESMERALDA"
+      "nome": "PM ESMERALDA",
+      "uf": "RS",
+      "municipio": "ESMERALDA"
     },
     {
       "cnpj": "01.612.634/0001-68",
-      "nome": "PM ESPIGAO ALTO DO IGUACU"
+      "nome": "PM ESPIGAO ALTO DO IGUACU",
+      "uf": "PR",
+      "municipio": "ESPIGAO ALTO DO IGUACU"
     },
     {
       "cnpj": "67.168.856/0001-41",
-      "nome": "PM ESTIVA GERBI"
+      "nome": "PM ESTIVA GERBI",
+      "uf": "SP",
+      "municipio": "ESTIVA GERBI"
     },
     {
       "cnpj": "46.449.682/0001-15",
-      "nome": "PM ESTRELA DO NORTE"
+      "nome": "PM ESTRELA DO NORTE",
+      "uf": "SP",
+      "municipio": "ESTRELA DO NORTE"
     },
     {
       "cnpj": "67.662.437/0001-61",
-      "nome": "PM EUCLIDES DA CUNHA PAULISTA"
+      "nome": "PM EUCLIDES DA CUNHA PAULISTA",
+      "uf": "SP",
+      "municipio": "EUCLIDES DA CUNHA PAULISTA"
     },
     {
       "cnpj": "91.566.893/0001-92",
-      "nome": "PM FAGUNDES VARELA"
+      "nome": "PM FAGUNDES VARELA",
+      "uf": "RS",
+      "municipio": "FAGUNDES VARELA"
     },
     {
       "cnpj": "88.488.341/0001-07",
-      "nome": "PM FAXINAL DO SOTURNO"
+      "nome": "PM FAXINAL DO SOTURNO",
+      "uf": "RS",
+      "municipio": "FAXINAL DO SOTURNO"
     },
     {
       "cnpj": "87.838.330/0001-39",
-      "nome": "PM FELIZ"
+      "nome": "PM FELIZ",
+      "uf": "RS",
+      "municipio": "FELIZ"
     },
     {
       "cnpj": "01.619.323/0001-20",
-      "nome": "PM FERNANDES PINHEIRO"
+      "nome": "PM FERNANDES PINHEIRO",
+      "uf": "PR",
+      "municipio": "FERNANDES PINHEIRO"
     },
     {
       "cnpj": "97.228.126/0001-50",
-      "nome": "PM FORMIGUEIRO"
+      "nome": "PM FORMIGUEIRO",
+      "uf": "RS",
+      "municipio": "FORMIGUEIRO"
     },
     {
       "cnpj": "76.208.495/0001-00",
-      "nome": "PM FORMOSA DO OESTE"
+      "nome": "PM FORMOSA DO OESTE",
+      "uf": "PR",
+      "municipio": "FORMOSA DO OESTE"
     },
     {
       "cnpj": "01.603.719/0001-80",
-      "nome": "PM FOZ DO JORDAO"
+      "nome": "PM FOZ DO JORDAO",
+      "uf": "PR",
+      "municipio": "FOZ DO JORDAO"
     },
     {
       "cnpj": "77.816.510/0001-66",
-      "nome": "PM FRANCISCO BELTRAO"
+      "nome": "PM FRANCISCO BELTRAO",
+      "uf": "PR",
+      "municipio": "FRANCISCO BELTRAO"
     },
     {
       "cnpj": "92.891.035/0001-86",
-      "nome": "PM GARRUCHOS"
+      "nome": "PM GARRUCHOS",
+      "uf": "RS",
+      "municipio": "GARRUCHOS"
     },
     {
       "cnpj": "88.117.726/0001-50",
-      "nome": "PM GENERAL CAMARA"
+      "nome": "PM GENERAL CAMARA",
+      "uf": "RS",
+      "municipio": "GENERAL CAMARA"
     },
     {
       "cnpj": "87.613.410/0001-96",
-      "nome": "PM GETULIO VARGAS"
+      "nome": "PM GETULIO VARGAS",
+      "uf": "RS",
+      "municipio": "GETULIO VARGAS"
     },
     {
       "cnpj": "91.338.558/0001-37",
-      "nome": "PM GLORINHA"
+      "nome": "PM GLORINHA",
+      "uf": "RS",
+      "municipio": "GLORINHA"
     },
     {
       "cnpj": "01.607.627/0001-78",
-      "nome": "PM GOIOXIM"
+      "nome": "PM GOIOXIM",
+      "uf": "PR",
+      "municipio": "GOIOXIM"
     },
     {
       "cnpj": "76.238.443/0001-87",
-      "nome": "PM GUAIRACA"
+      "nome": "PM GUAIRACA",
+      "uf": "PR",
+      "municipio": "GUAIRACA"
     },
     {
       "cnpj": "01.616.255/0001-46",
-      "nome": "PM GUAMIRANGA"
+      "nome": "PM GUAMIRANGA",
+      "uf": "PR",
+      "municipio": "GUAMIRANGA"
     },
     {
       "cnpj": "75.443.812/0001-00",
-      "nome": "PM GUAPIRAMA"
+      "nome": "PM GUAPIRAMA",
+      "uf": "PR",
+      "municipio": "GUAPIRAMA"
     },
     {
       "cnpj": "87.862.397/0001-09",
-      "nome": "PM GUAPORE"
+      "nome": "PM GUAPORE",
+      "uf": "RS",
+      "municipio": "GUAPORE"
     },
     {
       "cnpj": "75.378.844/0001-70",
-      "nome": "PM GUAPOREMA"
+      "nome": "PM GUAPOREMA",
+      "uf": "PR",
+      "municipio": "GUAPOREMA"
     },
     {
       "cnpj": "87.613.030/0001-51",
-      "nome": "PM GUARANI DAS MISSOES"
+      "nome": "PM GUARANI DAS MISSOES",
+      "uf": "RS",
+      "municipio": "GUARANI DAS MISSOES"
     },
     {
       "cnpj": "46.634.267/0001-31",
-      "nome": "PM GUAREI"
+      "nome": "PM GUAREI",
+      "uf": "SP",
+      "municipio": "GUAREI"
     },
     {
       "cnpj": "48.664.304/0001-80",
-      "nome": "PM GUARIBA"
+      "nome": "PM GUARIBA",
+      "uf": "SP",
+      "municipio": "GUARIBA"
     },
     {
       "cnpj": "88.080.379/0001-38",
-      "nome": "PM HERVAL"
+      "nome": "PM HERVAL",
+      "uf": "RS",
+      "municipio": "HERVAL"
     },
     {
       "cnpj": "94.702.784/0001-43",
-      "nome": "PM HULHA NEGRA"
+      "nome": "PM HULHA NEGRA",
+      "uf": "RS",
+      "municipio": "HULHA NEGRA"
     },
     {
       "cnpj": "77.008.068/0001-41",
-      "nome": "PM IBAITI"
+      "nome": "PM IBAITI",
+      "uf": "PR",
+      "municipio": "IBAITI"
     },
     {
       "cnpj": "87.613.584/0001-59",
-      "nome": "PM IBIRAIARAS"
+      "nome": "PM IBIRAIARAS",
+      "uf": "RS",
+      "municipio": "IBIRAIARAS"
     },
     {
       "cnpj": "11.256.062/0001-85",
-      "nome": "PM IBIRAJUBA"
+      "nome": "PM IBIRAJUBA",
+      "uf": "PE",
+      "municipio": "IBIRAJUBA"
     },
     {
       "cnpj": "95.595.013/0001-67",
-      "nome": "PM IGUATU"
+      "nome": "PM IGUATU",
+      "uf": "PR",
+      "municipio": "IGUATU"
     },
     {
       "cnpj": "90.738.196/0001-09",
-      "nome": "PM IJUI"
+      "nome": "PM IJUI",
+      "uf": "RS",
+      "municipio": "IJUI"
     },
     {
       "cnpj": "83.102.301/0001-53",
-      "nome": "PM ILHOTA"
+      "nome": "PM ILHOTA",
+      "uf": "SC",
+      "municipio": "ILHOTA"
     },
     {
       "cnpj": "01.613.770/0001-72",
-      "nome": "PM IMBAU"
+      "nome": "PM IMBAU",
+      "uf": "PR",
+      "municipio": "IMBAU"
     },
     {
       "cnpj": "76.175.892/0001-23",
-      "nome": "PM IMBITUVA"
+      "nome": "PM IMBITUVA",
+      "uf": "PR",
+      "municipio": "IMBITUVA"
     },
     {
       "cnpj": "90.544.511/0001-67",
-      "nome": "PM IPE"
+      "nome": "PM IPE",
+      "uf": "RS",
+      "municipio": "IPE"
     },
     {
       "cnpj": "75.738.484/0001-70",
-      "nome": "PM IPORA"
+      "nome": "PM IPORA",
+      "uf": "PR",
+      "municipio": "IPORA"
     },
     {
       "cnpj": "01.605.306/0001-34",
-      "nome": "PM ITAARA"
+      "nome": "PM ITAARA",
+      "uf": "RS",
+      "municipio": "ITAARA"
     },
     {
       "cnpj": "18.299.446/0001-24",
-      "nome": "PM ITABIRA"
+      "nome": "PM ITABIRA",
+      "uf": "MG",
+      "municipio": "ITABIRA"
     },
     {
       "cnpj": "30.417.158/0001-22",
-      "nome": "PM ITALVA"
+      "nome": "PM ITALVA",
+      "uf": "RJ",
+      "municipio": "ITALVA"
     },
     {
       "cnpj": "76.995.430/0001-52",
-      "nome": "PM ITAPEJARA D'OESTE"
+      "nome": "PM ITAPEJARA D'OESTE",
+      "uf": "PR",
+      "municipio": "ITAPEJARA D OESTE"
     },
     {
       "cnpj": "95.422.846/0001-26",
-      "nome": "PM ITAPERUCU"
+      "nome": "PM ITAPERUCU",
+      "uf": "PR",
+      "municipio": "ITAPERUCU"
     },
     {
       "cnpj": "15.403.041/0001-04",
-      "nome": "PM ITAQUIRAI"
+      "nome": "PM ITAQUIRAI",
+      "uf": "MS",
+      "municipio": "ITAQUIRAI"
     },
     {
       "cnpj": "46.634.127/0001-63",
-      "nome": "PM ITATINGA"
+      "nome": "PM ITATINGA",
+      "uf": "SP",
+      "municipio": "ITATINGA"
     },
     {
       "cnpj": "75.458.836/0001-33",
-      "nome": "PM ITAUNA DO SUL"
+      "nome": "PM ITAUNA DO SUL",
+      "uf": "PR",
+      "municipio": "ITAUNA DO SUL"
     },
     {
       "cnpj": "76.175.918/0001-33",
-      "nome": "PM IVAI"
+      "nome": "PM IVAI",
+      "uf": "PR",
+      "municipio": "IVAI"
     },
     {
       "cnpj": "75.969.667/0001-04",
-      "nome": "PM JABOTI"
+      "nome": "PM JABOTI",
+      "uf": "PR",
+      "municipio": "JABOTI"
     },
     {
       "cnpj": "76.966.860/0001-46",
-      "nome": "PM JACAREZINHO"
+      "nome": "PM JACAREZINHO",
+      "uf": "PR",
+      "municipio": "JACAREZINHO"
     },
     {
       "cnpj": "04.217.901/0001-90",
-      "nome": "PM JACUIZINHO"
+      "nome": "PM JACUIZINHO",
+      "uf": "RS",
+      "municipio": "JACUIZINHO"
     },
     {
       "cnpj": "88.414.552/0001-97",
-      "nome": "PM JAGUARAO"
+      "nome": "PM JAGUARAO",
+      "uf": "RS",
+      "municipio": "JAGUARAO"
     },
     {
       "cnpj": "75.969.881/0001-52",
-      "nome": "PM JAPIRA"
+      "nome": "PM JAPIRA",
+      "uf": "PR",
+      "municipio": "JAPIRA"
     },
     {
       "cnpj": "75.788.349/0001-39",
-      "nome": "PM JAPURA"
+      "nome": "PM JAPURA",
+      "uf": "PR",
+      "municipio": "JAPURA"
     },
     {
       "cnpj": "45.780.079/0001-59",
-      "nome": "PM JARINU"
+      "nome": "PM JARINU",
+      "uf": "SP",
+      "municipio": "JARINU"
     },
     {
       "cnpj": "76.245.042/0001-54",
-      "nome": "PM JATAIZINHO"
+      "nome": "PM JATAIZINHO",
+      "uf": "PR",
+      "municipio": "JATAIZINHO"
     },
     {
       "cnpj": "77.398.154/0001-08",
-      "nome": "PM JESUITAS"
+      "nome": "PM JESUITAS",
+      "uf": "PR",
+      "municipio": "JESUITAS"
     },
     {
       "cnpj": "18.401.059/0001-57",
-      "nome": "PM JOAO MONLEVADE"
+      "nome": "PM JOAO MONLEVADE",
+      "uf": "MG",
+      "municipio": "JOAO MONLEVADE"
     },
     {
       "cnpj": "89.650.121/0001-92",
-      "nome": "PM JOIA"
+      "nome": "PM JOIA",
+      "uf": "RS",
+      "municipio": "JOIA"
     },
     {
       "cnpj": "18.338.178/0001-02",
-      "nome": "PM JUIZ DE FORA"
+      "nome": "PM JUIZ DE FORA",
+      "uf": "MG",
+      "municipio": "JUIZ DE FORA"
     },
     {
       "cnpj": "88.227.756/0001-19",
-      "nome": "PM JULIO DE CASTILHOS"
+      "nome": "PM JULIO DE CASTILHOS",
+      "uf": "RS",
+      "municipio": "JULIO DE CASTILHOS"
     },
     {
       "cnpj": "76.408.061/0001-54",
-      "nome": "PM JUNDIAI DO SUL"
+      "nome": "PM JUNDIAI DO SUL",
+      "uf": "PR",
+      "municipio": "JUNDIAI DO SUL"
     },
     {
       "cnpj": "94.704.277/0001-49",
-      "nome": "PM LAGOA DOS TRES CANTOS"
+      "nome": "PM LAGOA DOS TRES CANTOS",
+      "uf": "RS",
+      "municipio": "LAGOA DOS TRES CANTOS"
     },
     {
       "cnpj": "28.919.637/0001-03",
-      "nome": "PM LAJE DO MURIAE"
+      "nome": "PM LAJE DO MURIAE",
+      "uf": "RJ",
+      "municipio": "LAJE DO MURIAE"
     },
     {
       "cnpj": "95.684.536/0001-80",
-      "nome": "PM LARANJAL"
+      "nome": "PM LARANJAL",
+      "uf": "PR",
+      "municipio": "LARANJAL"
     },
     {
       "cnpj": "88.201.298/0001-49",
-      "nome": "PM LAVRAS DO SUL"
+      "nome": "PM LAVRAS DO SUL",
+      "uf": "RS",
+      "municipio": "LAVRAS DO SUL"
     },
     {
       "cnpj": "46.362.661/0001-68",
-      "nome": "PM LEME"
+      "nome": "PM LEME",
+      "uf": "SP",
+      "municipio": "LEME"
     },
     {
       "cnpj": "75.388.850/0001-08",
-      "nome": "PM LEOPOLIS"
+      "nome": "PM LEOPOLIS",
+      "uf": "PR",
+      "municipio": "LEOPOLIS"
     },
     {
       "cnpj": "75.771.477/0001-70",
-      "nome": "PM LONDRINA"
+      "nome": "PM LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "75.845.511/0001-03",
-      "nome": "PM LUPIONOPOLIS"
+      "nome": "PM LUPIONOPOLIS",
+      "uf": "PR",
+      "municipio": "LUPIONOPOLIS"
     },
     {
       "cnpj": "87.613.576/0001-02",
-      "nome": "PM MACHADINHO"
+      "nome": "PM MACHADINHO",
+      "uf": "RS",
+      "municipio": "MACHADINHO"
     },
     {
       "cnpj": "01.614.343/0001-09",
-      "nome": "PM MANFRINOPOLIS"
+      "nome": "PM MANFRINOPOLIS",
+      "uf": "PR",
+      "municipio": "MANFRINOPOLIS"
     },
     {
       "cnpj": "75.740.811/0001-28",
-      "nome": "PM MANOEL RIBAS"
+      "nome": "PM MANOEL RIBAS",
+      "uf": "PR",
+      "municipio": "MANOEL RIBAS"
     },
     {
       "cnpj": "91.551.762/0001-31",
-      "nome": "PM MANOEL VIANA"
+      "nome": "PM MANOEL VIANA",
+      "uf": "RS",
+      "municipio": "MANOEL VIANA"
     },
     {
       "cnpj": "87.613.386/0001-95",
-      "nome": "PM MARIANO MORO"
+      "nome": "PM MARIANO MORO",
+      "uf": "RS",
+      "municipio": "MARIANO MORO"
     },
     {
       "cnpj": "01.612.552/0001-13",
-      "nome": "PM MARQUINHO"
+      "nome": "PM MARQUINHO",
+      "uf": "PR",
+      "municipio": "MARQUINHO"
     },
     {
       "cnpj": "91.900.381/0001-10",
-      "nome": "PM MINAS DO LEAO"
+      "nome": "PM MINAS DO LEAO",
+      "uf": "RS",
+      "municipio": "MINAS DO LEAO"
     },
     {
       "cnpj": "29.114.121/0001-46",
-      "nome": "PM MIRACEMA"
+      "nome": "PM MIRACEMA",
+      "uf": "RJ",
+      "municipio": "MIRACEMA"
     },
     {
       "cnpj": "75.845.529/0001-05",
-      "nome": "PM MIRASELVA"
+      "nome": "PM MIRASELVA",
+      "uf": "PR",
+      "municipio": "MIRASELVA"
     },
     {
       "cnpj": "46.612.032/0001-49",
-      "nome": "PM MIRASSOL"
+      "nome": "PM MIRASSOL",
+      "uf": "SP",
+      "municipio": "MIRASSOL"
     },
     {
       "cnpj": "78.101.847/0001-50",
-      "nome": "PM MISSAL"
+      "nome": "PM MISSAL",
+      "uf": "PR",
+      "municipio": "MISSAL"
     },
     {
       "cnpj": "18.301.044/0001-17",
-      "nome": "PM MOEMA"
+      "nome": "PM MOEMA",
+      "uf": "MG",
+      "municipio": "MOEMA"
     },
     {
       "cnpj": "45.301.264/0001-13",
-      "nome": "PM MOGI-GUACU"
+      "nome": "PM MOGI-GUACU",
+      "uf": "SP",
+      "municipio": "MOGI GUACU"
     },
     {
       "cnpj": "52.846.144/0001-67",
-      "nome": "PM MONTE ALEGRE DO SUL"
+      "nome": "PM MONTE ALEGRE DO SUL",
+      "uf": "SP",
+      "municipio": "MONTE ALEGRE DO SUL"
     },
     {
       "cnpj": "90.895.905/0001-60",
-      "nome": "PM MONTENEGRO"
+      "nome": "PM MONTENEGRO",
+      "uf": "RS",
+      "municipio": "MONTENEGRO"
     },
     {
       "cnpj": "22.678.874/0001-35",
-      "nome": "PM MONTES CLAROS"
+      "nome": "PM MONTES CLAROS",
+      "uf": "MG",
+      "municipio": "MONTES CLAROS"
     },
     {
       "cnpj": "18.296.665/0001-50",
-      "nome": "PM MORADA NOVA DE MINAS"
+      "nome": "PM MORADA NOVA DE MINAS",
+      "uf": "MG",
+      "municipio": "MORADA NOVA DE MINAS"
     },
     {
       "cnpj": "91.558.650/0001-02",
-      "nome": "PM MORRO REDONDO"
+      "nome": "PM MORRO REDONDO",
+      "uf": "RS",
+      "municipio": "MORRO REDONDO"
     },
     {
       "cnpj": "94.707.627/0001-20",
-      "nome": "PM MORRO REUTER"
+      "nome": "PM MORRO REUTER",
+      "uf": "RS",
+      "municipio": "MORRO REUTER"
     },
     {
       "cnpj": "88.000.922/0001-40",
-      "nome": "PM MOSTARDAS"
+      "nome": "PM MOSTARDAS",
+      "uf": "RS",
+      "municipio": "MOSTARDAS"
     },
     {
       "cnpj": "45.146.271/0001-98",
-      "nome": "PM NHANDEARA"
+      "nome": "PM NHANDEARA",
+      "uf": "SP",
+      "municipio": "NHANDEARA"
     },
     {
       "cnpj": "76.413.061/0001-42",
-      "nome": "PM NOVA ALIANACA DO IVAI"
+      "nome": "PM NOVA ALIANACA DO IVAI",
+      "uf": "PR",
+      "municipio": "NOVA ALIANCA DO IVAI"
     },
     {
       "cnpj": "95.589.289/0001-32",
-      "nome": "PM NOVA ESPERANCA SUDOESTE"
+      "nome": "PM NOVA ESPERANCA SUDOESTE",
+      "uf": "PR",
+      "municipio": "NOVA ESPERANCA DO SUDOESTE"
     },
     {
       "cnpj": "95.587.648/0001-12",
-      "nome": "PM NOVA LARANJEIRAS"
+      "nome": "PM NOVA LARANJEIRAS",
+      "uf": "PR",
+      "municipio": "NOVA LARANJEIRAS"
     },
     {
       "cnpj": "88.488.358/0001-56",
-      "nome": "PM NOVA PALMA"
+      "nome": "PM NOVA PALMA",
+      "uf": "RS",
+      "municipio": "NOVA PALMA"
     },
     {
       "cnpj": "88.572.748/0001-00",
-      "nome": "PM NOVA PETROPOLIS"
+      "nome": "PM NOVA PETROPOLIS",
+      "uf": "RS",
+      "municipio": "NOVA PETROPOLIS"
     },
     {
       "cnpj": "01.611.828/0001-49",
-      "nome": "PM NOVA RAMADA"
+      "nome": "PM NOVA RAMADA",
+      "uf": "RS",
+      "municipio": "NOVA RAMADA"
     },
     {
       "cnpj": "91.110.296/0001-59",
-      "nome": "PM NOVA ROMA DO SUL"
+      "nome": "PM NOVA ROMA DO SUL",
+      "uf": "RS",
+      "municipio": "NOVA ROMA DO SUL"
     },
     {
       "cnpj": "01.601.856/0001-85",
-      "nome": "PM NOVO CABRAIS"
+      "nome": "PM NOVO CABRAIS",
+      "uf": "RS",
+      "municipio": "NOVO CABRAIS"
     },
     {
       "cnpj": "04.207.526/0001-06",
-      "nome": "PM NOVO XINGU"
+      "nome": "PM NOVO XINGU",
+      "uf": "RS",
+      "municipio": "NOVO XINGU"
     },
     {
       "cnpj": "05.131.180/0001-64",
-      "nome": "PM OBIDOS"
+      "nome": "PM OBIDOS",
+      "uf": "PA",
+      "municipio": "OBIDOS"
     },
     {
       "cnpj": "90.836.701/0001-58",
-      "nome": "PM PALMARES DO SUL"
+      "nome": "PM PALMARES DO SUL",
+      "uf": "RS",
+      "municipio": "PALMARES DO SUL"
     },
     {
       "cnpj": "44.543.981/0001-99",
-      "nome": "PM PALMITAL"
+      "nome": "PM PALMITAL",
+      "uf": "SP",
+      "municipio": "PALMITAL"
     },
     {
       "cnpj": "75.680.025/0001-82",
-      "nome": "PM PALMITAL PR"
+      "nome": "PM PALMITAL PR",
+      "uf": "PR",
+      "municipio": "PALMITAL"
     },
     {
       "cnpj": "91.342.667/0001-28",
-      "nome": "PM PANTANO GRANDE"
+      "nome": "PM PANTANO GRANDE",
+      "uf": "RS",
+      "municipio": "PANTANO GRANDE"
     },
     {
       "cnpj": "05.193.057/0001-78",
-      "nome": "PM PARAGOMINAS"
+      "nome": "PM PARAGOMINAS",
+      "uf": "PA",
+      "municipio": "PARAGOMINAS"
     },
     {
       "cnpj": "29.138.385/0001-30",
-      "nome": "PM PARAIBA DO SUL"
+      "nome": "PM PARAIBA DO SUL",
+      "uf": "RJ",
+      "municipio": "PARAIBA DO SUL"
     },
     {
       "cnpj": "92.000.207/0001-84",
-      "nome": "PM PARAISO DO SUL"
+      "nome": "PM PARAISO DO SUL",
+      "uf": "RS",
+      "municipio": "PARAISO DO SUL"
     },
     {
       "cnpj": "46.634.309/0001-34",
-      "nome": "PM PARANAPANEMA"
+      "nome": "PM PARANAPANEMA",
+      "uf": "SP",
+      "municipio": "PARANAPANEMA"
     },
     {
       "cnpj": "46.634.150/0001-58",
-      "nome": "PM PARDINHO"
+      "nome": "PM PARDINHO",
+      "uf": "SP",
+      "municipio": "PARDINHO"
     },
     {
       "cnpj": "76.995.448/0001-54",
-      "nome": "PM PATO BRANCO"
+      "nome": "PM PATO BRANCO",
+      "uf": "PR",
+      "municipio": "PATO BRANCO"
     },
     {
       "cnpj": "45.290.426/0001-65",
-      "nome": "PM PEDRA BELA"
+      "nome": "PM PEDRA BELA",
+      "uf": "SP",
+      "municipio": "PEDRA BELA"
     },
     {
       "cnpj": "04.219.099/0001-78",
-      "nome": "PM PEDRAS ALTAS"
+      "nome": "PM PEDRAS ALTAS",
+      "uf": "RS",
+      "municipio": "PEDRAS ALTAS"
     },
     {
       "cnpj": "46.410.775/0001-36",
-      "nome": "PM PEDREIRA"
+      "nome": "PM PEDREIRA",
+      "uf": "SP",
+      "municipio": "PEDREIRA"
     },
     {
       "cnpj": "88.859.962/0001-41",
-      "nome": "PM PEDRO OSORIO"
+      "nome": "PM PEDRO OSORIO",
+      "uf": "RS",
+      "municipio": "PEDRO OSORIO"
     },
     {
       "cnpj": "87.566.188/0001-18",
-      "nome": "PM PEJUCARA"
+      "nome": "PM PEJUCARA",
+      "uf": "RS",
+      "municipio": "PEJUCARA"
     },
     {
       "cnpj": "81.478.133/0001-70",
-      "nome": "PM PEROLA"
+      "nome": "PM PEROLA",
+      "uf": "PR",
+      "municipio": "PEROLA"
     },
     {
       "cnpj": "92.871.466/0001-80",
-      "nome": "PM PICADA CAFE"
+      "nome": "PM PICADA CAFE",
+      "uf": "RS",
+      "municipio": "PICADA CAFE"
     },
     {
       "cnpj": "76.002.666/0001-40",
-      "nome": "PM PIEN"
+      "nome": "PM PIEN",
+      "uf": "PR",
+      "municipio": "PIEN"
     },
     {
       "cnpj": "45.122.942/0001-80",
-      "nome": "PM PINDORAMA"
+      "nome": "PM PINDORAMA",
+      "uf": "SP",
+      "municipio": "PINDORAMA"
     },
     {
       "cnpj": "04.213.870/0001-08",
-      "nome": "PM PINHAL DA SERRA"
+      "nome": "PM PINHAL DA SERRA",
+      "uf": "RS",
+      "municipio": "PINHAL DA SERRA"
     },
     {
       "cnpj": "95.590.832/0001-11",
-      "nome": "PM PINHAL DE SAO BENTO"
+      "nome": "PM PINHAL DE SAO BENTO",
+      "uf": "PR",
+      "municipio": "PINHAL DE SAO BENTO"
     },
     {
       "cnpj": "88.084.942/0001-46",
-      "nome": "PM PINHEIRO MACHADO"
+      "nome": "PM PINHEIRO MACHADO",
+      "uf": "RS",
+      "municipio": "PINHEIRO MACHADO"
     },
     {
       "cnpj": "88.861.448/0001-40",
-      "nome": "PM PIRATINI"
+      "nome": "PM PIRATINI",
+      "uf": "RS",
+      "municipio": "PIRATINI"
     },
     {
       "cnpj": "46.137.451/0001-76",
-      "nome": "PM PIRATININGA"
+      "nome": "PM PIRATININGA",
+      "uf": "SP",
+      "municipio": "PIRATININGA"
     },
     {
       "cnpj": "95.543.427/0001-42",
-      "nome": "PM PITANGUEIRAS-PR"
+      "nome": "PM PITANGUEIRAS-PR",
+      "uf": "PR",
+      "municipio": "PITANGUEIRAS"
     },
     {
       "cnpj": "76.460.526/0001-16",
-      "nome": "PM PLANALTO"
+      "nome": "PM PLANALTO",
+      "uf": "PR",
+      "municipio": "PLANALTO"
     },
     {
       "cnpj": "44.543.999/0001-90",
-      "nome": "PM PLATINA"
+      "nome": "PM PLATINA",
+      "uf": "SP",
+      "municipio": "PLATINA"
     },
     {
       "cnpj": "03.434.792/0001-09",
-      "nome": "PM PONTA PORA"
+      "nome": "PM PONTA PORA",
+      "uf": "MS",
+      "municipio": "PONTA PORA"
     },
     {
       "cnpj": "23.804.149/0001-29",
-      "nome": "PM PONTE NOVA"
+      "nome": "PM PONTE NOVA",
+      "uf": "MG",
+      "municipio": "PONTE NOVA"
     },
     {
       "cnpj": "80.542.764/0001-48",
-      "nome": "PM PORECATU"
+      "nome": "PM PORECATU",
+      "uf": "PR",
+      "municipio": "PORECATU"
     },
     {
       "cnpj": "76.179.837/0001-01",
-      "nome": "PM PORTO AMAZONAS"
+      "nome": "PM PORTO AMAZONAS",
+      "uf": "PR",
+      "municipio": "PORTO AMAZONAS"
     },
     {
       "cnpj": "01.591.618/0001-36",
-      "nome": "PM PORTO BARREIRO"
+      "nome": "PM PORTO BARREIRO",
+      "uf": "PR",
+      "municipio": "PORTO BARREIRO"
     },
     {
       "cnpj": "46.634.481/0001-98",
-      "nome": "PM PORTO FELIZ"
+      "nome": "PM PORTO FELIZ",
+      "uf": "SP",
+      "municipio": "PORTO FELIZ"
     },
     {
       "cnpj": "01.613.136/0001-30",
-      "nome": "PM PRADO FERREIRA"
+      "nome": "PM PRADO FERREIRA",
+      "uf": "PR",
+      "municipio": "PRADO FERREIRA"
     },
     {
       "cnpj": "78.113.834/0001-09",
-      "nome": "PM PRANCHITA"
+      "nome": "PM PRANCHITA",
+      "uf": "PR",
+      "municipio": "PRANCHITA"
     },
     {
       "cnpj": "55.251.185/0001-07",
-      "nome": "PM PRESIDENTE BERNARDES"
+      "nome": "PM PRESIDENTE BERNARDES",
+      "uf": "SP",
+      "municipio": "PRESIDENTE BERNARDES"
     },
     {
       "cnpj": "76.279.959/0001-70",
-      "nome": "PM PRESIDENTE CASTELO BRANCO"
+      "nome": "PM PRESIDENTE CASTELO BRANCO",
+      "uf": "PR",
+      "municipio": "PRESIDENTE CASTELO BRANCO"
     },
     {
       "cnpj": "55.293.427/0001-17",
-      "nome": "PM PRESIDENTE EPITACIO"
+      "nome": "PM PRESIDENTE EPITACIO",
+      "uf": "SP",
+      "municipio": "PRESIDENTE EPITACIO"
     },
     {
       "cnpj": "77.003.424/0001-34",
-      "nome": "PM PRUDENTOPOLIS"
+      "nome": "PM PRUDENTOPOLIS",
+      "uf": "PR",
+      "municipio": "PRUDENTOPOLIS"
     },
     {
       "cnpj": "88.186.754/0001-29",
-      "nome": "PM PUTINGA"
+      "nome": "PM PUTINGA",
+      "uf": "RS",
+      "municipio": "PUTINGA"
     },
     {
       "cnpj": "88.123.492/0001-53",
-      "nome": "PM QUARAI"
+      "nome": "PM QUARAI",
+      "uf": "RS",
+      "municipio": "QUARAI"
     },
     {
       "cnpj": "76.205.962/0001-49",
-      "nome": "PM QUEDAS DO IGUACU"
+      "nome": "PM QUEDAS DO IGUACU",
+      "uf": "PR",
+      "municipio": "QUEDAS DO IGUACU"
     },
     {
       "cnpj": "91.574.764/0001-46",
-      "nome": "PM QUINZE DE NOVEMBRO"
+      "nome": "PM QUINZE DE NOVEMBRO",
+      "uf": "RS",
+      "municipio": "QUINZE DE NOVEMBRO"
     },
     {
       "cnpj": "31.505.027/0001-60",
-      "nome": "PM QUISSAMA"
+      "nome": "PM QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "76.002.674/0001-97",
-      "nome": "PM QUITANDINHA"
+      "nome": "PM QUITANDINHA",
+      "uf": "PR",
+      "municipio": "QUITANDINHA"
     },
     {
       "cnpj": "95.725.024/0001-14",
-      "nome": "PM RAMILANDIA"
+      "nome": "PM RAMILANDIA",
+      "uf": "PR",
+      "municipio": "RAMILANDIA"
     },
     {
       "cnpj": "75.829.416/0001-16",
-      "nome": "PM RANCHO ALEGRE"
+      "nome": "PM RANCHO ALEGRE",
+      "uf": "PR",
+      "municipio": "RANCHO ALEGRE"
     },
     {
       "cnpj": "95.640.132/0001-94",
-      "nome": "PM RANCHO ALEGRE D OESTE"
+      "nome": "PM RANCHO ALEGRE D OESTE",
+      "uf": "PR",
+      "municipio": "RANCHO ALEGRE D OESTE"
     },
     {
       "cnpj": "76.205.673/0001-40",
-      "nome": "PM REALEZA"
+      "nome": "PM REALEZA",
+      "uf": "PR",
+      "municipio": "REALEZA"
     },
     {
       "cnpj": "76.169.879/0001-61",
-      "nome": "PM RESERVA"
+      "nome": "PM RESERVA",
+      "uf": "PR",
+      "municipio": "RESERVA"
     },
     {
       "cnpj": "01.612.911/0001-32",
-      "nome": "PM RESERVA DO IGUACU"
+      "nome": "PM RESERVA DO IGUACU",
+      "uf": "PR",
+      "municipio": "RESERVA DO IGUACU"
     },
     {
       "cnpj": "87.490.306/0001-51",
-      "nome": "PM RESTINGA SECA"
+      "nome": "PM RESTINGA SECA",
+      "uf": "RS",
+      "municipio": "RESTINGA SECA"
     },
     {
       "cnpj": "76.968.064/0001-42",
-      "nome": "PM RIBEIRAO DO PINHAL"
+      "nome": "PM RIBEIRAO DO PINHAL",
+      "uf": "PR",
+      "municipio": "RIBEIRAO DO PINHAL"
     },
     {
       "cnpj": "75.963.256/0001-01",
-      "nome": "PM RIO AZUL"
+      "nome": "PM RIO AZUL",
+      "uf": "PR",
+      "municipio": "RIO AZUL"
     },
     {
       "cnpj": "75.771.212/0001-71",
-      "nome": "PM RIO BOM"
+      "nome": "PM RIO BOM",
+      "uf": "PR",
+      "municipio": "RIO BOM"
     },
     {
       "cnpj": "03.681.582/0001-07",
-      "nome": "PM RIO BRILHANTE"
+      "nome": "PM RIO BRILHANTE",
+      "uf": "MS",
+      "municipio": "RIO BRILHANTE"
     },
     {
       "cnpj": "39.223.581/0001-66",
-      "nome": "PM RIO DAS OSTRAS"
+      "nome": "PM RIO DAS OSTRAS",
+      "uf": "RJ",
+      "municipio": "RIO DAS OSTRAS"
     },
     {
       "cnpj": "88.821.079/0001-62",
-      "nome": "PM RIO PARDO"
+      "nome": "PM RIO PARDO",
+      "uf": "RS",
+      "municipio": "RIO PARDO"
     },
     {
       "cnpj": "76.288.760/0001-08",
-      "nome": "PM ROLANDIA"
+      "nome": "PM ROLANDIA",
+      "uf": "PR",
+      "municipio": "ROLANDIA"
     },
     {
       "cnpj": "75.380.071/0001-66",
-      "nome": "PM RONDON"
+      "nome": "PM RONDON",
+      "uf": "PR",
+      "municipio": "RONDON"
     },
     {
       "cnpj": "88.138.292/0001-74",
-      "nome": "PM ROSARIO DO SUL"
+      "nome": "PM ROSARIO DO SUL",
+      "uf": "RS",
+      "municipio": "ROSARIO DO SUL"
     },
     {
       "cnpj": "18.349.944/0001-34",
-      "nome": "PM RUBIM"
+      "nome": "PM RUBIM",
+      "uf": "MG",
+      "municipio": "RUBIM"
     },
     {
       "cnpj": "76.205.707/0001-04",
-      "nome": "PM SALTO DO LONTRA"
+      "nome": "PM SALTO DO LONTRA",
+      "uf": "PR",
+      "municipio": "SALTO DO LONTRA"
     },
     {
       "cnpj": "44.872.778/0001-66",
-      "nome": "PM SANDOVALINA"
+      "nome": "PM SANDOVALINA",
+      "uf": "SP",
+      "municipio": "SANDOVALINA"
     },
     {
       "cnpj": "76.235.746/0001-46",
-      "nome": "PM SANTA AMELIA"
+      "nome": "PM SANTA AMELIA",
+      "uf": "PR",
+      "municipio": "SANTA AMELIA"
     },
     {
       "cnpj": "95.594.776/0001-93",
-      "nome": "PM SANTA LUCIA"
+      "nome": "PM SANTA LUCIA",
+      "uf": "PR",
+      "municipio": "SANTA LUCIA"
     },
     {
       "cnpj": "88.488.366/0001-00",
-      "nome": "PM SANTA MARIA"
+      "nome": "PM SANTA MARIA",
+      "uf": "RS",
+      "municipio": "SANTA MARIA"
     },
     {
       "cnpj": "95.684.544/0001-26",
-      "nome": "PM SANTA MARIA DO OESTE"
+      "nome": "PM SANTA MARIA DO OESTE",
+      "uf": "PR",
+      "municipio": "SANTA MARIA DO OESTE"
     },
     {
       "cnpj": "75.392.019/0001-20",
-      "nome": "PM SANTA MARIANA"
+      "nome": "PM SANTA MARIANA",
+      "uf": "PR",
+      "municipio": "SANTA MARIANA"
     },
     {
       "cnpj": "75.425.314/0001-35",
-      "nome": "PM SANTA TEREZINHA DE ITAIPU"
+      "nome": "PM SANTA TEREZINHA DE ITAIPU",
+      "uf": "PR",
+      "municipio": "SANTA TEREZINHA DE ITAIPU"
     },
     {
       "cnpj": "88.824.099/0001-97",
-      "nome": "PM SANTA VITORIA DO PALMAR"
+      "nome": "PM SANTA VITORIA DO PALMAR",
+      "uf": "RS",
+      "municipio": "SANTA VITORIA DO PALMAR"
     },
     {
       "cnpj": "88.141.460/0001-80",
-      "nome": "PM SANTANA DA BOA VISTA"
+      "nome": "PM SANTANA DA BOA VISTA",
+      "uf": "RS",
+      "municipio": "SANTANA DA BOA VISTA"
     },
     {
       "cnpj": "29.114.139/0001-48",
-      "nome": "PM SANTO ANTONIO DE PADUA"
+      "nome": "PM SANTO ANTONIO DE PADUA",
+      "uf": "RJ",
+      "municipio": "SANTO ANTONIO DE PADUA"
     },
     {
       "cnpj": "75.927.582/0001-55",
-      "nome": "PM SANTO ANTONIO DO SUDOESTE"
+      "nome": "PM SANTO ANTONIO DO SUDOESTE",
+      "uf": "PR",
+      "municipio": "SANTO ANTONIO DO SUDOESTE"
     },
     {
       "cnpj": "76.970.375/0001-46",
-      "nome": "PM SANTO INACIO"
+      "nome": "PM SANTO INACIO",
+      "uf": "PR",
+      "municipio": "SANTO INACIO"
     },
     {
       "cnpj": "87.896.882/0001-01",
-      "nome": "PM SAO FRANCISCO DE ASSIS"
+      "nome": "PM SAO FRANCISCO DE ASSIS",
+      "uf": "RS",
+      "municipio": "SAO FRANCISCO DE ASSIS"
     },
     {
       "cnpj": "88.768.080/0001-70",
-      "nome": "PM SAO GABRIEL"
+      "nome": "PM SAO GABRIEL",
+      "uf": "RS",
+      "municipio": "SAO GABRIEL"
     },
     {
       "cnpj": "24.380.651/0001-12",
-      "nome": "PM SAO GONCALO DO RIO ABAIXO"
+      "nome": "PM SAO GONCALO DO RIO ABAIXO",
+      "uf": "MG",
+      "municipio": "SAO GONCALO DO RIO ABAIXO"
     },
     {
       "cnpj": "76.995.422/0001-06",
-      "nome": "PM SAO JOAO"
+      "nome": "PM SAO JOAO",
+      "uf": "PR",
+      "municipio": "SAO JOAO"
     },
     {
       "cnpj": "10.122.661/0001-43",
-      "nome": "PM SAO JOAQUIM DO MONTE"
+      "nome": "PM SAO JOAQUIM DO MONTE",
+      "uf": "PE",
+      "municipio": "SAO JOAQUIM DO MONTE"
     },
     {
       "cnpj": "82.892.274/0001-05",
-      "nome": "PM SAO JOSE"
+      "nome": "PM SAO JOSE",
+      "uf": "SC",
+      "municipio": "SAO JOSE"
     },
     {
       "cnpj": "77.819.605/0001-33",
-      "nome": "PM SAO JOSE DAS PALMEIRAS"
+      "nome": "PM SAO JOSE DAS PALMEIRAS",
+      "uf": "PR",
+      "municipio": "SAO JOSE DAS PALMEIRAS"
     },
     {
       "cnpj": "92.406.511/0001-26",
-      "nome": "PM SAO JOSE DO HERVAL"
+      "nome": "PM SAO JOSE DO HERVAL",
+      "uf": "RS",
+      "municipio": "SAO JOSE DO HERVAL"
     },
     {
       "cnpj": "88.568.902/0001-70",
-      "nome": "PM SAO JOSE DO NORTE"
+      "nome": "PM SAO JOSE DO NORTE",
+      "uf": "RS",
+      "municipio": "SAO JOSE DO NORTE"
     },
     {
       "cnpj": "87.893.111/0001-52",
-      "nome": "PM SAO LOURENCO DO SUL"
+      "nome": "PM SAO LOURENCO DO SUL",
+      "uf": "RS",
+      "municipio": "SAO LOURENCO DO SUL"
     },
     {
       "cnpj": "80.909.617/0001-63",
-      "nome": "PM SAO MANOEL DO PARANA"
+      "nome": "PM SAO MANOEL DO PARANA",
+      "uf": "PR",
+      "municipio": "SAO MANOEL DO PARANA"
     },
     {
       "cnpj": "94.444.403/0001-73",
-      "nome": "PM SAO MARTINHO DA SERRA"
+      "nome": "PM SAO MARTINHO DA SERRA",
+      "uf": "RS",
+      "municipio": "SAO MARTINHO DA SERRA"
     },
     {
       "cnpj": "46.415.998/0001-96",
-      "nome": "PM SAO PEDRO"
+      "nome": "PM SAO PEDRO",
+      "uf": "SP",
+      "municipio": "SAO PEDRO"
     },
     {
       "cnpj": "70.946.009/0001-75",
-      "nome": "PM SAO ROQUE"
+      "nome": "PM SAO ROQUE",
+      "uf": "SP",
+      "municipio": "SAO ROQUE"
     },
     {
       "cnpj": "46.482.832/0001-92",
-      "nome": "PM SAO SEBASTIAO"
+      "nome": "PM SAO SEBASTIAO",
+      "uf": "SP",
+      "municipio": "SAO SEBASTIAO"
     },
     {
       "cnpj": "45.741.527/0001-05",
-      "nome": "PM SAO SEBASTIAO DA GRAMA"
+      "nome": "PM SAO SEBASTIAO DA GRAMA",
+      "uf": "SP",
+      "municipio": "SAO SEBASTIAO DA GRAMA"
     },
     {
       "cnpj": "88.370.879/0001-04",
-      "nome": "PM SAO SEBASTIAO DO CAI"
+      "nome": "PM SAO SEBASTIAO DO CAI",
+      "uf": "RS",
+      "municipio": "SAO SEBASTIAO DO CAI"
     },
     {
       "cnpj": "18.241.349/0001-80",
-      "nome": "PM SAO SEBASTIAO DO PARAISO"
+      "nome": "PM SAO SEBASTIAO DO PARAISO",
+      "uf": "MG",
+      "municipio": "SAO SEBASTIAO DO PARAISO"
     },
     {
       "cnpj": "75.381.178/0001-29",
-      "nome": "PM SAO TOME"
+      "nome": "PM SAO TOME",
+      "uf": "PR",
+      "municipio": "SAO TOME"
     },
     {
       "cnpj": "76.167.733/0001-87",
-      "nome": "PM SAPOPEMA"
+      "nome": "PM SAPOPEMA",
+      "uf": "PR",
+      "municipio": "SAPOPEMA"
     },
     {
       "cnpj": "32.147.670/0001-21",
-      "nome": "PM SAQUAREMA"
+      "nome": "PM SAQUAREMA",
+      "uf": "RJ",
+      "municipio": "SAQUAREMA"
     },
     {
       "cnpj": "95.585.477/0001-92",
-      "nome": "PM SAUDADE DO IGUACU"
+      "nome": "PM SAUDADE DO IGUACU",
+      "uf": "PR",
+      "municipio": "SAUDADE DO IGUACU"
     },
     {
       "cnpj": "87.613.501/0001-21",
-      "nome": "PM SELBACH"
+      "nome": "PM SELBACH",
+      "uf": "RS",
+      "municipio": "SELBACH"
     },
     {
       "cnpj": "76.911.676/0001-07",
-      "nome": "PM SENGES"
+      "nome": "PM SENGES",
+      "uf": "PR",
+      "municipio": "SENGES"
     },
     {
       "cnpj": "94.068.277/0001-08",
-      "nome": "PM SENTINELA DO SUL"
+      "nome": "PM SENTINELA DO SUL",
+      "uf": "RS",
+      "municipio": "SENTINELA DO SUL"
     },
     {
       "cnpj": "87.613.360/0001-47",
-      "nome": "PM SEVERIANO DE ALMEIDA"
+      "nome": "PM SEVERIANO DE ALMEIDA",
+      "uf": "RS",
+      "municipio": "SEVERIANO DE ALMEIDA"
     },
     {
       "cnpj": "28.741.098/0001-57",
-      "nome": "PM SILVA JARDIM"
+      "nome": "PM SILVA JARDIM",
+      "uf": "RJ",
+      "municipio": "SILVA JARDIM"
     },
     {
       "cnpj": "92.457.217/0001-43",
-      "nome": "PM SILVEIRA MARTINS"
+      "nome": "PM SILVEIRA MARTINS",
+      "uf": "RS",
+      "municipio": "SILVEIRA MARTINS"
     },
     {
       "cnpj": "87.738.530/0001-10",
-      "nome": "PM SOLEDADE"
+      "nome": "PM SOLEDADE",
+      "uf": "RS",
+      "municipio": "SOLEDADE"
     },
     {
       "cnpj": "80.869.886/0001-43",
-      "nome": "PM SULINA"
+      "nome": "PM SULINA",
+      "uf": "PR",
+      "municipio": "SULINA"
     },
     {
       "cnpj": "44.544.690/0001-15",
-      "nome": "PM TAIACU"
+      "nome": "PM TAIACU",
+      "uf": "SP",
+      "municipio": "TAIACU"
     },
     {
       "cnpj": "87.613.493/0001-13",
-      "nome": "PM TAPERA"
+      "nome": "PM TAPERA",
+      "uf": "RS",
+      "municipio": "TAPERA"
     },
     {
       "cnpj": "88.811.948/0001-78",
-      "nome": "PM TAPES"
+      "nome": "PM TAPES",
+      "uf": "RS",
+      "municipio": "TAPES"
     },
     {
       "cnpj": "88.427.018/0001-15",
-      "nome": "PM TAVARES-RS"
+      "nome": "PM TAVARES-RS",
+      "uf": "RS",
+      "municipio": "TAVARES"
     },
     {
       "cnpj": "75.963.850/0001-94",
-      "nome": "PM TEIXEIRA SOARES"
+      "nome": "PM TEIXEIRA SOARES",
+      "uf": "PR",
+      "municipio": "TEIXEIRA SOARES"
     },
     {
       "cnpj": "76.170.240/0001-04",
-      "nome": "PM TELEMACO BORBA"
+      "nome": "PM TELEMACO BORBA",
+      "uf": "PR",
+      "municipio": "TELEMACO BORBA"
     },
     {
       "cnpj": "44.951.515/0001-42",
-      "nome": "PM TEODORO SAMPAIO"
+      "nome": "PM TEODORO SAMPAIO",
+      "uf": "SP",
+      "municipio": "TEODORO SAMPAIO"
     },
     {
       "cnpj": "76.978.881/0001-81",
-      "nome": "PM TERRA RICA"
+      "nome": "PM TERRA RICA",
+      "uf": "PR",
+      "municipio": "TERRA RICA"
     },
     {
       "cnpj": "76.105.584/0001-21",
-      "nome": "PM TIJUCAS DO SUL"
+      "nome": "PM TIJUCAS DO SUL",
+      "uf": "PR",
+      "municipio": "TIJUCAS DO SUL"
     },
     {
       "cnpj": "76.205.806/0001-88",
-      "nome": "PM TOLEDO"
+      "nome": "PM TOLEDO",
+      "uf": "PR",
+      "municipio": "TOLEDO"
     },
     {
       "cnpj": "78.121.936/0001-68",
-      "nome": "PM TRES BARRAS DO PARANA"
+      "nome": "PM TRES BARRAS DO PARANA",
+      "uf": "PR",
+      "municipio": "TRES BARRAS DO PARANA"
     },
     {
       "cnpj": "88.199.971/0001-53",
-      "nome": "PM TRES COROAS"
+      "nome": "PM TRES COROAS",
+      "uf": "RS",
+      "municipio": "TRES COROAS"
     },
     {
       "cnpj": "17.695.008/0001-12",
-      "nome": "PM TRES MARIAS"
+      "nome": "PM TRES MARIAS",
+      "uf": "MG",
+      "municipio": "TRES MARIAS"
     },
     {
       "cnpj": "88.363.189/0001-28",
-      "nome": "PM TRIUNFO"
+      "nome": "PM TRIUNFO",
+      "uf": "RS",
+      "municipio": "TRIUNFO"
     },
     {
       "cnpj": "67.160.481/0001-73",
-      "nome": "PM TUIUTI"
+      "nome": "PM TUIUTI",
+      "uf": "SP",
+      "municipio": "TUIUTI"
     },
     {
       "cnpj": "92.406.438/0001-92",
-      "nome": "PM TUNAS"
+      "nome": "PM TUNAS",
+      "uf": "RS",
+      "municipio": "TUNAS"
     },
     {
       "cnpj": "88.227.764/0001-65",
-      "nome": "PM TUPANCIRETA"
+      "nome": "PM TUPANCIRETA",
+      "uf": "RS",
+      "municipio": "TUPANCIRETA"
     },
     {
       "cnpj": "01.613.067/0001-64",
-      "nome": "PM TURUCU"
+      "nome": "PM TURUCU",
+      "uf": "RS",
+      "municipio": "TURUCU"
     },
     {
       "cnpj": "78.279.973/0001-07",
-      "nome": "PM TURVO"
+      "nome": "PM TURVO",
+      "uf": "PR",
+      "municipio": "TURVO"
     },
     {
       "cnpj": "18.128.207/0001-01",
-      "nome": "PM UBA"
+      "nome": "PM UBA",
+      "uf": "MG",
+      "municipio": "UBA"
     },
     {
       "cnpj": "01.611.538/0001-03",
-      "nome": "PM UBIRETAMA"
+      "nome": "PM UBIRETAMA",
+      "uf": "RS",
+      "municipio": "UBIRETAMA"
     },
     {
       "cnpj": "76.279.975/0001-62",
-      "nome": "PM UNIFLOR"
+      "nome": "PM UNIFLOR",
+      "uf": "PR",
+      "municipio": "UNIFLOR"
     },
     {
       "cnpj": "75.424.507/0001-71",
-      "nome": "PM URAI"
+      "nome": "PM URAI",
+      "uf": "PR",
+      "municipio": "URAI"
     },
     {
       "cnpj": "88.131.164/0001-07",
-      "nome": "PM URUGUAIANA"
+      "nome": "PM URUGUAIANA",
+      "uf": "RS",
+      "municipio": "URUGUAIANA"
     },
     {
       "cnpj": "87.866.745/0001-16",
-      "nome": "PM VACARIA"
+      "nome": "PM VACARIA",
+      "uf": "RS",
+      "municipio": "VACARIA"
     },
     {
       "cnpj": "94.577.574/0001-70",
-      "nome": "PM VALE DO SOL"
+      "nome": "PM VALE DO SOL",
+      "uf": "RS",
+      "municipio": "VALE DO SOL"
     },
     {
       "cnpj": "39.217.831/0001-55",
-      "nome": "PM VARRE-SAI"
+      "nome": "PM VARRE-SAI",
+      "uf": "RJ",
+      "municipio": "VARRE-SAI"
     },
     {
       "cnpj": "32.412.819/0001-52",
-      "nome": "PM VASSOURAS"
+      "nome": "PM VASSOURAS",
+      "uf": "RJ",
+      "municipio": "VASSOURAS"
     },
     {
       "cnpj": "95.685.798/0001-69",
-      "nome": "PM VENTANIA"
+      "nome": "PM VENTANIA",
+      "uf": "PR",
+      "municipio": "VENTANIA"
     },
     {
       "cnpj": "98.661.366/0001-06",
-      "nome": "PM VERA CRUZ"
+      "nome": "PM VERA CRUZ",
+      "uf": "RS",
+      "municipio": "VERA CRUZ"
     },
     {
       "cnpj": "87.613.352/0001-09",
-      "nome": "PM VIADUTOS"
+      "nome": "PM VIADUTOS",
+      "uf": "RS",
+      "municipio": "VIADUTOS"
     },
     {
       "cnpj": "88.000.914/0001-01",
-      "nome": "PM VIAMAO"
+      "nome": "PM VIAMAO",
+      "uf": "RS",
+      "municipio": "VIAMAO"
     },
     {
       "cnpj": "87.613.485/0001-77",
-      "nome": "PM VICTOR GRAEFF"
+      "nome": "PM VICTOR GRAEFF",
+      "uf": "RS",
+      "municipio": "VICTOR GRAEFF"
     },
     {
       "cnpj": "94.444.189/0001-55",
-      "nome": "PM VILA NOVA DO SUL"
+      "nome": "PM VILA NOVA DO SUL",
+      "uf": "RS",
+      "municipio": "VILA NOVA DO SUL"
     },
     {
       "cnpj": "95.587.622/0001-74",
-      "nome": "PM VIRMOND"
+      "nome": "PM VIRMOND",
+      "uf": "PR",
+      "municipio": "VIRMOND"
     },
     {
       "cnpj": "94.449.030/0001-23",
-      "nome": "PM VITORIA DAS MISSOES"
+      "nome": "PM VITORIA DAS MISSOES",
+      "uf": "RS",
+      "municipio": "VITORIA DAS MISSOES"
     },
     {
       "cnpj": "76.247.360/0001-54",
-      "nome": "PM XAMBRE"
+      "nome": "PM XAMBRE",
+      "uf": "PR",
+      "municipio": "XAMBRE"
     },
     {
       "cnpj": "32.286.364/0001-76",
-      "nome": "PORTOBARREIROPREV"
+      "nome": "PORTOBARREIROPREV",
+      "uf": "PR",
+      "municipio": "PORTO BARREIRO"
     },
     {
       "cnpj": "40.527.279/0001-80",
-      "nome": "PREV JUIZ DE FORA"
+      "nome": "PREV JUIZ DE FORA",
+      "uf": "MG",
+      "municipio": "JUIZ DE FORA"
     },
     {
       "cnpj": "04.261.480/0001-03",
-      "nome": "PREV SOCIAL FRANCISCO BELTRAO PREVBEL"
+      "nome": "PREV SOCIAL FRANCISCO BELTRAO PREVBEL",
+      "uf": "PR",
+      "municipio": "FRANCISCO BELTRAO"
     },
     {
       "cnpj": "04.887.994/0001-60",
-      "nome": "PREV SOCIAL SERV PUBLICOS MUNIC PALMITAL"
+      "nome": "PREV SOCIAL SERV PUBLICOS MUNIC PALMITAL",
+      "uf": "PR",
+      "municipio": "PALMITAL"
     },
     {
       "cnpj": "04.877.728/0001-57",
-      "nome": "PREVI-MARQUINHO"
+      "nome": "PREVI-MARQUINHO",
+      "uf": "PR",
+      "municipio": "MARQUINHO"
     },
     {
       "cnpj": "19.065.011/0001-88",
-      "nome": "REG PREV AGRESTINA - AGRESTIPREV"
+      "nome": "REG PREV AGRESTINA - AGRESTIPREV",
+      "uf": "PE",
+      "municipio": "AGRESTINA"
     },
     {
       "cnpj": "14.218.461/0001-40",
-      "nome": "REG PREV ITAPERUNA"
+      "nome": "REG PREV ITAPERUNA",
+      "uf": "RJ",
+      "municipio": "ITAPERUNA"
     },
     {
       "cnpj": "07.602.215/0001-21",
-      "nome": "REG PREV SOCIAL FOZ DO JORDAO PREVFOZ"
+      "nome": "REG PREV SOCIAL FOZ DO JORDAO PREVFOZ",
+      "uf": "PR",
+      "municipio": "FOZ DO JORDAO"
     },
     {
       "cnpj": "13.064.477/0001-82",
-      "nome": "REGENPREV"
+      "nome": "REGENPREV",
+      "uf": "SP",
+      "municipio": "REGENTE FEIJO"
     },
     {
       "cnpj": "07.761.989/0001-03",
-      "nome": "RESERVA PREV"
+      "nome": "RESERVA PREV",
+      "uf": "PR",
+      "municipio": "RESERVA"
     },
     {
       "cnpj": "78.009.149/0001-29",
-      "nome": "SAAE ALVORADA DO SUL"
+      "nome": "SAAE ALVORADA DO SUL",
+      "uf": "PR",
+      "municipio": "ALVORADA DO SUL"
     },
     {
       "cnpj": "44.699.908/0001-00",
-      "nome": "SAAE ARARAS"
+      "nome": "SAAE ARARAS",
+      "uf": "SP",
+      "municipio": "ARARAS"
     },
     {
       "cnpj": "75.624.478/0001-91",
-      "nome": "SAAE BANDEIRANTES"
+      "nome": "SAAE BANDEIRANTES",
+      "uf": "PR",
+      "municipio": "BANDEIRANTES"
     },
     {
       "cnpj": "19.893.791/0001-54",
-      "nome": "SAAE CAETE"
+      "nome": "SAAE CAETE",
+      "uf": "MG",
+      "municipio": "CAETE"
     },
     {
       "cnpj": "20.959.219/0001-20",
-      "nome": "SAAE ITABIRA"
+      "nome": "SAAE ITABIRA",
+      "uf": "MG",
+      "municipio": "ITABIRA"
     },
     {
       "cnpj": "78.402.252/0001-34",
-      "nome": "SAAE JATAIZINHO"
+      "nome": "SAAE JATAIZINHO",
+      "uf": "PR",
+      "municipio": "JATAIZINHO"
     },
     {
       "cnpj": "46.675.997/0001-80",
-      "nome": "SAAE LEME"
+      "nome": "SAAE LEME",
+      "uf": "SP",
+      "municipio": "LEME"
     },
     {
       "cnpj": "20.918.413/0001-67",
-      "nome": "SAAE MOEMA"
+      "nome": "SAAE MOEMA",
+      "uf": "MG",
+      "municipio": "MOEMA"
     },
     {
       "cnpj": "44.544.005/0001-50",
-      "nome": "SAAE PALMITAL"
+      "nome": "SAAE PALMITAL",
+      "uf": "SP",
+      "municipio": "PALMITAL"
     },
     {
       "cnpj": "45.479.391/0001-07",
-      "nome": "SAAE PORTO FELIZ"
+      "nome": "SAAE PORTO FELIZ",
+      "uf": "SP",
+      "municipio": "PORTO FELIZ"
     },
     {
       "cnpj": "29.134.183/0001-10",
-      "nome": "SAAE RIO DAS OSTRAS"
+      "nome": "SAAE RIO DAS OSTRAS",
+      "uf": "RJ",
+      "municipio": "RIO DAS OSTRAS"
     },
     {
       "cnpj": "61.217.399/0001-51",
-      "nome": "SAAE SAO GONCALO DO RIO ABAIXO"
+      "nome": "SAAE SAO GONCALO DO RIO ABAIXO",
+      "uf": "MG",
+      "municipio": "SAO GONCALO DO RIO ABAIXO"
     },
     {
       "cnpj": "05.211.356/0001-98",
-      "nome": "SAAE SAO PEDRO"
+      "nome": "SAAE SAO PEDRO",
+      "uf": "SP",
+      "municipio": "SAO PEDRO"
     },
     {
       "cnpj": "80.505.431/0001-49",
-      "nome": "SAMAE ABATIA"
+      "nome": "SAMAE ABATIA",
+      "uf": "PR",
+      "municipio": "ABATIA"
     },
     {
       "cnpj": "04.211.210/0001-80",
-      "nome": "SAMAE BOA VENTURA DE SAO ROQUE"
+      "nome": "SAMAE BOA VENTURA DE SAO ROQUE",
+      "uf": "PR",
+      "municipio": "BOA VENTURA DE SAO ROQUE"
     },
     {
       "cnpj": "02.936.023/0001-38",
-      "nome": "SAMAE DE PORTO BARREIRO"
+      "nome": "SAMAE DE PORTO BARREIRO",
+      "uf": "PR",
+      "municipio": "PORTO BARREIRO"
     },
     {
       "cnpj": "01.755.525/0001-08",
-      "nome": "SAMAE PRADO FERREIRA"
+      "nome": "SAMAE PRADO FERREIRA",
+      "uf": "PR",
+      "municipio": "PRADO FERREIRA"
     },
     {
       "cnpj": "30.022.783/0001-75",
-      "nome": "SEC EDUC ITALVA - SEMEDUC"
+      "nome": "SEC EDUC ITALVA - SEMEDUC",
+      "uf": "RJ",
+      "municipio": "ITALVA"
     },
     {
       "cnpj": "30.903.506/0001-71",
-      "nome": "SEC EDUCACAO QUISSAMA"
+      "nome": "SEC EDUCACAO QUISSAMA",
+      "uf": "RJ",
+      "municipio": "QUISSAMA"
     },
     {
       "cnpj": "32.412.819/0013-96",
-      "nome": "SECRET EDUCACAO VASSOURAS"
+      "nome": "SECRET EDUCACAO VASSOURAS",
+      "uf": "RJ",
+      "municipio": "VASSOURAS"
     },
     {
       "cnpj": "32.412.819/0007-48",
-      "nome": "SECRET SAUDE VASSOURAS"
+      "nome": "SECRET SAUDE VASSOURAS",
+      "uf": "RJ",
+      "municipio": "VASSOURAS"
     },
     {
       "cnpj": "05.666.925/0001-90",
-      "nome": "SELUMA-SERV.DE LIMP.URBANA DE MAFRA LTDA"
+      "nome": "SELUMA-SERV.DE LIMP.URBANA DE MAFRA LTDA",
+      "uf": "SC",
+      "municipio": "MAFRA"
     },
     {
       "cnpj": "28.989.567/0001-51",
-      "nome": "SEMAD"
+      "nome": "SEMAD",
+      "uf": "PA",
+      "municipio": "ANANINDEUA"
     },
     {
       "cnpj": "28.946.916/0001-58",
-      "nome": "SEPOF"
+      "nome": "SEPOF",
+      "uf": "PA",
+      "municipio": "ANANINDEUA"
     },
     {
       "cnpj": "80.909.658/0001-50",
-      "nome": "SER AUT MUNIC JAPURA - SAMAE"
+      "nome": "SER AUT MUNIC JAPURA - SAMAE",
+      "uf": "PR",
+      "municipio": "JAPURA"
     },
     {
       "cnpj": "01.371.416/0001-89",
-      "nome": "SERCOMTEL - PM LONDRINA"
+      "nome": "SERCOMTEL - PM LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "02.494.988/0001-18",
-      "nome": "SERCOMTEL CELULAR S.A. - LONDRINA"
+      "nome": "SERCOMTEL CELULAR S.A. - LONDRINA",
+      "uf": "PR",
+      "municipio": "LONDRINA"
     },
     {
       "cnpj": "83.073.536/0001-64",
-      "nome": "SERRANA ENGENHARIA LTDA"
+      "nome": "SERRANA ENGENHARIA LTDA",
+      "uf": "SC",
+      "municipio": "JOINVILLE"
     },
     {
       "cnpj": "03.379.099/0001-72",
-      "nome": "SERV AUT AGUA E ESG MIRASELVA - SAMAE"
+      "nome": "SERV AUT AGUA E ESG MIRASELVA - SAMAE",
+      "uf": "PR",
+      "municipio": "MIRASELVA"
     },
     {
       "cnpj": "73.897.589/0001-46",
-      "nome": "SERV AUT AGUA E ESG. TERRA RICA - SAMAE"
+      "nome": "SERV AUT AGUA E ESG. TERRA RICA - SAMAE",
+      "uf": "PR",
+      "municipio": "TERRA RICA"
     },
     {
       "cnpj": "02.017.041/0001-16",
-      "nome": "SERV AUT AGUA ESG. PRES CASTELO BRANCO"
+      "nome": "SERV AUT AGUA ESG. PRES CASTELO BRANCO",
+      "uf": "PR",
+      "municipio": "PRESIDENTE CASTELO BRANCO"
     },
     {
       "cnpj": "47.261.292/0001-80",
-      "nome": "SERVICO FUNERARIO MUN.DE SAO PAULO"
+      "nome": "SERVICO FUNERARIO MUN.DE SAO PAULO",
+      "uf": "SP",
+      "municipio": "SAO PAULO"
     },
     {
       "cnpj": "52.156.114/0001-29",
-      "nome": "SMTCA ARARAS"
+      "nome": "SMTCA ARARAS",
+      "uf": "SP",
+      "municipio": "ARARAS"
     },
     {
       "cnpj": "28.931.425/0001-33",
-      "nome": "SUPERMOC"
+      "nome": "SUPERMOC",
+      "uf": "MG",
+      "municipio": "MONTES CLAROS"
     },
     {
       "cnpj": "34.870.246/0001-36",
-      "nome": "TCE AMAPA"
+      "nome": "TCE AMAPA",
+      "uf": "AP",
+      "municipio": "MACAPA"
     },
     {
       "cnpj": "04.996.792/0001-57",
-      "nome": "TIBAGI PREV"
+      "nome": "TIBAGI PREV",
+      "uf": "PR",
+      "municipio": "TIBAGI"
     },
     {
       "cnpj": "08.435.854/0001-02",
-      "nome": "TRANSCON"
+      "nome": "TRANSCON",
+      "uf": "MG",
+      "municipio": "CONTAGEM"
     },
     {
       "cnpj": "45.176.153/0001-22",
-      "nome": "UNIVERSIDADE DE TAUBATE - UNITAU"
+      "nome": "UNIVERSIDADE DE TAUBATE - UNITAU",
+      "uf": "SP",
+      "municipio": "TAUBATE"
     },
     {
       "cnpj": "77.902.914/0001-72",
-      "nome": "UNIVERSIDADE UNICENTRO"
+      "nome": "UNIVERSIDADE UNICENTRO",
+      "uf": "PR",
+      "municipio": "GUARAPUAVA"
     },
     {
       "cnpj": "78.680.337/0001-84",
-      "nome": "UNIVERSIDADE UNIOESTE"
+      "nome": "UNIVERSIDADE UNIOESTE",
+      "uf": "PR",
+      "municipio": "CASCAVEL"
     }
   ]
 }
