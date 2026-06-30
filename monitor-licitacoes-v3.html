@@ -2942,6 +2942,9 @@ async function buscarPorMunicipio() {
   const nome = document.getElementById('muni-nome-input').value.trim();
   if (!nome) { document.getElementById('muni-nome-input').focus(); return; }
 
+  // Aguarda base de clientes GOVBR antes de processar (evita race condition)
+  await clientesGOVBRPronto;
+
   modoMunicipio = true;
   muniUFAtiva   = uf;
   muniNomeAtivo = nome;
