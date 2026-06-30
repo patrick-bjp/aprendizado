@@ -2130,6 +2130,9 @@ function abrirPainelKws() {
    CNPJs normalizados (só dígitos) para comparação rápida.
    ────────────────────────────────────────────────────────── */
 let CLIENTES_GOVBR = new Set();
+// Lista completa de clientes com CNPJ/UF — usada para consulta direta e garantida
+// na API oficial do PNCP (evita depender só de match textual nas queries genéricas)
+let CLIENTES_GOVBR_LISTA = [];
 
 // Promise global — permite aguardar o carregamento antes de processar editais
 const clientesGOVBRPronto = (async function carregarClientesGOVBR() {
@@ -2138,10 +2141,15 @@ const clientesGOVBRPronto = (async function carregarClientesGOVBR() {
     const res  = await fetch(url);
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    CLIENTES_GOVBR = new Set(
-      (data.clientes || []).map(c => c.cnpj.replace(/\D/g, ''))
-    );
-    console.log('[Monitor] Clientes GOVBR carregados:', CLIENTES_GOVBR.size);
+    const lista = data.clientes || [];
+    CLIENTES_GOVBR = new Set(lista.map(c => c.cnpj.replace(/\D/g, '')));
+    CLIENTES_GOVBR_LISTA = lista.map(c => ({
+      cnpj: c.cnpj.replace(/\D/g, ''),
+      nome: c.nome || '',
+      uf:   (c.uf || '').toUpperCase().trim()
+    }));
+    const comUF = CLIENTES_GOVBR_LISTA.filter(c => c.uf).length;
+    console.log('[Monitor] Clientes GOVBR carregados:', CLIENTES_GOVBR.size, '| com UF:', comUF);
   } catch (err) {
     console.warn('[Monitor] Não foi possível carregar clientes GOVBR:', err.message);
   }
@@ -2685,6 +2693,69 @@ async function buscarPNCP(uf) {
         }
       }
     } catch(e) {}
+  }
+
+  // ── Cobertura garantida de clientes GOVBR ──────────────────────────────
+  // As queries acima dependem de match textual e podem não capturar 100% dos
+  // editais de clientes (ex: títulos com fraseado fora do esperado). Para
+  // garantir que NENHUM edital de cliente GOVBR passe despercebido, fazemos
+  // consulta DIRETA por CNPJ na API oficial de consulta do PNCP — sem
+  // depender de palavra-chave nenhuma.
+  // API oficial: /api/consulta/v1/contratacoes/publicacao?cnpj=...&dataInicial=...&dataFinal=...
+  await clientesGOVBRPronto;
+  const clientesDaUF = CLIENTES_GOVBR_LISTA.filter(c => c.uf === uf);
+  if (clientesDaUF.length > 0) {
+    const hoje = new Date();
+    const passado = new Date(hoje); passado.setDate(passado.getDate() - 90);
+    const fmtData = d => d.toISOString().slice(0,10).replace(/-/g, '');
+    const dataInicial = fmtData(passado);
+    const dataFinal   = fmtData(hoje);
+
+    // Lotes de 8 requisições em paralelo para não sobrecarregar a API/rede
+    const LOTE = 8;
+    for (let i = 0; i < clientesDaUF.length; i += LOTE) {
+      const lote = clientesDaUF.slice(i, i + LOTE);
+      await Promise.all(lote.map(async (cliente) => {
+        try {
+          const params = new URLSearchParams({
+            cnpj: cliente.cnpj,
+            dataInicial, dataFinal,
+            pagina: '1', tamanhoPagina: '20'
+          });
+          const data = await xhrGet(`https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao?${params}`);
+          const itensCliente = data.data || [];
+          for (const itemOficial of itensCliente) {
+            // Traduz formato oficial → formato esperado por normPNCP
+            const numCtrl = itemOficial.numeroControlePNCP || '';
+            if (!numCtrl || idsVistos.has(numCtrl)) continue;
+            idsVistos.add(numCtrl);
+            todosItens.push({
+              numero_controle_pncp: numCtrl,
+              numeroControlePNCP: numCtrl,
+              title: itemOficial.processo || '',
+              description: itemOficial.objetoCompra || '',
+              objeto: itemOficial.objetoCompra || '',
+              orgao_nome: itemOficial.orgaoEntidade?.razaoSocial || cliente.nome,
+              orgao: { razaoSocial: itemOficial.orgaoEntidade?.razaoSocial || cliente.nome },
+              orgao_cnpj: itemOficial.orgaoEntidade?.cnpj || cliente.cnpj,
+              municipio_nome: cliente.municipio || '',
+              uf: uf,
+              data_inicio_vigencia: itemOficial.dataAberturaProposta || '',
+              dataAberturaPropostas: itemOficial.dataAberturaProposta || '',
+              data_fim_vigencia: itemOficial.dataEncerramentoProposta || '',
+              dataEncerramentoProposta: itemOficial.dataEncerramentoProposta || '',
+              data_publicacao_pncp: itemOficial.dataPublicacaoPncp || '',
+              valorTotalEstimado: itemOficial.valorTotalEstimado || null,
+              modalidade_licitacao_nome: itemOficial.modalidadeNome || '',
+              cancelado: itemOficial.situacaoCompraId === 4
+            });
+          }
+        } catch (e) {
+          // Falha silenciosa por cliente individual não deve travar os demais
+        }
+      }));
+    }
+    console.log('[Monitor] Cobertura garantida GOVBR:', clientesDaUF.length, 'clientes consultados em', uf);
   }
   _pncpCache = todosItens;
   _pncpCacheTs = agora;
