@@ -2695,67 +2695,53 @@ async function buscarPNCP(uf) {
     } catch(e) {}
   }
 
-  // ── Cobertura garantida de clientes GOVBR ──────────────────────────────
-  // As queries acima dependem de match textual e podem não capturar 100% dos
-  // editais de clientes (ex: títulos com fraseado fora do esperado). Para
-  // garantir que NENHUM edital de cliente GOVBR passe despercebido, fazemos
-  // consulta DIRETA por CNPJ na API oficial de consulta do PNCP — sem
-  // depender de palavra-chave nenhuma.
-  // API oficial: /api/consulta/v1/contratacoes/publicacao?cnpj=...&dataInicial=...&dataFinal=...
+  // ── Cobertura complementar de clientes GOVBR ───────────────────────────
+  // Busca adicional por nome de município para garantir que editais de
+  // clientes com fraseado atípico não sejam perdidos pelas queries genéricas.
+  // Limitada a municípios cujos CNPJs NÃO foram encontrados pelas queries
+  // genéricas — evita requisições desnecessárias e mantém boa performance.
   await clientesGOVBRPronto;
-  const clientesDaUF = CLIENTES_GOVBR_LISTA.filter(c => c.uf === uf);
+  const clientesDaUF = CLIENTES_GOVBR_LISTA.filter(c => c.uf === uf && c.municipio);
   if (clientesDaUF.length > 0) {
-    const hoje = new Date();
-    const passado = new Date(hoje); passado.setDate(passado.getDate() - 90);
-    const fmtData = d => d.toISOString().slice(0,10).replace(/-/g, '');
-    const dataInicial = fmtData(passado);
-    const dataFinal   = fmtData(hoje);
-
-    // Lotes de 8 requisições em paralelo para não sobrecarregar a API/rede
-    const LOTE = 8;
-    for (let i = 0; i < clientesDaUF.length; i += LOTE) {
-      const lote = clientesDaUF.slice(i, i + LOTE);
-      await Promise.all(lote.map(async (cliente) => {
-        try {
-          const params = new URLSearchParams({
-            cnpj: cliente.cnpj,
-            dataInicial, dataFinal,
-            pagina: '1', tamanhoPagina: '20'
-          });
-          const data = await xhrGet(`https://pncp.gov.br/api/consulta/v1/contratacoes/publicacao?${params}`);
-          const itensCliente = data.data || [];
-          for (const itemOficial of itensCliente) {
-            // Traduz formato oficial → formato esperado por normPNCP
-            const numCtrl = itemOficial.numeroControlePNCP || '';
-            if (!numCtrl || idsVistos.has(numCtrl)) continue;
-            idsVistos.add(numCtrl);
-            todosItens.push({
-              numero_controle_pncp: numCtrl,
-              numeroControlePNCP: numCtrl,
-              title: itemOficial.processo || '',
-              description: itemOficial.objetoCompra || '',
-              objeto: itemOficial.objetoCompra || '',
-              orgao_nome: itemOficial.orgaoEntidade?.razaoSocial || cliente.nome,
-              orgao: { razaoSocial: itemOficial.orgaoEntidade?.razaoSocial || cliente.nome },
-              orgao_cnpj: itemOficial.orgaoEntidade?.cnpj || cliente.cnpj,
-              municipio_nome: cliente.municipio || '',
-              uf: uf,
-              data_inicio_vigencia: itemOficial.dataAberturaProposta || '',
-              dataAberturaPropostas: itemOficial.dataAberturaProposta || '',
-              data_fim_vigencia: itemOficial.dataEncerramentoProposta || '',
-              dataEncerramentoProposta: itemOficial.dataEncerramentoProposta || '',
-              data_publicacao_pncp: itemOficial.dataPublicacaoPncp || '',
-              valorTotalEstimado: itemOficial.valorTotalEstimado || null,
-              modalidade_licitacao_nome: itemOficial.modalidadeNome || '',
-              cancelado: itemOficial.situacaoCompraId === 4
+    // CNPJs já capturados pelas queries genéricas
+    const cnpjsJaCapturados = new Set(
+      todosItens
+        .filter(i => (i.uf || '') === uf)
+        .map(i => (i.orgao_cnpj || '').replace(/\D/g,''))
+        .filter(Boolean)
+    );
+    // Apenas municípios cujos clientes NÃO foram encontrados ainda
+    const municipiosFaltantes = [...new Set(
+      clientesDaUF
+        .filter(c => !cnpjsJaCapturados.has(c.cnpj))
+        .map(c => c.municipio.toLowerCase().trim())
+    )];
+    if (municipiosFaltantes.length > 0) {
+      console.log('[Monitor] Cobertura complementar GOVBR: buscando', municipiosFaltantes.length, 'municípios não cobertos em', uf);
+      const LOTE = 5;
+      for (let i = 0; i < municipiosFaltantes.length; i += LOTE) {
+        const lote = municipiosFaltantes.slice(i, i + LOTE);
+        await Promise.all(lote.map(async (nomeMuni) => {
+          try {
+            const params = new URLSearchParams({
+              tipos_documento: 'edital', status: 'recebendo_proposta',
+              pagina: '1', tam_pagina: '20', ordenacao: '-data', q: nomeMuni
             });
-          }
-        } catch (e) {
-          // Falha silenciosa por cliente individual não deve travar os demais
-        }
-      }));
+            const data = await xhrGet(`${PNCP_SEARCH}?${params}`);
+            const itens = (data.items || data.data || []).filter(
+              item => (item.municipio_nome || item.municipio || '').toLowerCase().includes(nomeMuni)
+            );
+            for (const item of itens) {
+              const id = item.numero_controle_pncp || item.id;
+              if (id && !idsVistos.has(id)) {
+                idsVistos.add(id);
+                todosItens.push(item);
+              }
+            }
+          } catch (e) {}
+        }));
+      }
     }
-    console.log('[Monitor] Cobertura garantida GOVBR:', clientesDaUF.length, 'clientes consultados em', uf);
   }
   _pncpCache = todosItens;
   _pncpCacheTs = agora;
